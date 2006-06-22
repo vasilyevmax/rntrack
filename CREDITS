@@ -1,0 +1,10 @@
+Authors:
+--------
+
+Alex Soukhotine <ph0enix@users.sourceforge.net>, <2:5030/1157>
+
+Andrey V. Stolyarov <croco@croco.net> (Alternative CONTAINER template library - a_list.hpp)
+Alexander S. Aganichev <asa@eed.miee.ru> (porting to DJGPP/MINGW32/EMX and small fixes)
+Alexey Wasilyev <2:5053/40.1> (porting this stuff to AIX)
+Nestyurkin Nikolay <2:5020/3600> (porting this stuff for Watcom compiler and fixing some bugs)
+Dmitry Pankov <2:5022/81> (porting to cygwin)

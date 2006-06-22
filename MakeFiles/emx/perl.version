@@ -1,0 +1,53 @@
+
+This is perl, version 5.005_53 built for os2
+
+Copyright 1987-1998, Larry Wall
+
+
+OS/2 port Copyright (c) 1990, 1991, Raymond Chen, Kai Uwe Rommel
+Version 5 port Copyright (c) 1994-1998, Andreas Kaiser, Ilya Zakharevich
+
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5.0 source kit.
+
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using `man perl' or `perldoc perl'.  If you have access to the
+Internet, point your browser at http://www.perl.com/, the Perl Home Page.
+
+Summary of my perl5 (5.0 patchlevel 5 subversion 53) configuration:
+  Platform:
+    osname=os2, osvers=2.30, archname=os2
+    uname='os2 karetnikova 2 2.30 i386 '
+    hint=recommended, useposix=true, d_sigaction=define
+    usethreads=undef useperlio=undef d_sfio=undef
+  Compiler:
+    cc='gcc', optimize='-O2 -fomit-frame-pointer -malign-loops=2 -malign-jumps=2 -malign-functions=2 -s', gccversion=2.7.2.1
+    cppflags='-Zomf -Zmt -DDOSISH -DOS2=2 -DEMBED -I.'
+    ccflags ='-Zomf -Zmt -DDOSISH -DOS2=2 -DEMBED -I.'
+    stdchar='char', d_stdstdio=define, usevfork=false
+    intsize=4, longsize=4, ptrsize=4, doublesize=8
+    d_longlong=define, longlongsize=8, d_longdbl=define, longdblsize=12
+    alignbytes=4, usemymalloc=y, prototype=define
+  Linker and Libraries:
+    ld='gcc', ldflags ='-Zexe -Zomf -Zmt -Zcrtdll -Zstack 32000'
+    libpth=d:/emx.add/lib d:/emx/lib D:/DEVTOOLS/OPENGL/LIB d:/emx/lib/mt
+    libs=-lsocket -lm -lbsd
+    libc=d:/emx/lib/mt/c_import.lib, so=dll, useshrplib=true, libperl=libperl.lib
+  Dynamic Linking:
+    dlsrc=dl_dlopen.xs, dlext=dll, d_dlsymun=undef, ccdlflags=' '
+    cccdlflags='-Zdll', lddlflags='-Zdll -Zomf -Zmt -Zcrtdll -s'
+
+
+Characteristics of this binary (from libperl): 
+  Built under os2
+  Compiled at Nov 12 1998 23:44:28
+  %ENV:
+    PERLLIB_PREFIX="f:/perllib/lib;d:\PERLLIB\LIB"
+    PERL_BADLANG="0"
+    PERL_SH_DIR="d:\BIN"
+  @INC:
+    d:/PERLLIB/LIB/5.00553/os2
+    d:/PERLLIB/LIB/5.00553
+    d:/PERLLIB/LIB/site_perl/5.00553/os2
+    d:/PERLLIB/LIB/site_perl/5.00553
+    .

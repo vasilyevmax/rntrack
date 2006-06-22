@@ -1,0 +1,149 @@
+
+! - Bug fixed
+# - Added feature or changes
+
+1.12 22-10-05
+-------------
+
+! Fix build with mingw32
+! Fix Solaris/x86 byte order (thanks to Alex V. Bagmanov)
+# Added Immediate outbound flavour
+# New keyword "Domain"
+# Added The Brake! fileboxes and outbound support
+# Added personal fileboxes support
+# String processing code was replaced (taken from OpenBSD source).
+! CVS version string format replaced to: RNtrack X.Y.YYYYMMDD/OS.
+# Added 'rntrack-stable' cvs branch. This source tree will contain only bugfixes
+  and tested features from current source.
+# New action: AddKludge
+# Add new mask flag "+M/-M" (check message size). Removed automatical
+  message size check when MaxMsgSize set.
+# Rewritten Watcom makefiles. Now you don't need build smapi manually. Now you can use
+  ENABLE_LOG_PID, ENABLE_SYSLOG_LOG_FORMAT and CONFIG make options.
+! Temporary disabled @MsgLoops, @MaxAge and @MaxAttachSize macroses.
+# Test build for Linux/x86_64
+
+1.11 30-01-05 (aka as11)
+------------------------
+
+# RNtrack: fork from FTrack 3.1.1-as 2005/01/12 03:00.
+! Fix FreeBSD port (thanks to Andrey Slusar, 2:467/126)
+! Fix compilation with gcc 3.4
+# Added Slackware linux package build script (MakeFiles/linux/slackware)
+# New variable: MaxPktSize.
+! gcc 3.4 and FreeBSD port fixes (thanks to Andrey Slusar, 2:467/126)
+# New perl API function: NewMsg() which creates message and put it to base.
+# For security reasons default value of BadPackets changed to 'Skip'.
+! Upgrade to cvs smapi-2_4-stable.
+! Fix JAM-base (thanks to Michael Kostylev, 2:5030/1530)
+! Fix OADDRESS subfield in JAM-base (thanks to Michael Kostylev, 2:5030/1530)
+# Now we have own FTSC product code: 16FF
+# New variable: MaxMsgSize
+
+Previous changes
+----------------
+
+3.1.1-as10 27-09-04 ! Fix RouteFilebox error. FTrack reported "can't route attached files" if
+                      message didn't contain attach.
+		    ! Fix CONFIG variable in djgpp and mingw32 makefiles
+		    # Now builds on Solaris 9 (SPARC)
+                    # Now builds on MacOS X 
+		    # bsd makefiles rewritten for bsd make
+		    ! Fix byte order on Solaris/SPARC and MacOS X (thanks to Serguei Revtov,
+		      2:5021/19.1)
+		    # Tested build on NetBSD
+		    # FreeBSD port added
+		    # Manpage added
+
+3.1.1-as9 09-05-04 ! Fix broken ENABLE_SYSLOG_LOG_FORMAT
+		   # Now all documentation placed in one directory. Some filename changes:
+
+		     doc/eng/readme     -> doc/README
+		     doc/eng/ftrack.faq -> doc/FAQ
+		     doc/eng/report.err -> doc/report.err
+		     
+		     doc/rus/readme     -> doc/README.ru
+		     doc/rus/ftrack.faq -> doc/FAQ.ru
+		     doc/rus/report.err -> doc/report.err.ru
+		     
+		     All russian text now in CP1251
+		     
+		   # Now you can choose config path by setting FTRACKCONFIG environment
+		     variable.
+		   # New action: "Action: RouteHub"
+		   ! Code cleanup
+		   ! Fix missing BSO directory creation
+		   ! Fix crash when ftrack detects bad date field in message.
+		   # New perl API function: FindHub() which returns hub number for specified node.
+		   ! Fix build with Watcom C/C++ compiler (tested with OpenWatcom 1.2).
+		   # smapi updated to version 2.4
+		   # Now builds on OpenBSD
+		   ! Fix ignore attach path by default.
+		   # New keyword: IgnoreAttachPath.
+		   ! Move attaches to fileboxes (when UseFileBoxes set or used Action: RouteFilebox) 
+		     only if KFS flag present. In other case copy attaches.
+
+3.1.1-as8 17-03-04 ! Removed Str class. Returned string processing code from older versions.
+                   ! Fix build on FreeBSD 4.x with ENABLE_SCRIPTS=1.
+		   ! Fix DOS path stripping under *NIX and vice versa when processing attaches
+		   ! Don't exit if can't CopyAttach or MoveAttach
+		   # Now messages with attaches placed to filebox as individual packets if UseFileBoxes
+                   # New action: "Action: RouteFilebox". Works same as "Action: Route" but
+		     message placed as individual packet to filebox.
+		   # New actions: "Action: ToLowerPath" and "Action: ToUpperPath" which
+		     converts path of attached files and filename to lower or upper case.
+		   # New actions: "Action: CopyAttachFilebox" and "Action: MoveAttachFilebox"
+		     which copies or moves attach to filebox.
+
+3.1.1-as7 20-02-04 ! Remove unused code.
+		   # Added filebox support. New keywords: 
+
+		    UseFileBoxes
+		    FileBoxDir: <Dir>
+		    FileBoxType: <Type>
+		    
+		    See documentation for details.
+		    
+		   # Added Makefile for cygwin (thanks to Dmitry Pankov, 2:5022/81)
+		   # Now you can choose actions when FTrack detect bad packet. New keyword:
+		   
+		     BadPackets: <mode>
+		   
+		   ! Fix errors when compile with MinGW32
+		   ! Fix gcc3 compilation warnings
+		     
+3.1.1-as6 04-02-04 # New keys for %FMSG hash: InetFromAddr and InetToAddr.
+		   ! script.cpp: Fix key size for AreaName
+		   # Scripting now full documented.
+		   # Now you can change with Update() API function new keys of %FMSG hash:
+		     FromAddr, ToAddr, AreaName, Body, Cost, ReplyTo, NextReply and TimesRead.
+		   # For compartible returned old log format. It's using by default.
+		     To enable syslog-like format run make with ENABLE_SYSLOG_LOG_FORMAT=1 option.
+		     To enable PID logging (for both formats) run make with
+		     ENABLE_LOG_PID=1 option
+
+3.1.1-as5 02-02-04 # ficl scripts -> perl scripts (backport from FTrack 4.0.1). 
+		     Scripts disabled by default. To enable uncomment
+		     ENABLE_SCRIPTS=1 in Makefile. WARNING! Code _NOT_ fully tested!
+		     Documentation will be available later. See sample script for now.
+		   # Default config file now can changed from Makefile (see CONFIG variable)
+
+3.1.1-as4 31-01-04 # New template macros: @InetFromAddr which contain sender
+		     address in internet-style (p.f.n.z)
+		   # New template macros: @InetToAddr which contain recepient
+		     address in internet-style (p.f.n.z)
+		   ! Fixed product version in packets
+		   # Now smapi code included in project
+		   ! Fixed some warnings when compile with gcc 3.x (taken from FreeBSD port)
+		   ! Fixed errors when compile with djgpp
+
+3.1.1-as3 10-08-03 ! Now builds with gcc 3.x		     
+
+3.1.1-as2 30-07-03 ! Now @Pid macros defined only under UNIX
+		   ! Fixed FreeBSD makefile
+
+3.1.1-as1 26-07-03 # Log format changed to syslog-like.
+                   # New template macros: @Pid which replaced by current 
+		     FTrack PID
+                   # Now default config placed at /etc/ftn/ftrack.cfg in UNIX
+                   # Added sample configs from 2:5030/1157

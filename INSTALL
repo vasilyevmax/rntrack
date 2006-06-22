@@ -1,0 +1,14 @@
+tar jxf rntrack-version.tar.bz2
+cd rntrack-version/MakeFiles/YourSystem
+make
+
+Make options:
+
+CONFIG="path/to/cfg"       - Default config path. If not defined, using "/etc/ftn/rntrack.cfg" under *NIX or "rntrack.cfg"
+                             under other os.
+
+ENABLE_SCRIPTS=1           - Enable Perl scripts support (currently not available on WIN32 and OS/2)
+ENABLE_LOG_PID=1           - Enable pid logging (ex: 21.04.2004 12:02:39 [212] --- RNtrack 1.11/LNX started.)
+ENABLE_SYSLOG_LOG_FORMAT=1 - Use syslog-like log style (ex: Apr 04 22:00:02 --- RNtrack 1.11/LNX started.)
+
+This options disabled by default.
