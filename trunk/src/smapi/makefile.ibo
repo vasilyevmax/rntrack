@@ -1,0 +1,30 @@
+# $Id: makefile.ibo,v 1.1.1.1 2005/01/14 19:20:34 ph0enix Exp $
+# Makefile for IBM CSet for OS/2 with nmake
+# No support for the Husky build environment
+
+CC=	icc
+CFLAGS=	-Sp1 -W2 -Q
+CDEFS=	-DOS2
+COPT=	-O
+#LIB=	ilib
+LIB=   lib
+OBJ=	.obj
+
+TARGET=	smapiibo.lib
+
+include makefile.inc
+
+# Thunderbirds are go!
+
+.c.obj:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(LIB) /nologo $(TARGET) -+$@,,
+
+$(TARGET): $(OBJS)
+
+clean:
+	-DEL *.obj
+
+distclean:
+	-DEL $(TARGET)
+

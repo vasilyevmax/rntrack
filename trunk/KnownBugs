@@ -1,0 +1,7 @@
+@MsgRoutedVia may be empty.
+Don't build on Win32 (mingw32, cygwin) and OS/2 with ENABLE_SCRIPTS=1.
+Sometimes accepts bad messages.
+Reports 'File not found' when routes attaches to fileboxes and use path change actions (ChangePath, ToUpperPath, ToLowerPath)
+Sometime crashes if scripts used.
+@MsgLoops, @MaxAge and @MaxAttachSize macroses not working
+

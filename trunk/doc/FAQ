@@ -1,0 +1,86 @@
+$Id: FAQ,v 1.2 2005/10/31 19:06:45 ph0enix Exp $
+
+                       Frequently asked questions
+
+Contents
+
+Q0: When you will (add my favourite feature | fix bug xxx | do something)?
+Q1: I want to catch letters containing UUE, how can I do it?
+Q2: I want to move letters from netmail to echomail. How can I do it?
+Q3: I want to move messages from echomail to netmail. How can I do it?
+
+
+
+Q0: When you will (add my favourite feature | fix bug xxx | do something)?
+A0: "The source is available, so download it and do it yourself. Please don't
+    think that OpenSource developers are your personal slaves." (c) FreeAmp FAQ
+
+Q1: I want to catch letters containing UUE, how can I do it?
+A1: You can use this mask and it's modifications:
+    BodyMask: "*%0d%begin ### *.*%0d%m*%0d%m*%0d%`%0d%end*" * *
+
+    This mask will catch files containing the following lines:
+    --------------------
+    begin 666 myfile.txt
+    M....
+    M....
+    some-some-some
+    `
+    end
+    --------------------
+
+    This mask is the most precise, but it won't catch splitted messages.
+    In fact you can use the fact lines in a usual UUE-file start with
+    letter 'M'.
+    BodyMask: "*%0d%M$$$$$$$$*%0d%M$$$$$$$$*%0d%M$$$$$$$$*%0d%m*%0d%M$$$$$$$$*" * *
+    This mask will catch all letters contatining five lines starting with
+    symbol 'M' and _not_ having a space within 8 symbols following this 'M'
+    (ATTENTION! It's not necessary that these lines must be in order;
+    they should simply exist)
+    ------------------
+    If you have any other checked mask please send it to me and the mask
+    will be added to this FAQ.
+
+A1: (Roman Rakitin, 2:5025/51.25)
+
+    I noticed that no one mask that catches UUE doesn't catch them properly 
+    if files were uuencoded by UUEPro. I solved the problem the following way
+    and tested it on all available coders:
+ 
+    ===[The beginning of WindowsClipboard]===
+    *begin ### .*M$$$$$$%0d%M$$$$$$%0d%M$$$$$$%0d%M$$$$$$%0d%*\
+    section*of file.M$$$$$$%0d%M$$$$$$%0d%M$$$$$$%0d%M$$$$$$%0d%*\
+    sum -r/size*
+    (This is one line. I simply splitted it into several parts for conveniency)
+    ===[The end of WindowsClipboard]===
+
+
+Q2: I want to move letters from netmail to echomail. How can I do it?
+A2: The most correct way is to create a template containing the following:
+    ------------
+    @MsgBody
+    @MsgNTearline
+    @MsgNOrigin
+    ------------
+    All these words should start from the beginning of line and, using
+    Action: NewMsg command they should put new letters to chosen echoarea.
+    Why to do only thus way? Because in echomail TearLine and Origin _must_
+    be present. But they're not obligatory necessary in netmail. Using this
+    template we create a letter where TearLine and Origin always present.
+    Also we delete all technical information that concerns only netmail and
+    that is not used in echomail.
+
+Q3: I want to move messages from echomail to netmail. How can I do it?
+A3: In general this operation doesn't differ from moving messages from
+    netmail to echomail, with the exception of only one small but important
+    moment- there is not recepient's address in echomail. His name exists, but
+    his address- not. That's why in 99% of cases you address will be placed
+    as recepient's address, and in 1%, that is left, there could be anything.
+    That's why when we move messages from echomail to netmail we should
+    clearly show to RNtrack the address of the recepient. For example:
+    Action: NewMsg "e_to_n.tpl" "o:\netmail\fromecho" * * * 2:5030/9999.0 * *
+
+-+-+------------------------------------------------------------------
+
+Your changes and additions to this FAQ please send to 2:5030/1157
+or ph0enix@users.sourceforge.net

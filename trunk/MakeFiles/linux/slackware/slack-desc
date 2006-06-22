@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+         |-----handy-ruler------------------------------------------------------|
+rntrack: rntrack (FTN Messages tracker)
+rntrack: 
+rntrack: It is so called netmail "tracker". It's puprose is to process netmail on
+rntrack: netmail hubs, though it can be useful for an ordinary node.
+rntrack: It takes a letter, compares it with a mask and, if comparison was
+rntrack: successful, it executes corresponding operation with this letter.
+rntrack: 
+rntrack: This product is Freeware. It is distributed in accordance to principle
+rntrack: As Is, and I can't provide any guarantee. The only thing I promise is
+rntrack: to correct founded mistakes more or less regulary and to produce new
+rntrack: 

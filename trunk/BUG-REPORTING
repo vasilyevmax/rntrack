@@ -1,0 +1,30 @@
+BUG-REPORTING
+-------------
+
+Please try to reproduce the bug before contacting me.
+
+Things to do when i encountered a bug:
+
+If a core-dump was created:
+- start gdb with
+   gdb rntrack core
+- type where
+   where
+- try to get all information out of the core file which could be interesting
+  for me. (this is for people who are familiar with c-programming)
+
+send me the following things:
+- an extensive description of the situation where the bug happened.
+- version of RNtrack (stable version or date of checkout)
+- version of smapi  (stable version or date of checkout)
+- your config-files
+- all SMALL files RNtrack was using when the bug happened. (pkt's/msg's/squis's or jam's)
+  only send me complete msgbases when the problem did not arise with a small
+  one.
+- a short description what system you are using.
+  (OS - Distribution - compiler - etc. i do NOT need to know what kind of
+  monitor do you use :-)
+
+Alex Soukhotine
+2:5030/1157
+ph0enix@users.sourceforge.net

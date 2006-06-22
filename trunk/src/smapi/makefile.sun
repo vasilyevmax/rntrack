@@ -1,0 +1,32 @@
+# $Id: makefile.sun,v 1.1.1.1 2005/01/14 19:20:35 ph0enix Exp $
+# Legacy Makefile for Solaris (i386 or sparc) and gcc.
+# No support for the Husky build environment.
+
+CC=	gcc
+CFLAGS=	-Wall
+CDEFS=	-D__SUN__
+#CDEFS+= -DHAS_SEMUN_UNDECL
+COPT=	-O3 -fomit-frame-pointer -fstrength-reduce
+LIB=	ar
+RANLIB= ranlib
+OBJ=	.o
+
+TARGET=	libsmapisun.a
+
+include makefile.inc
+
+
+all: $(TARGET)
+
+.c.o:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(LIB) r $(TARGET) $@
+
+$(TARGET): $(OBJS)
+	$(RANLIB) $(TARGET)
+
+clean:
+	-rm *.o
+
+distclean: clean
+	-rm $(TARGET)

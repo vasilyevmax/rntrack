@@ -1,0 +1,9 @@
+Fix @MsgRoutedVia macros.
+Extend script subsystem.
+Fix build with ENABLE_SCRIPTS=1 on Win32 and OS/2
+Allow write to PKT base.
+Rewrite makefiles
+Port to 64-bit platform
+Port to gcc4
+Fix @MsgLoops, @MaxAge and @MaxAttachSize macroses
+
