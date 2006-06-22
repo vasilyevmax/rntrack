@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: pktbase.hpp,v 1.1.1.1 2005/01/14 19:17:59 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _PKTBASE_HPP_
@@ -45,7 +45,7 @@ class PKTBASE: public MSGBASE {
    int CopyTail(FILE *tf);
    int CopyMessages(FILE *tf);
    int CopyOneMessage(FILE *tf);
-   int PKTBASE::ReadHeader(FILE *tf, char *Buff);
+   int ReadHeader(FILE *tf, char *Buff);
 public:
    int WriteOneMsg(unsigned int Num, cMSG &m);
    PKTBASE();
