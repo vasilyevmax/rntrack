@@ -4,6 +4,3 @@ Sometimes accepts bad messages.
 Reports 'File not found' when routes attaches to fileboxes and use path change actions (ChangePath, ToUpperPath, ToLowerPath)
 Sometime crashes if scripts used.
 @MsgLoops, @MaxAge and @MaxAttachSize macroses not working
-Don't build with ENABLE_SCRIPTS=1 on newer Perl versions (5.8.0 or higher)/
-
-

@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: constant.hpp,v 1.5 2005/10/31 19:06:45 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _CONST_HPP_
@@ -60,7 +60,7 @@
 #define RevisionLO     13
 #define ProductLO 0xff
 #define ProductHI 0x16
-#define Copyright      "\n(C) 2003-2005 Alex Soukhotine (2:5030/1157)\n"
+#define Copyright      "\n(C) 2003-2006, Alex Soukhotine (2:5030/1157)\n"
 
 #ifndef DefaultConfig
 # ifdef UNIX

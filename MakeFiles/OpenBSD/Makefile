@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.3 2005/03/22 19:10:05 ph0enix Exp $
+# $Id$
 CC	= g++
 CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
 CDEFS	= -DUNIX
@@ -12,7 +12,7 @@ SRCDIR	= ../../src/
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 .ifdef ENABLE_SCRIPTS
-    CFLAGS += `perl -MExtUtils::Embed -e ccopts`
+    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
 .else
     CDEFS  += -D__NOSCRIPTS__
