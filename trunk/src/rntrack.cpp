@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: rntrack.cpp,v 1.2 2005/01/15 02:12:58 ph0enix Exp $
+ *  $Id$
  */
 
 #include <locale.h>
@@ -89,14 +89,14 @@ int InitSystem(void) {
    signal(SIGILL,&AbrtHndl);
 #endif
 
-   if (sizeof(int) != 4 || sizeof(long) != 4) {
+/*   if (sizeof(int) != 4 || sizeof(long) != 4) {
       fprintf(stderr,"RNtrack compiled for wrong platform.\nPlease, call to author.\n");
       if (sizeof(long) == 8 && sizeof(void *) == 8 && sizeof(int) == 4) {
           fprintf(stderr,"Continue at your own risk! This software is not 64-bit ready yet!\n");
       } else {
           return FALSE;
       }
-   }
+   }*/
    CHP = 99101;
    tzset();
    CHP = 99102;

@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: script.cpp,v 1.4 2005/07/31 18:00:44 ph0enix Exp $
+ *  $Id$
  */
 
 // If you want to compile program without script subsystem
@@ -384,7 +384,11 @@ static char *file = __FILE__;
   newXS("ExistsInNodelist", perl_ExistsInNodelist, file);
   newXS("FindHub", perl_FindHub, file);
   newXS("NewMsg", perl_NewMsg, file);
+#ifdef __PERL_NEW__ /* for Perl 5.8+ */
+  newXS("DynaLoader::boot_DynaLoader", (void(*)(PerlInterpreter*,CV*))boot_DynaLoader, file);
+#else  /* for old Perl */
   newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file);
+#endif  
 }
 
 #endif /* NoScripts*/
@@ -442,7 +446,11 @@ int rc;
 
 
    PUSHMARK(SP);
+#ifdef __PERL_NEW__ /* for Perl 5.8+ */   
+   rc = perl_parse(PerlSystem, (void(*)( PerlInterpreter*))xs_init, 2, perlargs, NULL);
+#else  /* for old Perl */   
    rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
+#endif   
    SPAGAIN;
    PUTBACK;
 
