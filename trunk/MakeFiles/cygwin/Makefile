@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.4 2005/04/02 07:14:04 ph0enix Exp $
+# $Id$
 CC	= g++
 CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
 CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H
@@ -73,7 +73,7 @@ OBJS=	fidoaddr.o \
 # Thunderbirds are go!
 
 smapi:
-	cd $(SRCDIR)smapi && make -f makefile.cyg
+	cd $(SRCDIR)smapi && make -f makefile.cyg static
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
