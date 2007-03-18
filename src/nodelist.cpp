@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: nodelist.cpp,v 1.1.1.1 2005/01/14 19:19:12 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef __GNUC__
@@ -446,12 +446,14 @@ unsigned int tmp;
 
 int ParseOneNodelist (NodeListElem *Elem) {
 char Buff[512];
-   Log.Level(LOGI) << "Compile nodelist '" << Elem->Name << "'..." << EOL;
+   Log.Level(LOGI) << "Compile nodelist '" << Elem->Name << "'";
    if (Elem->StartZone != 0) {
       _SetCurrentZone(Elem->StartZone);
+      Log.Level(LOGI) << ", start zone number is " << Elem->StartZone;
    } else {
       CurrentZone = 0;
    }
+   Log.Level(LOGI) << "..." << EOL;
    CurrentNet = 0;
 
    if (!OpenNodelist(Elem->Name)) {
