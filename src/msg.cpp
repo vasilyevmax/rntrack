@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: msg.cpp,v 1.1.1.1 2005/01/14 19:19:03 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef UNIX
@@ -657,7 +657,7 @@ Kludge *TKlu;
 Log.Level(LOGD) << "Split kludge. p == '" << p << "', p2 == '" << p2 << "'" << EOL;
 
    CHP = 307;
-   if (*p == '\0' && strstr(p2,"* Origin:") == p2) { // Origin (
+   if (*p == '\0' && strstr(p2,"* Origin:") == p2 && fEchomail) { // Origin (
       CHP = 30909;
       s = strrchr(p2,'(');
       s2 = strrchr(p2,')');
@@ -672,6 +672,7 @@ Log.Level(LOGD) << "Split kludge. p == '" << p << "', p2 == '" << p2 << "'" << E
       if (s2 != NULL) *s2 = ')';
       CHP = 30912;
       if (tAddr.Valid()) {
+         Log.Level(LOGD) << "Parse Origin: FromAddr == '" << tAddr << "'" << EOL;
          _FromAddr.Zone(tAddr.Zone());
          _FromAddr.Net(tAddr.Net());
          _FromAddr.Node(tAddr.Node());
