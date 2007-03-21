@@ -967,7 +967,7 @@ char BuffForSearch[128];
 	 BuffForSearch[127] = '\0';
          nls_strupr(BuffForSearch);
          if ((strstr(BuffForSearch,"SEEN-BY:") == BuffForSearch)
-            || ( (strstr(BuffForSearch," * ORIGIN:") == BuffForSearch) && fEchomail )
+            || (strstr(BuffForSearch," * ORIGIN:") == BuffForSearch)
             || (strstr(BuffForSearch,"--- ") == BuffForSearch)
             || (strstr(BuffForSearch,"---\n") == BuffForSearch)
             || (strstr(BuffForSearch,"---\r") == BuffForSearch)) {
