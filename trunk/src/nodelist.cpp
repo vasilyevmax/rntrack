@@ -389,7 +389,11 @@ unsigned int tmp;
             _AddPoint(atoi(tmt+1));
          } else {
             if (CurrentZone == 0) {
-               ErrNdlFormat("Node record without HOST!");
+               ErrNdlFormat("Node record without Zone record!");
+               return FALSE;
+            }
+            if (CurrentNet == 0) {
+               ErrNdlFormat("Node record without Host/Region record!");
                return FALSE;
             }
             _AddNode(atoi(tmt+1));
@@ -401,7 +405,11 @@ unsigned int tmp;
             return FALSE;
          }
          if (CurrentZone == 0) {
-            ErrNdlFormat("Node record without HOST!");
+            ErrNdlFormat("Node Down record without Zone record!");
+            return FALSE;
+         }
+         if (CurrentNet == 0) {
+            ErrNdlFormat("Node Down record without Host/Region record!");
             return FALSE;
          }
          tmp = atoi(tmt+5);
@@ -417,7 +425,11 @@ unsigned int tmp;
                   return FALSE;
                }
                if (CurrentZone == 0) {
-                  ErrNdlFormat("Node record without HOST!");
+                  ErrNdlFormat("Node Pvt record without Zone record!");
+                  return FALSE;
+               }
+               if (CurrentNet == 0) {
+                  ErrNdlFormat("Node Pvt record without Host record!");
                   return FALSE;
                }
                tmp = atoi(tmt+4);
@@ -448,12 +460,11 @@ int ParseOneNodelist (NodeListElem *Elem) {
 char Buff[512];
    Log.Level(LOGI) << "Compile nodelist '" << Elem->Name << "'";
    if (Elem->StartZone != 0) {
-      _SetCurrentZone(Elem->StartZone);
+      _SetCurrentZone(Elem->StartZone); // Set address to Zone:Zone/0; 1st line of the nodelist should be "Host" or "Region"
       Log.Level(LOGI) << ", start zone number is " << Elem->StartZone;
    } else {
       CurrentZone = 0;
    }
-   Log.Level(LOGI) << "..." << EOL;
    CurrentNet = 0;
 
    if (!OpenNodelist(Elem->Name)) {
