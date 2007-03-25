@@ -466,6 +466,7 @@ char Buff[512];
       CurrentZone = 0;
    }
    CurrentNet = 0;
+   Log.Level(LOGI) << " ..." << EOL;
 
    if (!OpenNodelist(Elem->Name)) {
       return FALSE;
