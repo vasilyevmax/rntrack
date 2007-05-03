@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.4 2005/04/02 07:14:04 ph0enix Exp $
+# $Id$
 CC=	gcc
 
 PERL=D:/PERLLIB/LIB/5.00553/os2
@@ -44,9 +44,9 @@ OBJS=	fidoaddr.obj \
 	wildmat.obj \
 	badpkt.obj \
 	script.obj \
-	domain.obj \^M
-	filebox.obj \^M
-	string.o^M
+	domain.obj \
+	filebox.obj \
+	string.o
 
 PERLLIBS=\
         $(PERL)/auto/DB_File/DB_File.lib \

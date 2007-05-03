@@ -1,4 +1,4 @@
-# $Id: Makefile.emx,v 1.4 2005/04/02 07:14:04 ph0enix Exp $
+# $Id$
 CC=	gcc
 
 PERL=D:/PERLLIB/LIB/5.00553/os2
@@ -41,9 +41,9 @@ OBJS=	fidoaddr.o \
 	wildmat.o \
 	badpkt.o \
 	script.o \
-	domain.o \^M
-	filebox.o \^M
-	string.o^M
+	domain.o \
+	filebox.o \
+	string.o
 
 PERLLIBS=\
         $(PERL)/auto/DB_File/DB_File.a \
