@@ -1,4 +1,4 @@
- /* $Id: compiler.h,v 1.2 2005/02/01 19:03:33 ph0enix Exp $
+ /* $Id$
 
  *  SMAPI; Modified Squish MSGAPI
  *
@@ -1218,7 +1218,7 @@ int qq(void)
 /* Begin: Watcom C all variants (DOS, Win, OS/2, QNX) ************************/
 #elif defined(__WATCOMC__)
 
-#  define mode_t int
+/*#  define mode_t int*/
 #  define SMAPI_EXT extern
 
 #  define strcasecmp  stricmp
