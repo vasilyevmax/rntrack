@@ -1,9 +1,12 @@
+     RNTrack's changes log
+     $Id$
 
 ! - Bug fixed
 # - Added feature or changes
 
 1.13 XX-XX-XX
 -------------
+! Fix originate address recognition for messages with dublicated origin lines.
 # Migrated to SVN repository. CVS no longer supported.
 ! Fix build with gcc 4.1.0
 ! Fix build with ENABLE_SCRIPTS=1 when Perl 5.8+ installed
