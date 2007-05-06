@@ -1,4 +1,9 @@
+# Makefile for build standalone rntrack/emx: for EMX on OS/2 with OMF-Style linkage
+# First needs to build smapi library (cd ../../src/smapi; make -f makefile.emo)
+# To build with Perl: Perl version 5.5.53 is needed. Else call `make PERLLIBS=`
+#
 # $Id$
+
 CC=	gcc
 
 PERL=D:/PERLLIB/LIB/5.00553/os2
@@ -48,7 +53,7 @@ OBJS=	fidoaddr.obj \
 	filebox.obj \
 	string.o
 
-PERLLIBS=\
+PERLLIBS?=\
         $(PERL)/auto/DB_File/DB_File.lib \
         $(PERL)/auto/SDBM_File/SDBM_File.lib \
         $(PERL)/auto/Fcntl/Fcntl.lib \
