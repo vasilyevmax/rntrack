@@ -1,4 +1,4 @@
-$Id: README.ru,v 1.8 2005/10/31 19:06:45 ph0enix Exp $
+$Id$
                       FTN Messages tracker 1.13
 
 

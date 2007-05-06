@@ -1,0 +1,40 @@
+	  RNTrack: A FTN Messages tracker
+	  Version 1.13
+
+     What is this program for
+     ------------------------
+     It is so called netmail "tracker". It's puprose is to process netmail on
+netmail hubs, though it can be useful for an ordinary node. It parses PKTs or
+messagebases, compare messages with patterns and doing specified action if
+pattern matched. Also RNTrack may be used for echomail with limitations.
+
+     Features
+     --------
+* Support for popular messagebases: OPUS (*.msg), JAM, Squish.
+* Support for PKT 2+.
+* Embedded Perl (if scripting is enabled at compile time).
+* External templates.
+* Portability.
+
+     Documentation
+     -------------
+     The doc and samples subdirectory is contain documentation. Also you may
+subscribe to RU.FTRACK Fidonet echoarea and visits project's web page
+http://sourceforge.net/projects/rntrack.
+
+     Bug reporting
+     -------------
+     Read BUG-REPORTING text file for details.
+
+     License
+     -------
+     RNTrack is free software. It's licensed using GNU General Public License.
+See COPYING to text of license (or visits http://gnu.org if this file is
+missing).
+
+     Authors
+     -------
+     Current maintaner of RNTrack is Stas Degteff. See AUTHORS for list of all
+developres and more information.
+
+$Id$
