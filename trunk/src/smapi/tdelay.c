@@ -83,7 +83,7 @@
     snooze(msecs*1000l);
   }
 
-#elif defined(__UNIX__)
+#elif defined(__unix__)
 
 #include <unistd.h>
 

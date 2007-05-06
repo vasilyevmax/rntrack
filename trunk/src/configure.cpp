@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: configure.cpp,v 1.5 2005/06/05 20:48:17 ph0enix Exp $
+ *  $Id$
  */
 
 /*--------------------------------------------------------------------*/
@@ -31,7 +31,7 @@
 /*                        System include files                        */
 /*--------------------------------------------------------------------*/
 
-#ifndef UNIX
+#ifndef __unix__
 #ifdef __EMX__
 #include <unistd.h>
 #endif

@@ -71,7 +71,7 @@ void pascal far flush_handle2(int fh)
 */
 #define flush_handle2(f)  fsync(f)
 
-#elif defined(__UNIX__) || defined(SASC)
+#elif defined(__unix__) || defined(SASC)
 /*
 void pascal far flush_handle2(int fh)
 {

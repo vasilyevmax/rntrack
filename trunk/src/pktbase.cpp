@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: pktbase.cpp,v 1.8 2005/06/22 22:18:14 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef __GNUC__
@@ -306,14 +306,14 @@ FILE *tf;
    RSTRLCPY(TempName,PktName,BUFF_SIZE);
    tmt = strrchr(TempName,PATHDELIMC);
    if (tmt == NULL) {
-#ifndef UNIX
+#ifndef __unix__
       tmt = strchr(TempName,':');
       if (tmt != NULL) {
          tmt++;
       } else {
 #endif      
          tmt = TempName;
-#ifndef UNIX	 
+#ifndef __unix__	 
       }
 #endif      
    } else {
@@ -577,7 +577,7 @@ s_stat tmp_stat;
    Log.Level(LOGD) << "_Open PKT '" << PktName << "'" << EOL;
    if (!_Close()) return FALSE;
    fh = fopen(PktName,"r+b");
-#ifdef UNIX
+#ifdef __unix__
    if (errno == EACCES) {
       Log.Level(LOGE) << "   Error _open PKT '" << PktName << "' - permission denied." << EOL;
       return TRUE;

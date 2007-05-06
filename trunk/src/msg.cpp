@@ -13,7 +13,7 @@
  *  $Id$
  */
 
-#ifndef UNIX
+#ifndef __unix__
 #include <io.h>
 #endif
 #ifndef __GNUC__

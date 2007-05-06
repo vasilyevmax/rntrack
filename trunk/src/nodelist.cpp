@@ -77,7 +77,7 @@ FILE *ft;
 
    GetFilePath(Path,Mask);
    if (NodelistPath != NULL && *Path != PATHDELIMC
-#ifndef UNIX
+#ifndef __unix__
        && Path[1] != ':'
 #endif
    ) {

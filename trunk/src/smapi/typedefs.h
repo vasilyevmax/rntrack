@@ -43,13 +43,13 @@ typedef unsigned long dword;
 typedef signed long sdword;
 #endif
 
-#if !defined(__UNIX__) && !defined(SASC) && !defined(__MINGW32__)
+#if !defined(__unix__) && !defined(SASC) && !defined(__MINGW32__)
 typedef unsigned short ushort;
 #endif
 
 typedef signed short sshort;
 
-#ifndef __UNIX__
+#ifndef __unix__
 typedef unsigned long ulong;
 #endif
 

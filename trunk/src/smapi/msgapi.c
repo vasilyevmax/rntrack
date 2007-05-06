@@ -59,7 +59,7 @@ void _MsgCloseApi(void)
     JamCloseOpenAreas();
 }
 
-#ifdef __UNIX__
+#ifdef __unix__
 /* Just a dummy alarm-fnct */
 static void alrm(int x)
 {x=x;}
@@ -67,7 +67,7 @@ static void alrm(int x)
 
 sword _XPENTRY MsgOpenApi(struct _minf *minf)
 {
-#ifdef __UNIX__
+#ifdef __unix__
     struct sigaction alrmact;
 #endif
 
@@ -90,7 +90,7 @@ sword _XPENTRY MsgOpenApi(struct _minf *minf)
     /*
      * Set the dummy alarm-fcnt to supress stupid messages.
      */
-#ifdef __UNIX__
+#ifdef __unix__
     memset(&alrmact, 0, sizeof(alrmact));
     alrmact.sa_handler = alrm;
     sigaction(SIGALRM, &alrmact, 0);

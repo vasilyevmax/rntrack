@@ -10,15 +10,15 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: attach.cpp,v 1.3 2005/04/05 17:19:40 ph0enix Exp $
+ *  $Id$
  */
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifndef UNIX
+#ifndef __unix__
 #include <io.h>
 #endif
-#if defined (UNIX) || defined(__DJGPP__)
+#if defined (__unix__) || defined(__DJGPP__)
 #include <unistd.h>
 #endif
 #if defined(__DJGPP__)
@@ -97,7 +97,7 @@ static char Buff[BUFF_SIZE];
       Buff[0] = '\0';
    }
    if ((strchr(name,PATHDELIMC) == NULL 
-#ifndef UNIX   
+#ifndef __unix__   
    && strchr(name,':') == NULL
 #endif   
    ) || (IgnoreAttachPath != FALSE)) {
@@ -264,7 +264,7 @@ char *tmt;
       _dos_getfileattr(tmt, &attrs);
       if (attrs|_A_HIDDEN) return FALSE;
    }
-#elif !defined(UNIX)
+#elif !defined(__unix__)
    if (SkipHiddenFiles && (dd.st_attr & 2)) return FALSE;
 #endif
    return TRUE;
@@ -341,7 +341,7 @@ char B[BUFF_SIZE];
 }
 
 // --------------------------------------------------------------------
-#if defined(UNIX) || defined(__EMX__)
+#if defined(__unix__) || defined(__EMX__)
 
 typedef int (*faff)(char *b);
 

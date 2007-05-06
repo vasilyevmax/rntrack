@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: log.cpp,v 1.1.1.1 2005/01/14 19:18:38 ph0enix Exp $
+ *  $Id$
  */
 
 /*--------------------------------------------------------------------*/
@@ -21,12 +21,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#ifndef UNIX
+#ifndef __unix__
 #include <io.h>
 #endif
 #include <string.h>
 #include <assert.h>
-#ifdef UNIX
+#ifdef __unix__
 #include <unistd.h>
 #endif
 
@@ -173,7 +173,7 @@ va_list ll;
       va_end(ll);
       tmt2 = tmt;
       if (NewLine != 0) {
-#if defined(UNIX) && defined(LOG_SHOW_PID)
+#if defined(__unix__) && defined(LOG_SHOW_PID)
          fprintf(CurrFh,"%s [%u] ",Date(),getpid());
 #else
          fprintf(CurrFh,"%s ",Date());
@@ -183,7 +183,7 @@ va_list ll;
       while (*tmt != '\0') {
          tmt2 = tmt;
          if (NewLine != 0) {
-#if defined(UNIX) && defined(LOG_SHOW_PID)
+#if defined(__unix__) && defined(LOG_SHOW_PID)
             fprintf(CurrFh,"%s [%u] ",Date(),getpid());
 #else
             fprintf(CurrFh,"%s ",Date());

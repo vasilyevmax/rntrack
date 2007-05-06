@@ -377,7 +377,7 @@ int sopen(const char *name, int oflag, int ishared, int mode)
     return fd;
 }
 
-#elif defined(__UNIX__) && !defined(__BEOS__)
+#elif defined(__unix__) && !defined(__BEOS__)
 
 static struct flock* file_lock(short type, long ofs, long length, struct flock *ret)
 {

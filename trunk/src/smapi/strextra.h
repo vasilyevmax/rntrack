@@ -13,15 +13,15 @@
 
 #include "compiler.h"
 
-#if !defined(_MSC_VER) && !defined(__LINUX__)
+#if !defined(_MSC_VER) && !defined(__linux__)
 int stricmp(const char *s, const char *t);
 #endif
 
-#if !defined(__IBMPC__) && !defined(__LINUX__) && !defined(__SUN__) && !defined(__WATCOMC__) && !defined(_MSC_VER)
+#if !defined(__IBMPC__) && !defined(__linux__) && !defined(__SUN__) && !defined(__WATCOMC__) && !defined(_MSC_VER)
 char *strdup(const char *s);
 #endif
 
-#if defined(__UNIX__)
+#if defined(__unix__)
 char *strupr(char *str);
 #endif
 

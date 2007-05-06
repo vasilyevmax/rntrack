@@ -89,7 +89,7 @@ struct ffind
     char newfile[FILENAME_MAX];
     char prefix[FILENAME_MAX];
 
-#elif defined(__UNIX__)
+#elif defined(__unix__)
     DIR *dir;
     char firstbit[FILENAME_MAX];
     char lastbit[FILENAME_MAX];

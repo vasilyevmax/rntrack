@@ -166,9 +166,9 @@
    * __DOS16__ - MS/PC/... DOS target 16 bit
    * __DPMI__  - DOS 32 bit (extenders: dos4g, farcall, rsx, ...)
    * __MACOS__ - MacOS (Unix clone)
-   * __UNIX__  - All unix-like OS
+   * __unix__  - All unix-like OS
    * __BSD__   - BSD UNIX clones (BSDI, BSD/OS, FreeBSD, NetBSD, OpenBSD & etc)
-   * __LINUX__ - GNU/Linux (unix clone)
+   * __linux__ - GNU/Linux (unix clone)
    * __AMIGA__ - AmigaOS
    * __ALPHA__ - The Alpha CPU
    * __X86__   - Intel's x86 series CPU
@@ -534,8 +534,8 @@ int qq(void)
 #    endif
 #  endif
 #  if defined(__QNX__)
-#    if !defined(__UNIX__)
-#      define __UNIX__
+#    if !defined(__unix__)
+#      define __unix__
 #    endif
 #    if !defined(__WATCOMC__QNX__)
 #      define __WATCOMC__QNX__
@@ -568,8 +568,8 @@ int qq(void)
 #    if !defined(__IBMC__UNIX__)
 #      define __IBMC__UNIX__     /* IBM C/Set++ for unix */
 #    endif
-#    if !defined(__UNIX__)
-#      define __UNIX__
+#    if !defined(__unix__)
+#      define __unix__
 #    endif
 #  endif
 #endif
@@ -580,12 +580,15 @@ int qq(void)
 #  endif
 #endif
 
-#if defined(__linux__) || defined(__Linux__) || defined(linux) || defined(__linux) || defined(LINUX)
+#if defined(__linux__) || defined(__Linux__) || defined(linux) || defined(__linux) || defined(LINUX) || defined(__LINUX__)
 #  if !defined(__LINUX__)
 #    define __LINUX__
 #  endif
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__linux__)
+#    define __linux__
+#  endif
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -593,8 +596,8 @@ int qq(void)
 #  if !defined(__SVR4__)
 #    define __SVR4__
 #  endif
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -602,8 +605,8 @@ int qq(void)
 #  if !defined(__BSD__)
 #    define __BSD__
 #  endif
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -664,22 +667,22 @@ int qq(void)
 #  define __NT__
 #endif
 
-#if defined(__CYGWIN__) && !defined(__UNIX__)  /* Pure cygwin */
-#  define __UNIX__
+#if defined(__CYGWIN__) && !defined(__unix__)  /* Pure cygwin */
+#  define __unix__
 #endif
 
 #if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #  if !defined(__BSD__)
 #    define __BSD__
 #  endif
 #endif
 
-#if defined(__SUN__) || defined(__LINUX__)
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#if defined(__SUN__)
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -687,8 +690,8 @@ int qq(void)
 #  if !defined(__AIX__)
 #    define __AIX__
 #  endif
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -696,8 +699,8 @@ int qq(void)
 #  if !defined(__OSF__)
 #    define __OSF__
 #  endif
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -705,8 +708,8 @@ int qq(void)
 #  if !defined(__HPUX__)
 #    define __HPUX__
 #  endif
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
@@ -715,27 +718,29 @@ int qq(void)
   BeOS is NOT Unix, but sometime it seem's to Be ... ;)
 */
 #if defined (__BEOS__) || defined(__BeOS__)
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
 #if defined(SASC)  /* SAS C for AmigaDOS ***************/
-#  if !defined(__UNIX__)
-#    define __UNIX__
+#  if !defined(__unix__)
+#    define __unix__
 #  endif
 #endif
 
-#if defined(UNIX) || defined(_UNIX) || defined(__unix) || defined(__unix__) ||  defined(unix)
+#if defined(UNIX) || defined(_UNIX) || defined(__UNIX__) || defined(__unix) || defined(__unix__) ||  defined(unix)
 #  ifdef __DJGPP__
-#    undef __UNIX__
 #    undef UNIX
 #    undef _UNIX
+#    undef __UNIX__
+#    undef __unix
 #    undef __unix__
 #    undef unix
+#    undef _unix
 #  else
-#    ifndef __UNIX__
-#      define __UNIX__
+#    ifndef __unix__
+#      define __unix__
 #    endif
 #  endif
 #endif
@@ -884,7 +889,7 @@ int qq(void)
 
 /***** memory models *********************************************************/
 
-#if defined(__DPMI__) || defined(__WIN32__) || defined(__NT__) || defined(__UNIX__)
+#if defined(__DPMI__) || defined(__WIN32__) || defined(__NT__) || defined(__unix__)
 #  ifndef __FLAT__
 #    define __FLAT__
 #  endif
@@ -1772,7 +1777,7 @@ int qq(void)
 
 /* END: BeOS (Unix clone, GNU C) */
 
-#elif defined(__UNIX__) && !defined(__BEOS__)
+#elif defined(__unix__) && !defined(__BEOS__)
 /* Unix clones: Linux, FreeBSD, SUNOS (Solaris), MacOS etc. */
 
 #  define SMAPI_EXT extern
@@ -1792,7 +1797,7 @@ int qq(void)
 #  define farread read
 #  define farwrite write
 
-#  if (defined(__APPLE__) && defined(__MACH__)) || defined(__NetBSD__) || defined(__FreeBSD__) || defined(_AIX) || defined(__SUN__) || defined(__LINUX__) || defined(__osf__) || defined(__hpux) || defined(__OpenBSD__) || defined(__CYGWIN__)
+#  if (defined(__APPLE__) && defined(__MACH__)) || defined(__NetBSD__) || defined(__FreeBSD__) || defined(_AIX) || defined(__SUN__) || defined(__linux__) || defined(__osf__) || defined(__hpux) || defined(__OpenBSD__) || defined(__CYGWIN__)
 #    define mymkdir(a) mkdir((a), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
 #  else
 #    define mymkdir(a) __mkdir((a), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
@@ -1827,7 +1832,7 @@ int qq(void)
 #  define HAS_SYS_STATVFS_H
 #  endif
 
-#  if defined (__LINUX__) && !defined(__GLIBC__)
+#  if defined (__linux__) && !defined(__GLIBC__)
 #  define HAS_SYS_VFS_H
 #  endif
 
@@ -1855,7 +1860,7 @@ int qq(void)
 /* Other OS's may sleep with other functions */
 
 #  define HAS_sleep     1
-#  if defined(__BSD__) || defined(__CYGWIN__) || defined(__LINUX__) || defined(__SUN__) || defined(__OSX__)
+#  if defined(__BSD__) || defined(__CYGWIN__) || defined (__linux__) || defined(__SUN__) || defined(__OSX__)
 #    define mysleep(x) sleep(x)
 #  endif
 #  ifndef __SUN__ /* SunOs 2.5/2.5.1 not have snprintf() and vsnprintf in libc */
@@ -1872,7 +1877,7 @@ int qq(void)
 #  define HAS_SYS_WAIT_H       1  /* <sys/wait.h> */
 #  define USE_STAT_MACROS
 
-#if defined(__LINUX__) || defined(__BSD__) || defined(__CYGWIN__) || defined(__SUN__) || defined(__OSX__)
+#if defined(__linux__) || defined(__BSD__) || defined(__CYGWIN__) || defined(__SUN__) || defined(__OSX__)
 #  define HAS_mktime	/* <time.h> */
 #  define HAS_strftime	/* <time.h> */
 #  define HAS_DIRENT_H  /* <dirent.h> */
@@ -1961,7 +1966,7 @@ int qq(void)
 /* Default separator for path specification */
 
 #ifndef PATH_DELIM   /* moved from smapi/prog.h */
- #if defined(__UNIX__) || defined(__AMIGA__)
+ #if defined(__unix__) || defined(__AMIGA__)
   #define PATH_DELIM  '/'
  #else
   #define PATH_DELIM  '\\'
