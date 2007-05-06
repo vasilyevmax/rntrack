@@ -4,18 +4,28 @@
  *  vars.hpp - Global variables definitions
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: vars.hpp,v 1.4 2005/03/22 19:10:36 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _VARS_HPP_
 #define _VARS_HPP_
+
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
+
+#ifdef HAVE_TIME_H
 #include <time.h>
+#elif HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+
 #include "log.hpp"
 #include "nodelist.hpp"
 #include "badmsg.hpp"

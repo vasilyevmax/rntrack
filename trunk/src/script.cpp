@@ -19,14 +19,8 @@
 // Check points 60*
 // last CHP == 60055
 
-#if (defined(__WATCOMC__) && defined(__386__)) || defined(__MINGW32__) || defined(__DJGPP__)
-#define HAS_strupr 1
-#endif
-
-#ifdef __MINGW32__
-#ifndef _STAT_DEFINED
-#define _STAT_DEFINED 1
-#endif
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
 #endif
 
 #if !defined(__NOSCRIPTS__)
@@ -437,8 +431,8 @@ int StopScriptSystem(void) {
 #endif /* NoScripts */
 }
 
-#if !defined(__NOSCRIPTS__)
 int _LoadScriptFile(char *fname) {
+#if !defined(__NOSCRIPTS__)
 dSP;
 
 char *perlargs[]={"", fname, NULL};
@@ -461,9 +455,9 @@ int rc;
    }
    setlocale(LC_TIME, "C");
    ScriptSystemInitialised = TRUE;
+#endif /* NoScripts */
    return 0;
 }
-#endif /* NoScripts */
 
 // --------------------------------------------------------------------
 //        Work with MSG

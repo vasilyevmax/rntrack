@@ -12,14 +12,8 @@
  *
  *  $Id$
  */
-
-#ifdef __MINGW32__
-#ifndef _STAT_DEFINED
-#define _STAT_DEFINED 1
-#endif
-#endif
-#ifndef __unix__
-#include <io.h>
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
 #endif
 
 #include <stdio.h>

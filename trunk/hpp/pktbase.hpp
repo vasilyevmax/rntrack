@@ -4,7 +4,7 @@
  *  pktbase.hpp - Work with *.PKT base
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,6 @@
 #ifndef _PKTBASE_HPP_
 #define _PKTBASE_HPP_
 
-#include <time.h>
 #include "a_list.hpp"
 #include "utils.hpp"
 #include "fidoaddr.hpp"
@@ -37,7 +36,7 @@ class PKTBASE: public MSGBASE {
    DIR          *dp;
    int          fForWrite;
    int          fCreated;
-   
+
    int _Close(void);
    int _Open(void);
    void AddToMask(unsigned int Num);

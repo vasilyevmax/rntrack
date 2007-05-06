@@ -4,7 +4,7 @@
  *  constants.hpp - Main constants definitions
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,16 +17,19 @@
 #define _CONST_HPP_
 
 #include "cvsdate.hpp"
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
 
 #if !defined(__OS2__) && defined(__EMX__)
 #define __OS2__
 #endif
 
-#ifdef __NT__
+#if defined(__NT__) || defined(__MINGW32__) || defined(_WINDOWS)
 #define OsType         "/W32"
 #define PATHDELIMS     "\\"
 #define PATHDELIMC     '\\'
-#elif defined(__OS2__)
+#elif defined(__OS2__) || defined(__os2__)
 #define OsType         "/OS2"
 #define PATHDELIMS     "\\"
 #define PATHDELIMC     '\\'
@@ -35,7 +38,7 @@
 #define PATHDELIMS     "\\"
 #define PATHDELIMC     '\\'
 #elif defined(__unix__)
-#   ifdef __LINUX__
+#   if defined(__linux__)
 #      define OsType      "/LNX"
 #   elif defined(__FreeBSD__)
 #      define OsType      "/FBSD"
@@ -55,12 +58,16 @@
 #define PATHDELIMS     "/"
 #define PATHDELIMC     '/'
 #endif
+
+#ifndef PACKAGE_NAME
+# define PACKAGE_NAME "RNTrack"
+#endif
 #define ProgVersion    "1.13."CVS_DATE""OsType
 #define RevisionHI     1
 #define RevisionLO     13
 #define ProductLO 0xff
 #define ProductHI 0x16
-#define Copyright      "\n(C) 2003-2006, Alex Soukhotine (2:5030/1157)\n"
+#define Copyright      "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007 Stas Degteff (2:5080/102)\n"
 
 #ifndef DefaultConfig
 # ifdef __unix__

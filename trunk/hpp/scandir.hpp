@@ -4,19 +4,18 @@
  *  scandir.hpp - ScanDir class
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: scandir.hpp,v 1.7 2005/08/08 16:33:44 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _SCANDIR_HPP_
 #define _SCANDIR_HPP_
 
-#include <time.h>
 #include "a_list.hpp"
 #include "utils.hpp"
 #include "fidoaddr.hpp"
@@ -58,7 +57,7 @@ public:
    ~Action();
    void Print(void);
    int Do(MSGBASE &b, cMSG &m);
-};   
+};
 
 class DoList {
    IndBiList<Mask> Masks;
@@ -71,7 +70,7 @@ public:
    void Print(void);
    int Do(MSGBASE &b, cMSG &m);
    MaskType InMask(cMSG &m);
-   
+
 };
 
 class ScanDir {

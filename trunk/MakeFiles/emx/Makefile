@@ -11,7 +11,7 @@ PERL=D:/PERLLIB/LIB/5.00553/os2
 DEBUG=-s -g
 
 CFLAGS=	-Wall -funsigned-char -Wno-char-subscripts -O3 $(DEBUG)
-CDEFS=	-DOS2 -DDO_PERL -DDOSISH -DEMBED
+CDEFS=	-DOS2 -DDO_PERL -DDOSISH -DEMBED -DHAVE_UNISTD_H -DHAVE_IO_H
 # -D__NOSCRIPTS__
 COPT=	-I../../hpp -I../../.. -I$(PERL)/CORE -O3 -Zomf
 SRCDIR= ../../src/

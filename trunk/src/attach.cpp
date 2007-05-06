@@ -4,7 +4,7 @@
  *  attach.cpp - Work with attaches
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -13,22 +13,28 @@
  *  $Id$
  */
 
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifndef __unix__
+#ifdef HAVE_IO_H
 #include <io.h>
 #endif
-#if defined (__unix__) || defined(__DJGPP__)
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#if defined(__DJGPP__)
+#ifdef HAVE_DOS_H
 #include <dos.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "string.hpp"
 #include <ctype.h>
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
 #include <errno.h>
 #include "constant.hpp"
 #include "help.hpp"
@@ -41,9 +47,6 @@
 #include "outbound.hpp"
 #include "mytypes.hpp"
 #include "msg.hpp"
-#ifndef O_BINARY
-#define O_BINARY 0
-#endif
 
 #ifdef __WATCOMC__
 #undef far
@@ -71,22 +74,22 @@ char *tmt;
    if ((tmt = strrchr(Buff1,PATHDELIMC)) != NULL) {
       tmt++;
       RSTRLCPY(Buff1,tmt,BUFF_SIZE);
-   } 
+   }
    if ((tmt = strrchr(Buff1,':')) != NULL) {
       tmt++;
       RSTRLCPY(Buff1,tmt,BUFF_SIZE);
-   } 
+   }
    if ((tmt = strrchr(Buff1,'/')) != NULL) {
       tmt++;
       RSTRLCPY(Buff1,tmt,BUFF_SIZE);
-   }  
+   }
    if ((tmt = strrchr(Buff1,'\\')) != NULL) {
-      tmt++;      
+      tmt++;
       RSTRLCPY(Buff1,tmt,BUFF_SIZE);
-   } 
+   }
    RSTRLCAT(Buff,Buff1,BUFF_SIZE);
    return Buff;
- 
+
 }
 
 static char *FullName(char *name) {
@@ -96,10 +99,10 @@ static char Buff[BUFF_SIZE];
    } else {
       Buff[0] = '\0';
    }
-   if ((strchr(name,PATHDELIMC) == NULL 
-#ifndef __unix__   
+   if ((strchr(name,PATHDELIMC) == NULL
+#ifndef __unix__
    && strchr(name,':') == NULL
-#endif   
+#endif
    ) || (IgnoreAttachPath != FALSE)) {
       RSTRLCAT(Buff,BaseName(name),BUFF_SIZE);
    } else {
@@ -136,7 +139,7 @@ char *tmt;
          return TRUE;
       }
    }
-   
+
    i = filelength(fh);
    if (i == -1) {
       i = errno;
@@ -153,9 +156,9 @@ int _AddToLo(char *Buff) {
 char tmt[BUFF_SIZE];
    tmt[0] = NewPath[0];
    tmt[1] = '\0';
-   
+
    RSTRLCAT(tmt,FullName(Buff),BUFF_SIZE);
-   
+
    AddToLo(tmt);
    return TRUE;
 }
@@ -164,19 +167,19 @@ int _AddToFboxLo(char *Buff) {
 char tmt[BUFF_SIZE];
    tmt[0] = NewPath[0];
    tmt[1] = '\0';
-   
+
    if (FboxPath[0] != '\0')
    {
     RSTRLCAT(tmt,FboxPath,BUFF_SIZE);
     if (tmt[strlen(tmt)-1]!=PATHDELIMC) {
      RSTRLCAT(tmt,PATHDELIMS,BUFF_SIZE);
-    } 
+    }
     RSTRLCAT(tmt,BaseName(Buff),BUFF_SIZE);
-   }    
+   }
    else {
     RSTRLCAT(tmt,FullName(Buff),BUFF_SIZE);
-   }    
-   
+   }
+
    AddToLo(tmt);
    return TRUE;
 }
@@ -285,7 +288,7 @@ char B[BUFF_SIZE];
       return TRUE;
    }
    RSTRLCPY(B,NewPath,BUFF_SIZE);
-   RSTRLCAT(B,BaseName(Buff),BUFF_SIZE);   
+   RSTRLCAT(B,BaseName(Buff),BUFF_SIZE);
    tmt = FullName(Buff);
 #ifdef __NT__
    OemToChar(tmt,tmt);
@@ -485,7 +488,7 @@ int rc;
    RSTRLCPY(m._Subject,NewSubj,72);
    return TRUE;
 }
-    
+
 int GetAttSize(cMSG &m) {
 int rc;
    AttSize = 0;
@@ -521,7 +524,7 @@ int rc;
    if (!rc) {
       return FALSE;
    }
-   
+
 //   strncpy(m._Subject,NewSubj,72);
    return TRUE;
 }
@@ -537,7 +540,7 @@ int rc;
    if (!rc) {
       return FALSE;
    }
-   
+
    return TRUE;
 }
 
@@ -571,9 +574,9 @@ size_t size;
       yyerror("Unable to open file inbound directory.");
       return (-1);
    }
-   
+
    size=strlen(tmt) + 2;
-   
+
    if (sd == NULL) {
       FileInbound = (char *) malloc(size);
       CheckMem(FileInbound);

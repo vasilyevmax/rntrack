@@ -1,7 +1,7 @@
-# $Id: Makefile,v 1.4 2005/04/02 07:14:04 ph0enix Exp $
+# $Id$
 CC	= g++
 CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
-CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H
+CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H -DHAVE_IO_H
 LFLAGS	= -s -L$(SRCDIR)smapi -lsmapimgw
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\

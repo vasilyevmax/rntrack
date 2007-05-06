@@ -4,20 +4,30 @@
  *  tmstamp.hpp - Check time of execution ScanDir's
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: tmstamp.hpp,v 1.1.1.1 2005/01/14 19:18:08 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _TMSTAMP_HPP_
 #define _TMSTAMP_HPP_
 
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
+
+#ifdef HAVE_TIME_H
 #include <time.h>
+#elif HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+
 #include "scandir.hpp"
+
 class ScanDir;
 
 class tTimes {
@@ -34,4 +44,3 @@ int GetLastTime(char *FName);
 int InTime(IndBiList<tTimes>::ElemPtr tmt);
 
 #endif
-

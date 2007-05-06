@@ -1,7 +1,7 @@
-# $Id: Makefile,v 1.4 2005/04/02 07:14:04 ph0enix Exp $
+# $Id$
 CC	= gxx
 CFLAGS	= -Wall -W -Werror -fno-rtti -I../../hpp -I../../src -O3
-CDEFS	= -D__FLAT__ -DNOSEMAPHORES
+CDEFS	= -D__FLAT__ -DNOSEMAPHORES -DHAVE_DOS_H
 LFLAGS	= -s $(SRCDIR)smapi/smapidjg.a
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
@@ -15,7 +15,7 @@ EXEEND	= _386.exe
 
 ifeq ($(ENABLE_SCRIPTS), 1)
     CFLAGS += `perl -MExtUtils::Embed -e ccopts`
-    LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
+    LFLAGS += `perl -MExtUtils::Embed -e ldopts`
 else
     CDEFS  += -D__NOSCRIPTS__
 endif
