@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: parsetpl.cpp,v 1.3 2005/08/08 16:33:44 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef __GNUC__
@@ -105,7 +105,7 @@ static int AddMsgId(Template *Tpl);
 static int AddMsgReply(Template *Tpl);
 static int AddNewMsgId(Template *Tpl);
 static int AddProgVersion(Template *Tpl);
-#ifdef UNIX
+#ifdef __unix__
 static int AddFPid(Template *Tpl);
 #endif
 static int AddInetFromAddr(Template *Tpl);
@@ -158,7 +158,7 @@ static TplTok TemplTokens[] = {
    {"MsgID",&AddMsgId},
    {"MsgReply",&AddMsgReply},
    {"Version",&AddProgVersion},
-#ifdef UNIX
+#ifdef __unix__
    {"Pid",&AddFPid},
 #endif   
    {"InetFromAddr",&AddInetFromAddr},
@@ -303,7 +303,7 @@ static int AddProgVersion(Template *Tpl) {
    return TRUE;
 }
 
-#ifdef UNIX
+#ifdef __unix__
 static int AddFPid(Template *Tpl) {
    Tpl->AddInt((unsigned)getpid());
    return TRUE;

@@ -93,7 +93,7 @@
     return ((int)DosSetFileSize((HFILE)fd, (ULONG)size));
   }
 
-#elif defined(__UNIX__)
+#elif defined(__unix__)
 
   int _fast setfsize(int fd, long size)
   {

@@ -13,7 +13,7 @@
 #include <ctype.h>
 #include "strextra.h"
 
-#if !defined(_MSC_VER) && !defined(__UNIX__)
+#if !defined(_MSC_VER) && !defined(__unix__)
 
 int stricmp(const char *s, const char *t)
 {
@@ -54,7 +54,7 @@ char *strdup(const char *s)
 
 #endif
 
-#if defined(__UNIX__)
+#if defined(__unix__)
 char *strupr(char *str)
 {
     char *temp = str;

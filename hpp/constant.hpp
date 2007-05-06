@@ -34,7 +34,7 @@
 #define OsType         "/386"
 #define PATHDELIMS     "\\"
 #define PATHDELIMC     '\\'
-#elif defined(UNIX)
+#elif defined(__unix__)
 #   ifdef __LINUX__
 #      define OsType      "/LNX"
 #   elif defined(__FreeBSD__)
@@ -63,14 +63,14 @@
 #define Copyright      "\n(C) 2003-2006, Alex Soukhotine (2:5030/1157)\n"
 
 #ifndef DefaultConfig
-# ifdef UNIX
+# ifdef __unix__
 #  define DefaultConfig  "/etc/ftn/rntrack.cfg"
 # else
 #  define DefaultConfig  "rntrack.cfg"
 # endif
 #endif
 
-#ifdef UNIX
+#ifdef __unix__
 #define MsgExtension   ".msg"
 #define PktExtension   ".pkt"
 #define BsyExtension   ".bsy"

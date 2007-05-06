@@ -1095,7 +1095,7 @@ static sword near _SdmRescanArea(MSGA * mh)
         {
             /* Don't count zero-length or invalid messages */
 
-#ifndef __UNIX__
+#ifndef __unix__
             if (ff->ff_fsize < OMSG_SIZE)
             {
                  continue;

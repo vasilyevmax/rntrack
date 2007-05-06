@@ -28,7 +28,7 @@
 
 
 #elif defined(__EMX__)
-#elif defined(__UNIX__)
+#elif defined(__unix__)
 #elif defined(SASC)
 #else
 #include <direct.h>

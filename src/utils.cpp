@@ -10,10 +10,10 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: utils.cpp,v 1.1.1.1 2005/01/14 19:20:04 ph0enix Exp $
+ *  $Id$
  */
 
-#ifndef UNIX
+#ifndef __unix__
 #include <process.h>
 #endif
 #ifndef __GNUC__
@@ -219,7 +219,7 @@ char *tmt;
       tmt++;
       *tmt = '\0';
    }  
-#ifndef UNIX
+#ifndef __unix__
    if (strcmp(Path,Name) == 0) {
       tmt = strchr(Path, ':');
       if (tmt != NULL) {
@@ -246,7 +246,7 @@ char *tmt;
       tmt++;
       strcpy(FName,tmt);
    }  
-#ifndef UNIX
+#ifndef __unix__
    if (strlen(FName) == 0) {
       tmt = strchr(Name, ':');
       if (tmt != NULL) {
@@ -286,7 +286,7 @@ char *s2 = strdup(s);
 #endif
 }
 
-#ifdef UNIX
+#ifdef __unix__
 unsigned int filelength(int fh) {
 struct stat bstat;
 
@@ -318,7 +318,7 @@ time_t t;
    return tz;
 }
 
-// #ifndef UNIX
+// #ifndef __unix__
    #ifndef MAX_PATH
       #ifdef PATH_MAX
          #define MAX_PATH PATH_MAX
@@ -344,7 +344,7 @@ int len;
 }
    
 int fsCompareName(char *Name, char *Mask) {
-#ifdef UNIX
+#ifdef __unix__
    return wildmat(Name,Mask);
 #else
 char NewName[MAX_PATH];

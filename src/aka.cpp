@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: aka.cpp,v 1.1.1.1 2005/01/14 19:19:22 ph0enix Exp $
+ *  $Id$
  */
 
 #ifdef __MINGW32__
@@ -18,7 +18,7 @@
 #define _STAT_DEFINED 1
 #endif
 #endif
-#ifndef UNIX
+#ifndef __unix__
 #include <io.h>
 #endif
 #include <stdio.h>

@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: badpkt.cpp,v 1.2 2005/04/02 07:14:04 ph0enix Exp $
+ *  $Id$
  */
  
 #ifdef __MINGW32__
@@ -18,7 +18,7 @@
 #define _STAT_DEFINED 1
 #endif
 #endif
-#ifndef UNIX
+#ifndef __unix__
 #include <io.h>
 #else
 #define stricmp strcasecmp

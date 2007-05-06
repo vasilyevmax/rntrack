@@ -22,7 +22,7 @@
    macros are not. For compilers that do not provide these macros, we revert to
    the old "ffind" method. */
 /* Moved to compiler.h
-#if defined(__UNIX__) || defined(__MINGW32__) || defined(__EMX__) || defined(__RSXNT__) || defined(__DJGPP__) || defined(_MSC_VER)
+#if defined(__unix__) || defined(__MINGW32__) || defined(__EMX__) || defined(__RSXNT__) || defined(__DJGPP__) || defined(_MSC_VER)
 #define USE_STAT_MACROS
 #endif
 */
@@ -157,7 +157,7 @@ long _fast fsize(const char *filename)
 
     if (ff)
     {
-#ifndef __UNIX__
+#ifndef __unix__
 	ret = ff->ff_fsize;
 	if (ret != -1L)
 #endif
@@ -290,7 +290,7 @@ int _fast direxist(const char *directory)
 #endif
 }
 
-#elif defined(__UNIX__)
+#elif defined(__unix__)
 
 int _fast direxist(const char *directory)
 {
@@ -328,7 +328,7 @@ int _createDirectoryTree(const char *pathName) {
    }
    slash = start;
 
-#ifndef __UNIX__
+#ifndef __unix__
    /*  if there is a drivename, jump over it */
    if (slash[1] == ':') slash += 2;
 #endif

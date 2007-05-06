@@ -14,14 +14,14 @@
  */
 
 #include <locale.h>
-#ifndef UNIX
+#ifndef __unix__
 #include <io.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
-#if !defined (UNIX) && !defined(__DJGPP__)
+#if !defined (__unix__) && !defined(__DJGPP__)
 #include <sys/utime.h>
 #else
 #include <sys/types.h>

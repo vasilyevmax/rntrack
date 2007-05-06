@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: utils.hpp,v 1.1.1.1 2005/01/14 19:18:12 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _UTILS_HPP_
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef UNIX
+#ifdef __unix__
 #include <unistd.h>
 #endif
 
@@ -40,7 +40,7 @@ int ExecP(char *Name);
 int SetSemaphore(void);
 int ReleaseSemaphore(void);
 
-#ifdef UNIX
+#ifdef __unix__
 unsigned int filelength(int fh);
 #endif
 int tzoffset(void);

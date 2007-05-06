@@ -62,7 +62,7 @@ extern "C" {
 #define MOPEN_WRITE     2
 #define MOPEN_RW        3
 
-#ifdef __UNIX__
+#ifdef __unix__
 #define FILEMODE_NETMAIL (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP)
 #define FILEMODE_ECHOMAIL (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 #else
@@ -445,7 +445,7 @@ byte *StripNasties(byte * str);
 
 #if defined(__DOS__)
 sword far pascal shareloaded(void);
-#elif defined(__OS2__) || defined(__NT__) || defined(__UNIX__)
+#elif defined(__OS2__) || defined(__NT__) || defined(__unix__)
 #define shareloaded() TRUE
 #else
 #define shareloaded() FALSE

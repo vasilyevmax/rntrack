@@ -44,7 +44,7 @@
 #  endif
 #endif
 
-#ifdef __UNIX__
+#ifdef __unix__
 #  include "patmat.h"
 #endif
 
@@ -62,7 +62,7 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
 
     ff = malloc(sizeof(FFIND));
 
-#if defined(__UNIX__)
+#if defined(__unix__)
     /* prevent compiler warning */
     attribute = attribute;
 #endif
@@ -131,7 +131,7 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
             ff = NULL;
         }
 
-#elif defined(__UNIX__)
+#elif defined(__unix__)
 
         char *p;
         int fin = 0;
@@ -328,7 +328,7 @@ int _fast FFindNext(FFIND * ff)
             rc = 0;
         }
 
-#elif defined(__UNIX__)
+#elif defined(__unix__)
 
         int fin = 0;
         struct dirent *de;
@@ -436,7 +436,7 @@ void _fast FFindClose(FFIND * ff)
         {
             DosFindClose(ff->hdir);
         }
-#elif defined(__UNIX__)
+#elif defined(__unix__)
         if (ff->dir)
         {
             closedir(ff->dir);
@@ -540,7 +540,7 @@ int walk(char *path)
                 strcpy(full, path);
                 strcat(full, ff->ff_name);
                 puts(full);
-#ifndef __UNIX__
+#ifndef __unix__
                 strcat(full, "\\");
 #else
                 strcat(full, "/");
@@ -564,7 +564,7 @@ int walk(char *path)
 
 int main(void)
 {
-#ifndef __UNIX__
+#ifndef __unix__
     return walk("\\") == TRUE ? EXIT_SUCCESS : EXIT_FAILURE;
 #else
     return walk("/") == TRUE ? EXIT_SUCCESS : EXIT_FAILURE;
