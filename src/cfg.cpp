@@ -142,7 +142,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: cfg.cpp,v 1.8 2005/07/23 00:04:22 ph0enix Exp $
+ *  $Id$
  */
 
 #if (defined(__WATCOMC__) && defined(__386__)) || defined(__DJGPP__) || defined(__MINGW32__)
@@ -150,11 +150,6 @@
 #endif
 #define YYDEBUG 0
 /* #define YYERROR_VERBOSE */
-#ifdef __MINGW32__
-#ifndef _STAT_DEFINED
-#define _STAT_DEFINED 1
-#endif
-#endif
 
 #include <stdlib.h>
 #ifdef __WATCOMC__

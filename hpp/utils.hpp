@@ -4,7 +4,7 @@
  *  utils.hpp - Common routines
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -15,18 +15,33 @@
 
 #ifndef _UTILS_HPP_
 #define _UTILS_HPP_
+
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#else
+# include <smapi/compiler.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef __unix__
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <smapi/compiler.h>
-#if defined(__WATCOMC__) && (defined(__OS2__) || defined(MSDOS))
+//#if defined(__WATCOMC__) && (defined(__OS2__) || defined(MSDOS))
 /* Why it's not implemented in smapi/compiler.h? */
-#define strcasecmp stricmp
-#define strncasecmp strnicmp
+//#define strcasecmp stricmp
+//#define strncasecmp strnicmp
+//#endif
+
+#if !defined(HAVE_STRICMP) && defined(HAVE_STRCASECMP) && !defined(stricmp)
+# define stricmp(s1,s2) strcasecmp(s1,s2)
+# define HAVE_STRICMP
+#endif
+
+#ifndef O_BINARY
+#define O_BINARY 0
 #endif
 
 void CheckMem(char *ptr);

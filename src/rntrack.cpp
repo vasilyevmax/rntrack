@@ -4,7 +4,7 @@
  *  rntrack.cpp - Main module
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -12,26 +12,46 @@
  *
  *  $Id$
  */
-
-#include <locale.h>
-#ifndef __unix__
-#include <io.h>
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
 #endif
+
+#ifdef TIME_WITH_SYS_TIME_H
+# include <time.h>
+# include <sys/time.h>
+#elif defined(HAVE_TIME_H)
+# include <time.h>
+#elif defined(HAVE_SYS_TIME_H)
+# include <sys/time.h>
+#endif
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#endif
+#ifdef HAVE_IO_H
+# include <io.h>
+#endif
+#ifdef HAVE_STRING_H
+# include <string.h>
+#endif
+#ifdef HAVE_SYS_UTIME_H
+# include <sys/utime.h>
+#elif defined(HAVE_UTIME_H)
+# include <utime.h>
+#endif
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#elif defined(HAVE_TYPES_H)
+# include <types.h>
+#endif
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#if !defined (__unix__) && !defined(__DJGPP__)
-#include <sys/utime.h>
-#else
-#include <sys/types.h>
-#include <utime.h>
 #include <errno.h>
-#include <unistd.h>
-#endif
-#ifdef __SUN__
-#include <time.h>
-#endif
+#include <signal.h>
+
 #include "constant.hpp"
 #include "vars.hpp"
 #include "help.hpp"
@@ -47,7 +67,7 @@
 #include "parsetpl.hpp"
 #include "tmstamp.hpp"
 #include "script.hpp"
-#include <smapi/msgapi.h>
+#include "smapi/msgapi.h"
 
 static struct utimbuf ut;
 static struct _minf mnf;
@@ -60,13 +80,13 @@ FILE *fh;
 
    printf("Internal Error!!! Please, read report.err in documentation.\n");
    printf("---------------------------------------\n");
-   printf("%s RNtrack %s\n",Date(),ProgVersion);
+   printf("%s " PACKAGE_NAME " %s\n",Date(),ProgVersion);
    printf("Check point: %ld\n",(long int)CHP);
    printf("Signal: %u\n",Sign);
    printf("---------------------------------------\n");
    fh = fopen("RNtrack.err","a+t");
    if (fh != NULL) {
-      fprintf(fh,"Internal Error!!! Please, read report.err in documentation.\n");   
+      fprintf(fh,"Internal Error!!! Please, read report.err in documentation.\n");
       fprintf(fh,"---------------------------------------\n");
       fprintf(fh,"%s RNtrack %s\n",Date(),ProgVersion);
       fprintf(fh,"Check point: %ld\n",(long int)CHP);
@@ -205,10 +225,10 @@ char *tmpCf;
    CHP = 99001;
 
    tmpCf = getenv("RNTRACKCONFIG");
-   
+
    if (tmpCf)
     ConfigFile = strdup(tmpCf);
-   
+
    while ((Option = ParseCmdArgs(argc, argv, "c:uh?t")) != EOF) {
       switch (Option) {
          case 'u' : UnpackNeed = TRUE;

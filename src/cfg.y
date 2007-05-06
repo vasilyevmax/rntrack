@@ -21,11 +21,6 @@
 #endif
 #define YYDEBUG 0
 /* #define YYERROR_VERBOSE */
-#ifdef __MINGW32__
-#ifndef _STAT_DEFINED
-#define _STAT_DEFINED 1
-#endif
-#endif
 
 #include <stdlib.h>
 #ifdef __WATCOMC__

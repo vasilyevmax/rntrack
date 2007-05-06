@@ -80,7 +80,7 @@ time_t tt;
    t.tm_mon = 0;
    if (t.tm_year < 70) t.tm_year += 100;
    for (i = 0; i < 12; i++) {
-      if (strcasecmp(months_ab[i],mon) == 0) {
+      if (stricmp(months_ab[i],mon) == 0) {
          t.tm_mon = i;
 	 break;
       }

@@ -4,19 +4,18 @@
  *  sqbase.hpp - Work with Squish and JAM bases
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: sqbase.hpp,v 1.1.1.1 2005/01/14 19:18:11 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _SQBASE_HPP_
 #define _SQBASE_HPP_
 
-#include <time.h>
 #include "a_list.hpp"
 #include "utils.hpp"
 #include "fidoaddr.hpp"
@@ -36,7 +35,7 @@ class SQUISH: public MSGBASE {
    char bType;
 // private:
 public:
-   int WriteOneMsg(unsigned int Num, cMSG &m);   
+   int WriteOneMsg(unsigned int Num, cMSG &m);
    SQUISH();
    SQUISH(char _bType);
    ~SQUISH();
@@ -44,7 +43,7 @@ public:
    int  Set(char *c, int BaseType);
    void Clear(void);
    int  Next(void);
-   int  Rewind(void); 
+   int  Rewind(void);
    int  DeleteMsg(void);
    int  ReadMsg(cMSG &m);
    int  WriteMsg(cMSG &m);

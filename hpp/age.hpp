@@ -10,11 +10,16 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: age.hpp,v 1.1.1.1 2005/01/14 19:18:05 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _AGE_HPP_
 #define _AGE_HPP_
+
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
+
 #include <time.h>
 
 int SetMaxAge(int tmt);

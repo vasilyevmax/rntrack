@@ -1,8 +1,8 @@
-# $Id: makefile,v 1.5 2005/07/30 19:37:18 ph0enix Exp $
+# $Id$
 
 CC 	= wcc386.exe
 CCP 	= wpp386.exe
-CDEFS	= /oilmrt /s /DOS2
+CDEFS	= /oilmrt /s /DOS2 /DHAVE_IO_H /DHAVE_MALLOC_H
 CFLAGS	= -I$(INCLUDE) -bt=os2 $(CDEFS)
 TOS	= OS2V2
 TNAME	= rntrack_os2

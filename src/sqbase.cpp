@@ -10,14 +10,9 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: sqbase.cpp,v 1.2 2005/04/02 07:14:05 ph0enix Exp $
+ *  $Id$
  */
 
-#ifdef __MINGW32__
-#ifndef _STAT_DEFINED
-#define _STAT_DEFINED 1
-#endif
-#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "string.hpp"

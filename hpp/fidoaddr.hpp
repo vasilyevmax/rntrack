@@ -4,19 +4,24 @@
  *  fidoaddr.hpp - Work with FTN-addresses
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: fidoaddr.hpp,v 1.1.1.1 2005/01/14 19:18:01 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef FIDOADDR_HPP
 #define FIDOADDR_HPP
-
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
+#ifdef HAVE_STRING_H
 #include        <string.h>
+#endif
+
 #include        "log.hpp"
 #include	"mytypes.hpp"
 
@@ -69,7 +74,7 @@ public:
     inline int     Masked(void) { return ((zone_v & FA_MASK) || (net_v & FA_MASK) ||
                                           (node_v & FA_MASK) || (point_v & FA_MASK)); };
     inline int     MaskValid(void) { return (!((zone_v & FA_BADMASK) || (net_v & FA_BADMASK) ||
-                                            (node_v & FA_BADMASK) || 
+                                            (node_v & FA_BADMASK) ||
                                             (!(point_v & FA_NOTDEF)&& (point_v & FA_BADMASK)))); };
     inline int     ActValid(void) { return (!((zone_v & FA_BADACT) || (net_v & FA_BADACT) ||
                                           (node_v & FA_BADACT) || (point_v & FA_BADACT))); };
@@ -83,7 +88,7 @@ public:
     void    Net(dword i)     { net_v = i; }
     void    Node(dword i)    { node_v = i; }
     void    Point(dword i)   { point_v = i; }
-    char    *ToStr(void) const;    
+    char    *ToStr(void) const;
     FA(void);
     FA(const FA &);
 

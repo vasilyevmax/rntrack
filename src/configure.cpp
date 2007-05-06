@@ -14,6 +14,41 @@
  */
 
 /*--------------------------------------------------------------------*/
+/*                  Autoconf-generated include files                  */
+/*--------------------------------------------------------------------*/
+
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
+
+/*--------------------------------------------------------------------*/
+/*                        System include files                        */
+/*--------------------------------------------------------------------*/
+
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+#ifdef HAVE_IO_H
+# include <io.h>
+#endif
+
+#ifdef HAVE_STRING_H
+# include <string.h>
+#endif
+#ifdef HAVE_STDLIB_H
+# include <stdlib.h>
+#endif
+#include <ctype.h>
+
+/*--------------------------------------------------------------------*/
+/*                 Library function (re)definitions                   */
+/*--------------------------------------------------------------------*/
+
+#if !defined(HAVE_STRICMP) && defined(HAVE_STRCASECMP)
+# define stricmp(s1,s2) strcasecmp(s1,s2)
+#endif
+
+/*--------------------------------------------------------------------*/
 /*                        Program include files                       */
 /*--------------------------------------------------------------------*/
 
@@ -26,22 +61,6 @@
 #if !defined(__NOSCRIPTS__)
 #include "script.hpp"
 #endif
-
-/*--------------------------------------------------------------------*/
-/*                        System include files                        */
-/*--------------------------------------------------------------------*/
-
-#ifndef __unix__
-#ifdef __EMX__
-#include <unistd.h>
-#endif
-#include <io.h>
-#else
-#define stricmp strcasecmp
-#endif
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 /*--------------------------------------------------------------------*/
 /*                         Global definitions                         */
