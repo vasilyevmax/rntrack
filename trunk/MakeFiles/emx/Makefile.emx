@@ -1,4 +1,10 @@
+# Makefile for build dynamic rntrack/emx: for EMX on OS/2 with a.out style linkage
+# (EMX Runtime is required to run executable)
+# First needs to build smapi library (cd ../../src/smapi; make -f makefile.emx)
+# To build with Perl: Perl version 5.5.53 is needed. Else call `make PERLLIBS=`
+#
 # $Id$
+
 CC=	gcc
 
 PERL=D:/PERLLIB/LIB/5.00553/os2
