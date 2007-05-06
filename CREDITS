@@ -1,10 +1,15 @@
 Authors:
 --------
 
-Alex Soukhotine <ph0enix@users.sourceforge.net>, <2:5030/1157>
+Stas Degteff 2:5080/102@fidonet, <stas_degteff@users.sourceforge.net> (project coordinator in 2007 year)
+Alex Soukhotine 2:5030/1157@fidonet, <ph0enix@users.sourceforge.net> (project coordinator)
 
 Andrey V. Stolyarov <croco@croco.net> (Alternative CONTAINER template library - a_list.hpp)
-Alexander S. Aganichev <asa@eed.miee.ru> (porting to DJGPP/MINGW32/EMX and small fixes)
-Alexey Wasilyev <2:5053/40.1> (porting this stuff to AIX)
-Nestyurkin Nikolay <2:5020/3600> (porting this stuff for Watcom compiler and fixing some bugs)
-Dmitry Pankov <2:5022/81> (porting to cygwin)
+Alexander S. Aganichev <aaganichev@yandex.ru>, <asa@eed.miee.ru> (porting to DJGPP/MINGW32/EMX and small fixes)
+Alexey Wasilyev 2:5053/40.1@fidonet (porting this stuff to AIX)
+Nestyurkin Nikolay 2:5020/3600@fidonet (porting this stuff for Watcom compiler and fixing some bugs)
+Dmitry Pankov 2:5022/81@fidonet (porting to cygwin)
+
+Fyodor Ustinov 2:5020/79@fidonet, <ufm@kgb.ru> (Author of the original Ftrack)
+
+$Id$

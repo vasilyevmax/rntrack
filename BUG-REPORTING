@@ -1,7 +1,13 @@
 BUG-REPORTING
 -------------
 
-Please try to reproduce the bug before contacting me.
+If you found a bug in RNTrack, you may posts information about error into
+fidonet echoarea "RU.FTRACK" (russian), also you may posts information into
+bugtrack on rntrack project page on sourceforge
+(http://sourceforge.net/projects/ftrack-as), or you may send message into author
+via fidonet netmail or internet email.
+
+Please try to reproduce the bug before contacting authors.
 
 Things to do when i encountered a bug:
 
@@ -13,7 +19,7 @@ If a core-dump was created:
 - try to get all information out of the core file which could be interesting
   for me. (this is for people who are familiar with c-programming)
 
-send me the following things:
+Send the following things:
 - an extensive description of the situation where the bug happened.
 - version of RNtrack (stable version or date of checkout)
 - version of smapi  (stable version or date of checkout)
@@ -25,6 +31,12 @@ send me the following things:
   (OS - Distribution - compiler - etc. i do NOT need to know what kind of
   monitor do you use :-)
 
+Stas Degteff
+2:5080/102@fidonet
+stas_degteff@users.sourceforge.net
+
 Alex Soukhotine
 2:5030/1157
 ph0enix@users.sourceforge.net
+
+$Id$

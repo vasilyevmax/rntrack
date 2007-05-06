@@ -1,3 +1,6 @@
+     RNTrack installation instructions
+     $Id$
+
 tar jxf rntrack-version.tar.bz2
 cd rntrack-version/MakeFiles/YourSystem
 make
