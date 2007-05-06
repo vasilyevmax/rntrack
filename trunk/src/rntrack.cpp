@@ -88,7 +88,7 @@ FILE *fh;
    if (fh != NULL) {
       fprintf(fh,"Internal Error!!! Please, read report.err in documentation.\n");
       fprintf(fh,"---------------------------------------\n");
-      fprintf(fh,"%s RNtrack %s\n",Date(),ProgVersion);
+      fprintf(fh,"%s " PACKAGE_NAME " %s\n",Date(),ProgVersion);
       fprintf(fh,"Check point: %ld\n",(long int)CHP);
       fprintf(fh,"Signal: %u\n",Sign);
       fprintf(fh,"---------------------------------------\n");
