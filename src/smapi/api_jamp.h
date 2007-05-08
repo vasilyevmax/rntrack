@@ -24,9 +24,9 @@ static dword _XPENTRY JamGetCtrlLen(MSGH * msgh);
 static UMSGID _XPENTRY JamGetNextUid(HAREA ha);
 static dword  _XPENTRY JamGetHash(HAREA mh, dword msgnum);
 
-#define fop_wpb (O_CREAT | O_TRUNC | O_RDWR | O_BINARY)
-#define fop_rpb (O_RDWR | O_BINARY)
-#define fop_cpb (O_CREAT | O_EXCL | O_RDWR | O_BINARY)
+#define fop_wpb (word)(O_CREAT | O_TRUNC | O_RDWR | O_BINARY)
+#define fop_rpb (word)(O_RDWR | O_BINARY)
+#define fop_cpb (word)(O_CREAT | O_EXCL | O_RDWR | O_BINARY)
 
 static sword MSGAPI Jam_OpenBase(MSGA *jm, word *mode, unsigned char *basename);
 int Jam_OpenFile(JAMBASE *jambase, word *mode, mode_t permissions);

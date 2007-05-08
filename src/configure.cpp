@@ -45,7 +45,9 @@
 /*--------------------------------------------------------------------*/
 
 #if !defined(HAVE_STRICMP) && defined(HAVE_STRCASECMP)
-# define stricmp(s1,s2) strcasecmp(s1,s2)
+# ifndef stricmp
+#  define stricmp(s1,s2) strcasecmp(s1,s2)
+# endif
 #endif
 
 /*--------------------------------------------------------------------*/
