@@ -1,6 +1,6 @@
 # RNtrack                                      -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-# $Id$
+# $Id:$
 
 AC_INIT(RNtrack, 1.13, stas_degteff@users.sourceforge.net)
 AC_CONFIG_SRCDIR(src/rntrack.cpp)

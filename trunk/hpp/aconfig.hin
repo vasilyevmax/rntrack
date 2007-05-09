@@ -1,10 +1,13 @@
-/* hpp/aconfig.h.in.  Generated from configure.ac by autoheader.  */
+/* hpp/aconfig.hin.  Generated from configure.ac by autoheader.  */
 
 /* 1234 = LIL_ENDIAN, 4321 = BIGENDIAN */
 #undef BYTEORDER
 
 /* Define to 1 if you have the `alarm' function. */
 #undef HAVE_ALARM
+
+/* Define to 1 if you have the <direct.h> header file. */
+#undef HAVE_DIRECT_H
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -18,6 +21,12 @@
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <iostream> header file. */
+#undef HAVE_IOSTREAM
+
+/* Define to 1 if you have the <iostream.h> header file. */
+#undef HAVE_IOSTREAM_H
 
 /* Define to 1 if you have the <io.h> header file. */
 #undef HAVE_IO_H
@@ -150,6 +159,12 @@
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #undef RETSIGTYPE
+
+/* The size of a `int', as computed by sizeof. */
+#undef SIZEOF_INT
+
+/* The size of a `long', as computed by sizeof. */
+#undef SIZEOF_LONG
 
 /* Define to 1 if the `S_IS*' macros in <sys/stat.h> do not work properly. */
 #undef STAT_MACROS_BROKEN
