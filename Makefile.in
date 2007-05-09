@@ -39,7 +39,7 @@ host_triplet = @host@
 target_triplet = @target@
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure \
-	$(top_srcdir)/hpp/aconfig.h.in AUTHORS COPYING ChangeLog \
+	$(top_srcdir)/hpp/aconfig.hin AUTHORS COPYING ChangeLog \
 	INSTALL MakeFiles/config.guess MakeFiles/config.sub \
 	MakeFiles/depcomp MakeFiles/install-sh MakeFiles/missing NEWS \
 	TODO
@@ -233,10 +233,10 @@ hpp/aconfig.h: hpp/stamp-h1
 	  $(MAKE) hpp/stamp-h1; \
 	else :; fi
 
-hpp/stamp-h1: $(top_srcdir)/hpp/aconfig.h.in $(top_builddir)/config.status
+hpp/stamp-h1: $(top_srcdir)/hpp/aconfig.hin $(top_builddir)/config.status
 	@rm -f hpp/stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status hpp/aconfig.h
-$(top_srcdir)/hpp/aconfig.h.in:  $(am__configure_deps) 
+$(top_srcdir)/hpp/aconfig.hin:  $(am__configure_deps) 
 	cd $(top_srcdir) && $(AUTOHEADER)
 	rm -f hpp/stamp-h1
 	touch $@
