@@ -38,6 +38,8 @@ typedef enum { FILEBOXLONG, FILEBOXTMLONG, FILEBOXTMSHORT, FILEBOXBRAKE } filebo
 
 extern KillModeT KillMode;
 
+extern unsigned RevisionLO;
+extern unsigned RevisionHI;
 extern char *ConfigFile;
 extern LogStream Log;
 extern int LogLevel;

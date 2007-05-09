@@ -52,6 +52,8 @@
 #      define OsType      "/AIX"
 #   elif defined(__OSX__)
 #      define OsType      "/OSX"
+#   elif defined(__PLATFORM_TYPE__)
+#      define OsType      "/"__PLATFORM_TYPE__
 #   else
 #      define OsType      "/Unix"
 #   endif
@@ -62,9 +64,10 @@
 #ifndef PACKAGE_NAME
 # define PACKAGE_NAME "RNTrack"
 #endif
-#define ProgVersion    "1.13."CVS_DATE""OsType
-#define RevisionHI     1
-#define RevisionLO     13
+#ifndef VERSION
+#define VERSION        "1.13"
+#endif
+#define ProgVersion    VERSION"."CVS_DATE""OsType
 #define ProductLO 0xff
 #define ProductHI 0x16
 #define Copyright      "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007 Stas Degteff (2:5080/102)\n"

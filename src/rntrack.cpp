@@ -72,6 +72,9 @@
 static struct utimbuf ut;
 static struct _minf mnf;
 
+unsigned RevisionLO; // software revision number, minor part
+unsigned RevisionHI; // software revision number, major part
+
 // --------------------------------------------------------------------
 //                         Signals catch functions
 // --------------------------------------------------------------------
@@ -170,6 +173,14 @@ int InitSystem(void) {
       default: break;
    }
 
+   {  char* rev1=strdup(VERSION);
+      if (rev1) {
+         char* rev2=strtok(rev1,".");
+         RevisionLO=atoi(rev2);
+         RevisionHI=atoi(rev1);
+         free(rev1);
+      }
+   }
    return TRUE;
 }
 
