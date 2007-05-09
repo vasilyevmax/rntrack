@@ -4,8 +4,8 @@
 
 CC 	= wcc386.exe
 CCP 	= wpp386.exe
-CDEFS	= /oilmrt /s /DHAVE_IO_H /DHAVE_MALLOC_H
-CFLAGS	= -I$(INCLUDE) -bt=DOS4G $(CDEFS)
+CDEFS	= /DHAVE_IO_H /DHAVE_MALLOC_H
+CFLAGS	= -I$(INCLUDE) -bt=DOS4G /oilmrt /s $(CDEFS)
 TOS	= DOS4G
 TNAME	= rntrack_386
 SRCDIR	= ..\..\..\src
