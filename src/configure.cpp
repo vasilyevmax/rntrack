@@ -4,7 +4,7 @@
  *  configure.cpp - Configuration routines
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -44,10 +44,8 @@
 /*                 Library function (re)definitions                   */
 /*--------------------------------------------------------------------*/
 
-#if !defined(HAVE_STRICMP) && defined(HAVE_STRCASECMP)
-# ifndef stricmp
+#if !defined(stricmp) && !defined(HAVE_STRICMP) && defined(HAVE_STRCASECMP)
 #  define stricmp(s1,s2) strcasecmp(s1,s2)
-# endif
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -101,7 +99,7 @@ static struct {
    {"+Mask:",_PMASK},
    {"Route",_ROUTE},
    {"RouteFilebox",_ROUTEFBOX},
-   {"RouteHub",_ROUTEHUB},   
+   {"RouteHub",_ROUTEHUB},
    {"Hold",_HOLD},
    {"Direct",_DIRECT},
    {"Crash",_CRASH},
@@ -125,9 +123,9 @@ static struct {
    {"ToUpperPath",_TOUPPERPATH},
    {"AddKludge",_ADDKLUDGE},
    {"MoveAttach",_MOVEATTACH},
-   {"MoveAttachFilebox",_MOVEATTACHFBOX},      
+   {"MoveAttachFilebox",_MOVEATTACHFBOX},
    {"CopyAttach",_COPYATTACH},
-   {"CopyAttachFilebox",_COPYATTACHFBOX},   
+   {"CopyAttachFilebox",_COPYATTACHFBOX},
    {"Split",_SPLIT},
    {"Recode",_RECODE},
    {"LogFile:",_LOGFILE},
@@ -208,7 +206,7 @@ static struct {
    {"UseBrake",_USEBRAKE},
    {"ScriptFile:",_SCRIPTFILE},
    {"IgnoreBSY",_IGNOREBSY},
-   {"IgnoreAttachPath",_IGNOREATTACHPATH},   
+   {"IgnoreAttachPath",_IGNOREATTACHPATH},
    {"Fresh",_FRESH},
    {"ScriptBefore",_BEFORESCRIPT},
    {"ScriptAfter",_AFTERSCRIPT},
@@ -358,7 +356,7 @@ int LoadScriptFile(char *fname) {
    yyerror("RNtrack compiled withoud script system support. Sorry.");
    fname = fname;
    return (-1);
-#endif /* NoScript */   
+#endif /* NoScript */
 }
 
 
@@ -527,7 +525,7 @@ IndBiList<ScanDir>::ElemPtr sd;
    if (tmt < 0) {
       yyerror("Parameter can't be a number lesser than 0.");
       return (-1);
-   }   
+   }
    if (sd != NULL) {
       sd->_MaxPktSize = tmt;
    } else {
@@ -669,9 +667,9 @@ int SetUseBrake(void) {
    UseBrake = TRUE;
    return (0);
 }
-			
+
 // --------------------------------------------------------------------
-			
+
 
 int SetSoftCheckInNodelists(void) {
    if (SoftCheckInNodelists) {
@@ -736,7 +734,7 @@ char Buf[1024];
    strcpy(Buf,tmt);
    if (Buf[strlen(Buf)-1] != PATHDELIMC) {
       strcat(Buf,PATHDELIMS);
-   }                                                                                                            
+   }
    NodelistPath = strdup(Buf);
    return 0;
 }
@@ -780,7 +778,7 @@ int ParseConfig(char *CfgFile) {
 int rc;
 
 //  Open configuration File
-// yydebug = 1;   
+// yydebug = 1;
    CHP = 1003;
    if (access(CfgFile,R_OK) != 0) {
       Log.Level(LOGE) << "Configuration file '" << CfgFile << "' not found." << EOL;

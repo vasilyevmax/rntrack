@@ -4,26 +4,26 @@
  *  help.hpp - Help functions
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: help.cpp,v 1.1.1.1 2005/01/14 19:20:02 ph0enix Exp $
+ *  $Id$
  */
 
 #include <stdio.h>
 #include "constant.hpp"
 #include "help.hpp"
 
-#ifndef __WATCOMC__
+//#ifndef __WATCOMC__
 #include <iostream>
 using std::cout;
 using std::flush;
-#else
-#include <iostream.h>
-#endif
+//#else
+//#include <iostream.h>
+//#endif
 
 void Hello(void) {
    cout << "RNtrack " << ProgVersion << Copyright << "\n";

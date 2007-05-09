@@ -5,12 +5,11 @@ dnl 2. Define macro AC_C_BIGENDIAN_CROSS: check bytes order (big endian or littl
 dnl
 dnl $Id$
 
-# Perl check
+# Perl version check (imported from autoconf-archive package)
+# (c) Dean Povey <povey@wedgetail.com>
 AC_DEFUN([AC_PROG_PERL_VERSION],[dnl
 # Make sure we have perl
-if test -z "$PERL"; then
 AC_CHECK_PROG(PERL,perl,perl)
-fi
 
 # Check if version of Perl is sufficient
 ac_perl_version="$1"

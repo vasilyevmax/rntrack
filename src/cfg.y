@@ -7,7 +7,7 @@
  *  cfg.(y|hpp|cpp) - Config file parser
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,14 +16,14 @@
  *  $Id: cfg.y,v 1.6 2005/06/22 22:18:14 ph0enix Exp $
  */
 
-#if (defined(__WATCOMC__) && defined(__386__)) || defined(__DJGPP__) || defined(__MINGW32__)
-#define HAS_strupr 1
-#endif
 #define YYDEBUG 0
 /* #define YYERROR_VERBOSE */
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
 
 #include <stdlib.h>
-#ifdef __WATCOMC__
+#ifdef HAVE_MALLOC_H
    #include <malloc.h>
 #endif
 #include "msg.hpp"
@@ -151,7 +151,7 @@ static int ctoi(char *s) {
    KillModeT    kmode;
    CheckPointsT pmode;
    tBadMsgMode  bmode;
-   tBadMsgMode  bpmode;   
+   tBadMsgMode  bpmode;
    fileboxType	fbtype;
    time_t       t;
    PKTMode      pktmode;
@@ -180,7 +180,7 @@ static int ctoi(char *s) {
        _STRING      _BEFOREROUTE _AFTERROUTE
        _DIGIT_
        _RENUMBER    _UNPACK _DAILY _WEEKLY _FLAG
-       _NEVER _HARD _SOFT _ALWAYS 
+       _NEVER _HARD _SOFT _ALWAYS
 /* Actions */
        _ADDNOTE _COPY  _REWRITE _IGNORE _DISPLAY _DELFILE _NEWMSG _WRITEFILE
        _APPENDTOFILE _CALL _ROUTE _ROUTEFBOX _ROUTEHUB _POLL _DELETEATTACH _CHANGEPATH _MOVEATTACH
@@ -205,7 +205,7 @@ ConfLine :  Action _CRLF
          }
          |  TimeStampFile _CRLF
          |  Address _CRLF
-         |  _ADDTONULLPKT _CRLF 
+         |  _ADDTONULLPKT _CRLF
             = {
                if (SetAddToNullPkt() != 0) {
                   YYABORT;
@@ -244,7 +244,7 @@ ConfLine :  Action _CRLF
          |  PMask _CRLF
          |  MaxAge _CRLF
          |  MaxAttachSize _CRLF
-	 |  MaxMsgSize _CRLF	 
+	 |  MaxMsgSize _CRLF
 	 |  MaxPktSize _CRLF
          |  MaxNodelistAge _CRLF
          |  Nodelist _CRLF
@@ -273,7 +273,7 @@ ConfLine :  Action _CRLF
                if (SetIgnoreAttachPath() != 0) {
                   YYABORT;
                }
-            }	    
+            }
          |  _SETVIAALWAYS _CRLF
             = {
                if (SetSetViaAlways() != 0) {
@@ -317,13 +317,13 @@ ConfLine :  Action _CRLF
 		    if (SetUseBrake() != 0) {
 		  YYABORT;
 		    }
-		 }    	 
+		 }
 	 |  _USEFILEBOXES _CRLF
 	         = {
 	            if (SetUseFileBoxes() != 0) {
                   YYABORT;
 	            }
-	         }	 
+	         }
          | _STRIPPATHINPKT _CRLF
 			   = {
 				   if (SetStripPathInPkt() != 0) {
@@ -340,7 +340,7 @@ ConfLine :  Action _CRLF
          |  TempMail _CRLF
          |  TrafficLog _CRLF
          |  BadMessages _CRLF
-         |  BadPackets _CRLF	 
+         |  BadPackets _CRLF
          |  ScanDir _CRLF
          |  Semaphore _CRLF
          |  TrafficLogTemplate _CRLF
@@ -362,7 +362,7 @@ ScriptFile : _SCRIPTFILE _STRING ={
                }
              }
            ;
-	   
+
 FileBoxDir : _FILEBOXDIR _STRING ={
                if (SetFileBoxDir($<ch>2) != 0) {
                   YYABORT;
@@ -370,8 +370,8 @@ FileBoxDir : _FILEBOXDIR _STRING ={
              }
            ;
 
-FileBoxType: _FILEBOXTYPE FBOXTYPE 
-              ={ 
+FileBoxType: _FILEBOXTYPE FBOXTYPE
+              ={
                 if (SetFileBoxType($<fbtype>2) != 0) {
 		  YYABORT;
                 }
@@ -545,7 +545,7 @@ MaxNodelistAge : _MAXNODELISTAGE _DIGIT_
             }
                ;
 
-Outbound : _OUTBOUND _STRING 
+Outbound : _OUTBOUND _STRING
             = {
                if (SetOutbound($<ch>2) != 0) {
                   YYABORT;
@@ -604,7 +604,7 @@ MaxPktSize   : _MAXPKTSIZE _DIGIT_
             }
             ;
 
-Password    : _PASSWORD _STRING 
+Password    : _PASSWORD _STRING
             = {
                if (strlen($<ch>2) > 8){
                   yyerror("Password too long. Max password length is a 8 characters.");
@@ -621,7 +621,7 @@ Password    : _PASSWORD _STRING
             }
             ;
 
-Domain    : _DOMAIN _STRING 
+Domain    : _DOMAIN _STRING
             = {
                if (strlen($<ch>2) > 10){
                   yyerror("Domain too long. Max domain length is a 10 characters.");
@@ -638,7 +638,7 @@ Domain    : _DOMAIN _STRING
             }
             ;
 
-FileBox    : _FILEBOX _STRING 
+FileBox    : _FILEBOX _STRING
             = {
                if (strlen($<ch>2) > 100){
                   yyerror("Path too long. Max path length is a 100 characters.");
@@ -656,8 +656,8 @@ FileBox    : _FILEBOX _STRING
             ;
 
 
-BadMessages : _BADMESSAGES BadMsgMode 
-              ={ 
+BadMessages : _BADMESSAGES BadMsgMode
+              ={
                 if (SetBadMode($<bmode>2,FileName) != 0) {
                   YYABORT;
                 }
@@ -670,8 +670,8 @@ BadMsgMode  : _SKIP ={ $<bmode>$ = SKIP; FileName = NULL;}
             | _MOVE _STRING ={ $<bmode>$ = MOVE; FileName = $<ch>2;}
             ;
 
-BadPackets  : _BADPACKETS BadPktMode 
-              ={ 
+BadPackets  : _BADPACKETS BadPktMode
+              ={
                 if (SetBadPktMode($<bpmode>2,BPktDir) != 0) {
                   YYABORT;
                 }
@@ -685,7 +685,7 @@ BadPktMode  : _SKIP ={ $<bpmode>$ = SKIP; BPktDir = NULL;}
             ;
 
 Utc         : _UTC UtcOffs
-              ={ 
+              ={
                 if (SetUTC($<ln>2) != 0) {
                   YYABORT;
                 }
@@ -693,16 +693,16 @@ Utc         : _UTC UtcOffs
             ;
 
 UtcOffs     : _DIGIT_ ={ $<ln>$ = $<ln>1; }
-            | '+' _DIGIT_ ={ $<ln>$ = $<ln>2; } 
-            | '-' _DIGIT_ ={ $<ln>$ = -$<ln>2; } 
+            | '+' _DIGIT_ ={ $<ln>$ = $<ln>2; }
+            | '-' _DIGIT_ ={ $<ln>$ = -$<ln>2; }
             ;
 
 /* ScanDir --------- */
 
 ScanDir  : _SCANDIR
-           = { 
-              wsd = new ScanDir(); 
-              CheckMem((char *)wsd); 
+           = {
+              wsd = new ScanDir();
+              CheckMem((char *)wsd);
               renumberf = FALSE;
               unpackf = FALSE;
               freshf = FALSE;
@@ -714,7 +714,7 @@ ScanDir  : _SCANDIR
               ScriptBefore = NULL;
               ScriptAfter = NULL;
               FileName = NULL;
-           } 
+           }
            SDType
            = {
               wsd->SetBase(mbase);
@@ -731,7 +731,7 @@ ScanDir  : _SCANDIR
          ;
 
 SDType  : BeforeAfter Flag
-        | _STRING 
+        | _STRING
           = {
              mbase = MakeBase($<ch>1);
              if (mbase == NULL) {
@@ -755,7 +755,7 @@ BeforeAfter : _BEFOREROUTE = { brf = TRUE; }
             | _AFTERROUTE = { arf = TRUE; }
             ;
 
-AddSdParam  : 
+AddSdParam  :
             | AddSdParam SdParam
             ;
 
@@ -773,7 +773,7 @@ SdParam     : _RENUMBER
                   if (ScriptWordExists($<ch>2) == FALSE) {
                      yyerror("Script function not found.");
                      YYABORT;
-                  } 
+                  }
                   ScriptBefore = strdup($<ch>2);
                }
             | _AFTERSCRIPT  _STRING
@@ -816,7 +816,7 @@ SdParam     : _RENUMBER
                }
             ;
 
-STime       : _DAILY 
+STime       : _DAILY
                = {
                   tt = new tTimes;
                   tt->_STime = TimeOfBeginOfDay(-1);
@@ -829,7 +829,7 @@ STime       : _DAILY
                      _TTimes->AddToEnd(tt);
                   }
                }
-            | _WEEKLY 
+            | _WEEKLY
                = {
                   tt = new tTimes;
                   tt->_STime = TimeOfBeginOfDay(0);
@@ -844,9 +844,9 @@ STime       : _DAILY
                }
             ;
 
-DaySTime    : 
-            | DaySTime DaySSTime 
-               = { 
+DaySTime    :
+            | DaySTime DaySSTime
+               = {
                   if (tt->_STime != 0) {
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
@@ -855,14 +855,14 @@ DaySTime    :
                }
             ;
 
-DaySSTime   : Time 
-               = { 
-                  tt->_STime = $<t>1 + TimeOfBeginOfDay(-1); 
+DaySSTime   : Time
+               = {
+                  tt->_STime = $<t>1 + TimeOfBeginOfDay(-1);
                }
             | Time '-' Time
-               = { 
-                  tt->_STime = $<t>1 + TimeOfBeginOfDay(-1); 
-                  tt->_ETime = $<t>3 + TimeOfBeginOfDay(-1) + 59; 
+               = {
+                  tt->_STime = $<t>1 + TimeOfBeginOfDay(-1);
+                  tt->_ETime = $<t>3 + TimeOfBeginOfDay(-1) + 59;
                }
             | AnyP '.' Time ={
                   time_t i_time;
@@ -872,9 +872,9 @@ DaySSTime   : Time
                      YYABORT;
                   }
                   tt->_STime = TimeOfBeginOfDay(-1);
-                  b_time = tt->_STime; 
+                  b_time = tt->_STime;
                   do {
-                     i_time = tt->_STime; 
+                     i_time = tt->_STime;
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
                      tt = new tTimes;
@@ -889,17 +889,17 @@ AnyP        : 'p'
             | 'P'
             ;
 
-Time        : _DIGIT_ 
-              = { 
+Time        : _DIGIT_
+              = {
                  if ($<ln>1 < 0 || $<ln>1 > 23) {
                     yyerror("Hour should be between 00 and 23");
                     YYABORT;
                  } else {
                     $<t>$ = (time_t) ($<ln>1 * 60);
                  }
-              } 
+              }
               ':' _DIGIT_
-              = { 
+              = {
                  if ($<ln>4 < 0 || $<ln>4 > 59 || $<t>2 == (time_t) -1) {
                     $<t>$ = (time_t)-1;
                     yyerror("Minutes should be between 00 and 59");
@@ -908,12 +908,12 @@ Time        : _DIGIT_
                     $<t>$ = $<t>2 + (time_t) $<ln>4;
                     $<t>$ *= 60;
                  }
-              } 
+              }
             ;
 
 WeekSTime   :
             | WeekSTime WeekSSTime
-               = { 
+               = {
                   CheckETTime();
                   _TTimes->AddToEnd(tt);
                   tt = new tTimes;
@@ -921,24 +921,24 @@ WeekSTime   :
             ;
 
 WeekSSTime  : _DIGIT_
-              = { 
+              = {
                  if ($<ln>1 < 0 || $<ln>1 > 6) {
                     yyerror("Day of week should be between 0 and 6");
                     YYABORT;
                  } else {
-                    tt->_STime = TimeOfBeginOfDay($<ln>1); 
+                    tt->_STime = TimeOfBeginOfDay($<ln>1);
                  }
-              } 
+              }
             | _DIGIT_ '-' _DIGIT_
-              = { 
+              = {
                  if ($<ln>1 < 0 || $<ln>1 > 6 || $<ln>3 < 0 || $<ln>3 > 6) {
                     yyerror("Day of week should be between 0 and 6");
                     YYABORT;
                  } else {
-                    tt->_STime = TimeOfBeginOfDay($<ln>1); 
-                    tt->_ETime = TimeOfBeginOfDay($<ln>3) + (23*60*60)+(59*60)+59; 
+                    tt->_STime = TimeOfBeginOfDay($<ln>1);
+                    tt->_ETime = TimeOfBeginOfDay($<ln>3) + (23*60*60)+(59*60)+59;
                  }
-              } 
+              }
             ;
 
 Flag        : = { FileName = NULL; }
@@ -947,25 +947,25 @@ Flag        : = { FileName = NULL; }
 
 /* -------------- */
 
-Mask        : _MASK ={ MaskMode = 0; } MParam ={ 
+Mask        : _MASK ={ MaskMode = 0; } MParam ={
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(NormalMask *)msk);
             }
             ;
 
-SMask       : _SMASK ={ MaskMode = 0; } MParam ={ 
+SMask       : _SMASK ={ MaskMode = 0; } MParam ={
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(NormalMask *)msk);
             }
             ;
 
-PMask       : _PMASK ={ MaskMode = 0; } MParam ={ 
+PMask       : _PMASK ={ MaskMode = 0; } MParam ={
                msk->_Type = MASK_ADD;
                AddReadyMask(*(NormalMask *)msk);
             }
             ;
 
-MParam      : ={ 
+MParam      : ={
                msk = new NormalMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -980,9 +980,9 @@ MParam      : ={
             faddress ={
                ((NormalMask *)msk)->_FromAddr = cffa;
                if (MaskMode == 0) {
-                  rc = ((NormalMask *)msk)->_FromAddr.MaskValid(); 
+                  rc = ((NormalMask *)msk)->_FromAddr.MaskValid();
                } else {
-                  rc = ((NormalMask *)msk)->_FromAddr.ActValid(); 
+                  rc = ((NormalMask *)msk)->_FromAddr.ActValid();
                }
                if (!rc) {
                   yyerror("Invalid 'From' Address.");
@@ -996,9 +996,9 @@ MParam      : ={
             faddress ={
                ((NormalMask *)msk)->_ToAddr = cffa;
                if (MaskMode == 0) {
-                  rc = ((NormalMask *)msk)->_ToAddr.MaskValid(); 
+                  rc = ((NormalMask *)msk)->_ToAddr.MaskValid();
                } else {
-                  rc = ((NormalMask *)msk)->_ToAddr.ActValid(); 
+                  rc = ((NormalMask *)msk)->_ToAddr.ActValid();
                }
                if (!rc) {
                   yyerror("Invalid 'To' Address.");
@@ -1013,12 +1013,12 @@ MParam      : ={
                   YYABORT;
                }
             }
-            MString ={ 
+            MString ={
                ((NormalMask *)msk)->_Subject = strdup($<ch>10);
-               NoTokensF = TRUE; 
-            } 
-            MsgAttr ={ 
-               NoTokensF = FALSE; 
+               NoTokensF = TRUE;
+            }
+            MsgAttr ={
+               NoTokensF = FALSE;
             }
             ;
 
@@ -1078,7 +1078,7 @@ FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1;
                   YYABORT;
                }
                ((NormalMask *)msk)->fMaxMsg = (FlagMode == 2) ? 2 : 1;
-            }	    
+            }
             | 'b' ={ ((NormalMask *)msk)->fARQ = (FlagMode == 2) ? 2 : 1; }
             | 'c' ={ ((NormalMask *)msk)->fCrash = (FlagMode == 2) ? 2 : 1; }
             | 'd' ={ ((NormalMask *)msk)->fDIR = (FlagMode == 2) ? 2 : 1; }
@@ -1144,32 +1144,32 @@ FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1;
 
 /* -------------- */
 
-KludgeMask  : _KLUDGEMASK KMParam ={ 
+KludgeMask  : _KLUDGEMASK KMParam ={
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(KludgeMask *)msk);
             }
             ;
 
-SKludgeMask : _SKLUDGEMASK KMParam ={ 
+SKludgeMask : _SKLUDGEMASK KMParam ={
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(KludgeMask *)msk);
             }
             ;
 
-PKludgeMask : _PKLUDGEMASK KMParam ={ 
+PKludgeMask : _PKLUDGEMASK KMParam ={
                msk->_Type = MASK_ADD;
                AddReadyMask(*(KludgeMask *)msk);
             }
             ;
 
-KMParam     : ={ 
+KMParam     : ={
                msk = new KludgeMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
                if (PrepareMask(*msk) != 0) {
                   YYABORT;
                }
-            } 
+            }
             MString MString MDigit ={
                ((KludgeMask *)msk)-> _KludgeName = strdup($<ch>2);
                ((KludgeMask *)msk)-> _KludgeBody = strdup($<ch>3);
@@ -1179,32 +1179,32 @@ KMParam     : ={
 
 /* -------------- */
 
-BodyMask    : _BODYMASK BMParam ={ 
+BodyMask    : _BODYMASK BMParam ={
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(BodyMask *)msk);
             }
             ;
 
-SBodyMask   : _SBODYMASK BMParam ={ 
+SBodyMask   : _SBODYMASK BMParam ={
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(BodyMask *)msk);
             }
             ;
 
-PBodyMask   : _PBODYMASK BMParam ={ 
+PBodyMask   : _PBODYMASK BMParam ={
                msk->_Type = MASK_ADD;
                AddReadyMask(*(BodyMask *)msk);
             }
             ;
 
-BMParam     : ={ 
+BMParam     : ={
                msk = new BodyMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
                if (PrepareMask(*msk) != 0) {
                   YYABORT;
                }
-            } 
+            }
             MString MDigit MDigit ={
                ((BodyMask *)msk)-> _Body = strdup($<ch>2);
                ((BodyMask *)msk)-> _Lines = $<ln>3;
@@ -1215,32 +1215,32 @@ BMParam     : ={
 
 /* -------------- */
 
-ScriptMask  : _SCRIPTMASK SCRMParam ={ 
+ScriptMask  : _SCRIPTMASK SCRMParam ={
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(ScriptMask *)msk);
             }
             ;
 
-SScriptMask : _SSCRIPTMASK SCRMParam ={ 
+SScriptMask : _SSCRIPTMASK SCRMParam ={
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(ScriptMask *)msk);
             }
             ;
 
-PScriptMask : _PSCRIPTMASK SCRMParam ={ 
+PScriptMask : _PSCRIPTMASK SCRMParam ={
                msk->_Type = MASK_ADD;
                AddReadyMask(*(ScriptMask *)msk);
             }
             ;
 
-SCRMParam   : ={ 
+SCRMParam   : ={
                msk = new ScriptMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
                if (PrepareMask(*msk) != 0) {
                   YYABORT;
                }
-            } 
+            }
             _STRING ={
                ((ScriptMask *)msk)->_ScriptName = strdup($<ch>2);
                if (ScriptWordExists($<ch>2) != TRUE) {
@@ -1263,7 +1263,7 @@ Action : _ACTION ={
           act->sd = wsd;
           act->Before = BeforeRoute;
           act->After = AfterRoute;
-         _TTimes = &act->_Times;       
+         _TTimes = &act->_Times;
        }
        ActionCmd ={
           LastDo->AddAction(*act);
@@ -1370,24 +1370,24 @@ ARewrite : _REWRITE ={
            }
          ;
 
-ADisplay : _DISPLAY _STRING ={ 
-            act->_Act = ACT_DISPLAY; 
+ADisplay : _DISPLAY _STRING ={
+            act->_Act = ACT_DISPLAY;
             act->_TplName = strdup($<ch>2);
          }
          ;
-         
+
 AScript  : _ASCRIPT _STRING ={
             act->_Act = ACT_SCRIPT;
             if (ScriptWordExists($<ch>2) == FALSE) {
                yyerror("Script function not found.");
                YYABORT;
-            } 
+            }
             act->_TplName = strdup($<ch>2);
          }
-         ;         
+         ;
 
 AAFlag   : AFlag ={
-            act->_Act = ACT_FLAG; 
+            act->_Act = ACT_FLAG;
             act->_OutDir = strdup($<ch>1);
          }
          ;
@@ -1552,7 +1552,7 @@ ACopyAttachFbox : _COPYATTACHFBOX RouMode ={ cffa.Clean(); } faddress ={
           act->_f = cffa;
        }
        ;
-       
+
 AMoveAttachFbox : _MOVEATTACHFBOX RouMode ={ cffa.Clean(); } faddress ={
           act->_Act = ACT_MOVEATTACHFBOX;
 	  if (FileBoxDir == NULL)
@@ -1591,11 +1591,11 @@ AChangePath : _CHANGEPATH _STRING ={
                if (strlen($<ch>2) > 72) {
                   yyerror("New path too long");
                   YYABORT;
-               }	       
+               }
                act->_OutDir = strdup($<ch>2);
             }
             ;
-	    
+
 AToLowerPath : _TOLOWERPATH ={
                act->_Act = ACT_TOLOWERPATH;
             }
@@ -1605,7 +1605,7 @@ AToLowerPath : _TOLOWERPATH ={
 AToUpperPath : _TOUPPERPATH ={
                act->_Act = ACT_TOUPPERPATH;
             }
-            ;	    
+            ;
 
 AAddKludge : _ADDKLUDGE _STRING _STRING ={
                act->_Act = ACT_ADDKLUDGE;
@@ -1623,7 +1623,7 @@ AMoveAttach : _MOVEATTACH _STRING ={
                if (strlen($<ch>2) > 72) {
                   yyerror("New path too long");
                   YYABORT;
-               }	       
+               }
                act->_OutDir = strdup($<ch>2);
             }
             ;
@@ -1631,12 +1631,12 @@ AMoveAttach : _MOVEATTACH _STRING ={
 ACopyAttach : _COPYATTACH _STRING ={
                act->_Act = ACT_COPYATTACH;
                if (!DirExists($<ch>2)) {
-	         Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;	       
+	         Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
                }
                if (strlen($<ch>2) > 72) {
                   yyerror("New path too long");
                   YYABORT;
-               }	       
+               }
                act->_OutDir = strdup($<ch>2);
             }
             ;
@@ -1666,7 +1666,7 @@ ARecode     : _RECODE _STRING ={
                   act->_TplName = (char *)malloc(256);
                   CheckMem(act->_TplName);
                   for (count = 0; count < 256; count++) act->_TplName[count] = (char) count;
-                  count = 0;	 
+                  count = 0;
                   line = 0;
 
                   while (fgets((char*)buf,sizeof(buf),fp)) {
@@ -1685,9 +1685,9 @@ ARecode     : _RECODE _STRING ={
                         on=ctoi((char *)q);
                         if (in != 0 && on != 0) {
                            if (count++ < 256 ) {
-                              act->_TplName[in]=on; 
-                           } else { 
-                              sprintf(buf,"Char map table \"%s\" is big",$<ch>2); 
+                              act->_TplName[in]=on;
+                           } else {
+                              sprintf(buf,"Char map table \"%s\" is big",$<ch>2);
                               yyerror(buf);
                               fclose(fp);
                               free(act->_TplName);
@@ -1765,7 +1765,7 @@ FullFtnAddr : nodeaddr
                   cffa.Node(FA_FROMMASK);
                   cffa.Point(FA_FROMMASK);
                }
-            | '%' 
+            | '%'
                = {
                   cffa.Zone(FA_TOMASK);
                   cffa.Net(FA_TOMASK);
@@ -1792,12 +1792,12 @@ PntAddr  : dw   = { cffa.Point($<ln>1); }
          | '&'  = { cffa.Point(FA_SUBMASK); }
          ;
 
-nodeaddr : dw ':' dw '/' dw 
-            = { 
-               cffa.Zone($<ln>1); 
-               cffa.Net($<ln>3); 
-               cffa.Node($<ln>5); 
-               cffa.Point(0); 
+nodeaddr : dw ':' dw '/' dw
+            = {
+               cffa.Zone($<ln>1);
+               cffa.Net($<ln>3);
+               cffa.Node($<ln>5);
+               cffa.Point(0);
             }
          ;
 
