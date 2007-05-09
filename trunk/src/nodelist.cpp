@@ -461,7 +461,7 @@ char Buff[512];
    Log.Level(LOGI) << "Compile nodelist '" << Elem->Name << "'";
    if (Elem->StartZone != 0) {
       _SetCurrentZone(Elem->StartZone); // Set address to Zone:Zone/0; 1st line of the nodelist should be "Host" or "Region"
-      Log.Level(LOGI) << ", start zone number is " << Elem->StartZone;
+      Log.Level(LOGI) << ", start zone number is " << Elem->StartZone << EOL;
    } else {
       CurrentZone = 0;
    }
