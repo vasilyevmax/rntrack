@@ -8,20 +8,23 @@ AC_CONFIG_AUX_DIR(MakeFiles)
 AC_CANONICAL_SYSTEM
 #AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER(hpp/aconfig.h)
+AM_CONFIG_HEADER(hpp/aconfig.h:hpp/aconfig.hin)
 
 # Checks for programs.
+#AM_PROG_LEX
 #AC_PROG_YACC
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
-#AC_PROG_LIBTOOL
+#AM_PROG_LIBTOOL
+AM_PROG_INSTALL
+AC_CHECK_PROG(PERL,perl,perl)
 
 # Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
-AC_CHECK_HEADERS([fcntl.h limits.h locale.h malloc.h stddef.h unistd.h utime.h sys/utime.h io.h time.h])
+AC_CHECK_HEADERS([fcntl.h limits.h locale.h malloc.h stddef.h unistd.h utime.h sys/utime.h io.h time.h iostream iostream.h direct.h])
 dnl AC_CHECK_HEADERS([OS.h])dnl For smapi only
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -33,9 +36,12 @@ AC_TYPE_MODE_T
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
 AC_STRUCT_TM
+AC_CHECK_SIZEOF(int)
+AC_CHECK_SIZEOF(long)
+
 
 # Checks for library functions.
-#AC_FUNC_CLOSEDIR_VOID
+dnl AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_MALLOC
 AC_FUNC_MEMCMP
 AC_FUNC_MKTIME
@@ -53,10 +59,10 @@ AC_C_BIGENDIAN_CROSS
 if test $ac_cv_c_bigendian = yes; then
  AC_DEFINE(_AIX_CONV,1,[Need rotate byte order])
 fi
-      
+
 # OS type
 case "$target" in
- *-*linux*   ) 
+ *-*linux*   )
   AC_DEFINE(unix,1,[OS is Unix])
   AC_DEFINE(__linux__,1,[OS is Linux])
   ;;
@@ -73,20 +79,20 @@ case "$target" in
   AC_DEFINE(__NetBSD__,1,[OS is NetBSD])
   ;;
  *-*solaris* )
-  AC_DEFINE(unix,1,[OS is Unix]) 
+  AC_DEFINE(unix,1,[OS is Unix])
   AC_DEFINE(__sun__,1,[OS is Sun Solaris])
   ;;
  *-*aix*     )
-  AC_DEFINE(unix,1,[OS is Unix]) 
+  AC_DEFINE(unix,1,[OS is Unix])
   AC_DEFINE(_AIX,1,[OS is IBM AIX])
   ;;
- *-*darwin*  ) 
+ *-*darwin*  )
   AC_DEFINE(__OSX__,1,[OS is Apple MacOS X])
   ;;
- *-*mingw32* ) 
-  AC_DEFINE(__NT__,1,[OS is Win32]) 
+ *-*mingw32* )
+  AC_DEFINE(__NT__,1,[OS is Win32])
   ;;
- *-*djgpp*   ) 
+ *-*djgpp*   )
   AC_DEFINE(__DJGPP__,1,[OS is DOS])
   AC_DEFINE(__DOS4G__,1,[DOS protected mode])
   ;;
@@ -96,7 +102,7 @@ case "$target" in
   ;;
 esac
 
-AC_DEFINE(__PLATFORM_TYPE__,$$target,[target platform])
+AC_DEFINE_UNQUOTED(__PLATFORM_TYPE__,$target_os,[target platform])
 
 # EOF OS-specific
 
@@ -114,7 +120,7 @@ AC_ARG_ENABLE(scripts,		 [  --enable-scripts			enable Perl-scripting (auto)],
 	AC_DEFINE(__PERL_NEW__,1,[Perl 5.8+ installed])
    fi
   fi],
-  AC_DEFINE(__NOSCRIPTS__,1,[disable Perl-scripting]) )  
+  AC_DEFINE(__NOSCRIPTS__,1,[disable Perl-scripting]) )
 # EOF Optional arguments
 
 

@@ -4,7 +4,7 @@
  *  aka.cpp - Aka routines
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -12,9 +12,6 @@
  *
  *  $Id$
  */
-#ifdef HAVE_CONFIG_H
-# include "aconfig.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,18 +58,18 @@ IndBiList<tAka>::ElemPtr tmt;
       if (tmt->_Mask == Addr) {
          return tmt->_Addr;
       }
-   }   
+   }
    return MyAddr;
 }
 
 int IsMyAka(FA const &Addr) {
 IndBiList<tAka>::ElemPtr tmt;
 
-   for (tmt = Aka.GetFirst(); tmt != NULL; tmt++) { 
+   for (tmt = Aka.GetFirst(); tmt != NULL; tmt++) {
       if (tmt->_Addr == Addr) {
          return TRUE;
       }
-   }   
+   }
    return (MyAddr == Addr);
 }
 

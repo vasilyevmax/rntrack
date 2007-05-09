@@ -4,7 +4,7 @@
  *  badmsg.cpp - Work with bad messages
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -12,9 +12,6 @@
  *
  *  $Id$
  */
-#ifdef HAVE_CONFIG_H
-# include "aconfig.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +46,7 @@ static int BadAlready = FALSE;
          yyerror("You can use only MSG base as base for bad mail.");
          return (-1);
       }
-     
+
       BadMsgBase = MakeBase(bname);
       if (BadMsgBase == NULL) return (-1);
       if (!BadMsgBase->CheckOut()) {
@@ -86,7 +83,7 @@ char *Buff;
             Log.Level(LOGE) << "Skip bad message " << b.MessageName() << EOL;
             break;
          } else {
-            Log.Level(LOGE) << "Move bad message " << b.MessageName() 
+            Log.Level(LOGE) << "Move bad message " << b.MessageName()
                             << " to " << BadMsgBase->BaseName() << EOL;
          }
          if (!BadMsgBase->WriteFromMem(Buff)) {

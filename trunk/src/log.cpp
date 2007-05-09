@@ -4,7 +4,7 @@
  *  log.cpp - Work with log file
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -12,6 +12,13 @@
  *
  *  $Id$
  */
+/*--------------------------------------------------------------------*/
+/*                  Autoconf-generated include files                  */
+/*--------------------------------------------------------------------*/
+
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
 
 /*--------------------------------------------------------------------*/
 /*                        System include files                        */
@@ -21,12 +28,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#ifndef __unix__
+#ifdef HAVE_IO_H
 #include <io.h>
 #endif
 #include <string.h>
 #include <assert.h>
-#ifdef __unix__
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
@@ -41,11 +48,9 @@
 /*--------------------------------------------------------------------*/
 // #define DEBUG_LOG 1
 
-
 /*--------------------------------------------------------------------*/
 /*                      Functions prototypes                          */
 /*--------------------------------------------------------------------*/
-
 
 /*--------------------------------------------------------------------*/
 /*    T i m e                                                         */
@@ -177,7 +182,7 @@ va_list ll;
          fprintf(CurrFh,"%s [%u] ",Date(),getpid());
 #else
          fprintf(CurrFh,"%s ",Date());
-#endif	 
+#endif
          NewLine = 0;
       }
       while (*tmt != '\0') {

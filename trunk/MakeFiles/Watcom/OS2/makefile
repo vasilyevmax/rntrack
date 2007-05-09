@@ -1,3 +1,5 @@
+# Make rntrack/OS2 using Watcom C
+#
 # $Id$
 
 CC 	= wcc386.exe
@@ -17,7 +19,7 @@ DEBUG	= 0
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 
-OBJS= cfg.obj configure.obj rntrack.obj log.obj help.obj 
+OBJS= cfg.obj configure.obj rntrack.obj log.obj help.obj
 OBJS+= fidoaddr.obj msg.obj msgbase.obj scandir.obj vars.obj age.obj
 OBJS+= badmsg.obj aka.obj parsetpl.obj attach.obj outbound.obj
 OBJS+= passwd.obj wildmat.obj tmstamp.obj badpkt.obj
@@ -85,7 +87,7 @@ libpath = $(%watcom)\lib386;$(%watcom)\lib386\os2;
 #.y: $(SRCDIR)
 
 #.y.cpp: .AUTODEPEND
-#    bison -l -v -d $[@ 
+#    bison -l -v -d $[@
 #    if exist $@ del $@
 #    move $(SRCDIR)\cfg_tab.c $@
 #    move $(SRCDIR)\cfg.out cfg.output
@@ -102,13 +104,13 @@ $(TNAME).exe : smapi $(OBJS) tmp.lnk
     wlink.exe @tmp.lnk
 
 smapi: .symbolic
-    cd  $(SRCDIR)\smapi 
+    cd  $(SRCDIR)\smapi
     wmake -f makefile.wco
     cd $(WORKDIR)
 
 tmp.lnk : $(__MAKEFILES__)
     %create $^@
-    @%append $^@ system $(TOS) 
+    @%append $^@ system $(TOS)
     @%append $^@ name $(TNAME)
     @%append $^@ option Stack=655340
 !ifeq debug 1

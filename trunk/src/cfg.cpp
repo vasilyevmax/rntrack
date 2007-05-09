@@ -136,7 +136,7 @@
  *  cfg.(y|hpp|cpp) - Config file parser
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -145,14 +145,14 @@
  *  $Id$
  */
 
-#if (defined(__WATCOMC__) && defined(__386__)) || defined(__DJGPP__) || defined(__MINGW32__)
-#define HAS_strupr 1
-#endif
 #define YYDEBUG 0
 /* #define YYERROR_VERBOSE */
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
 
 #include <stdlib.h>
-#ifdef __WATCOMC__
+#ifdef HAVE_MALLOC_H
    #include <malloc.h>
 #endif
 #include "msg.hpp"
@@ -280,7 +280,7 @@ typedef union {
    KillModeT    kmode;
    CheckPointsT pmode;
    tBadMsgMode  bmode;
-   tBadMsgMode  bpmode;   
+   tBadMsgMode  bpmode;
    fileboxType	fbtype;
    time_t       t;
    PKTMode      pktmode;
@@ -527,61 +527,61 @@ static const short yyrline[] =
 /* YYTNAME[TOKEN_NUM] -- String name of the token TOKEN_NUM. */
 static const char *const yytname[] =
 {
-  "$", "error", "$undefined.", "_LOGFILE", "_LOGLEVEL", "_NODELIST", 
-  "_INDEXFILE", "_NODELISTPATH", "_ADDRESS", "_SYSOPNAME", "_USEOWNZONE", 
-  "_FORCEINTL", "_LOOPSTR", "_SCANDIR", "_MASK", "_SMASK", "_PMASK", 
-  "_BODYMASK", "_SBODYMASK", "_PBODYMASK", "_KLUDGEMASK", "_SKLUDGEMASK", 
-  "_PKLUDGEMASK", "_ACTION", "_MAXAGE", "_BADMESSAGES", "_NOLOGIGNORE", 
-  "_AKA", "_SKIPHIDDENFILES", "_FILEINBOUND", "_OUTBOUND", 
-  "_ADDTONULLPKT", "_TEMPMAIL", "_TRAFFICLOG", "_PASSWORD", "_UTC", 
-  "_ORIGIN", "_TEARLINE", "_INCLUDE", "_APKTDIR", "_CHECKPOINTS", 
-  "_SETVIAALWAYS", "_FRESH", "_CREATEMISSINGBASE", "_USENEWVIA", 
-  "_SCRIPTMASK", "_SSCRIPTMASK", "_PSCRIPTMASK", "_MAXATTACHSIZE", 
-  "_SEMAPHORE", "_SCRIPTFILE", "_USEASO", "_USEBRAKE", "_FILEBOXDIR", 
-  "_KILLROUTEDMESSAGE", "_IGNOREBSY", "_AFTERSCRIPT", "_BEFORESCRIPT", 
-  "_AGEFROMVIA", "_MAXNODELISTAGE", "_USEFILEBOXES", "_FILEBOXTYPE", 
-  "_LONG", "_TMLONG", "_TMSHORT", "_BRAKE", "_SOFTCHECKINNODELIST", 
-  "_BADPACKETS", "_IGNOREATTACHPATH", "_MAXPKTSIZE", "_MAXMSGSIZE", 
-  "_TIMESTAMPFILE", "_DOMAIN", "_FILEBOX", "_TRAFFICLOGTEMPLATE", 
-  "_STRIPPATHINPKT", "_CRLF", "_SKIP", "_DELETE", "_EXIT", "_MOVE", 
-  "__EOF", "_STRING", "_BEFOREROUTE", "_AFTERROUTE", "_DIGIT_", 
-  "_RENUMBER", "_UNPACK", "_DAILY", "_WEEKLY", "_FLAG", "_NEVER", "_HARD", 
-  "_SOFT", "_ALWAYS", "_ADDNOTE", "_COPY", "_REWRITE", "_IGNORE", 
-  "_DISPLAY", "_DELFILE", "_NEWMSG", "_WRITEFILE", "_APPENDTOFILE", 
-  "_CALL", "_ROUTE", "_ROUTEFBOX", "_ROUTEHUB", "_POLL", "_DELETEATTACH", 
-  "_CHANGEPATH", "_MOVEATTACH", "_ASCRIPT", "_TOLOWERPATH", 
-  "_TOUPPERPATH", "_COPYATTACHFBOX", "_MOVEATTACHFBOX", "_COPYATTACH", 
-  "_SPLIT", "_RECODE", "_ADDKLUDGE", "_HOLD", "_CRASH", "_DIRECT", 
-  "_NORMAL", "_IMMEDIATE", "LEXERR", "'+'", "'-'", "'.'", "'p'", "'P'", 
-  "':'", "'$'", "'*'", "'%'", "'!'", "'a'", "'A'", "'M'", "'b'", "'c'", 
-  "'d'", "'e'", "'E'", "'f'", "'g'", "'h'", "'i'", "'j'", "'k'", "'l'", 
-  "'L'", "'m'", "'n'", "'o'", "'q'", "'r'", "'s'", "'S'", "'t'", "'u'", 
-  "'v'", "'x'", "'y'", "'['", "']'", "'#'", "'H'", "'U'", "'D'", "'@'", 
-  "'&'", "'/'", "Conf", "ConfLine", "@1", "ScriptFile", "FileBoxDir", 
-  "FileBoxType", "FBOXTYPE", "TrafficLogTemplate", "Semaphore", 
-  "IncludeF", "Aka", "@2", "@3", "TimeStampFile", "APktDir", "Address", 
-  "@4", "CheckPoints", "ChkPntMode", "KillRoutedMessage", "KillRMode", 
-  "SysopName", "TearLine", "LogFile", "LogLevel", "Origin", "Nodelist", 
-  "NdlZone", "NodelistPath", "IndexFile", "LoopStr", "MaxAttachSize", 
-  "MaxNodelistAge", "Outbound", "TempMail", "TrafficLog", "FileInbound", 
-  "MaxAge", "MaxMsgSize", "MaxPktSize", "Password", "@5", "Domain", "@6", 
-  "FileBox", "@7", "BadMessages", "BadMsgMode", "BadPackets", 
-  "BadPktMode", "Utc", "UtcOffs", "ScanDir", "@8", "SDType", "@9", 
-  "BeforeAfter", "AddSdParam", "SdParam", "STime", "@10", "@11", 
-  "DaySTime", "DaySSTime", "AnyP", "Time", "@12", "WeekSTime", 
-  "WeekSSTime", "Flag", "Mask", "@13", "SMask", "@14", "PMask", "@15", 
-  "MParam", "@16", "@17", "@18", "@19", "@20", "@21", "SyName", "MString", 
-  "MDigit", "MNot", "MsgAttr", "@22", "MsgFAttr", "FlagsMode", "@23", 
-  "@24", "FlagsChar", "KludgeMask", "SKludgeMask", "PKludgeMask", 
-  "KMParam", "@25", "BodyMask", "SBodyMask", "PBodyMask", "BMParam", 
-  "@26", "ScriptMask", "SScriptMask", "PScriptMask", "SCRMParam", "@27", 
-  "Action", "@28", "@29", "MayBeActTime", "ActionCmd", "AAddNote", 
-  "AMove", "ACopy", "ARewrite", "@30", "ADisplay", "AScript", "AAFlag", 
-  "AFlag", "ADelFile", "ANewMsg", "@31", "AWriteFile", "AAppendToFile", 
-  "ACall", "ARoute", "@32", "ARouteFbox", "@33", "ARouteHub", "@34", 
-  "ACopyAttachFbox", "@35", "AMoveAttachFbox", "@36", "RouMode", "APoll", 
-  "@37", "AChangePath", "AToLowerPath", "AToUpperPath", "AAddKludge", 
-  "AMoveAttach", "ACopyAttach", "ASplit", "ARecode", "faddress", 
+  "$", "error", "$undefined.", "_LOGFILE", "_LOGLEVEL", "_NODELIST",
+  "_INDEXFILE", "_NODELISTPATH", "_ADDRESS", "_SYSOPNAME", "_USEOWNZONE",
+  "_FORCEINTL", "_LOOPSTR", "_SCANDIR", "_MASK", "_SMASK", "_PMASK",
+  "_BODYMASK", "_SBODYMASK", "_PBODYMASK", "_KLUDGEMASK", "_SKLUDGEMASK",
+  "_PKLUDGEMASK", "_ACTION", "_MAXAGE", "_BADMESSAGES", "_NOLOGIGNORE",
+  "_AKA", "_SKIPHIDDENFILES", "_FILEINBOUND", "_OUTBOUND",
+  "_ADDTONULLPKT", "_TEMPMAIL", "_TRAFFICLOG", "_PASSWORD", "_UTC",
+  "_ORIGIN", "_TEARLINE", "_INCLUDE", "_APKTDIR", "_CHECKPOINTS",
+  "_SETVIAALWAYS", "_FRESH", "_CREATEMISSINGBASE", "_USENEWVIA",
+  "_SCRIPTMASK", "_SSCRIPTMASK", "_PSCRIPTMASK", "_MAXATTACHSIZE",
+  "_SEMAPHORE", "_SCRIPTFILE", "_USEASO", "_USEBRAKE", "_FILEBOXDIR",
+  "_KILLROUTEDMESSAGE", "_IGNOREBSY", "_AFTERSCRIPT", "_BEFORESCRIPT",
+  "_AGEFROMVIA", "_MAXNODELISTAGE", "_USEFILEBOXES", "_FILEBOXTYPE",
+  "_LONG", "_TMLONG", "_TMSHORT", "_BRAKE", "_SOFTCHECKINNODELIST",
+  "_BADPACKETS", "_IGNOREATTACHPATH", "_MAXPKTSIZE", "_MAXMSGSIZE",
+  "_TIMESTAMPFILE", "_DOMAIN", "_FILEBOX", "_TRAFFICLOGTEMPLATE",
+  "_STRIPPATHINPKT", "_CRLF", "_SKIP", "_DELETE", "_EXIT", "_MOVE",
+  "__EOF", "_STRING", "_BEFOREROUTE", "_AFTERROUTE", "_DIGIT_",
+  "_RENUMBER", "_UNPACK", "_DAILY", "_WEEKLY", "_FLAG", "_NEVER", "_HARD",
+  "_SOFT", "_ALWAYS", "_ADDNOTE", "_COPY", "_REWRITE", "_IGNORE",
+  "_DISPLAY", "_DELFILE", "_NEWMSG", "_WRITEFILE", "_APPENDTOFILE",
+  "_CALL", "_ROUTE", "_ROUTEFBOX", "_ROUTEHUB", "_POLL", "_DELETEATTACH",
+  "_CHANGEPATH", "_MOVEATTACH", "_ASCRIPT", "_TOLOWERPATH",
+  "_TOUPPERPATH", "_COPYATTACHFBOX", "_MOVEATTACHFBOX", "_COPYATTACH",
+  "_SPLIT", "_RECODE", "_ADDKLUDGE", "_HOLD", "_CRASH", "_DIRECT",
+  "_NORMAL", "_IMMEDIATE", "LEXERR", "'+'", "'-'", "'.'", "'p'", "'P'",
+  "':'", "'$'", "'*'", "'%'", "'!'", "'a'", "'A'", "'M'", "'b'", "'c'",
+  "'d'", "'e'", "'E'", "'f'", "'g'", "'h'", "'i'", "'j'", "'k'", "'l'",
+  "'L'", "'m'", "'n'", "'o'", "'q'", "'r'", "'s'", "'S'", "'t'", "'u'",
+  "'v'", "'x'", "'y'", "'['", "']'", "'#'", "'H'", "'U'", "'D'", "'@'",
+  "'&'", "'/'", "Conf", "ConfLine", "@1", "ScriptFile", "FileBoxDir",
+  "FileBoxType", "FBOXTYPE", "TrafficLogTemplate", "Semaphore",
+  "IncludeF", "Aka", "@2", "@3", "TimeStampFile", "APktDir", "Address",
+  "@4", "CheckPoints", "ChkPntMode", "KillRoutedMessage", "KillRMode",
+  "SysopName", "TearLine", "LogFile", "LogLevel", "Origin", "Nodelist",
+  "NdlZone", "NodelistPath", "IndexFile", "LoopStr", "MaxAttachSize",
+  "MaxNodelistAge", "Outbound", "TempMail", "TrafficLog", "FileInbound",
+  "MaxAge", "MaxMsgSize", "MaxPktSize", "Password", "@5", "Domain", "@6",
+  "FileBox", "@7", "BadMessages", "BadMsgMode", "BadPackets",
+  "BadPktMode", "Utc", "UtcOffs", "ScanDir", "@8", "SDType", "@9",
+  "BeforeAfter", "AddSdParam", "SdParam", "STime", "@10", "@11",
+  "DaySTime", "DaySSTime", "AnyP", "Time", "@12", "WeekSTime",
+  "WeekSSTime", "Flag", "Mask", "@13", "SMask", "@14", "PMask", "@15",
+  "MParam", "@16", "@17", "@18", "@19", "@20", "@21", "SyName", "MString",
+  "MDigit", "MNot", "MsgAttr", "@22", "MsgFAttr", "FlagsMode", "@23",
+  "@24", "FlagsChar", "KludgeMask", "SKludgeMask", "PKludgeMask",
+  "KMParam", "@25", "BodyMask", "SBodyMask", "PBodyMask", "BMParam",
+  "@26", "ScriptMask", "SScriptMask", "PScriptMask", "SCRMParam", "@27",
+  "Action", "@28", "@29", "MayBeActTime", "ActionCmd", "AAddNote",
+  "AMove", "ACopy", "ARewrite", "@30", "ADisplay", "AScript", "AAFlag",
+  "AFlag", "ADelFile", "ANewMsg", "@31", "AWriteFile", "AAppendToFile",
+  "ACall", "ARoute", "@32", "ARouteFbox", "@33", "ARouteHub", "@34",
+  "ACopyAttachFbox", "@35", "AMoveAttachFbox", "@36", "RouMode", "APoll",
+  "@37", "AChangePath", "AToLowerPath", "AToUpperPath", "AAddKludge",
+  "AMoveAttach", "ACopyAttach", "ASplit", "ARecode", "faddress",
   "FullFtnAddr", "pointaddr", "PntAddr", "nodeaddr", "dw", 0
 };
 #endif
@@ -1184,7 +1184,7 @@ int yydebug;
 #ifndef YYMAXDEPTH
 # define YYMAXDEPTH 10000
 #endif
-
+
 #ifdef YYERROR_VERBOSE
 
 # ifndef yystrlen
@@ -1236,7 +1236,7 @@ yystpcpy (yydest, yysrc)
 #  endif
 # endif
 #endif
-
+
 
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
@@ -1775,7 +1775,7 @@ case 73:
              ;
     break;}
 case 74:
-{ 
+{
                 if (SetFileBoxType(yyvsp[0].fbtype) != 0) {
 		  YYABORT;
                 }
@@ -2061,7 +2061,7 @@ case 122:
             ;
     break;}
 case 123:
-{ 
+{
                 if (SetBadMode(yyvsp[0].bmode,FileName) != 0) {
                   YYABORT;
                 }
@@ -2081,7 +2081,7 @@ case 127:
 { yyval.bmode = MOVE; FileName = yyvsp[0].ch;;
     break;}
 case 128:
-{ 
+{
                 if (SetBadPktMode(yyvsp[0].bpmode,BPktDir) != 0) {
                   YYABORT;
                 }
@@ -2101,7 +2101,7 @@ case 132:
 { yyval.bpmode = MOVE; BPktDir = yyvsp[0].ch;;
     break;}
 case 133:
-{ 
+{
                 if (SetUTC(yyvsp[0].ln) != 0) {
                   YYABORT;
                 }
@@ -2117,9 +2117,9 @@ case 136:
 { yyval.ln = -yyvsp[0].ln; ;
     break;}
 case 137:
-{ 
-              wsd = new ScanDir(); 
-              CheckMem((char *)wsd); 
+{
+              wsd = new ScanDir();
+              CheckMem((char *)wsd);
               renumberf = FALSE;
               unpackf = FALSE;
               freshf = FALSE;
@@ -2186,7 +2186,7 @@ case 147:
                   if (ScriptWordExists(yyvsp[0].ch) == FALSE) {
                      yyerror("Script function not found.");
                      YYABORT;
-                  } 
+                  }
                   ScriptBefore = strdup(yyvsp[0].ch);
                ;
     break;}
@@ -2263,7 +2263,7 @@ case 155:
                ;
     break;}
 case 157:
-{ 
+{
                   if (tt->_STime != 0) {
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
@@ -2272,14 +2272,14 @@ case 157:
                ;
     break;}
 case 158:
-{ 
-                  tt->_STime = yyvsp[0].t + TimeOfBeginOfDay(-1); 
+{
+                  tt->_STime = yyvsp[0].t + TimeOfBeginOfDay(-1);
                ;
     break;}
 case 159:
-{ 
-                  tt->_STime = yyvsp[-2].t + TimeOfBeginOfDay(-1); 
-                  tt->_ETime = yyvsp[0].t + TimeOfBeginOfDay(-1) + 59; 
+{
+                  tt->_STime = yyvsp[-2].t + TimeOfBeginOfDay(-1);
+                  tt->_ETime = yyvsp[0].t + TimeOfBeginOfDay(-1) + 59;
                ;
     break;}
 case 160:
@@ -2291,9 +2291,9 @@ case 160:
                      YYABORT;
                   }
                   tt->_STime = TimeOfBeginOfDay(-1);
-                  b_time = tt->_STime; 
+                  b_time = tt->_STime;
                   do {
-                     i_time = tt->_STime; 
+                     i_time = tt->_STime;
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
                      tt = new tTimes;
@@ -2304,7 +2304,7 @@ case 160:
             ;
     break;}
 case 163:
-{ 
+{
                  if (yyvsp[0].ln < 0 || yyvsp[0].ln > 23) {
                     yyerror("Hour should be between 00 and 23");
                     YYABORT;
@@ -2314,7 +2314,7 @@ case 163:
               ;
     break;}
 case 164:
-{ 
+{
                  if (yyvsp[0].ln < 0 || yyvsp[0].ln > 59 || yyvsp[-2].t == (time_t) -1) {
                     yyval.t = (time_t)-1;
                     yyerror("Minutes should be between 00 and 59");
@@ -2326,30 +2326,30 @@ case 164:
               ;
     break;}
 case 166:
-{ 
+{
                   CheckETTime();
                   _TTimes->AddToEnd(tt);
                   tt = new tTimes;
                ;
     break;}
 case 167:
-{ 
+{
                  if (yyvsp[0].ln < 0 || yyvsp[0].ln > 6) {
                     yyerror("Day of week should be between 0 and 6");
                     YYABORT;
                  } else {
-                    tt->_STime = TimeOfBeginOfDay(yyvsp[0].ln); 
+                    tt->_STime = TimeOfBeginOfDay(yyvsp[0].ln);
                  }
               ;
     break;}
 case 168:
-{ 
+{
                  if (yyvsp[-2].ln < 0 || yyvsp[-2].ln > 6 || yyvsp[0].ln < 0 || yyvsp[0].ln > 6) {
                     yyerror("Day of week should be between 0 and 6");
                     YYABORT;
                  } else {
-                    tt->_STime = TimeOfBeginOfDay(yyvsp[-2].ln); 
-                    tt->_ETime = TimeOfBeginOfDay(yyvsp[0].ln) + (23*60*60)+(59*60)+59; 
+                    tt->_STime = TimeOfBeginOfDay(yyvsp[-2].ln);
+                    tt->_ETime = TimeOfBeginOfDay(yyvsp[0].ln) + (23*60*60)+(59*60)+59;
                  }
               ;
     break;}
@@ -2363,7 +2363,7 @@ case 171:
 { MaskMode = 0; ;
     break;}
 case 172:
-{ 
+{
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(NormalMask *)msk);
             ;
@@ -2372,7 +2372,7 @@ case 173:
 { MaskMode = 0; ;
     break;}
 case 174:
-{ 
+{
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(NormalMask *)msk);
             ;
@@ -2381,13 +2381,13 @@ case 175:
 { MaskMode = 0; ;
     break;}
 case 176:
-{ 
+{
                msk->_Type = MASK_ADD;
                AddReadyMask(*(NormalMask *)msk);
             ;
     break;}
 case 177:
-{ 
+{
                msk = new NormalMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -2406,9 +2406,9 @@ case 179:
 {
                ((NormalMask *)msk)->_FromAddr = cffa;
                if (MaskMode == 0) {
-                  rc = ((NormalMask *)msk)->_FromAddr.MaskValid(); 
+                  rc = ((NormalMask *)msk)->_FromAddr.MaskValid();
                } else {
-                  rc = ((NormalMask *)msk)->_FromAddr.ActValid(); 
+                  rc = ((NormalMask *)msk)->_FromAddr.ActValid();
                }
                if (!rc) {
                   yyerror("Invalid 'From' Address.");
@@ -2426,9 +2426,9 @@ case 181:
 {
                ((NormalMask *)msk)->_ToAddr = cffa;
                if (MaskMode == 0) {
-                  rc = ((NormalMask *)msk)->_ToAddr.MaskValid(); 
+                  rc = ((NormalMask *)msk)->_ToAddr.MaskValid();
                } else {
-                  rc = ((NormalMask *)msk)->_ToAddr.ActValid(); 
+                  rc = ((NormalMask *)msk)->_ToAddr.ActValid();
                }
                if (!rc) {
                   yyerror("Invalid 'To' Address.");
@@ -2445,14 +2445,14 @@ case 181:
             ;
     break;}
 case 182:
-{ 
+{
                ((NormalMask *)msk)->_Subject = strdup(yyvsp[0].ch);
-               NoTokensF = TRUE; 
+               NoTokensF = TRUE;
             ;
     break;}
 case 183:
-{ 
-               NoTokensF = FALSE; 
+{
+               NoTokensF = FALSE;
             ;
     break;}
 case 185:
@@ -2637,25 +2637,25 @@ case 233:
             ;
     break;}
 case 234:
-{ 
+{
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(KludgeMask *)msk);
             ;
     break;}
 case 235:
-{ 
+{
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(KludgeMask *)msk);
             ;
     break;}
 case 236:
-{ 
+{
                msk->_Type = MASK_ADD;
                AddReadyMask(*(KludgeMask *)msk);
             ;
     break;}
 case 237:
-{ 
+{
                msk = new KludgeMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -2672,25 +2672,25 @@ case 238:
             ;
     break;}
 case 239:
-{ 
+{
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(BodyMask *)msk);
             ;
     break;}
 case 240:
-{ 
+{
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(BodyMask *)msk);
             ;
     break;}
 case 241:
-{ 
+{
                msk->_Type = MASK_ADD;
                AddReadyMask(*(BodyMask *)msk);
             ;
     break;}
 case 242:
-{ 
+{
                msk = new BodyMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -2707,25 +2707,25 @@ case 243:
             ;
     break;}
 case 244:
-{ 
+{
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(ScriptMask *)msk);
             ;
     break;}
 case 245:
-{ 
+{
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(ScriptMask *)msk);
             ;
     break;}
 case 246:
-{ 
+{
                msk->_Type = MASK_ADD;
                AddReadyMask(*(ScriptMask *)msk);
             ;
     break;}
 case 247:
-{ 
+{
                msk = new ScriptMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -2755,7 +2755,7 @@ case 249:
           act->sd = wsd;
           act->Before = BeforeRoute;
           act->After = AfterRoute;
-         _TTimes = &act->_Times;       
+         _TTimes = &act->_Times;
        ;
     break;}
 case 250:
@@ -2839,8 +2839,8 @@ case 287:
            ;
     break;}
 case 288:
-{ 
-            act->_Act = ACT_DISPLAY; 
+{
+            act->_Act = ACT_DISPLAY;
             act->_TplName = strdup(yyvsp[0].ch);
          ;
     break;}
@@ -2850,13 +2850,13 @@ case 289:
             if (ScriptWordExists(yyvsp[0].ch) == FALSE) {
                yyerror("Script function not found.");
                YYABORT;
-            } 
+            }
             act->_TplName = strdup(yyvsp[0].ch);
          ;
     break;}
 case 290:
 {
-            act->_Act = ACT_FLAG; 
+            act->_Act = ACT_FLAG;
             act->_OutDir = strdup(yyvsp[0].ch);
          ;
     break;}
@@ -3089,7 +3089,7 @@ case 316:
                if (strlen(yyvsp[0].ch) > 72) {
                   yyerror("New path too long");
                   YYABORT;
-               }	       
+               }
                act->_OutDir = strdup(yyvsp[0].ch);
             ;
     break;}
@@ -3119,7 +3119,7 @@ case 320:
                if (strlen(yyvsp[0].ch) > 72) {
                   yyerror("New path too long");
                   YYABORT;
-               }	       
+               }
                act->_OutDir = strdup(yyvsp[0].ch);
             ;
     break;}
@@ -3127,12 +3127,12 @@ case 321:
 {
                act->_Act = ACT_COPYATTACH;
                if (!DirExists(yyvsp[0].ch)) {
-	         Log.Level(LOGE) << "Target directory '" << yyvsp[0].ch << "' not found." << EOL;	       
+	         Log.Level(LOGE) << "Target directory '" << yyvsp[0].ch << "' not found." << EOL;
                }
                if (strlen(yyvsp[0].ch) > 72) {
                   yyerror("New path too long");
                   YYABORT;
-               }	       
+               }
                act->_OutDir = strdup(yyvsp[0].ch);
             ;
     break;}
@@ -3162,7 +3162,7 @@ case 323:
                   act->_TplName = (char *)malloc(256);
                   CheckMem(act->_TplName);
                   for (count = 0; count < 256; count++) act->_TplName[count] = (char) count;
-                  count = 0;	 
+                  count = 0;
                   line = 0;
 
                   while (fgets((char*)buf,sizeof(buf),fp)) {
@@ -3181,9 +3181,9 @@ case 323:
                         on=ctoi((char *)q);
                         if (in != 0 && on != 0) {
                            if (count++ < 256 ) {
-                              act->_TplName[in]=on; 
-                           } else { 
-                              sprintf(buf,"Char map table \"%s\" is big",yyvsp[0].ch); 
+                              act->_TplName[in]=on;
+                           } else {
+                              sprintf(buf,"Char map table \"%s\" is big",yyvsp[0].ch);
                               yyerror(buf);
                               fclose(fp);
                               free(act->_TplName);
@@ -3289,11 +3289,11 @@ case 340:
 { cffa.Point(FA_SUBMASK); ;
     break;}
 case 341:
-{ 
-               cffa.Zone(yyvsp[-4].ln); 
-               cffa.Net(yyvsp[-2].ln); 
-               cffa.Node(yyvsp[0].ln); 
-               cffa.Point(0); 
+{
+               cffa.Zone(yyvsp[-4].ln);
+               cffa.Net(yyvsp[-2].ln);
+               cffa.Node(yyvsp[0].ln);
+               cffa.Point(0);
             ;
     break;}
 case 342:
@@ -3305,7 +3305,7 @@ case 343:
 }
 
 
-
+
   yyvsp -= yylen;
   yyssp -= yylen;
 #if YYLSP_NEEDED

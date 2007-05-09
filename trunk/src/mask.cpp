@@ -5,26 +5,19 @@
  *  Check points 23*
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: mask.cpp,v 1.2 2005/06/22 22:18:14 ph0enix Exp $
+ *  $Id$
  */
+#ifdef HAVE_CONFIG_H
+# include "aconfig.h"
+#endif
 
-#ifndef __GNUC__
-#include <io.h>
-#include <direct.h>
-#else
-#include <unistd.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <sys/stat.h>
 #include <errno.h>
-#endif                                                                                                          
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,7 +38,6 @@
 #include "aka.hpp"
 #include "wildmat.hpp"
 #include "script.hpp"
-
 
 /*--------------------------------------------------------------------*/
 /*                         Common functions                           */
@@ -254,7 +246,7 @@ int BodyMask::operator == (cMSG &m) const {
    }
    CHP = 23011;
    Log.Level(LOGD) << "Message is equal to mask." << EOL;
-   
+
    return TRUE;
 }
 
@@ -336,7 +328,7 @@ NormalMask::NormalMask() {
    fPrivate = fCrash = fReceived = fSend =
    fFileAttach = fTransit = fOrphan = fKillSend = fLocal =
    fHold = fFileRequest = fRRQ = fIRR = fARQ = fFURQ = fDIR =
-   fIMM = fCFM = fTFS = fKFS  = fEmpty = fMaxAge = fLoop = fAttExists = 
+   fIMM = fCFM = fTFS = fKFS  = fEmpty = fMaxAge = fLoop = fAttExists =
    fEchomail = fScanned = fMaxAttach = fMaxMsg = fLok = fAS = 0;
    _Type = MASK_ERROR;
    sd = NULL;
@@ -362,7 +354,7 @@ char fa1[40], fa2[40];
    strcpy(fa1,_FromAddr.ToStr());
    strcpy(fa2,_ToAddr.ToStr());
    Log << "Mask: \"" << _FromName << "\" " << fa1
-                   << " \"" << _ToName << "\" " << fa2 
+                   << " \"" << _ToName << "\" " << fa2
                    << " \"" << _Subject << '"';
    fa1[0] = '\0';
 
@@ -440,7 +432,7 @@ char fa1[40], fa2[40];
 
    if (fMaxAttach == 1) strcat(fa1,"+A");
    if (fMaxAttach == 2) strcat(fa1,"-A");
-   
+
    if (fMaxMsg == 1) strcat(fa1,"+M");
    if (fMaxMsg == 2) strcat(fa1,"-M");
 
@@ -586,8 +578,8 @@ int ScriptMask::operator == (cMSG &m) const {
 
       case SS_NOTDEF:
       case SS_FALSE:
-      case SS_ERROR: 
+      case SS_ERROR:
       default:    Log.Level(LOGD) << "Message is not equal to mask." << EOL;
                   return FALSE;
-   }                                                                                                                       
+   }
 }
