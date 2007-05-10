@@ -15,12 +15,7 @@
 
 #ifndef FIDOADDR_HPP
 #define FIDOADDR_HPP
-#ifdef HAVE_CONFIG_H
-# include "aconfig.h"
-#endif
-#ifdef HAVE_STRING_H
 #include        <string.h>
-#endif
 
 #include        "log.hpp"
 #include	"mytypes.hpp"
