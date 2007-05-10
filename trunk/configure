@@ -8269,6 +8269,9 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
    fi
+  CFLAGS += $PERL_CFLAGS
+  CXXFLAGS += $PERL_CFLAGS
+  LDFLAGS += $PERL_LFLAGS
   fi
 else
 

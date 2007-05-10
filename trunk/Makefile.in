@@ -41,8 +41,7 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure \
 	$(top_srcdir)/hpp/aconfig.hin AUTHORS COPYING ChangeLog \
 	INSTALL MakeFiles/config.guess MakeFiles/config.sub \
-	MakeFiles/depcomp MakeFiles/install-sh MakeFiles/missing NEWS \
-	TODO
+	MakeFiles/depcomp MakeFiles/install-sh MakeFiles/missing TODO
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/MakeFiles/acinclude.m4 \
@@ -688,7 +687,7 @@ uninstall-man: uninstall-man1
 
 
 dist-hook:
-	$(distdir)/samples -name .svn -exec rm -r '{}' ';'
+	find $(distdir)/samples $(distdir)/doc -name .svn -exec rm -r '{}' ';'
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
