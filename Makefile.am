@@ -9,4 +9,4 @@ man_MANS = doc/rntrack.1
 data_DATA = doc/FAQ doc/FAQ.ru doc/MANUAL doc/MANUAL.ru doc/report.err doc/report.err.ru
 
 dist-hook:
-	$(distdir)/samples -name .svn -exec rm -r '{}' ';'
+	find $(distdir)/samples $(distdir)/doc -name .svn -exec rm -r '{}' ';'
