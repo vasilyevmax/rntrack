@@ -1,7 +1,9 @@
 # $Id$
 CC	= g++
 CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -O3
-CDEFS	= -DUNIX -D__LINUX__ 
+CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
+          -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
+	  -DHAVE_LOCALE_H
 LFLAGS	= -s -L$(SRCDIR)smapi -lsmapilnx
 SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg

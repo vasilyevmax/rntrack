@@ -16,12 +16,7 @@
 #ifndef _STRING_HPP_
 #define _STRING_HPP_
 
-#ifdef HAVE_CONFIG_H
-# include "aconfig.h"
-#endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
 
 /*
 #if defined(__OpenBSD__)
