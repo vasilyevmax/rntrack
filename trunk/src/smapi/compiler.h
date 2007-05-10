@@ -1446,6 +1446,7 @@ int qq(void)
 #    define SH_DENYNO 0x40
 #  endif
 
+#  define HAS_strupr
 #  define HAS_spawnvp    /* spawnvp() present */
 #  define HAS_mktime     /* time.h */
 #  define HAS_strftime   /* time.h */
