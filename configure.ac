@@ -102,7 +102,7 @@ case "$target" in
   ;;
 esac
 
-AC_DEFINE_UNQUOTED(__PLATFORM_TYPE__,$target_os,[target platform])
+AC_DEFINE_UNQUOTED(__PLATFORM_TYPE__,"$target_os",[target platform])
 
 # EOF OS-specific
 
@@ -119,9 +119,9 @@ AC_ARG_ENABLE(scripts,		 [  --enable-scripts			enable Perl-scripting (auto)],
    if test $ac_perl_result = yes; then
 	AC_DEFINE(__PERL_NEW__,1,[Perl 5.8+ installed])
    fi
-  CFLAGS += $PERL_CFLAGS
-  CXXFLAGS += $PERL_CFLAGS
-  LDFLAGS += $PERL_LFLAGS
+   CFLAGS="$CFLAGS $PERL_CFLAGS"
+   CXXFLAGS="$CXXFLAGS $PERL_CFLAGS"
+   LDFLAGS="$LDFLAGS $PERL_LFLAGS"
   fi],
   AC_DEFINE(__NOSCRIPTS__,1,[disable Perl-scripting]) )
 # EOF Optional arguments
