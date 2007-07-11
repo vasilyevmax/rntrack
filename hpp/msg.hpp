@@ -18,6 +18,7 @@
 
 #ifdef HAVE_CONFIG_H
 # include "aconfig.h"
+# undef BYTEORDER
 #endif
 
 #ifdef HAVE_TIME_H

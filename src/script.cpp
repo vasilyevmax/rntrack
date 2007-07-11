@@ -21,9 +21,12 @@
 
 #ifdef HAVE_CONFIG_H
 # include "aconfig.h"
+#undef BYTEORDER
+#undef HAVE_CONFIG_H
 #endif
 
 #if !defined(__NOSCRIPTS__)
+#undef BYTEORDER
 #include <EXTERN.h>
 #include <perl.h>
 #endif
