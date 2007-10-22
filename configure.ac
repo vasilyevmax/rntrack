@@ -125,7 +125,11 @@ AC_ARG_ENABLE(scripts,		 [  --enable-scripts			enable Perl-scripting (auto)],
   fi],
   AC_DEFINE(__NOSCRIPTS__,1,[disable Perl-scripting]) )
 
-AC_ARG_VAR(DefaultConfig,          [specify config file pathname (default is /etc/ftn/rntrack.cfg)])
+AC_ARG_VAR(CONFIG,          [specify config file pathname (default is /etc/ftn/rntrack.cfg)])
+if test "x$CONFIG" != "x" ; then
+  AC_DEFINE_UNQUOTED(DefaultConfig,"$CONFIG",[config file pathname])
+  AC_MSG_NOTICE([config file is set to $CONFIG])
+fi
 
 # EOF Optional arguments
 
