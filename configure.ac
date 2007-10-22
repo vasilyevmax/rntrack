@@ -124,6 +124,9 @@ AC_ARG_ENABLE(scripts,		 [  --enable-scripts			enable Perl-scripting (auto)],
    LDFLAGS="$LDFLAGS $PERL_LFLAGS"
   fi],
   AC_DEFINE(__NOSCRIPTS__,1,[disable Perl-scripting]) )
+
+AC_ARG_VAR(DefaultConfig,          [specify config file pathname (default is /etc/ftn/rntrack.cfg)])
+
 # EOF Optional arguments
 
 
