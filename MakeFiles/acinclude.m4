@@ -3,10 +3,11 @@ dnl
 dnl 1. Define macro AC_PROG_PERL_VERSION: check version of the Perl interpreter.
 dnl 2. Define macro AC_C_BIGENDIAN_CROSS: check bytes order (big endian or little endian) for cross-compiling or host-compiling.
 dnl
-dnl $Id$
+dnl $Id:$
 
 # Perl version check (imported from autoconf-archive package)
 # (c) Dean Povey <povey@wedgetail.com>
+# license AllPermissive
 AC_DEFUN([AC_PROG_PERL_VERSION],[dnl
 # Make sure we have perl
 AC_CHECK_PROG(PERL,perl,perl)
@@ -38,7 +39,10 @@ else
 fi
 ])dnl
 
-
+# Byte order check (big-endian or little-endian)
+#  (imported from autoconf-archive package)
+# (c) Guido Draheim <guidod@gmx.de>
+# license: GPL With AC Exception
 AC_DEFUN([AC_C_BIGENDIAN_CROSS],
 [AC_CACHE_CHECK(whether byte ordering is bigendian, ac_cv_c_bigendian,
 [ac_cv_c_bigendian=unknown
