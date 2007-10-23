@@ -717,7 +717,6 @@ EGREP
 LIBOBJS
 PERL_CFLAGS
 PERL_LFLAGS
-CONFIG
 LTLIBOBJS'
 ac_subst_files=''
       ac_precious_vars='build_alias
@@ -731,8 +730,7 @@ CPPFLAGS
 CCC
 CC
 CFLAGS
-CPP
-CONFIG'
+CPP'
 
 
 # Initialize some variables set by options.
@@ -1315,9 +1313,15 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
-  --enable-log-pid			enable pid logging
-  --enable-syslog-log-format		syslog-like log structure
-  --enable-scripts			enable Perl-scripting (auto)
+  --enable-log-pid		 enable pid logging
+  --enable-syslog-log-format	 syslog-like log structure
+  --enable-scripts		 enable Perl-scripting (auto)
+
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-config=<file>    specify alternate config file
+                          (default is /etc/ftn/rntrack.cfg)
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -1330,7 +1334,6 @@ Some influential environment variables:
   CC          C compiler command
   CFLAGS      C compiler flags
   CPP         C preprocessor
-  CONFIG      specify config file pathname (default is /etc/ftn/rntrack.cfg)
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -8725,15 +8728,7 @@ cat >>confdefs.h <<\_ACEOF
 #define WORDS_BIGENDIAN 1
 _ACEOF
 
-  BYTEORDER=4321
-else
-  BYTEORDER=1234
 fi
-
-cat >>confdefs.h <<_ACEOF
-#define BYTEORDER $BYTEORDER
-_ACEOF
-
 if test $ac_cv_c_bigendian = unknown; then
   { { echo "$as_me:$LINENO: error: unknown endianess - sorry" >&5
 echo "$as_me: error: unknown endianess - sorry" >&2;}
@@ -8873,6 +8868,20 @@ _ACEOF
 
 # Optional arguments
 
+# Check whether --with-config was given.
+if test "${with_config+set}" = set; then
+  withval=$with_config;
+cat >>confdefs.h <<_ACEOF
+#define DefaultConfig "$withval"
+_ACEOF
+
+  { echo "$as_me:$LINENO: config file is set to $withval" >&5
+echo "$as_me: config file is set to $withval" >&6;}
+
+
+fi
+
+
 # Check whether --enable-log-pid was given.
 if test "${enable_log_pid+set}" = set; then
   enableval=$enable_log_pid;
@@ -8982,17 +8991,6 @@ _ACEOF
 
 fi
 
-
-
-if test "x$CONFIG" != "x" ; then
-
-cat >>confdefs.h <<_ACEOF
-#define DefaultConfig "$CONFIG"
-_ACEOF
-
-  { echo "$as_me:$LINENO: config file is set to $CONFIG" >&5
-echo "$as_me: config file is set to $CONFIG" >&6;}
-fi
 
 # EOF Optional arguments
 
@@ -9790,11 +9788,10 @@ for ac_last_try in false false false false false :; do
 LIBOBJS!$LIBOBJS$ac_delim
 PERL_CFLAGS!$PERL_CFLAGS$ac_delim
 PERL_LFLAGS!$PERL_LFLAGS$ac_delim
-CONFIG!$CONFIG$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 5; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 4; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

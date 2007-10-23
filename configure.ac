@@ -108,12 +108,19 @@ AC_DEFINE_UNQUOTED(__PLATFORM_TYPE__,"$target_os",[target platform])
 
 
 # Optional arguments
+AC_ARG_WITH(config,
+[  --with-config=<file>    specify alternate config file
+                          (default is /etc/ftn/rntrack.cfg)],
+[  AC_DEFINE_UNQUOTED(DefaultConfig,"$withval",[config file pathname])
+  AC_MSG_NOTICE([config file is set to $withval])
+]
+)
 
-AC_ARG_ENABLE(log-pid,           [  --enable-log-pid			enable pid logging ],
+AC_ARG_ENABLE(log-pid,           [  --enable-log-pid		 enable pid logging ],
   AC_DEFINE(LOG_SHOW_PID,1,[enable pid logging]) )
-AC_ARG_ENABLE(syslog-log-format, [  --enable-syslog-log-format		syslog-like log structure ],
+AC_ARG_ENABLE(syslog-log-format, [  --enable-syslog-log-format	 syslog-like log structure ],
   AC_DEFINE(SYSLOG_LOG_FORMAT,1,[syslog-like log structure]) )
-AC_ARG_ENABLE(scripts,		 [  --enable-scripts			enable Perl-scripting (auto)],
+AC_ARG_ENABLE(scripts,		 [  --enable-scripts		 enable Perl-scripting (auto)],
   [if test $enableval = yes; then
    AC_PROG_PERL_VERSION(5.8.0)
    if test $ac_perl_result = yes; then
@@ -124,12 +131,6 @@ AC_ARG_ENABLE(scripts,		 [  --enable-scripts			enable Perl-scripting (auto)],
    LDFLAGS="$LDFLAGS $PERL_LFLAGS"
   fi],
   AC_DEFINE(__NOSCRIPTS__,1,[disable Perl-scripting]) )
-
-AC_ARG_VAR(CONFIG,          [specify config file pathname (default is /etc/ftn/rntrack.cfg)])
-if test "x$CONFIG" != "x" ; then
-  AC_DEFINE_UNQUOTED(DefaultConfig,"$CONFIG",[config file pathname])
-  AC_MSG_NOTICE([config file is set to $CONFIG])
-fi
 
 # EOF Optional arguments
 
