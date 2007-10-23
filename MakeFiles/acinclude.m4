@@ -99,11 +99,7 @@ AC_MSG_RESULT($ac_cv_c_bigendian)
 fi
 if test $ac_cv_c_bigendian = yes; then
   AC_DEFINE(WORDS_BIGENDIAN, 1, [whether byteorder is bigendian])
-  BYTEORDER=4321
-else
-  BYTEORDER=1234
 fi
-AC_DEFINE_UNQUOTED(BYTEORDER, $BYTEORDER, [1234 = LIL_ENDIAN, 4321 = BIGENDIAN])
 if test $ac_cv_c_bigendian = unknown; then
   AC_MSG_ERROR(unknown endianess - sorry, please pre-set ac_cv_c_bigendian)
 fi
