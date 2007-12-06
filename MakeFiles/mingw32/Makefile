@@ -1,16 +1,20 @@
 # $Id$
-CC	= g++
+CC      = g++
 CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
 CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H -DHAVE_IO_H
 LFLAGS	= -s -L$(SRCDIR)smapi -lsmapimgw
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
-EXEEND= _w32.exe
+EXEEND  = _w32.exe
+RM      = rm -f
 #CONFIG	= c:\\\\ftn\\\\rntrack.cfg
 
-# uncomment to enable
+# uncomment or use in comand line to enable features: 
+# Embedded Perl
 #ENABLE_SCRIPTS=1
+# Write PID/TID in log lines
 #ENABLE_LOG_PID=1
+# Use log lines format like syslog format
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 ifeq ($(ENABLE_SCRIPTS), 1)
@@ -80,9 +84,11 @@ rntrack: smapi $(OBJS)
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
 
 clean:
-	-del $(SRCDIR1)smapi\\*.o
-	-del $(SRCDIR1)smapi\\*.a
-	-del *.o
-	-del *~
-	-del core                                                                                                
-	-del rntrack$(EXEEND)
+	-$RM $(SRCDIR1)smapi\\*.o
+	-$RM $(SRCDIR1)smapi\\*.a
+	-$RM *.o
+	-$RM *~
+	-$RM core
+
+distclean: clean
+	-$RM rntrack$(EXEEND)
