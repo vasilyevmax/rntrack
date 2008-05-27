@@ -10,9 +10,10 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: msgbase.cpp,v 1.3 2005/06/22 22:18:14 ph0enix Exp $
+ *  $Id$
  */
 
+#include "constant.hpp"
 #ifndef __GNUC__
 #include <io.h>
 #include <direct.h>
@@ -27,7 +28,6 @@
 #include <assert.h>
 #include <errno.h>
 
-#include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
 #include "configure.hpp"
@@ -481,8 +481,13 @@ char Buff[1024];
       return TRUE;
    }
    sprintf(Buff,"%s%u"MsgExtension,DirName,MsgNum);
-   MsgMask[MsgNum] = 0;
-   return (unlink(Buff) == 0);
+   int error = unlink(Buff);
+   if(!error)
+   {
+      MsgMask[MsgNum] = 0;
+      Log.Level(LOGD) << "Message " << Buff << " is deleted" << EOL;
+   }
+   return (!error);
 }
 
 // ---------------------------
@@ -767,6 +772,7 @@ char *Buff;
    CHP = 23711;
    fclose(fh);
    CHP = 23712;
+   AddToMask(Num);
    return TRUE;
 }
 
