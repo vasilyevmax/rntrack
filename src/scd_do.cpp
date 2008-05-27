@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: scd_do.cpp,v 1.4 2005/06/05 20:48:17 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef __SCD_DO_CPP__
@@ -699,6 +699,7 @@ size_t size;
                return FALSE;
             }
          }
+         m.fSend = 1;
          if (After != NULL) {
             Log.Level(LOGI) << " Execute 'AfterRoute' ScanDir." << EOL;
             RSTRLCPY(m._RoutedVia,f.ToStr(),127);
