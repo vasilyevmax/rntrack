@@ -286,13 +286,16 @@ configuration-file
 
 KillRoutedMessage: <Mode>
 ------------------
- Shows to RNtrack what to do with a letter after execution of Action: Route
- (or Action: RouteFilebox) command.
-   <Mode> : Always  - after the command the letter is always deleted
-          : Never   - after the command the letter is never deleted
-          : Flag    - if the letter has KillSend flag (k) then it will
-                      we deleted. Otherwise it won't
- By default Always mode is used.
+ Shows to RNtrack what to do with the message after execution of Action: Route
+(or Action: RouteFilebox) command.
+   <Mode> : Always  - after the command the message is always deleted
+          : Never   - after the command the message is never deleted
+          : Flag    - the message will be deleted only if it has KillSent 
+                      flag (k).
+ By default the mode 'Always' is used. If the message should be deleted, it is
+deleted from the message base named by the 'ScanDir:' command to which the 
+'Action: Route' belongs. Meanwhile the message stays in memory and its further
+handling is possible.
 
 KludgeMask: * * *
 -----------
@@ -452,7 +455,12 @@ coincided with mask, shown password is added to packet.
 ScanDir: "o:\netmail" [Renumber] [Unpack] [Time] [Flag "[!]File"] [ScriptBefore "Func1"] [ScriptAfter "Func2"]
 ScanDir: @BeforeRoute|@AfterRoute [Flag "[!|#]File"]
 --------
- Shows base that will be processed. Several bases can be indicated.
+ Shows the message base that will be processed. Several bases can be indicated.
+The messages are read in succession into memory. After that every message may be
+compared with a mask by a 'Mask:' command and if the comparison is successful,
+some actions may be done by 'Action:' commands. All commands below the 'ScanDir:'
+command refer to this 'ScanDir:' command until another 'ScanDir:' command is 
+encountered or the configuration file ends.
 
  If additional keyword Renumber is used (of course, without square brackets)
 then after all operations with this base are done RNtrack will renumber
@@ -800,17 +808,26 @@ Possible variants for this keyword are:
                                      of the body of the letter.
    Action: AddKludge "name" "value" - Add kludge to message.
 
-   Action: Delete                  - Delete the letter.
+   Action: Delete                  - Delete the message. It is deleted from the
+                                     message base named by the 'ScanDir:'
+                                     command to which this command refers. At 
+                                     the same time the message stays in memory
+                                     and its further processing by other commands
+                                     refering to the same 'ScanDir:' is possible.
 
-   Action: Move "o:\new\dir"       - Move the letter to another base.
+   Action: Move "o:\new\dir"       - Move the message to another base. After that
+                                     its further processing by other commands
+                                     refering to the same 'ScanDir:' is possible.
 
-   Action: Copy "o:\new\dir"       - Copy the letter to another base.
+   Action: Copy "o:\new\dir"       - Copy the message to another base.
 
-   Action: Rewrite * * * * * *     - Rewrite the letter. Symbol '*' shows
-                                     that current field must be left
-                                     unchanged.
-                                     In the Subject field you can use macros
-                                     that are used in templates.
+   Action: Rewrite * * * * * *     - Rewrite the message. Symbol '*' shows
+                                     that the current field must be left
+                                     unchanged. RNtrack writes the message from
+                                     the memory to the message base named by the
+                                     'ScanDir:' command. You can use any macros
+                                     permitted in templates for the Subject 
+                                     field.                                     
 
    Action: Ignore                  - Ignore the letter.
 
