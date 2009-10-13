@@ -1,4 +1,4 @@
-$Id: report.err,v 1.2 2005/10/31 19:06:45 ph0enix Exp $
+$Id$
                     What you need to do if RNtrack halts
                     with message "Internal Error!!! Please,
                     read report.err in documentation."
@@ -15,7 +15,7 @@ already been fixed.
    * RNtrack.err
    * RNtrack.cfg
    * RNtrack.log
-   * *.msg - if RNtrack halts on a certain letter.
+   * *.msg - if RNtrack halts on a certain message.
    * What RNtrack put on the screen before halt.
    * Indicate type and version of your OS.
    * Indicate the location of stars and moon phase, if you are certain that
@@ -25,7 +25,5 @@ already been fixed.
 5. Describe the problem in _details_.  In looking for bugs there is no such
 thing as "too little info".
 
-6. Send all this information to me either to 2:5030/1157 or ph0enix@users.sourceforge.net
-
-With best regards,
-                  Alex
+6. Send all this information to me either to 2:5020/1042 or to
+dukelsky(at)users.sourceforge.net
