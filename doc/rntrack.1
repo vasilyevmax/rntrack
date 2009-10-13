@@ -6,27 +6,28 @@ RNtrack \- mail tracker and packer for FTN-networks
 [ options ]
 .SH DESCRIPTION
 .I  RNtrack
-is so called netmail "tracker". It's puprose is to process netmail on
-netmail hubs, though it can be useful for an ordinary node. It takes a letter,
+is a so called netmail "tracker". Its purpose is to process netmail on
+netmail hubs, though it can be useful for an ordinary node. It takes a message,
 compares it with a mask and, if comparison was successful, it executes
-corresponding operation with this letter.
+corresponding operation with this message.
 .SH OPTIONS
 .TP
 .B \-c configfile
-Use alternative config file. Space between -c and the beginning of path is obligatory. Quotation
-marks are necessary. This parameter overrides 
+Use an alternative config file. Space between -c and the beginning of the path is
+obligatory. Quotation marks are necessary. This parameter overrides 
 .B RNTRACKCONFIG
 environment variable.
 .TP
 .B \-u
-Unpack outbound. Shows that outbound repack is necessary
+Unpack outbound. Shows that outbound repack is necessary.
 Before execution of all main functions, described in configuration
 file, RNtrack will repack all outbound to a directory, defined by
 TempMail: keyword.
 .TP
 .B \-t
-Do ScanDir: with expired time of execution (instructions for which single execution is
-shown, without respect of whether or not they should be executed right now).
+Do ScanDir: with expired time of execution (instructions for which single
+execution is shown, without respect of whether or not they should be executed
+right now).
 .TP
 .B \-h, \-?
 Display help screen.
