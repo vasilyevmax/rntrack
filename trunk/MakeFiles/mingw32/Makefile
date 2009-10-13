@@ -1,12 +1,13 @@
 # $Id$
 CC      = g++
 CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
-CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H -DHAVE_IO_H
+CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H -DHAVE_IO_H \
+          -DHAVE_TIME_H -DHAVE_UTIME_H -DHAVE_LOCALE_H
 LFLAGS	= -s -L$(SRCDIR)smapi -lsmapimgw
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
 EXEEND  = _w32.exe
-RM      = rm -f
+RM      = del /Q
 #CONFIG	= c:\\\\ftn\\\\rntrack.cfg
 
 # uncomment or use in comand line to enable features: 
@@ -84,11 +85,11 @@ rntrack: smapi $(OBJS)
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
 
 clean:
-	-$RM $(SRCDIR1)smapi\\*.o
-	-$RM $(SRCDIR1)smapi\\*.a
-	-$RM *.o
-	-$RM *~
-	-$RM core
+	-$(RM) $(SRCDIR1)smapi\\*.o
+	-$(RM) $(SRCDIR1)smapi\\*.a
+	-$(RM) *.o
+	-$(RM) *~
+	-$(RM) core
 
 distclean: clean
-	-$RM rntrack$(EXEEND)
+	-$(RM) rntrack$(EXEEND)
