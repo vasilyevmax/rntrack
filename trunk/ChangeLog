@@ -4,6 +4,15 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.14 2009-10-09
+---------------
+! The flag of presence of a certain message in MSG base was not set after
+  writing the message down to the base.
+! The flag of presence of a certain message in MSG base was cleared after
+  deleting the message file without check whether the deletion succeeded.
+# If an invalid nodelist is found all nodelist handling functions are
+  switched off and RNtrack continues running.
+
 1.13 XX-XX-XX
 -------------
 ! Fix originate address recognition for messages with dublicated origin lines.
