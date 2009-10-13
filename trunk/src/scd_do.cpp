@@ -699,7 +699,6 @@ size_t size;
                return FALSE;
             }
          }
-         m.fSend = 1;
          if (After != NULL) {
             Log.Level(LOGI) << " Execute 'AfterRoute' ScanDir." << EOL;
             RSTRLCPY(m._RoutedVia,f.ToStr(),127);
