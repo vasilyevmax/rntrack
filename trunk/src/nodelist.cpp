@@ -61,6 +61,7 @@ typedef struct _Ntr {
 void ErrNdlFormat(char *m) {
    Log.Level(LOGE) << "Error in line " << NodelistLineNum << ", " << mErrNdlFormat << EOL;
    Log.Level(LOGE) << m << EOL;
+   NodelistTurnOff = TRUE;
 }
 
 int FindNodelist(char *Mask, char *Name) {
@@ -868,12 +869,28 @@ unsigned int i;
 
 int NodeLists::Load(void) {
 FILE *fh;
-   if (!Enabled()) {
+   if (!Enabled() || NodelistTurnOff)
+   {
       return TRUE;
    }
-   if (CompileNeed()) {
-      if (!Compile()) {
+   if (CompileNeed())
+   {
+      if (!Compile())
+      {
+         if(NodelistTurnOff)
+         {
+            Log.Level(LOGI) << "Nodelists are not used." << EOL;
+            return TRUE;
+         }
          return FALSE;
+      }
+   }
+   else
+   {
+      if(NodelistTurnOff)
+      {
+         Log.Level(LOGI) << "Nodelists are not used." << EOL;
+         return TRUE;
       }
    }
    fh = fopen(IndexName,"rb");
