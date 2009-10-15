@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 # $Id:$
 
-AC_INIT(RNtrack, 1.13, stas_degteff@users.sourceforge.net)
+AC_INIT(RNtrack, 1.14, dukelsky@users.sourceforge.net)
 AC_CONFIG_SRCDIR(src/rntrack.cpp)
 AC_CONFIG_AUX_DIR(MakeFiles)
 AC_CANONICAL_SYSTEM

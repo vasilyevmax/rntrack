@@ -1,8 +1,5 @@
 /* hpp/aconfig.hin.  Generated from configure.ac by autoheader.  */
 
-/* 1234 = LIL_ENDIAN, 4321 = BIGENDIAN */
-#undef BYTEORDER
-
 /* config file pathname */
 #undef DefaultConfig
 
