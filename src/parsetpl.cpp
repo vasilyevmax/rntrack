@@ -4,7 +4,7 @@
  *  parsetpl.cpp - Work with template files
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -576,20 +576,20 @@ Buff[0]='\0';
 
     if (Tpl->From != NULL) {
 
-	if ((0<Tpl->From->_FromAddr.Point())&&(Tpl->From->_FromAddr.Point()<=65535))
-	{
-	 sprintf(Buff+strlen(Buff),"p%u.",(unsigned int)Tpl->From->_FromAddr.Point());
-	}
+    if ((0<Tpl->From->_FromAddr.Point())&&(Tpl->From->_FromAddr.Point()<=65535))
+    {
+     sprintf(Buff+strlen(Buff),"p%u.",(unsigned int)Tpl->From->_FromAddr.Point());
+    }
 
         sprintf(Buff+strlen(Buff),"f%u.",(unsigned int)Tpl->From->_FromAddr.Node());
-	sprintf(Buff+strlen(Buff),"n%u.",(unsigned int)Tpl->From->_FromAddr.Net());
-	sprintf(Buff+strlen(Buff),"z%u",(unsigned int)Tpl->From->_FromAddr.Zone());
-	Tpl->AddStr(Buff);
+    sprintf(Buff+strlen(Buff),"n%u.",(unsigned int)Tpl->From->_FromAddr.Net());
+    sprintf(Buff+strlen(Buff),"z%u",(unsigned int)Tpl->From->_FromAddr.Zone());
+    Tpl->AddStr(Buff);
 
     }
     else 
     {
-	Tpl->AddInt(-1);
+    Tpl->AddInt(-1);
     }
     return TRUE;
 }
@@ -601,20 +601,20 @@ Buff[0]='\0';
 
     if (Tpl->From != NULL) {
 
-	if ((0<Tpl->From->_ToAddr.Point())&&(Tpl->From->_ToAddr.Point()<=65535))
-	{
-	 sprintf(Buff+strlen(Buff),"p%u.",(unsigned int)Tpl->From->_FromAddr.Point());
-	}
+    if ((0<Tpl->From->_ToAddr.Point())&&(Tpl->From->_ToAddr.Point()<=65535))
+    {
+     sprintf(Buff+strlen(Buff),"p%u.",(unsigned int)Tpl->From->_FromAddr.Point());
+    }
 
         sprintf(Buff+strlen(Buff),"f%u.",(unsigned int)Tpl->From->_ToAddr.Node());
-	sprintf(Buff+strlen(Buff),"n%u.",(unsigned int)Tpl->From->_ToAddr.Net());
-	sprintf(Buff+strlen(Buff),"z%u",(unsigned int)Tpl->From->_ToAddr.Zone());
-	Tpl->AddStr(Buff);
+    sprintf(Buff+strlen(Buff),"n%u.",(unsigned int)Tpl->From->_ToAddr.Net());
+    sprintf(Buff+strlen(Buff),"z%u",(unsigned int)Tpl->From->_ToAddr.Zone());
+    Tpl->AddStr(Buff);
 
     }
     else 
     {
-	Tpl->AddInt(-1);
+    Tpl->AddInt(-1);
     }
     return TRUE;
 }
@@ -745,8 +745,8 @@ char LastChr;
       return TRUE;
    }
    CHP = 77134;
-// Copy body of message and strip 0x0A characters. Fucked shit, 
-// even who be reads standards, except for me?
+// Copy the body of the message and strip 0x0A characters. Fucked shit, 
+// does anybody besides me read these standards?
    LastChr = '\0';
    while (*c != '\0') {
       if (*c == '\r') {
@@ -1070,7 +1070,7 @@ int Template::Parse(void) {
    }
    CHP = 77264;
    if (access(TplName,R_OK) != 0) {
-      Log.Level(LOGE) << "Template file '" << TplName << "' is not exists." << EOL;
+      Log.Level(LOGE) << "Template file '" << TplName << "' does not exist." << EOL;
       return FALSE;
    }
    CHP = 77268;

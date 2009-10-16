@@ -63,17 +63,17 @@ int SetDomain(FA &f, char *tmt) {
 char Dom[11];
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Domain.");
+      yyerror("Missing parameter: Domain.");
       return (-1);
    }
 
    if (strlen(tmt) > 10) {
-      yyerror("Domain should be no more 10 characters.");
+      yyerror("Domain should be no more than 10 characters long.");
       return (-1);
    }
 
    if (!f.Valid()) {
-      yyerror("Invalid addres.");
+      yyerror("Invalid address.");
       return (-1);
    }
    RSTRLCPY(Dom,tmt,10);

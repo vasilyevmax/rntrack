@@ -4,7 +4,7 @@
  *  scripts.cpp - Work with scripts
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -96,7 +96,7 @@ unsigned int i;
    cv=cv;
    CHP = 600014;
    if (items != 0) {
-      Log.Level(LOGE) << "perl_Update() argument count (need 0, exist" << (int)items << ")." << EOL;
+      Log.Level(LOGE) << "perl_Update() argument count (should be 0, actually " << (int)items << ")." << EOL;
       abort();
    }
 
@@ -191,7 +191,7 @@ FA fa;
    cv=cv;
    CHP = 60030;
    if (items != 1) {
-      Log.Level(LOGE) << " perl_ExistsInNodelist() argument count (need 1, exist" << (int)items << ")." << EOL;
+      Log.Level(LOGE) << " perl_ExistsInNodelist() argument count (should be 1, actually " << (int)items << ")." << EOL;
       abort();
    }
    sp_s = FromSP(0);
@@ -224,7 +224,7 @@ FA fa;
    cv=cv;
    CHP = 60030;
    if (items != 1) {
-      Log.Level(LOGE) << " perl_FindHub() argument count (need 1, exist" << (int)items << ")." << EOL;
+      Log.Level(LOGE) << " perl_FindHub() argument count (should be 1, actually " << (int)items << ")." << EOL;
       abort();
    }
    sp_s = FromSP(0);
@@ -260,7 +260,7 @@ static XS(perl_NewMsg)
  cv=cv;
  CHP = 60056;
  if (items < 9) {
-  Log.Level(LOGE) << " perl_NewMsg() argument count (need 9, exist " << (int)items << ")." << EOL;
+  Log.Level(LOGE) << " perl_NewMsg() argument count (should be 9, actually " << (int)items << ")." << EOL;
   abort();
  }
  
@@ -364,7 +364,7 @@ static XS(perl_NewMsg)
  }
  
  mb->Close();
-			
+            
  XSRETURN_EMPTY;
 }
 
@@ -400,7 +400,7 @@ int InitScriptSystem(void) {
 //         perl_parse(PerlSystem, xs_init, 1, embedding, NULL);
          return TRUE;
    } else {
-	   return FALSE;
+       return FALSE;
    }
 #else
    return TRUE;
@@ -570,15 +570,15 @@ int i;
 }
 
 ScrRet DoSomeWord(char *word) {
-	if (ScriptWordExists(word)) {
-	   return DoThisWord(word);
+    if (ScriptWordExists(word)) {
+       return DoThisWord(word);
    }
    return SS_NOTDEF;
 }
 
 ScrRet DoSomeWordRc(char *word) {
-	if (ScriptWordExists(word)) {
-	   return DoThisWordRc(word);
+    if (ScriptWordExists(word)) {
+       return DoThisWordRc(word);
    }
    return SS_NOTDEF;
 }

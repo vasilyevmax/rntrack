@@ -4,13 +4,13 @@
  *  widmat.cpp - Pattern matching
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: wildmat.cpp,v 1.1.1.1 2005/01/14 19:19:58 ph0enix Exp $
+ *  $Id$
  */
 
 /*
@@ -26,9 +26,9 @@
  *
  *  Special thanks to Lars Mathiesen <thorinn@diku.dk> for the ABORT code.
  *  This can greatly speed up failing wildcard patterns.  For example:
- *	pattern: -*-*-*-*-*-*-12-*-*-*-m-*-*-*
- *	text 1:	 -adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1
- *	text 2:	 -adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1
+ *  pattern: -*-*-*-*-*-*-12-*-*-*-m-*-*-*
+ *  text 1:  -adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1
+ *  text 2:  -adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1
  *  Text 1 matches with 51 calls, while text 2 fails with 54 calls.  Without
  *  the ABORT code, it takes 22310 calls to fail.  Ugh.  The following
  *  explanation is from Lars:
@@ -57,7 +57,7 @@
 // #define TEST 1
 
     /* What character marks an inverted character class? */
-#define NEGATE_CLASS		'!'
+#define NEGATE_CLASS        '!'
 
     /* Is "*" a common pattern? */
 #define OPTIMIZE_JUST_STAR
@@ -80,7 +80,7 @@ int    reverse;
         switch (*p) {
             case '\\': /* Literal match with following character. */
                     p++;
-                      //!!!!!!!!!!!!!!! no change it!!!!!!!!!!
+                      //!!!!!!!!!!!!!!! do not change it!!!!!!!!!!
             default: /* FALLTHROUGH */
                     if (*text != *p) return FALSE;
                     continue;
@@ -127,9 +127,9 @@ int    reverse;
         }
     }
 
-#ifdef	MATCH_TAR_PATTERN
+#ifdef  MATCH_TAR_PATTERN
     if (*text == '/')
-	return TRUE;
+    return TRUE;
 #endif  /* MATCH_TAR_PATTERN */
 
     return *text == '\0';
@@ -142,42 +142,42 @@ int    reverse;
 int
 wildmat(char *text, char *p) {
     if (p[0] == '*' && p[1] == '\0')
-	return TRUE;
+    return TRUE;
     return DoMatch(text, p) == TRUE;
 }
 
-#if	defined(TEST)
+#if defined(TEST)
 
 #include <stdio.h>
 
 /* Yes, we use gets not fgets.  Sue me. */
 
 int main(void) {
-    char	 p[80];
-    char	 text[80];
+    char     p[80];
+    char     text[80];
 
     printf("Wildmat tester.  Enter pattern, then strings to test.\n");
     printf("A blank line gets prompts for a new pattern; a blank pattern\n");
     printf("exits the program.\n");
 
     for ( ; ; ) {
-	printf("\nEnter pattern:  ");
-	(void)fflush(stdout);
-	if (gets(p) == NULL || p[0] == '\0')
-	    break;
-	for ( ; ; ) {
-	    printf("Enter text:  ");
-	    (void)fflush(stdout);
-	    if (gets(text) == NULL)
+    printf("\nEnter pattern:  ");
+    (void)fflush(stdout);
+    if (gets(p) == NULL || p[0] == '\0')
+        break;
+    for ( ; ; ) {
+        printf("Enter text:  ");
+        (void)fflush(stdout);
+        if (gets(text) == NULL)
         return (0);
-	    if (text[0] == '\0')
-		/* Blank line; go back and get a new pattern. */
-		break;
-	    printf("      %s\n", wildmat(text, p) ? "YES" : "NO");
-	}
+        if (text[0] == '\0')
+        /* Blank line; go back and get a new pattern. */
+        break;
+        printf("      %s\n", wildmat(text, p) ? "YES" : "NO");
+    }
     }
 
     return (0);
     /* NOTREACHED */
 }
-#endif	/* defined(TEST) */
+#endif  /* defined(TEST) */

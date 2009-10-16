@@ -241,7 +241,7 @@ int SetSemaphoreName(char *File, unsigned int SemTime) {
       return(-1);
    }
    if (strlen(File) == 0) {
-      yyerror("Missed parameter: Semaphore file name.");
+      yyerror("Missing parameter: Semaphore file name.");
       return (-1);
    }
 
@@ -260,7 +260,7 @@ FILE *fh;
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Timestamp file name.");
+      yyerror("Missing parameter: Timestamp file name.");
       return (-1);
    }
    if (access(tmt,W_OK) != 0) { /* attempt to create file */
@@ -288,7 +288,7 @@ int SetLogFile(char *tmt) {
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Log file name.");
+      yyerror("Missing parameter: Log file name.");
       return (-1);
    }
    LogFileName = strdup(tmt);
@@ -313,7 +313,7 @@ int SetTrafficLogTemplate(char *tmt) {
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: File name of Template for traffic Log.");
+      yyerror("Missing parameter: File name of Template for traffic Log.");
       return (-1);
    }
    TrafficLogTpl = strdup(tmt);
@@ -343,7 +343,7 @@ int LoadScriptFile(char *fname) {
 
 #if !defined(__NOSCRIPTS__)
    if (strlen(fname) == 0) {
-      yyerror("Missed parameter: Script file name.");
+      yyerror("Missing parameter: Script file name.");
       return (-1);
    }
    if (access(fname,R_OK) != 0) {
@@ -465,7 +465,7 @@ IndBiList<ScanDir>::ElemPtr sd;
       }
    }
    if (tmt < 1) {
-      yyerror("Parameter must be a number great than 0.");
+      yyerror("Parameter must be a number greater than 0.");
       return (-1);
    }
    if (sd != NULL) {
@@ -494,7 +494,7 @@ IndBiList<ScanDir>::ElemPtr sd;
       }
    }
    if (tmt < 0) {
-      yyerror("Parameter can't be a number lesser than 0.");
+      yyerror("Parameter can't be a negative number.");
       return (-1);
    }
    if (sd != NULL) {
@@ -523,7 +523,7 @@ IndBiList<ScanDir>::ElemPtr sd;
       }
    }
    if (tmt < 0) {
-      yyerror("Parameter can't be a number lesser than 0.");
+      yyerror("Parameter can't be a negative number.");
       return (-1);
    }
    if (sd != NULL) {
@@ -551,7 +551,7 @@ IndBiList<ScanDir>::ElemPtr sd;
       }
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Loop string.");
+      yyerror("Missing parameter: Loop string.");
       return (-1);
    }
    if (sd != NULL) {
@@ -570,11 +570,11 @@ int SetOrigin(char *tmt) {
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Origin string.");
+      yyerror("Missing parameter: Origin string.");
       return (-1);
    }
    if (strlen(tmt) > 70) {
-      yyerror("Origin string too long. Max Origin length is a 70 characters.");
+      yyerror("Origin string too long. Max Origin length is 70 characters.");
       return (-1);
    }
    Origin = strdup(tmt);
@@ -586,7 +586,7 @@ int SetOrigin(char *tmt) {
 int SetSysopName(char *tmt) {
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Sysop name.");
+      yyerror("Missing parameter: Sysop name.");
       return (-1);
    }
    if (SysopName != NULL) {
@@ -605,11 +605,11 @@ int SetTearline(char *tmt) {
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Tearline string.");
+      yyerror("Missing parameter: Tearline string.");
       return (-1);
    }
    if (strlen(tmt) > 70) {
-      yyerror("Tearline string too long. Max Tearline length is a 70 characters.");
+      yyerror("Tearline string too long. Max Tearline length is 70 characters.");
       return (-1);
    }
    Tearline = strdup(tmt);
@@ -690,7 +690,7 @@ char Buff2[1024];
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: directory name.");
+      yyerror("Missing parameter: directory name.");
       return (-1);
    }
    if (!DirExists(tmt)) {
@@ -724,7 +724,7 @@ int SetNodelistPath(char *tmt) {
 char Buf[1024];
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Nodelists path.");
+      yyerror("Missing parameter: Nodelists path.");
       return (-1);
    }
    if (!DirExists(tmt)) {
@@ -744,7 +744,7 @@ char Buf[1024];
 int SetIndexFile(char *tmt) {
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Index file name.");
+      yyerror("Missing parameter: Index file name.");
       return (-1);
    }
    Ndl.IndexFile(tmt);
@@ -850,7 +850,7 @@ int i;
 /*--------------------------------------------------------------------*/
 /*    S e a r c h T o k e n                                           */
 /*                                                                    */
-/*    Search token in table and return his number                     */
+/*    Search token in table and return its number                     */
 /*--------------------------------------------------------------------*/
 
 int SearchToken(char *s) {
@@ -893,7 +893,7 @@ char *Buff;
 /*--------------------------------------------------------------------*/
 /*    T o k e n N a m e                                               */
 /*                                                                    */
-/*    Search token in table by number and return his name             */
+/*    Search token in table by number and return its name             */
 /*--------------------------------------------------------------------*/
 
 char *TokenName(int s) {
@@ -908,7 +908,7 @@ int i;
 /*    T a k e C h a r                                                 */
 /*                                                                    */
 /*    Get one char from stream with buffering                         */
-/*    Look forward, and if get token then return token.               */
+/*    Look forward, and if get a token then return the token.         */
 /*                                                                    */
 /*    NoTokenF: TRUE   Disable tokenise stream.                       */
 /*              FALSE  Enable tokenise stream.                        */
@@ -1158,11 +1158,11 @@ FILE *sFh;
 char *sConfigFile;
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Include file name.");
+      yyerror("Missing parameter: Include file name.");
       return (-1);
    }
    if (access(tmt,R_OK) != 0) {
-      yyerror("File is not exists.");
+      yyerror("File does not exist.");
       return (-1);
    }
    sLineNumber = LineNumber;

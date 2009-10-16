@@ -4,7 +4,7 @@
  *  scd_do.cpp - Part of scandir.cpp
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -160,8 +160,8 @@ char *tmt;
    RSTRLCPY(d._Subject,s._Subject,72);
    tf = MakeFromAddr(s,_Mask->_FromAddr);
    tt = MakeToAddr(s,_Mask->_ToAddr);
-   if (s._FromAddr != tf) {        // If we change source address
-      d.fChanged = 1;              // we need change MSGID.
+   if (s._FromAddr != tf) {        // If we change the source address
+      d.fChanged = 1;              // we need to change MSGID.
    }
    d._FromAddr = tf;
    d._ToAddr = tt;
@@ -305,41 +305,41 @@ size_t size;
          if (m.fFileAttach) {
             m.Normalise();
             tmt = b.MessageName();
-	    if (_Act == ACT_CHANGEPATH)
-	    {
+        if (_Act == ACT_CHANGEPATH)
+        {
              if (strlen(_OutDir) == 0) {
                Log.Level(LOGI) << "Strip path to attached files in " << tmt << EOL;
              } else {
                Log.Level(LOGI) << "Change path to attached files in " << tmt << " to " << _OutDir << EOL;
              }
-	    } 
+        } 
             tmt2 = FileInbound;
             if (sd->_FileInbound != NULL) {
                FileInbound = sd->_FileInbound;
             }
-	    if (_Act == ACT_TOLOWERPATH)
-	    {
-	     Log.Level(LOGI) << "Convert path of attached files in " << tmt << " to lower case" << EOL;
+        if (_Act == ACT_TOLOWERPATH)
+        {
+         Log.Level(LOGI) << "Convert path of attached files in " << tmt << " to lower case" << EOL;
              if (!ToLowerPath(m)) {
                FileInbound = tmt2;
                return FALSE;
              }
-	    }
-	    else if (_Act == ACT_TOUPPERPATH)
-	    {
-	     Log.Level(LOGI) << "Convert path of attached files in " << tmt << " to upper case" << EOL;
+        }
+        else if (_Act == ACT_TOUPPERPATH)
+        {
+         Log.Level(LOGI) << "Convert path of attached files in " << tmt << " to upper case" << EOL;
              if (!ToUpperPath(m)) {
                FileInbound = tmt2;
                return FALSE;
-             }	    
-	    }
+             }      
+        }
             else
-	    {
+        {
              if (!ChangePath(m,_OutDir)) {
                FileInbound = tmt2;
                return FALSE;
              }
-	    }
+        }
             FileInbound = tmt2;
 //            m.fChanged = 1;
             if (SetViaAlways == TRUE) {
@@ -351,7 +351,7 @@ size_t size;
             }
          }
          break;
-	 
+     
       case ACT_MOVEATTACH:
       case ACT_MOVEATTACHFBOX:
          CHP = 13;
@@ -362,29 +362,29 @@ size_t size;
             if (sd->_FileInbound != NULL) {
                FileInbound = sd->_FileInbound;
             }
-	    if (_Act == ACT_MOVEATTACHFBOX)
-	    {
-	     RSTRLCPY(Buff,MakeFileboxName(_f,_Flav),BUFF_SIZE);
-	     Log.Level(LOGI) << "Move attached files in " << tmt << " to " << Buff << EOL;	    
-	     mymkdir(Buff);
+        if (_Act == ACT_MOVEATTACHFBOX)
+        {
+         RSTRLCPY(Buff,MakeFileboxName(_f,_Flav),BUFF_SIZE);
+         Log.Level(LOGI) << "Move attached files in " << tmt << " to " << Buff << EOL;      
+         mymkdir(Buff);
              if (!MoveAttach(m,Buff)) {
                FileInbound = tmt2;
                return FALSE;
              }
              if (!ReadLoFile(_f,_Flav))
               return FALSE;
-	     AddFboxAttachToLo(m,Buff);
+         AddFboxAttachToLo(m,Buff);
              if (!SaveLoFile(_f,_Flav))
-              return FALSE;	     
-	    }
-	    else
-	    {
-	     Log.Level(LOGI) << "Move attached files in " << tmt << " to " << _OutDir << EOL;
+              return FALSE;      
+        }
+        else
+        {
+         Log.Level(LOGI) << "Move attached files in " << tmt << " to " << _OutDir << EOL;
              if (!MoveAttach(m,_OutDir)) {
                FileInbound = tmt2;
                return FALSE;
-             }	     
-	    }
+             }       
+        }
 
             FileInbound = tmt2;
 //            m.fChanged = 1;
@@ -408,30 +408,30 @@ size_t size;
             if (sd->_FileInbound != NULL) {
                FileInbound = sd->_FileInbound;
             }
-	    if (_Act == ACT_COPYATTACHFBOX)
-	    {
-	     RSTRLCPY(Buff,MakeFileboxName(_f,_Flav),BUFF_SIZE);
-	     Log.Level(LOGI) << "Copy attached files in " << tmt << " to " << Buff << EOL;
+        if (_Act == ACT_COPYATTACHFBOX)
+        {
+         RSTRLCPY(Buff,MakeFileboxName(_f,_Flav),BUFF_SIZE);
+         Log.Level(LOGI) << "Copy attached files in " << tmt << " to " << Buff << EOL;
 
-	     mymkdir(Buff);
+         mymkdir(Buff);
              if (!CopyAttach(m,Buff)) {
                FileInbound = tmt2;
                return FALSE;
              }
              if (!ReadLoFile(_f,_Flav))
               return FALSE;
-	     AddFboxAttachToLo(m,Buff);
+         AddFboxAttachToLo(m,Buff);
              if (!SaveLoFile(_f,_Flav))
               return FALSE;
-	    }
-	    else
-	    {
-	     Log.Level(LOGI) << "Copy attached files in " << tmt << " to " << _OutDir << EOL;
+        }
+        else
+        {
+         Log.Level(LOGI) << "Copy attached files in " << tmt << " to " << _OutDir << EOL;
              if (!CopyAttach(m,_OutDir)) {
                FileInbound = tmt2;
                return FALSE;
              }
-	    }
+        }
             FileInbound = tmt2;
          }
          break;
@@ -546,7 +546,7 @@ size_t size;
          while ((tmt = strchr(_Tpl->Body,'\n')) != NULL) *tmt = '\r';
          tmt = m._Body;
          CHP = 16102;
-	 size=((tmt != NULL) ? strlen(tmt) : 0) + strlen(_Tpl->Body) +1;
+     size=((tmt != NULL) ? strlen(tmt) : 0) + strlen(_Tpl->Body) +1;
          m._Body = (char *) malloc(size);
          m.fEmpty = 0;
          CheckMem(m._Body);
@@ -568,24 +568,24 @@ size_t size;
          }
          CHP = 16107;
          break;
-	 
+     
       case ACT_ADDKLUDGE:
          CHP = 162;
-	 m.Normalise();
-	 Kludge *TKlu;
-	 char kName[SMALL_BUFF_SIZE];
-	 RSTRLCPY(kName,"\1",SMALL_BUFF_SIZE);
-	 RSTRLCAT(kName,_OutDir,SMALL_BUFF_SIZE); 
+     m.Normalise();
+     Kludge *TKlu;
+     char kName[SMALL_BUFF_SIZE];
+     RSTRLCPY(kName,"\1",SMALL_BUFF_SIZE);
+     RSTRLCAT(kName,_OutDir,SMALL_BUFF_SIZE); 
 
-	 TKlu = new Kludge(kName,_TplName);
- 	 m._Klu.AddToEnd(TKlu);
+     TKlu = new Kludge(kName,_TplName);
+     m._Klu.AddToEnd(TKlu);
 
-	 break;
+     break;
 
       case ACT_CALL:
          m.Normalise();
          tmt = StrAsTpl(m,_TplName);
-         Log.Level(LOGI) << "Execute programm " << tmt << EOL;
+         Log.Level(LOGI) << "Execute program " << tmt << EOL;
          if (_Tpl != NULL) {
             _Tpl->Clean();
             _Tpl->SetMsg(m);
@@ -602,9 +602,9 @@ size_t size;
          rcc = ExecP(tmt);
          unlink(_OutDir);
          if (rcc < 0) {
-            Log.Level(LOGE) << "Error execution " << tmt << EOL;
+            Log.Level(LOGE) << "Error executing " << tmt << EOL;
          } else {
-            Log.Level(LOGI) << "Done execution. Error code == " << rcc << EOL;
+            Log.Level(LOGI) << "Execution done. Error code == " << rcc << EOL;
          }
          free(tmt);
          break;
@@ -618,16 +618,16 @@ size_t size;
             FileInbound = sd->_FileInbound;
          }
          m.Normalise();
-	 
-	 if (_Act == ACT_ROUTEHUB)
-	 {
-	  _f=m._ToAddr;
-	  _f.Node(Ndl.FindHub(_f));
-	  _f.Point(0);
-	  f=_f;
-	 }
-	 else
-	 {
+     
+     if (_Act == ACT_ROUTEHUB)
+     {
+      _f=m._ToAddr;
+      _f.Node(Ndl.FindHub(_f));
+      _f.Point(0);
+      f=_f;
+     }
+     else
+     {
           if (_f.Zone() & FA_TOMASK) {
             f = m._ToAddr;
             if (!(_f.Point() & FA_TOMASK)) {
@@ -636,7 +636,7 @@ size_t size;
           } else {
             f = _f;
           }
-	 } 
+     } 
          Log.Level(LOGI) << "Route message from " << m._FromAddr;
          Log.Level(LOGI) << " to " << m._ToAddr;
          Log.Level(LOGI) << " via " << f.ToStr() << EOL;
@@ -651,10 +651,10 @@ size_t size;
          p.Set(f);
          tmt = f.ToStr();
          m.AddOurVia();
-	 if (_Act == ACT_ROUTEFBOX)
+     if (_Act == ACT_ROUTEFBOX)
           rc = p.AddMsg(m,_Flav,1);
-	 else 
-	  rc = p.AddMsg(m,_Flav,0);
+     else 
+      rc = p.AddMsg(m,_Flav,0);
          switch (rc) {
             case BSY: 
                Log.Level(LOGW) << f << " is Busy now." << EOL;
@@ -687,7 +687,7 @@ size_t size;
                p.Clean();
                FileInbound = tmt2;
                return TRUE;
-	    default: break;
+        default: break;
          }
          p.Clean();
          LogTraffic(m,f);
@@ -730,7 +730,7 @@ size_t size;
                Log.Level(LOGE) << "Error generating poll to " << f << EOL;
                p.Clean();
                return FALSE;
-	    default: break;
+        default: break;
          }
          p.Clean();
          break;
@@ -843,7 +843,7 @@ size_t size;
             tmt = b.MessageName();
             Lns = m.Lines();
             if (Lns > _Lines) {
-               Log.Level(LOGI) << "Split message " << tmt << EOL;
+               Log.Level(LOGI) << "Splitting message " << tmt << EOL;
                Parts = Lns / _Lines;
                if ((Lns % _Lines) != 0) Parts++;
                CurPart = 1;
@@ -855,7 +855,7 @@ size_t size;
 
                while (*tmt2 != '\0') {
                   tmt = stmt;
-                  sprintf(tmt,"\1SPLITTED: By RNtrack. Part %d of %d\r",CurPart, Parts);
+                  sprintf(tmt,"\1SPLIT by RNtrack. Part %d of %d\r",CurPart, Parts);
                   tmt += strlen(tmt);
                   for(Lns = 0; Lns < _Lines && *tmt2 != '\0'; tmt2++,tmt++) {
                      if (*tmt2 == '\r') Lns++;
@@ -865,7 +865,7 @@ size_t size;
                   m.Body(stmt);
                   m.fChanged = TRUE;
                   if (!b.WriteNewMsg(m)) {
-                     Log.Level(LOGE) << "   Error writing splitted message." << EOL;
+                     Log.Level(LOGE) << "   Error writing split message." << EOL;
                      free(stmt);
                      m.Body(sBeg);
                      return FALSE;
@@ -874,9 +874,9 @@ size_t size;
                }
                m.Body(sBeg);
                free(stmt);
-               Log.Level(LOGI) << "   Message splitted to " << Parts << " Parts" << EOL;
+               Log.Level(LOGI) << "   Message split to " << Parts << " parts" << EOL;
                if (!b.DeleteMsg()) {
-                  Log.Level(LOGE) << "   Error deleting splitted message." << EOL;
+                  Log.Level(LOGE) << "   Error deleting split message." << EOL;
                   return FALSE;
                }
             }

@@ -4,7 +4,7 @@
  *  nodelist.cpp - Work with nodelists
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -41,9 +41,9 @@ static int NodelistTurnOff = FALSE;
 static int NodelistLineNum = 0;
 
 static char mErrReadIndex[] = "Error reading index file.";
-static char mNdlChanged[] = "Some nodelists is changed. Recompile need.";
+static char mNdlChanged[] = "Some nodelists have changed. Recompilation is necessary.";
 static char mIndNFound[] = "Index file not found. Create new index file.";
-static char mErrNdlMustFull[] = "Error: You must define default Zone for Regional and Network verisons of nodelist.";
+static char mErrNdlMustFull[] = "Error: You must define default Zone for Regional and Network versions of nodelist.";
 static char mErrNdlFormat[] = "Incorrect nodelist format.";
 
 #define ErrReadIndex   Log.Level(LOGE) << mErrReadIndex << EOL
@@ -91,11 +91,11 @@ FILE *ft;
       if ((dd = opendir(dirslashbug(Path))) != 0) {
          while((ff = readdir(dd)) != NULL) {
             if (fsCompareName(ff->d_name,Fname) != 0 && (tmt = strrchr(ff->d_name,'.')) != NULL) {
-	       tmt++;
+           tmt++;
                if (StrIsNum(tmt) && atoi(tmt) > maxext) {
                   maxext = atoi(tmt);
-		  strcpy(Name,Path);
-		  strcat(Name,ff->d_name);
+          strcpy(Name,Path);
+          strcat(Name,ff->d_name);
                }
             }
          }
@@ -121,7 +121,7 @@ FILE *ft;
    return (0);
 }
 
-// ------------------- Compile and writing one nodelist  --------------------
+// ------------------- Compile and write one nodelist  --------------------
 
 static FILE *nh;
 static int  CurrentNet = -1;
@@ -196,12 +196,12 @@ Ntr *tmt;
 }
 
 int DelDupNode(unsigned int Node) {
-// Удаляем ноду из списка, если она там уже есть. Но! При этом проверяем,
-// а не в виде-ли хаба она есть? Если в виде хаба, то не удаляем. А если при 
-// этом выясняется, что она и сейчас хаб - то устанавливаем указатель
-// текущего хаба на это место.
-// Return TRUE  - успешно удалили, или этой ноды вообще небыло в списке
-//        FALSE - нода была в списке в виде хаба, да и сейчас - хаб.
+// Remove a node from the list if it is already present there but check
+// whether it is a hub. If it is a hub then do not remove it. If the node
+// is also a hub now then we set the current hub pointer to the hub.
+// Return TRUE  if the node was successfully removed 
+//              or it was absent in the list
+//        FALSE if the node was in the list as a hub and it is a hub now.
 Ntr *tr;
    tr = GetCurrentNet();
    assert(tr != NULL);
@@ -257,10 +257,10 @@ void _SetCurrentZone(unsigned int Zone) {
 }
 
 void _AddNode(unsigned int Node) {
-// Добавляем ноду в список. Если ее там еще небыло - 
-// то просто тупо приписываем в начало списка CurrentHub. Но если он не 
-// установлен, то добавляем в список как обычно.
-// Если была, то нифига не делаем, за нас уже все сделали в DelDupNode.
+// Add a node to the list. If it is absent there then just prepend it
+// to the CurrentHub list. If there is no CurrentHub list then we add
+// the node as usual. If the node is already present in the list
+// then do nothing.
 Ntr *tr, *tmt;
    
    if (DelDupNode(Node) == TRUE) {
@@ -665,48 +665,48 @@ FILE *fh;
 unsigned int tmp;
 NodeListElem Elem;
 
-// 1 - index file exist?
+// 1 - does index file exist?
    if (access(IndexName,F_OK) != 0) {
       IndexNotFound;
       return TRUE;
    }
 
-// 2 - We can open him?
+// 2 - can we open it?
    fh = fopen(IndexName,"r+b");
    if (fh == NULL) {
       Log.Level(LOGE) << "Unable to open index file." << EOL;
       return TRUE;
    }
 
-// 3 - We can read signature from him?
+// 3 - can we read the signature from it?
    if (fread(&tmp,sizeof(tmp),1,fh) != 1) {
       ErrReadIndex;
       fclose(fh);
       return TRUE;
    }
 
-// 4 - Signature is correct?
+// 4 - is signature correct?
    if (tmp != NdlSign) {
-      Log.Level(LOGE) << "Index file from old version of RNtrack. Recompile need." << EOL;
+      Log.Level(LOGE) << "Index file from the old version of RNtrack. Recompilation is necessary." << EOL;
       fclose(fh);
       return TRUE;
    }
 
-// 5 - We can read nodelist count?
+// 5 - can we read nodelist count?
    if (fread(&tmp,sizeof(tmp),1,fh) != 1) {
       ErrReadIndex;
       fclose(fh);
       return TRUE;
    }
 
-// 6 - count of nodelists the same?
+// 6 - is the count of nodelists the same?
    if (tmp != (unsigned int) Lists) {
       IndexChanged;
       fclose(fh);
       return TRUE;
    }
 
-// 7 - Node lists is no changed?
+// 7 - have nodelists not changed?
    for (unsigned int i = 0; i < tmp; i++) {
       if (fread(&Elem,sizeof(Elem),1,fh) != 1) {
          ErrReadIndex;
@@ -800,18 +800,18 @@ int i;
 // 3  - Write new, true header.
 
    if (fseek(fh,0,SEEK_SET) != 0) {
-      Log.Level(LOGE) << "Unable to set pointer to begin of index file." << EOL;
+      Log.Level(LOGE) << "Unable to set pointer to the beginning of the index file." << EOL;
       fclose(fh);
       return FALSE;
    }
    tmp = NdlSign;
    if (fwrite(&tmp,sizeof(tmp),1,fh) != 1) {
-      Log.Level(LOGE) << "Unable to write signature to index file." << EOL;
+      Log.Level(LOGE) << "Unable to write a signature to the index file." << EOL;
       fclose(fh);
       return FALSE;
    }
    if (fwrite(&Lists,sizeof(Lists),1,fh) != 1) {
-      Log.Level(LOGE) << "Unable to write Nodelist counter to index file." << EOL;
+      Log.Level(LOGE) << "Unable to write a Nodelist counter to the index file." << EOL;
       fclose(fh);
       return FALSE;
    }
@@ -819,14 +819,14 @@ int i;
       if ((MaxNodelistAge != (time_t)-1) && (NodelistTurnOff != TRUE)) {
          if ((time(NULL) - (NList+i)->Time) > MaxNodelistAge) {
             Log.Level(LOGI) << "Nodelist '" << (NList+i)->Name << "' too old." << EOL;
-            Log.Level(LOGI) << "Checking existance in nodelists turned off." << EOL;
+            Log.Level(LOGI) << "Checking of existence in nodelists is turned off." << EOL;
             NodelistTurnOff = TRUE;
             Log.Level(LOGD) << "Age   : " << (int) (time(NULL) - (NList+i)->Time) << EOL;
             Log.Level(LOGD) << "MaxAge: " << (int) MaxNodelistAge << EOL;
          }
       }
       if (fwrite(NList+i,sizeof(NodeListElem),1,fh) != 1) {
-         Log.Level(LOGE) << "Unable to write Nodelist information to index file." << EOL;
+         Log.Level(LOGE) << "Unable to write a Nodelist information to the index file." << EOL;
          fclose(fh);
          return FALSE;
       }
@@ -924,10 +924,11 @@ Nch *NodeLists::Srch(Nch *Addr, unsigned int Number) {
 unsigned int NodeLists::FindHub(FA const &f) {
 Nch *tmt;
 unsigned int currHub=0;
-// if nodelists turned off or need say that node exist then return to any 
-// adress - A_HOST
-// in another part of this programm compare return of this
+// If nodelists are switched off or it is necesary to say that a node exists
+// then return A_HOST for any address.
+// In other parts of this program compare return value of this
 // function only with (-1).
+
    if (NodelistTurnOff)
     return 0;
 
@@ -960,10 +961,11 @@ unsigned int currHub=0;
 
 unsigned int NodeLists::ExistInNodelist(FA const &f) {
 Nch *tmt;
-// if nodelists turned off or need say that node exist then return to any 
-// adress - A_HOST
-// in another part of this programm compare return of this
+// If nodelists are switched off or it is necesary to say that a node exists
+// then return A_HOST for any address.
+// In other parts of this program compare return value of this
 // function only with (-1).
+
    if (NodelistTurnOff) {
       return (A_HOST);
    }
@@ -1041,10 +1043,11 @@ unsigned int i;
 int NodeLists::InSubHubs(FA const &Addr, FA const &Mask) {
 Nch *tmt;
 int Existing;
-// Если узел используемый в качестве маски есть в нодлисте и он хаб или хост
-// то проверяем адрес на наличие у него в подхабнике. Иначе - проверяем поинт.
-// Ну и еще некоторые заморочки с регионами. Будь они трижды неладны в месте
-// с теми, кто придумывал фидошные стандарты.
+// If the node used as a mask is in the nodelist and it is a hub or host
+// then check if the Addr belongs to the "subhub" list of nodes linked in
+// the nodelist to the hub or to the host. Otherwise check a point.
+// And there is a mess with regions. Blast them thrice together with
+// those who developed Fidonet standards.
 
    Existing = (ExistInNodelist(Addr) == (unsigned int) -1 ? FALSE : TRUE);
 // Node is equal Mask?
@@ -1058,10 +1061,10 @@ int Existing;
    }
    if (Existing == FALSE) return FALSE;
 
-// Node in the same zone?
+// Is the node in the same zone?
    if ((Addr.Zone() & 0xffff) != (Mask.Zone() & 0xffff)) return FALSE;
 
-// Search zone of mask.
+// Search the zone of mask.
    tmt = Srch(Index,Mask.Zone() & 0xffff);
    if (tmt == NULL) {
 //      Log.Level(LOGD) << "Zone " << (Mask.Zone() & 0xffff) << " missing" << EOL;
@@ -1073,7 +1076,7 @@ int Existing;
       return FALSE;
    }
 
-// Search Net of mask.
+// Search the Net of mask.
    tmt = Srch(tmt,Mask.Net() & 0xffff);
    if (tmt == NULL) {
 //      Log.Level(LOGD) << "Net " << (Mask.Zone() & 0xffff) << ":" << (Mask.Net() & 0xffff) << " missing" << EOL;
@@ -1084,7 +1087,7 @@ int Existing;
          // Mask to region. Search net.
          while (tmt->Number != (unsigned int) -1) {
             if ((tmt->Number & 0xffff) == (Addr.Net() & 0xffff)) {
-               // Net is Found. Search node.
+               // The net is found. Search node.
                tmt = tmt->Sub;
                if (tmt == NULL) return FALSE;
                if ((Addr.Node() & 0xffff) == 0) return TRUE;
@@ -1096,7 +1099,7 @@ int Existing;
             }
             tmt++;
             if ((tmt->Number & A_MASK) == A_REGION) {
-               // Next region started, but net not found...
+               // Next region began but net was not found...
                return FALSE;
             }
          }
@@ -1112,7 +1115,8 @@ int Existing;
 //      Log.Level(LOGD) << "Node " << Addr << " not equal to mask " << Mask << " and no nodes in mask net." << EOL;
       return FALSE;
    }
-   // if mask is a HOST, then start already founded. Continue search otherwise.   
+   // If the mask is a HOST then the beginning has already been found.
+   // Otherwise continue the search.
    if ((Mask.Node() & 0xffff) != 0) {
       tmt = Srch(tmt,Mask.Node() & 0xffff);
       if (tmt == NULL) return FALSE;
@@ -1120,7 +1124,8 @@ int Existing;
       if ((tmt->Number & A_MASK) != A_HUB) return FALSE;
       tmt++;
    }
-   // Ok. We hawe start of list. Search node to hub or end of list.
+   // Ok. We have the beginning of the list.
+   // Search the node down to a hub or to the end of the list.
    while (tmt->Number != (unsigned int) -1 && (tmt->Number & A_MASK) != A_HUB) {
       if ((tmt->Number & 0xffff) == (Addr.Node() & 0xffff)) {
          return Existing;
@@ -1137,7 +1142,7 @@ NodeListElem *Elem;
 
    memset(Buff,0,512);
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: nodelist name or mask.");
+      yyerror("Missing parameter: nodelist name or mask.");
       return (-1);
    }
    if ((TempZone <= 0) && (TempZone != -3)) {
@@ -1186,7 +1191,7 @@ int SetMaxNodelistAge(int tmt) {
       return(-1);
    }
    if (tmt < 1) {
-      yyerror("Parameter must be a number great than 0.");
+      yyerror("Parameter must be a number greater than 0.");
       return (-1);
    }
    MaxNodelistAge = tmt * 24 * 60 * 60;

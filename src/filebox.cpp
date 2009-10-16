@@ -106,12 +106,12 @@ char FPath[101];
 //   Log.Level(LOGD) << "DEBUG0" <<EOL;
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Path.");
+      yyerror("Missing parameter: Path.");
       return (-1);
    }
 
    if (strlen(tmt) > 100) {
-      yyerror("Path should be no more 100 characters.");
+      yyerror("Path should be no more than 100 characters.");
       return (-1);
    }
 
@@ -206,7 +206,7 @@ int SetFileBoxDir(char *tmt) {
 char Buf[BUFF_SIZE];
 
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: FileBox path.");
+      yyerror("Missing parameter: FileBox path.");
       return (-1);
    }
    if (!DirExists(tmt)) {

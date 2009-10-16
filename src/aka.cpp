@@ -76,11 +76,11 @@ IndBiList<tAka>::ElemPtr tmt;
 int SetAka(FA &f, FA &m) {
 
    if (!f.Valid()) {
-      yyerror("Invalid our addres.");
+      yyerror("Our address is invalid.");
       return (-1);
    }
    if (f.Masked()) {
-      yyerror("Our AKA Address should do not be a mask.");
+      yyerror("Our AKA Address should not be a mask.");
       return (-1);
    }
 

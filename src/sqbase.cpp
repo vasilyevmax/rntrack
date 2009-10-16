@@ -4,7 +4,7 @@
  *  sqbase.cpp - Work with Squish and JAM bases
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -284,7 +284,7 @@ int SQUISH::DeleteMsg(void) {
                       << ", errno: " << errno << EOL;
       return FALSE;
    }
-//   if (bType == '$') { // Squish base. No need move to next message
+//   if (bType == '$') { // Squish base. No need to move to the next message
       PrevIsDel = TRUE;
 //   }
    CHP = 532;
@@ -511,7 +511,7 @@ char *tmt, *tmt2;
       if ((c = Body[strlen(Body)-1]) != '\r' && c != '\n') {
          CHP = 569;
          Log.Level(LOGD) << "MSGAPI::WriteOneMsg: last char == '" << (int) c << "'(" << c << ") " << EOL;
-         Log.Level(LOGD) << "MSGAPI::WriteOneMsg: Add tail newline. " << EOL;
+         Log.Level(LOGD) << "MSGAPI::WriteOneMsg: Append newline. " << EOL;
          AddKluToChain(Body, "\0", NULL);
          CHP = 570;
       }

@@ -557,7 +557,7 @@ size_t size;
 
    if (sd == NULL) {
       if (FileInbound != NULL) {
-         yyerror("File inbound directory aready defined.");
+         yyerror("File inbound directory already defined.");
          return (-1);
       }
    } else {
@@ -567,7 +567,7 @@ size_t size;
       }
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Inbound directory name.");
+      yyerror("Missing parameter: Inbound directory name.");
       return (-1);
    }
    if (!DirExists(tmt)) {

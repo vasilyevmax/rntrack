@@ -45,7 +45,7 @@
 #include "nodelist.hpp"
 #include "script.hpp"
 
-#undef YYSTYPE               /* Perl also use bison? damn! */
+#undef YYSTYPE               /* Perl also uses bison? damn! */
 
 extern int DetectError;
 extern int NoTokensF;

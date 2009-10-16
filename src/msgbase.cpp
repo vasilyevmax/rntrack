@@ -194,8 +194,8 @@ char *Ctrl;
    CHP = 204;
 
 #ifdef __OS2__
-// Very strange situation... 
-// Without this code in OS/2 programm _strongly_ freeze.
+// A very strange situation... 
+// Without this code the program _strongly_ freezes in OS/2.
 //   fprintf(stderr," \b");fflush(stderr);
 #endif
 
@@ -676,7 +676,7 @@ int i;
    CHP = 226;
    if (fseek(fh,sizeof(Hdr),SEEK_SET) != 0) {
       i = errno;
-      Log.Level(LOGE) << "Unable to seek to begin of message, Errno: " << i << EOL;
+      Log.Level(LOGE) << "Unable to seek to beginning of message, Errno: " << i << EOL;
       fclose (fh);
       return FALSE;
    }
@@ -818,7 +818,7 @@ MSGBASE *tmt;
 // $ -- Squish style area
 // @ -- JAM style area
 // # -- PKT style area
-// Without this characters style of area is a MSG
+// Without this characters it is a MSG style area
 
    if (*BName == '$') {
       tmt = new SQUISH('$');

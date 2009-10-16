@@ -738,7 +738,7 @@ Log.Level(LOGD) << "Split kludge. p == '" << p << "', p2 == '" << p2 << "'" << E
          p = strtok(NULL," ");
       }
    } else if (stricmp(p,"\1MSGID:") == 0) { // MSGID: <SomeId>
-   // from MSGID: we take only missed parameters.
+   // from MSGID: we take only missing parameters.
       tAddr.Parse(p2);
       if (tAddr.Valid()) {
          Log.Level(LOGD) << "MSGID is valid. FTN addr == '" << tAddr << "'" << EOL;
@@ -962,7 +962,7 @@ char BuffForSearch[128];
          tmt2++; tmt1++;
          continue;
       } 
-      if (NewLine == TRUE) { // All kludges shoul be start from begin of string.
+      if (NewLine == TRUE) { // All kludges should start from beginning of a string.
          strncpy(BuffForSearch,tmt1,126);
 	 BuffForSearch[127] = '\0';
          nls_strupr(BuffForSearch);
@@ -986,7 +986,7 @@ char BuffForSearch[128];
    *tmt2 = '\0';
    if (strlen(_Body) != 0) fEmpty = 0;
 
-// If we have not received the Zone for this letter - we shall 
+// If we have not received the Zone for this message - we shall 
 // receive it in the magic way.
    if (UseOwnZone) {
       if (_FromAddr.Zone() & FA_NOTDEF) {

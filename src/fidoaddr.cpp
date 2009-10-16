@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: fidoaddr.cpp,v 1.3 2005/01/20 17:05:29 ph0enix Exp $
+ *  $Id$
  */
  
 #include        <string.h>
@@ -179,7 +179,7 @@ int NotFlag;
    }
    while( *p == ' ') p++;
    NotFlag = FALSE;
-   if (*p == NOTMASK_CHAR[0]) { // Found NOT flag. This flag set _only_ on ZONE
+   if (*p == NOTMASK_CHAR[0]) { // Found NOT flag. This flag is set _only_ on ZONE
       NotFlag = TRUE;
       p++;
    }
@@ -203,17 +203,17 @@ int NotFlag;
    }
 // Now, check errors.
    if (point_v & FA_SUBMASK) {   // set point submask
-   // i'm not understud, who need doing...
+   // I do not understand, who needs it...
    }
    
-   if (!(zone_v & FA_NOTDEF) && (net_v & FA_NOTDEF)) { // zone exist but not net.
+   if (!(zone_v & FA_NOTDEF) && (net_v & FA_NOTDEF)) { // zone exists but not a net.
       zone_v = FA_NOTDEF;
       node_v = FA_NOTDEF;
       point_v = FA_NOTDEF;
       while(*p > ' ') p++;
    }
 
-   if (!(net_v & FA_NOTDEF) && (node_v & FA_NOTDEF)) { // net exist but not node.
+   if (!(net_v & FA_NOTDEF) && (node_v & FA_NOTDEF)) { // net exists but not a node.
       zone_v = FA_NOTDEF;
       net_v = FA_NOTDEF;
       point_v = FA_NOTDEF;
@@ -222,7 +222,7 @@ int NotFlag;
    if (*p == '@') { // skip domain.
       while(*p > ' ') p++;
    }
-   if (*p > ' ') { // exist some not parsed...
+   if (*p > ' ') { // exists something not parsed...
       zone_v = FA_NOTDEF;
       net_v = FA_NOTDEF;
       node_v = FA_NOTDEF;
