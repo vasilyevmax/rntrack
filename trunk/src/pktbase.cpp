@@ -4,7 +4,7 @@
  *  pktbase.cpp - Work with *.PKT base
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -100,7 +100,7 @@ tPKTH PKTH;
       return FALSE;
    }
 
-// Removed by UFM. In this point transformation of pkt header not need.
+// Removed by UFM. At this point transformation of pkt header is not necessary.
 //#ifdef _AIX_CONV
 //    AIXConvPKTH(PKTH);
 //#endif
@@ -155,7 +155,7 @@ int I,i;
 
    Log.Level(LOGD) << "...Message signature: " << I << EOL;
    if (I != 2) {
-      Log.Level(LOGE) << "   Error: Missing 0200 in begin of message." << EOL;
+      Log.Level(LOGE) << "   Error: Missing 0200 at the beginning of the message." << EOL;
       free(Buff);
       return FALSE;
    }
@@ -180,7 +180,7 @@ int I,i;
       memset(Buff+I,0,READBLOCKLEN + 1);
       for (i = 0; i < READBLOCKLEN; i++) {
          if (fread(Buff+I,1,1,fh) != 1) {
-            Log.Level(LOGE) << "   Error reading body of message." << EOL;
+            Log.Level(LOGE) << "   Error reading body of the message." << EOL;
             free(Buff);
             return FALSE;
          }
@@ -191,12 +191,12 @@ int I,i;
    if (tf != NULL) {
       i = 2;
       if (fwrite(&i,2,1,tf) != 1) {
-         Log.Level(LOGE) << "   Error writing copy of signature." << EOL;
+         Log.Level(LOGE) << "   Error writing copy of the signature." << EOL;
          free(Buff);
          return FALSE;
       }
       if (fwrite(Buff,I,1,tf) != 1) {
-         Log.Level(LOGE) << "   Error writing copy of message." << EOL;
+         Log.Level(LOGE) << "   Error writing copy of the message." << EOL;
          free(Buff);
          return FALSE;
       }
@@ -275,7 +275,7 @@ FILE *tf;
       MaxMsgNum = 0;
       return TRUE;
    }
-   Log.Level(LOGD) << "...In PKT Exists not deleted messages" << EOL;
+   Log.Level(LOGD) << "...not deleted messages exist in the PKT" << EOL;
    for(Num = 1; Num <= MaxMsgNum; Num++) {
       if (MsgMask[Num] == 0) break;
    }
@@ -288,13 +288,13 @@ FILE *tf;
       return TRUE;
    }
 
-   Log.Level(LOGD) << "...In PKT Exists _deleted_ messages" << EOL;
+   Log.Level(LOGD) << "..._deleted_ messages exist in the PKT" << EOL;
    if (fseek(fh,0L,SEEK_SET) != 0) {
       fclose(fh);
       fh = NULL;
       MsgNum = 0;
       MaxMsgNum = 0;
-      Log.Level(LOGE) << "   Unable to set to begin of PKT file." << EOL;
+      Log.Level(LOGE) << "   Unable to seek to the beginning of the PKT file." << EOL;
       if (BadPktMode == EXIT)
        return FALSE;
       BadPkt(PktName);
@@ -302,7 +302,7 @@ FILE *tf;
       return TRUE;      
    }
 
-   Log.Level(LOGD) << "...Seek to begin - completed" << EOL;
+   Log.Level(LOGD) << "...the seek to the beginning is completed" << EOL;
    RSTRLCPY(TempName,PktName,BUFF_SIZE);
    tmt = strrchr(TempName,PATHDELIMC);
    if (tmt == NULL) {
@@ -313,7 +313,7 @@ FILE *tf;
       } else {
 #endif      
          tmt = TempName;
-#ifndef __unix__	 
+#ifndef __unix__     
       }
 #endif      
    } else {
@@ -356,7 +356,7 @@ FILE *tf;
       return FALSE;
    }
    
-   Log.Level(LOGD) << "...Copying Messages completed." << EOL;
+   Log.Level(LOGD) << "...Copying messages completed." << EOL;
    if (!CopyTail(tf)) {
       fclose(fh);
       fclose(tf);
@@ -367,7 +367,7 @@ FILE *tf;
       return FALSE;
    }
 
-   Log.Level(LOGD) << "...Copying Tail completed." << EOL;
+   Log.Level(LOGD) << "...Copying tail completed." << EOL;
    MsgNum = 0;
    MaxMsgNum = 0;
    fclose(fh);
@@ -492,7 +492,7 @@ struct dirent *de;
          Log.Level(LOGE) << "   Error: Unable to read signature from PKT '" << PktName << "'" << EOL;
          fclose (fh);
          fh = NULL;
-	 if (BadPktMode == EXIT)
+     if (BadPktMode == EXIT)
           return FALSE;
          BadPkt(PktName);
          return TRUE;
@@ -514,9 +514,9 @@ struct dirent *de;
       while ((de = readdir(dp)) != NULL) {
          Log.Level(LOGD) << "PKTBASE::Next(). de->d_name == '" << de->d_name << "'" << EOL;
          if (fsCompareName(de->d_name,"*.[Pp][Kk][Tt]") != 0) {
-	    sprintf(Buff,"%s"PATHDELIMS"%s",DirName,de->d_name);
-	    break;
-	 }
+        sprintf(Buff,"%s"PATHDELIMS"%s",DirName,de->d_name);
+        break;
+     }
       }
       if (Buff[0] == '\0') {
          Log.Level(LOGD) << "No more files from ReadDir in Next." << EOL;
@@ -629,7 +629,7 @@ s_stat tmp_stat;
    if (f != FMask) {
       fclose(fh);
       fh = NULL;
-      Log.Level(LOGW) << "Sender of PKT '" << PktName << "' not match with " << FMask << EOL;
+      Log.Level(LOGW) << "Sender of PKT '" << PktName << "' does not match with " << FMask << EOL;
       return TRUE;
    }
    if (!fNoCheckPwd) {
@@ -642,7 +642,7 @@ s_stat tmp_stat;
          Log.Level(LOGW) << "Should be '" << tmt << "'. In PKT '" << Buff << "'" << EOL;
          fclose(fh);
          fh = NULL;
-	 if (BadPktMode == EXIT)
+     if (BadPktMode == EXIT)
           return FALSE;
          BadPkt(PktName);
          MsgNum = 0;
@@ -756,7 +756,7 @@ uint i, I;
    CHP = 640;
    if (!ReadHeader(fh,(char *)&p)) {
       if (feof(fh) != 0) {
-         Log.Level(LOGE) << "   Warning: New message, but EOF found of PKT '" << PktName << "'." << EOL;
+         Log.Level(LOGE) << "   Warning: New message, but EOF found in PKT '" << PktName << "'." << EOL;
          return FALSE;
       }
       Log.Level(LOGE) << "   Error: Unable to read message header from PKT '" << PktName << "'." << EOL;

@@ -113,7 +113,7 @@ int InitSystem(void) {
 #endif
 
 /*   if (sizeof(int) != 4 || sizeof(long) != 4) {
-      fprintf(stderr,"RNtrack compiled for wrong platform.\nPlease, call to author.\n");
+      fprintf(stderr,"RNtrack was compiled for a wrong platform.\nPlease, inform the packager.\n");
       if (sizeof(long) == 8 && sizeof(void *) == 8 && sizeof(int) == 4) {
           fprintf(stderr,"Continue at your own risk! This software is not 64-bit ready yet!\n");
       } else {
@@ -133,7 +133,7 @@ int InitSystem(void) {
 
    if (InitScriptSystem() != TRUE) {
       Log.Level(LOGE) << "Unable to start script system" << EOL;
-	  return FALSE;
+      return FALSE;
    }
    if (ConfigFile == NULL) {
       ConfigFile = strdup(DefaultConfig);

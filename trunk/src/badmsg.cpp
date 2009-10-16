@@ -39,11 +39,11 @@ static int BadAlready = FALSE;
    BadMsgMode = bmode;
    if (bname != NULL) {
       if (strlen(bname) == 0) {
-         yyerror("Missed Message base name.");
+         yyerror("Missind message base name.");
          return (-1);
       }
       if (*bname == '$' || *bname == '#' || *bname == '@') {
-         yyerror("You can use only MSG base as base for bad mail.");
+         yyerror("You can use only MSG base as a base for bad mail.");
          return (-1);
       }
 

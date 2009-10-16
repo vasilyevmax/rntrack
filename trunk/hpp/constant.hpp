@@ -65,7 +65,7 @@
 # define PACKAGE_NAME "RNTrack"
 #endif
 #ifndef VERSION
-#define VERSION        "1.14"
+#define VERSION        "1.15"
 #endif
 #define ProgVersion    VERSION"."CVS_DATE""OsType
 #define ProductLO 0xff

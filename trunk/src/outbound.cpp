@@ -4,13 +4,13 @@
  *  outbound.cpp - Work with outbound
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: outbound.cpp,v 1.6 2005/04/05 17:19:40 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef __GNUC__
@@ -99,7 +99,7 @@ Template *tpl;
    } else {
       tpl = new Template();
       if (tpl->Set(TrafficLogTpl) != TRUE) {
-         Log.Level(LOGE) << "Unable to open trafficlog template file '" << TrafficLogTpl << "'." << EOL;
+         Log.Level(LOGE) << "Unable to open traffic log template file '" << TrafficLogTpl << "'." << EOL;
          return;
       }
       tpl->SetMsg(m);
@@ -125,17 +125,17 @@ char *tmt;
        tmt=GetDomain(f);
        if (tmt) {
         RSTRLCAT(Buff,tmt,BUFF_SIZE);
-       }	
+       }    
        else {
         RSTRLCAT(Buff,"fidonet",BUFF_SIZE);
-       }	
+       }    
        RSTRLCAT(Buff,".",BUFF_SIZE);
       }
       sprintf(Buff+strlen(Buff),"%u.%u.%u.%u",
          (word)(f.Zone() & 0xffff),
-	 (word)(f.Net() & 0xffff),
-	 (word)(f.Node() & 0xffff),
-	 (word)(f.Point() & 0xffff));
+     (word)(f.Net() & 0xffff),
+     (word)(f.Node() & 0xffff),
+     (word)(f.Point() & 0xffff));
    } else {
       if (Buff[strlen(Buff)-1] == PATHDELIMC) {
          Buff[strlen(Buff)-1] = '\0';
@@ -1027,7 +1027,7 @@ struct stat statb;
       if (fsCompareName(ff->d_name,"*.[pP][nN][tT]") != 0) {
          RSTRLCPY(fdir,Dir,BUFF_SIZE);
          RSTRLCAT(fdir,ff->d_name,BUFF_SIZE);
-	 RSTRLCAT(fdir,PATHDELIMS,BUFF_SIZE);
+     RSTRLCAT(fdir,PATHDELIMS,BUFF_SIZE);
          if (stat(dirslashbug(fdir),&statb) == 0 && S_ISDIR(statb.st_mode)) {
             DoRepackDir(fdir);
          }
@@ -1081,7 +1081,7 @@ struct stat statb;
             if (stat(fdir,&statb) == 0 && S_ISREG(statb.st_mode)) {
                DoRepackBundle(fdir);
             }
-	 }
+     }
       }
       closedir(dd);
    }
@@ -1178,11 +1178,11 @@ int SetOutbound(char *tmt){
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Outbound directory name.");
+      yyerror("Missing parameter: Outbound directory name.");
       return (-1);
    }
    if (APktDir != NULL && stricmp(APktDir,tmt) == 0) {
-      yyerror("APKT directory and Outbound directory should be in different place.");
+      yyerror("APKT directory and Outbound directory should be different.");
       return (-1);
    }
    size=strlen(tmt)+2;
@@ -1202,7 +1202,7 @@ int SetTrafficLog(char *tmt){
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: Traffic log file name.");
+      yyerror("Missing parameter: Traffic log file name.");
       return (-1);
    }
    TrafficLog = strdup(tmt);
@@ -1216,7 +1216,7 @@ int SetTempMail(char *tmt){
       return (-1);
    }
    if (strlen(tmt) == 0) {
-      yyerror("Missed parameter: TempMail base name.");
+      yyerror("Missing parameter: TempMail base name.");
       return (-1);
    }
    TempMail = MakeBase(tmt);
