@@ -17,7 +17,7 @@
 #define _UTILS_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "aconfig.h"
+# include "constant.hpp"
 #else
 # include <smapi/compiler.h>
 #endif

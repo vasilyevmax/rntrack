@@ -18,7 +18,7 @@
 #define _MYTYPES_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "aconfig.h"
+# include "constant.hpp"
 #endif
 
 #ifdef HAVE_SYS_STAT_H
