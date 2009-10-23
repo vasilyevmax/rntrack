@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: outbound.hpp,v 1.4 2005/04/02 07:14:04 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _OUTBOUND_HPP_

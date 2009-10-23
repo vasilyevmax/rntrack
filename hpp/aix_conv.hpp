@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: aix_conv.hpp,v 1.1.1.1 2005/01/14 19:18:05 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _AIX_CONV_HPP_

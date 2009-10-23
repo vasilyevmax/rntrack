@@ -1,4 +1,4 @@
-# $Id: makefile.qcd,v 1.1.1.1 2005/01/14 19:20:35 ph0enix Exp $
+# $Id$
 # Makefile for building SMAPI with Quick C or MS C for DOS
 # No support for the Husky build environment
 

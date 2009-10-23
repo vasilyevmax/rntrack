@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: domain.hpp,v 1.1 2005/03/21 22:09:02 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _DOMAIN_HPP_

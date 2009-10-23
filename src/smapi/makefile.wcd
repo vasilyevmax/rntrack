@@ -1,4 +1,4 @@
-# $Id: makefile.wcd,v 1.1.1.1 2005/01/14 19:20:37 ph0enix Exp $
+# $Id$
 # Makefile for Building SMAPI with Watcom C 11.0c for 16 bit DOS
 # No support for Husky build environment.
 

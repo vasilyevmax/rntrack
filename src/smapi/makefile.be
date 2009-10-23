@@ -1,4 +1,4 @@
-# $Id: makefile.be,v 1.1.1.1 2005/01/14 19:22:14 ph0enix Exp $
+# $Id$
 #
 # Legacy makefile for building on BeOS with gcc
 # No support for the Husky build environment

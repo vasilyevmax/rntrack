@@ -1,4 +1,4 @@
-# $Id: makefile.emx,v 1.1.1.1 2005/01/14 19:20:34 ph0enix Exp $
+# $Id$
 # Makefile for EMX on OS/2 with a.out style linkage (EMX Runtime)
 # see also makefile.emo
 # No support for the Husky build environment

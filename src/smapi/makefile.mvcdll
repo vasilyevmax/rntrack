@@ -1,4 +1,4 @@
-# $Id: makefile.mvcdll,v 1.1.1.1 2005/01/14 19:23:26 ph0enix Exp $
+# $Id$
 # Microsoft Visual C++ Makefile for build DLL
 
 CC=     cl

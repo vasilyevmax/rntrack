@@ -1,4 +1,4 @@
-# $Id: makefile.wcw,v 1.1.1.1 2005/01/14 19:20:37 ph0enix Exp $
+# $Id$
 # Makefile for Building SMAPI with Watcom C 11.0c for Windows.
 # No support for Husky build environment.
 #

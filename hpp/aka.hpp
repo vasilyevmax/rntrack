@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: aka.hpp,v 1.1.1.1 2005/01/14 19:18:05 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _AKA_HPP_

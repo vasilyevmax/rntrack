@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: mask.hpp,v 1.2 2005/06/22 22:18:13 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _MASK_HPP_
