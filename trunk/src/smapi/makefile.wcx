@@ -1,4 +1,4 @@
-# $Id: makefile.wcx,v 1.1.1.1 2005/01/14 19:20:37 ph0enix Exp $
+# $Id$
 # Makefile for Building SMAPI with Watcom C for DOS/386 (DOS4G/DOS4GW extender)
 # No support for Husky build environment.
 #

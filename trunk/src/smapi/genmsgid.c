@@ -1,4 +1,4 @@
-/* $Id: genmsgid.c,v 1.1.1.1 2005/01/14 19:22:44 ph0enix Exp $
+/* $Id$
  *
  *  SMAPI; Modified Squish MSGAPI
  *

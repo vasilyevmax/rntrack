@@ -1,4 +1,4 @@
-# $Id: makefile.inc,v 1.1.1.1 2005/01/14 19:20:34 ph0enix Exp $
+# $Id$
 #
 # Common makefiles part (include-file)
 

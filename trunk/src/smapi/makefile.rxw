@@ -1,4 +1,4 @@
-# $Id: makefile.rxw,v 1.1.1.1 2005/01/14 19:20:35 ph0enix Exp $
+# $Id$
 # Makefile for building a Windows 95 / NT SMAPI library
 # with RSXNT and EMX GCC running on Win32 or OS/2.
 # No support for the Husky build environment

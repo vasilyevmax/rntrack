@@ -1,4 +1,4 @@
-# $Id: makefile.bsd,v 1.2 2005/01/19 17:14:15 ph0enix Exp $
+# $Id$
 #
 # Legacy makefile for building smapi (static binary & library)
 # on FreeBSD/OpenBSD/NetBSD using BSD make.

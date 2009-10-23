@@ -9,9 +9,9 @@
    This is free software, you can FREE redistribute or modify it.
 
 */
-/* $Id: gnmsgid.c,v 1.1.1.1 2005/01/14 19:22:54 ph0enix Exp $ */
+/* $Id$ */
 
-/* $Id: gnmsgid.c,v 1.1.1.1 2005/01/14 19:22:54 ph0enix Exp $
+/* $Id$
  * standalone msgid generator: print new msgid to stdout
 
  *  SMAPI; Modified Squish MSGAPI

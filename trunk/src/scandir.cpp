@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: scandir.cpp,v 1.4 2005/06/22 22:18:14 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef __GNUC__

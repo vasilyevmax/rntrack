@@ -10,7 +10,7 @@
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  $Id: filebox.hpp,v 1.1 2005/03/22 19:10:35 ph0enix Exp $
+ *  $Id$
  */
 
 #ifndef _FILEBOX_HPP_

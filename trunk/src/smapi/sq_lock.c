@@ -22,7 +22,7 @@
  ***************************************************************************/
 /*
 #pragma off(unreferenced)
-static char rcs_id[]="$Id: sq_lock.c,v 1.1.1.1 2005/01/14 19:22:02 ph0enix Exp $";
+static char rcs_id[]="$Id$";
 #pragma on(unreferenced)
 */
 #define MSGAPI_HANDLERS
