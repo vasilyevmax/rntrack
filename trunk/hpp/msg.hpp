@@ -17,7 +17,7 @@
 #define _MSG_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "aconfig.h"
+# include "constant.hpp"
 # undef BYTEORDER
 #endif
 

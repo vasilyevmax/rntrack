@@ -4,6 +4,12 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.16 2009-10-23
+---------------
+# The program version number from configure.ac is not used any more,
+  that is why it is now not necessary to change configure.ac and
+  configure at every change of RNtrack version.
+
 1.15 2009-10-16
 ---------------
 # English usage in strings that RNtrack logs is fixed.

@@ -17,7 +17,7 @@
 #define _AGE_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "aconfig.h"
+# include "constant.hpp"
 #endif
 
 #include <time.h>

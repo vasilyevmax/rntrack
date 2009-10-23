@@ -17,7 +17,7 @@
 #define _VARS_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "aconfig.h"
+# include "constant.hpp"
 #endif
 
 #ifdef HAVE_TIME_H

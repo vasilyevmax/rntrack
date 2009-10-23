@@ -17,7 +17,7 @@
 #define _MSGBASE_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "aconfig.h"
+# include "constant.hpp"
 #endif
 
 #ifdef HAVE_TIME_H
