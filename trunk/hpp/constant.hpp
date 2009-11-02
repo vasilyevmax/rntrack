@@ -16,7 +16,6 @@
 #ifndef _CONST_HPP_
 #define _CONST_HPP_
 
-#include "cvsdate.hpp"
 #ifdef HAVE_CONFIG_H
 # include "aconfig.h"
 #endif
@@ -67,8 +66,8 @@
 #ifdef VERSION
 #undef VERSION
 #endif
-#define VERSION        "1.16"
-#define ProgVersion    VERSION"."CVS_DATE""OsType
+#define VERSION        "1.17"
+#define ProgVersion    VERSION""OsType
 #define ProductLO 0xff
 #define ProductHI 0x16
 #define Copyright      "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007 Stas Degteff (2:5080/102)\n    2009 Michael Dukelsky (2:5020/1042)\n"
