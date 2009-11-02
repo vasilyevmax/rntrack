@@ -4,6 +4,12 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.17 2009-11-02
+---------------
+# The date of commit does not follow the program version number in
+  printed strings any more, since the version number changes at each 
+  commit now.
+
 1.16 2009-10-23
 ---------------
 # The program version number from configure.ac is not used any more,
