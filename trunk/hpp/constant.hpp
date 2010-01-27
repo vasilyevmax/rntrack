@@ -66,7 +66,7 @@
 #ifdef VERSION
 #undef VERSION
 #endif
-#define VERSION        "1.17"
+#define VERSION        "1.18"
 #define ProgVersion    VERSION""OsType
 #define ProductLO 0xff
 #define ProductHI 0x16

@@ -4,7 +4,7 @@
  *  fidoaddr.cpp - Work with FTN-addresses
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -161,7 +161,7 @@ unsigned int tmp;
       return FA_NOTDEF;
    }
    if (tmp != FA_NOTDEF) {
-      if (*t != '.' && *t != '\0' && *t != ' ' && *t != '@') {
+      if (*t != '.' && *t != '\0' && *t != ' ' && *t != '@' && *t != ',') {
          p = t;
          return FA_NOTDEF;
       }
@@ -220,6 +220,9 @@ int NotFlag;
       while(*p > ' ') p++;
    }
    if (*p == '@') { // skip domain.
+      while(*p > ' ') p++;
+   }
+   if (*p == ',') { // comma after boss node
       while(*p > ' ') p++;
    }
    if (*p > ' ') { // exists something not parsed...
