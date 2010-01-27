@@ -223,7 +223,7 @@ int NotFlag;
       while(*p > ' ') p++;
    }
    if (*p == ',') { // comma after boss node
-      while(*p > ' ') p++;
+      while(*p >= ' ') p++; // skip the rest
    }
    if (*p > ' ') { // exists something not parsed...
       zone_v = FA_NOTDEF;
