@@ -16,6 +16,9 @@
 #ifndef _PKTBASE_HPP_
 #define _PKTBASE_HPP_
 
+#if defined(__MSVC__)
+#include "dirent.h"
+#endif
 #include "a_list.hpp"
 #include "utils.hpp"
 #include "fidoaddr.hpp"

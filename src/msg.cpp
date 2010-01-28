@@ -46,11 +46,23 @@
 #define strftim strftime
 #endif
 
-// ---------------------------
-//char months[][4] = {
-//        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-//        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-//};
+#ifdef _MSC_VER
+char months_ab[][4] =
+{
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+};
+#endif
 
 char *FromTime(time_t tmt) {
 static char buf[40];
