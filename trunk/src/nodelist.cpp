@@ -16,6 +16,9 @@
 #ifndef __GNUC__
 #include <io.h>
 #include <direct.h>
+#ifdef _MSC_VER
+#include "dirent.h"
+#endif
 #else
 #include <unistd.h>
 #include <sys/types.h>

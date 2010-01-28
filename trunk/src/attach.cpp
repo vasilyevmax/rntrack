@@ -252,7 +252,7 @@ char *tmt;
 #endif
    if (stat(tmt,&dd) != 0) return FALSE;
    if (!S_ISREG(dd.st_mode)) return FALSE;
-#ifdef __MINGW32__
+#if defined(__MINGW32__) || defined(_MSC_VER)
    if (SkipHiddenFiles) {
       struct _finddata_t fd;
       int h = _findfirst(tmt, &fd);

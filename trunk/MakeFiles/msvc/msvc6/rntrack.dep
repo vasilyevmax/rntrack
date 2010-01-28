@@ -1,0 +1,454 @@
+# Microsoft Developer Studio Generated Dependency File, included by rntrack.mak
+
+..\..\..\src\age.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\age.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\aix_conv.cpp : \
+	"..\..\..\hpp\aix_conv.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\tpkt.hpp"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\aka.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\badmsg.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\badpkt.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\string.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\cfg.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\age.hpp"\
+	"..\..\..\hpp\aka.hpp"\
+	"..\..\..\hpp\attach.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\badpkt.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\passwd.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\script.hpp"\
+	"..\..\..\hpp\sqbase.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\api_brow.h"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\msgapi.h"\
+	"..\..\..\src\smapi\stamp.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\configure.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\script.hpp"\
+	"..\..\..\hpp\sqbase.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\cfg.hpp"\
+	"..\..\..\src\smapi\api_brow.h"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\msgapi.h"\
+	"..\..\..\src\smapi\stamp.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\domain.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\string.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\fidoaddr.cpp : \
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\filebox.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\string.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\getopt.cpp : \
+	"..\..\..\hpp\getopt.hpp"\
+	
+
+..\..\..\src\help.cpp : \
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	
+
+..\..\..\src\log.cpp : \
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\mask.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\age.hpp"\
+	"..\..\..\hpp\aka.hpp"\
+	"..\..\..\hpp\attach.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\script.hpp"\
+	"..\..\..\hpp\sqbase.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\hpp\wildmat.hpp"\
+	"..\..\..\src\smapi\api_brow.h"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\msgapi.h"\
+	"..\..\..\src\smapi\stamp.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\msg.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\age.hpp"\
+	"..\..\..\hpp\aka.hpp"\
+	"..\..\..\hpp\attach.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\api_brow.h"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\msgapi.h"\
+	"..\..\..\src\smapi\prog.h"\
+	"..\..\..\src\smapi\progprot.h"\
+	"..\..\..\src\smapi\stamp.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\parsetpl.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\age.hpp"\
+	"..\..\..\hpp\aka.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\passwd.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\string.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\scandir.cpp : \
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\string.hpp"\
+	"..\..\..\src\scd_do.cpp"\
+	
+
+..\..\..\src\sqbase.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\aka.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\sqbase.hpp"\
+	"..\..\..\hpp\string.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\api_brow.h"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\msgapi.h"\
+	"..\..\..\src\smapi\stamp.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\tmstamp.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\age.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\configure.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\domain.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\filebox.hpp"\
+	"..\..\..\hpp\help.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\mask.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\outbound.hpp"\
+	"..\..\..\hpp\parsetpl.hpp"\
+	"..\..\..\hpp\scandir.hpp"\
+	"..\..\..\hpp\tmstamp.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\hpp\wildmat.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\utils.cpp : \
+	"..\..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\constant.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\hpp\wildmat.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\vars.cpp : \
+	"..\..\..\hpp\a_list.hpp"\
+	"..\..\..\hpp\badmsg.hpp"\
+	"..\..\..\hpp\fidoaddr.hpp"\
+	"..\..\..\hpp\log.hpp"\
+	"..\..\..\hpp\msg.hpp"\
+	"..\..\..\hpp\msgbase.hpp"\
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\hpp\nodelist.hpp"\
+	"..\..\..\hpp\utils.hpp"\
+	"..\..\..\hpp\vars.hpp"\
+	"..\..\..\src\smapi\compiler.h"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
+
+..\..\..\src\wildmat.cpp : \
+	"..\..\..\hpp\mytypes.hpp"\
+	"..\..\..\src\smapi\typedefs.h"\
+	
