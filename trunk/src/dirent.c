@@ -12,7 +12,7 @@
 
 #include <errno.h>
 #include <io.h> /* _findfirst and _findnext set errno iff they return -1 */
-#include <dirent.h>
+#include <dirent/dirent.h>
 #include <stdlib.h>
 #include <string.h>
 

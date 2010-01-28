@@ -17,7 +17,7 @@
 #include <io.h>
 #include <direct.h>
 #ifdef _MSC_VER
-#include "dirent.h"
+#include "dirent/dirent.h"
 #endif
 #else
 #include <unistd.h>
