@@ -18,7 +18,7 @@ ENABLE_LOG_PID?=0
 ENABLE_SYSLOG_LOG_FORMAT?=1
 
 .if $(ENABLE_SCRIPTS) == 1
-    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$\>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
+    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
 .else
     CDEFS  += -D__NOSCRIPTS__
