@@ -15,7 +15,7 @@
 @SET_MAKE@
 
 # RNTrack-smapi -*Automake*-
-# $Id$
+# $Id:$
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@

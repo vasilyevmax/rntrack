@@ -1,5 +1,5 @@
 # RNTrack-smapi -*Automake*-
-# $Id$
+# $Id:$
 
 noinst_LIBRARIES	= libsmapi.a
 libsmapi_a_SOURCES = 1stchar.c api_jam.c api_sdm.c cvtdate.c date2bin.c dosdate.c fexist.c \

@@ -1,5 +1,5 @@
 # RNTrack -*Automake*-
-# $Id$
+# $Id:$
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = src
 DIST_SUBDIRS = doc samples
