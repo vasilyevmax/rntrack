@@ -53,16 +53,21 @@ static int ScriptSystemInitialised = FALSE;
 //        static void xs_init _((void));
 
 //        EXTERN_C void boot_DynaLoader _((CV* cv));
-extern "C" void boot_DynaLoader _((CV *cv));
+extern "C" static void boot_DynaLoader _((CV *cv));
 
 // --------------------------------------------------------------------
 //        Perl extensions.
 // --------------------------------------------------------------------
+extern "C" static void perl_Log( CV* cv);
+extern "C" static void perl_Update( CV* cv);
+extern "C" static void perl_ExistsInNodelist( CV* cv);
+extern "C" static void perl_FindHub( CV* cv);
+extern "C" static void perl_NewMsg( CV* cv);
 
 #define FromSP(i)       (char *)SvPV(ST(i), n_a); if (n_a == 0) sp_s  = ""
 #define XCAL            (char *)malloc(n_a+1)
 
-static XS(perl_Log) {
+XS(perl_Log) {
 char *sp_s;
 dXSARGS;
 char *str;
@@ -84,7 +89,7 @@ STRLEN n_a;
    CHP = 60013;
 }
 
-static XS(perl_Update) {
+XS(perl_Update) {
 //char *sp_s;
 dXSARGS;
 char *str;
@@ -180,7 +185,7 @@ unsigned int i;
    XSRETURN_EMPTY;
 }
 
-static XS(perl_ExistsInNodelist) {
+XS(perl_ExistsInNodelist) {
 dXSARGS;
 char *sp_s;
 char *str;
@@ -213,7 +218,7 @@ FA fa;
    XSRETURN_IV(Ndl.ExistInNodelist(fa) != (unsigned int) -1);
 }
 
-static XS(perl_FindHub) {
+XS(perl_FindHub) {
 dXSARGS;
 char *sp_s;
 char *str;
@@ -247,7 +252,7 @@ FA fa;
 }
 
 //usage: NewMsg($MsgBase,$FromName,$FromAddr,$ToName,$ToAddr,$Subject,$Flags,$Kludges,$Body)
-static XS(perl_NewMsg)
+XS(perl_NewMsg)
 {
  dXSARGS;
  cMSG *msg;
