@@ -8,13 +8,13 @@ LFLAGS	= -s -L$(SRCDIR)smapi -lsmapilnx
 SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
-# uncomment to enable
-#ENABLE_SCRIPTS=1
-#ENABLE_LOG_PID=1
-#ENABLE_SYSLOG_LOG_FORMAT=1
+# set to 1 for enable (in command line)
+ENABLE_SCRIPTS?=1
+ENABLE_LOG_PID?=1
+ENABLE_SYSLOG_LOG_FORMAT?=1
 
 ifeq ($(ENABLE_SCRIPTS), 1)
-    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$\>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
+    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
 else
     CDEFS  += -D__NOSCRIPTS__

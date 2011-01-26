@@ -13,7 +13,7 @@ EXEEND= _w32.exe
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 ifeq ($(ENABLE_SCRIPTS), 1)
-    CFLAGS += `perl -MExtUtils::Embed -e ccopts`
+    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
 else
     CDEFS  += -D__NOSCRIPTS__
