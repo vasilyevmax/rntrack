@@ -1,28 +1,34 @@
 # $Id$
 CC	= g++
 CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
-CDEFS	= -DUNIX
+CDEFS	= -DUNIX -Dunix -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_LOCALE_H \
+          -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
+
 LFLAGS	= -s -L${SRCDIR}smapi -lsmapibsd
 SRCDIR	= ../../src/
-#CONFIG	= /etc/ftn/rntrack.cfg
 
-# uncomment to enable
-#ENABLE_SCRIPTS=1
-#ENABLE_LOG_PID=1
-#ENABLE_SYSLOG_LOG_FORMAT=1
+# Best solution: specify in command line your favorite config place, like:
+# make CONFIG=/home/fido/config/rntrack.conf
+#CONFIG	?= /etc/ftn/rntrack.cfg
+CONFIG	?= ~/ftn/rntrack.cfg
 
-.ifdef ENABLE_SCRIPTS
+# set in 1 to enable (may be specified in command line: make ENABLE_SCRIPTS=0)
+ENABLE_SCRIPTS?=1
+ENABLE_LOG_PID?=0
+ENABLE_SYSLOG_LOG_FORMAT?=1
+
+.if $(ENABLE_SCRIPTS) == 1
     CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$\>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
 .else
     CDEFS  += -D__NOSCRIPTS__
 .endif
 
-.ifdef ENABLE_SYSLOG_LOG_FORMAT
+.if $(ENABLE_SYSLOG_LOG_FORMAT) == 1
     CFLAGS += -DSYSLOG_LOG_FORMAT
 .endif
 
-.ifdef ENABLE_LOG_PID
+.if $(ENABLE_LOG_PID) == 1
     CFLAGS += -DLOG_SHOW_PID
 .endif
 
@@ -60,6 +66,7 @@ OBJS=	fidoaddr.o \
 	wildmat.o \
 	badpkt.o \
 	domain.o \
+	string.o \
 	filebox.o
 
 .SUFFIXES: .cpp .o

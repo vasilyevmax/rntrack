@@ -35,7 +35,7 @@
 #include <sys/nls.h>
 #endif
 #include <ctype.h>
-#if defined(__FreeBSD__) || defined(__OSX__)
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__OSX__)
 #   include <stdlib.h>
 #else
 #   include <malloc.h>
