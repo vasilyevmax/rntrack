@@ -15,7 +15,7 @@
 @SET_MAKE@
 
 # RNTrack -*Automake*-
-# $Id$
+# $Id:$
 
 #AUTOMAKE_OPTIONS = foreign
 
