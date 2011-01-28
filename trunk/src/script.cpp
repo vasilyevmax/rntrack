@@ -268,7 +268,7 @@ XS(perl_NewMsg)
   Log.Level(LOGE) << " perl_NewMsg() argument count (should be 9, actually " << (int)items << ")." << EOL;
   abort();
  }
- 
+
  CHP = 60057;
  base=SvPV(ST(0) , n_a);
  CHP = 600571;
@@ -279,27 +279,27 @@ XS(perl_NewMsg)
    Log.Level(LOGE) << " perl_NewMsg(): MakeBase(" << base << ") error" << EOL;
    abort();
  }
- 
+
  CHP = 600572;
- 
+
  if (!mb->Set(base,BASE_OUT)) {
   Log.Level(LOGE) << " perl_NewMsg(): Invalid message base name." <<EOL;
 //  delete mb;
   mb = NULL;
   abort();
  }
- 
+
  CHP = 600573;
- 
+
  if (!mb->CheckOut()) {
    Log.Level(LOGE) << " perl_NewMsg(): mb->CheckOut failed" <<EOL; 
   // delete mb;
    mb = NULL;
    abort();
  }
- 
+
  CHP = 600574;
- 
+
 // mb->Rewind();
 
  CHP = 600575;
@@ -312,50 +312,50 @@ XS(perl_NewMsg)
  CHP = 60058;
  msg = new cMSG;
  msg->_Time = time(NULL);
- 
- 
+
+
  tmp=SvPV(ST(1) , n_a); if (n_a==0) tmp="";
  RSTRLCPY(msg->_FromName,tmp,36);
- 
+
  tmp=SvPV(ST(2) , n_a); if (n_a==0) tmp="";
  addr.Parse(tmp);
- 
+
  msg->_FromAddr = addr;
  tmp=SvPV(ST(3) , n_a); if (n_a==0) tmp="";
  RSTRLCPY(msg->_ToName,tmp,36);
- 
+
  tmp=SvPV(ST(4) , n_a); if (n_a==0) tmp="";
  addr.Parse(tmp);
- 
+
  msg->_ToAddr = addr;
  tmp=SvPV(ST(5) , n_a); if (n_a==0) tmp="";
  RSTRLCPY(msg->_Subject,tmp,72);
- 
+
  // 6 - flags (not implemented yet)
  tmp=SvPV(ST(6) , n_a); if (n_a==0) tmp="";
- 
+
  // 7 - kludges (not implemented yet)
  tmp=SvPV(ST(6) , n_a); if (n_a==0) tmp="";
- 
+
  tmp=SvPV(ST(8) , n_a); if (n_a==0) tmp="";
  msg->SetBody(tmp,n_a);
- 
+
 // msg->fChanged = 1;
- 
+
  CHP = 60059;
 
  msg->Normalise();
- 
+
 /* 
  Kludge *TKlu;
- 
+
  TKlu = new Kludge("\1TESTK ddd");
  msg->_Klu.AddToEnd(TKlu);
- 
+
  TKlu = new Kludge("\1TESTK1 ggg");
  msg->_Klu.AddToEnd(TKlu);
  */
- 
+
  CHP = 60060;
 
  if (SetViaAlways == TRUE) 
@@ -386,11 +386,11 @@ static char *file = __FILE__;
   newXS("ExistsInNodelist", perl_ExistsInNodelist, file);
   newXS("FindHub", perl_FindHub, file);
   newXS("NewMsg", perl_NewMsg, file);
-#ifdef __PERL_NEW__ /* for Perl 5.8+ */
+#if __PERL_VERSION__ >= 5008000 /* for Perl 5.8.* and above, see Makefile */
   newXS("DynaLoader::boot_DynaLoader", (void(*)(PerlInterpreter*,CV*))boot_DynaLoader, file);
 #else  /* for old Perl */
   newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file);
-#endif  
+#endif
 }
 
 #endif /* NoScripts*/
@@ -448,11 +448,11 @@ int rc;
 
 
    PUSHMARK(SP);
-#ifdef __PERL_NEW__ /* for Perl 5.8+ */   
+#if __PERL_VERSION__ >= 5008000 /* for Perl 5.8.* and above, see Makefile */
    rc = perl_parse(PerlSystem, (void(*)( PerlInterpreter*))xs_init, 2, perlargs, NULL);
 #else  /* for old Perl */   
    rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
-#endif   
+#endif
    SPAGAIN;
    PUTBACK;
 
