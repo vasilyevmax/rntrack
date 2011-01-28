@@ -19,8 +19,8 @@ RM      = del /Q
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 ifeq ($(ENABLE_SCRIPTS), 1)
-    CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
-    LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
+    CFLAGS += `perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]";'` `perl -MExtUtils::Embed -e ccopts`
+    LFLAGS += `perl -MExtUtils::Embed -e ldopts`
 else
     CDEFS  += -D__NOSCRIPTS__
 endif
@@ -81,8 +81,10 @@ OBJS=	fidoaddr.o \
 smapi:
 	make -C $(SRCDIR)smapi -f makefile.mgw
 
-rntrack: smapi $(OBJS)
-	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
+rntrack: rntrack$(EXEEND)
+
+rntrack$(EXEEND): $(OBJS) smapi
+	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS)
 
 clean:
 	-$(RM) $(SRCDIR1)smapi\\*.o
