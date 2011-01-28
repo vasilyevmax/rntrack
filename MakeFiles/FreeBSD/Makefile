@@ -1,15 +1,16 @@
 # $Id$
 CC	= g++
 CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
-CDEFS	= -DUNIX
+CDEFS	= -DUNIX -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_LOCALE_H \
+          -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
 LFLAGS	= -s -L${SRCDIR}smapi -lsmapibsd
 SRCDIR	= ../../src/
-#CONFIG	= /etc/ftn/rntrack.cfg
 
-# uncomment to enable
-#ENABLE_SCRIPTS=1
-#ENABLE_LOG_PID=1
-#ENABLE_SYSLOG_LOG_FORMAT=1
+# to enable: run `make ENABLE_SCRIPTS=1` & etc.
+ENABLE_SCRIPTS?=0
+ENABLE_LOG_PID?=0
+ENABLE_SYSLOG_LOG_FORMAT?=0
+#CONFIG?= /etc/ftn/rntrack.cfg
 
 .ifdef ENABLE_SCRIPTS
     CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
