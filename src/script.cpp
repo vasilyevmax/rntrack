@@ -58,16 +58,26 @@ extern "C" static void boot_DynaLoader _((CV *cv));
 // --------------------------------------------------------------------
 //        Perl extensions.
 // --------------------------------------------------------------------
-extern "C" static void perl_Log( CV* cv);
-extern "C" static void perl_Update( CV* cv);
-extern "C" static void perl_ExistsInNodelist( CV* cv);
-extern "C" static void perl_FindHub( CV* cv);
-extern "C" static void perl_NewMsg( CV* cv);
+#if __PERL_VERSION__ < 5010000
+  extern "C" static void perl_Log( CV* cv);
+  extern "C" static void perl_Update( CV* cv);
+  extern "C" static void perl_ExistsInNodelist( CV* cv);
+  extern "C" static void perl_FindHub( CV* cv);
+  extern "C" static void perl_NewMsg( CV* cv);
+# define XSdEfInE XS
+#else
+  static void perl_Log( CV* cv);
+  static void perl_Update( CV* cv);
+  static void perl_ExistsInNodelist( CV* cv);
+  static void perl_FindHub( CV* cv);
+  static void perl_NewMsg( CV* cv);
+# define XSdEfInE XSPROTO
+#endif
 
 #define FromSP(i)       (char *)SvPV(ST(i), n_a); if (n_a == 0) sp_s  = ""
 #define XCAL            (char *)malloc(n_a+1)
 
-XS(perl_Log) {
+XSdEfInE(perl_Log) {
 char *sp_s;
 dXSARGS;
 char *str;
@@ -89,7 +99,7 @@ STRLEN n_a;
    CHP = 60013;
 }
 
-XS(perl_Update) {
+XSdEfInE(perl_Update) {
 //char *sp_s;
 dXSARGS;
 char *str;
@@ -185,7 +195,7 @@ unsigned int i;
    XSRETURN_EMPTY;
 }
 
-XS(perl_ExistsInNodelist) {
+XSdEfInE(perl_ExistsInNodelist) {
 dXSARGS;
 char *sp_s;
 char *str;
@@ -218,7 +228,7 @@ FA fa;
    XSRETURN_IV(Ndl.ExistInNodelist(fa) != (unsigned int) -1);
 }
 
-XS(perl_FindHub) {
+XSdEfInE(perl_FindHub) {
 dXSARGS;
 char *sp_s;
 char *str;
@@ -252,7 +262,7 @@ FA fa;
 }
 
 //usage: NewMsg($MsgBase,$FromName,$FromAddr,$ToName,$ToAddr,$Subject,$Flags,$Kludges,$Body)
-XS(perl_NewMsg)
+XSdEfInE(perl_NewMsg)
 {
  dXSARGS;
  cMSG *msg;
