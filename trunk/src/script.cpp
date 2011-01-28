@@ -50,15 +50,11 @@ static PerlInterpreter *PerlSystem = NULL;
 static cMSG *CurrMsg;
 static int ScriptSystemInitialised = FALSE;
 
-//        static void xs_init _((void));
-
-//        EXTERN_C void boot_DynaLoader _((CV* cv));
-extern "C" static void boot_DynaLoader _((CV *cv));
-
 // --------------------------------------------------------------------
 //        Perl extensions.
 // --------------------------------------------------------------------
 #if __PERL_VERSION__ < 5010000
+  extern "C" static void boot_DynaLoader _((CV *cv));
   extern "C" static void perl_Log( CV* cv);
   extern "C" static void perl_Update( CV* cv);
   extern "C" static void perl_ExistsInNodelist( CV* cv);
@@ -66,6 +62,7 @@ extern "C" static void boot_DynaLoader _((CV *cv));
   extern "C" static void perl_NewMsg( CV* cv);
 # define XSdEfInE XS
 #else
+  static void boot_DynaLoader _((CV *cv));
   static void perl_Log( CV* cv);
   static void perl_Update( CV* cv);
   static void perl_ExistsInNodelist( CV* cv);
