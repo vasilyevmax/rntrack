@@ -12,18 +12,18 @@ ENABLE_LOG_PID?=0
 ENABLE_SYSLOG_LOG_FORMAT?=0
 #CONFIG?= /etc/ftn/rntrack.cfg
 
-.ifdef ENABLE_SCRIPTS
+.if $(ENABLE_SCRIPTS) == 1
     CFLAGS += `perl -e 'print "-D__PERL_NEW__" if ($$]>=5.008);'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`    
 .else
     CDEFS  += -D__NOSCRIPTS__
 .endif
 
-.ifdef ENABLE_SYSLOG_LOG_FORMAT
+.if $(ENABLE_SYSLOG_LOG_FORMAT) == 1
     CFLAGS += -DSYSLOG_LOG_FORMAT
 .endif
 
-.ifdef ENABLE_LOG_PID
+.if $(ENABLE_LOG_PID) == 1
     CFLAGS += -DLOG_SHOW_PID
 .endif
 
