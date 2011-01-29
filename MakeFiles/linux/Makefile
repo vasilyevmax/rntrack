@@ -9,9 +9,9 @@ SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
 # set to 1 for enable (in command line: make ENABLE_SCRIPTS=1 ENABLE_LOG_PID=1 ENABLE_SYSLOG_LOG_FORMAT=1)
-ENABLE_SCRIPTS?=1
-ENABLE_LOG_PID?=1
-ENABLE_SYSLOG_LOG_FORMAT?=1
+ENABLE_SCRIPTS?=0
+ENABLE_LOG_PID?=0
+ENABLE_SYSLOG_LOG_FORMAT?=0
 
 ifeq ($(ENABLE_SCRIPTS), 1)
     CFLAGS += `perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]";'` `perl -MExtUtils::Embed -e ccopts`
