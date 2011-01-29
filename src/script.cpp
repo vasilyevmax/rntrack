@@ -55,7 +55,7 @@ static int ScriptSystemInitialised = FALSE;
 //        Perl extensions.
 // --------------------------------------------------------------------
 #if __PERL_VERSION__ < 5010000
-  extern "C" static void boot_DynaLoader _((CV *cv));
+//  extern "C" static void boot_DynaLoader _((CV *cv)); // not used
   extern "C" static void perl_Log( CV* cv);
   extern "C" static void perl_Update( CV* cv);
   extern "C" static void perl_ExistsInNodelist( CV* cv);
@@ -63,7 +63,7 @@ static int ScriptSystemInitialised = FALSE;
   extern "C" static void perl_NewMsg( CV* cv);
 # define XSdEfInE XS
 #else
-  static void boot_DynaLoader _((CV *cv));
+//  static void boot_DynaLoader _((CV *cv)); // not used
   static void perl_Log( CV* cv);
   static void perl_Update( CV* cv);
   static void perl_ExistsInNodelist( CV* cv);
@@ -395,10 +395,11 @@ static char *file = __FILE__;
   newXS("FindHub", perl_FindHub, file);
   newXS("NewMsg", perl_NewMsg, file);
 #if __PERL_VERSION__ >= 5008000 /* for Perl 5.8.* and above, see Makefile */
-  newXS("DynaLoader::boot_DynaLoader", (void(*)(PerlInterpreter*,CV*))boot_DynaLoader, file);
+//  newXS("DynaLoader::boot_DynaLoader", (void(*)(PerlInterpreter*,CV*))boot_DynaLoader, file); // not used
 #else  /* for old Perl */
-  newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file);
+//  newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file); // not used
 #endif
+
 }
 
 #endif /* defined(__PERL_VERSION__) */
@@ -458,7 +459,7 @@ int rc;
    PUSHMARK(SP);
 #if __PERL_VERSION__ >= 5008000 /* for Perl 5.8.* and above, see Makefile */
    rc = perl_parse(PerlSystem, (void(*)( PerlInterpreter*))xs_init, 2, perlargs, NULL);
-#else  /* for old Perl */   
+#else  /* for old Perl */
    rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
 #endif
    SPAGAIN;
