@@ -4,7 +4,7 @@
  *  scripts.cpp - Work with scripts
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *  
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -13,8 +13,9 @@
  *  $Id$
  */
 
-// If you want to compile program without script subsystem
-// define __NOSCRIPTS__ in makefile.
+// If you want to compile program with script subsystem
+// define __PERL_VERSION__ in makefile with digital number of version without point character
+// for perl 5.8.0 defines __PERL_VERSION__ as 5008000
 //
 // Check points 60*
 // last CHP == 60055
@@ -25,14 +26,14 @@
 #undef HAVE_CONFIG_H
 #endif
 
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 #undef BYTEORDER
 #include <EXTERN.h>
 #include <perl.h>
 #endif
 
 #include "script.hpp"
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 #include "constant.hpp"
 #include "vars.hpp"
 #include "parsetpl.hpp"
@@ -43,7 +44,7 @@
 #define MSGVARNAME        "main::FMSG"
 #define KLUVARNAME        "main::FKludges"
 
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 static HV *m = NULL;                      // MSG
 static HV *k = NULL;                      // Kludges
 static PerlInterpreter *PerlSystem = NULL;
@@ -374,9 +375,9 @@ XSdEfInE(perl_NewMsg)
   mb->Close();
   abort();
  }
- 
+
  mb->Close();
-            
+
  XSRETURN_EMPTY;
 }
 
@@ -400,10 +401,10 @@ static char *file = __FILE__;
 #endif
 }
 
-#endif /* NoScripts*/
+#endif /* defined(__PERL_VERSION__) */
 
 int InitScriptSystem(void) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 //char *embedding[] = { NULL, "", "0" };
 
    PerlSystem = perl_alloc();
@@ -416,11 +417,11 @@ int InitScriptSystem(void) {
    }
 #else
    return TRUE;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 void InitScriptValues(void) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
    CHP = 60045;
    if (!ScriptSystemInitialised) return;
    sv_setpv(perl_get_sv("main::ConfigFile",TRUE),ConfigFile);
@@ -430,11 +431,11 @@ void InitScriptValues(void) {
    sv_setpv(perl_get_sv("main::TrafficLog",TRUE),TrafficLog);
    sv_setpv(perl_get_sv("main::Version",TRUE),ProgVersion);
    CHP = 60055;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 int StopScriptSystem(void) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
    if (PerlSystem != NULL) {
       perl_destruct(PerlSystem);
       perl_free(PerlSystem);
@@ -443,11 +444,11 @@ int StopScriptSystem(void) {
   return TRUE;
 #else
    return TRUE;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 int _LoadScriptFile(char *fname) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 dSP;
 
 char *perlargs[]={"", fname, NULL};
@@ -470,7 +471,7 @@ int rc;
    }
    setlocale(LC_TIME, "C");
    ScriptSystemInitialised = TRUE;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
    return 0;
 }
 
@@ -485,7 +486,7 @@ int rc;
 
 
 int ScriptWordExists(char *word) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 char Buff[1024];
 SV *val;
 
@@ -499,12 +500,12 @@ SV *val;
 #else
    word = word;
    return FALSE;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 
 ScrRet DoThisWord(char *word) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 STRLEN n_a;
 
    dSP;
@@ -532,11 +533,11 @@ STRLEN n_a;
 #else
    word = word;
    return SS_ERROR;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 ScrRet DoThisWordRc(char *word) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 STRLEN n_a;
 int i;
 
@@ -578,7 +579,7 @@ int i;
 #else
    word = word;
    return SS_ERROR;
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 ScrRet DoSomeWord(char *word) {
@@ -595,7 +596,7 @@ ScrRet DoSomeWordRc(char *word) {
    return SS_NOTDEF;
 }
 
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 void MakeHash(char *KName, char *KBody) {
 char *buff;
 char *tmt;
@@ -620,10 +621,10 @@ char *p1, *p2;
    free(buff);
    free(tmt);
 }
-#endif /* NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 
 void PrepareMsgForScript(cMSG &sm) {
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 char *tmt;
 char Buff[128];
 IndBiList<Kludge>::ElemPtr Klu;
@@ -679,16 +680,16 @@ IndBiList<Kludge>::ElemPtr Klu;
    }
 #else
    if (sm.Body() != NULL);
-#endif /*NoScripts */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 
-#if !defined(__NOSCRIPTS__)
-#ifdef OS2
+#if defined(__PERL_VERSION__)
+# ifdef OS2
 char *strdup(const char *src) {
-char *dest = malloc(strlen(src)+1);
-   if (dest != NULL) RSTRLCPY(dest, src, strlen(src));
-   return dest;
+  char *dest = malloc(strlen(src)+1);
+  if (dest != NULL) RSTRLCPY(dest, src, strlen(src));
+  return dest;
 }
-#endif
-#endif      
+# endif
+#endif /* defined(__PERL_VERSION__) */

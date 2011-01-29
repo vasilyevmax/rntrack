@@ -58,7 +58,7 @@
 #include "configure.hpp"
 #include "scandir.hpp"
 #include "cfg.hpp"
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
 #include "script.hpp"
 #endif
 
@@ -341,7 +341,7 @@ int SetLogLevel(int tmt) {
 
 int LoadScriptFile(char *fname) {
 
-#if !defined(__NOSCRIPTS__)
+#if defined(__PERL_VERSION__)
    if (strlen(fname) == 0) {
       yyerror("Missing parameter: Script file name.");
       return (-1);
@@ -356,7 +356,7 @@ int LoadScriptFile(char *fname) {
    yyerror("RNtrack compiled withoud script system support. Sorry.");
    fname = fname;
    return (-1);
-#endif /* NoScript */
+#endif /* defined(__PERL_VERSION__) */
 }
 
 

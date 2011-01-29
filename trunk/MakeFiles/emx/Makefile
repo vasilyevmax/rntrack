@@ -1,18 +1,18 @@
 # Makefile for build standalone rntrack/emx: for EMX on OS/2 with OMF-Style linkage
 # First needs to build smapi library (cd ../../src/smapi; make -f makefile.emo)
-# To build with Perl: Perl version 5.5.53 is needed. Else call `make PERLLIBS=`
+# To build with Perl: Perl version 5.5.53 is needed. Else call `make PERLLIBS= PERLCDEFS=`
 #
 # $Id$
 
 CC=	gcc
 
 PERL=D:/PERLLIB/LIB/5.00553/os2
+PERLCDEFS?=-D__PERL_VERSION__=5005053
 
 DEBUG=-s -g
 
 CFLAGS=	-Wall -funsigned-char -Wno-char-subscripts -O3 $(DEBUG)
-CDEFS=	-DOS2 -DDO_PERL -DDOSISH -DEMBED -DHAVE_UNISTD_H -DHAVE_IO_H
-# -D__NOSCRIPTS__
+CDEFS=	-DOS2 -DDOSISH -DEMBED -DHAVE_UNISTD_H -DHAVE_IO_H 
 COPT=	-I../../hpp -I../../.. -I$(PERL)/CORE -O3 -Zomf
 SRCDIR= ../../src/
 LFLAGS=	-Zomf -Zcrtdll -Zlinker /PM:VIO $(DEBUG) -L../../../smapi
@@ -69,7 +69,7 @@ PERLLIBS?=\
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
 %.obj: $(SRCDIR)%.cpp
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(CC) $(CFLAGS) $(CDEFS) $(PERLCDEFS) $(COPT) -c $<
 
 # Thunderbirds are go!
 
