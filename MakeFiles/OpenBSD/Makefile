@@ -20,8 +20,6 @@ ENABLE_SYSLOG_LOG_FORMAT?=1
 .if $(ENABLE_SCRIPTS) == 1
     CFLAGS += `perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]";'` `perl -MExtUtils::Embed -e ccopts`
     LFLAGS += `perl -MExtUtils::Embed -e ldopts`
-.else
-    CDEFS  += -D__NOSCRIPTS__
 .endif
 
 .if $(ENABLE_SYSLOG_LOG_FORMAT) == 1

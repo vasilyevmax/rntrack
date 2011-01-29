@@ -30,8 +30,13 @@ INCLUDE=..\..\..\hpp;$(SRCDIR)
 LIB=$(SRCDIR)\smapi\smapiwcw.lib
 
 
-!ifndef ENABLE_SCRIPTS
-CFLAGS+= -d__NOSCRIPTS__
+!ifdef ENABLE_SCRIPTS
+CFLAGS+= -d__PERL_VERSION__
+# please write here path to perl library - part of output of 'perl -MExtUtils::Embed -e ccopts'
+INCLUDE+=
+# please write here pathname of perl dinaloader library and path to other perl libraries - parts of output of 'perl -MExtUtils::Embed -e ldopts', directories in of libpath divided by semicolon
+LIB+=
+libpath=
 !endif
 
 !ifdef ENABLE_SYSLOG_LOG_FORMAT
@@ -69,7 +74,7 @@ CFLAGS += -d2
 CFLAGS += -hw
 !endif
 
-libpath = $(%watcom)\lib386;$(%watcom)\lib286\nt;
+libpath +=$(%watcom)\lib386;$(%watcom)\lib286\nt;
 .before
     set include=$(%watcom)\h;$(%watcom)\h\nt;
 
@@ -126,4 +131,3 @@ clean: .symbolic
 	del $(SRCDIR)\smapi\*.lib
 	del tmp.lnk
 	del $(TNAME).exe
-
