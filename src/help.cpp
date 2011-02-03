@@ -26,7 +26,13 @@ using std::flush;
 //#endif
 
 void Hello(void) {
-   cout << "RNtrack " << ProgVersion << Copyright << "\n";
+   cout << "RNtrack " << ProgVersion;
+#if defined( __PERL_VERSION__ ) && defined( __PERL_MAJOR__ )
+   cout << " (Perl " << __PERL_MAJOR__ << "." << int( (__PERL_VERSION__ % 1000000)/ 1000) << "." << __PERL_VERSION__ % 1000 << ") ";
+//#if defined( __PERL_MAJOR__ ) && defined( __PERL_MINOR__ )
+//   cout << " (Perl " << __PERL_MAJOR__ << "." << int( __PERL_MINOR__ / 1000) << "." << __PERL_MINOR__ % 1000 << ") ";
+#endif
+   cout << Copyright << "\n";
    cout << flush;
 }
 
