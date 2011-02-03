@@ -1,4 +1,25 @@
-# Microsoft Developer Studio Generated NMAKE File, Based on rntrack.dsp
+# Microsoft Visual C++ NMAKE File.
+
+PERL_BASEDIR=C:\Perl
+!if defined(SCRIPTS_ENABLE)
+!if ![perl perlconf.pl perlconf.tmp]
+!if exists("perlconf.tmp")
+!include "perlconf.tmp"
+!if ![del "perlconf.tmp"]
+!endif
+!else
+!error Can't include perlconf.tmp!
+!endif
+!else
+!error Can't execute perlconf.pl!
+!endif
+EXEFILE=rntrack_perl.exe
+!else
+CPP_PERL=
+LINK32_PERL=
+EXEFILE=rntrack.exe
+!endif
+
 !IF "$(CFG)" == ""
 CFG=rntrack - Win32 Debug
 !MESSAGE No configuration specified. Defaulting to rntrack - Win32 Debug.
@@ -38,11 +59,11 @@ OutDir=.\Release
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : "$(OUTDIR)\rntrack.exe"
+ALL : "$(OUTDIR)\$(EXEFILE)"
 
 !ELSE 
 
-ALL : "smapi - Win32 Release" "$(OUTDIR)\rntrack.exe"
+ALL : "smapi - Win32 Release" "$(OUTDIR)\$(EXEFILE)"
 
 !ENDIF 
 
@@ -84,7 +105,7 @@ CLEAN :
 	-@erase "$(INTDIR)\vars.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\wildmat.obj"
-	-@erase "$(OUTDIR)\rntrack.exe"
+	-@erase "$(OUTDIR)\$(EXEFILE)"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -95,7 +116,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\rntrack.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\rntrack.pdb" /machine:I386 /out:"$(OUTDIR)\rntrack.exe" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\rntrack.pdb" /machine:I386 /out:"$(OUTDIR)\$(EXEFILE)"
 LINK32_OBJS= \
 	"$(INTDIR)\age.obj" \
 	"$(INTDIR)\aix_conv.obj" \
@@ -131,9 +152,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\wildmat.obj" \
 	".\smapi\Release\smapi.lib"
 
-"$(OUTDIR)\rntrack.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\$(EXEFILE)" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
+  $(LINK32_FLAGS) $(LINK32_OBJS) $(LINK32_PERL)
 <<
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
@@ -146,11 +167,11 @@ OutDir=.\Debug
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : "$(OUTDIR)\rntrack.exe" "$(OUTDIR)\rntrack.bsc"
+ALL : "$(OUTDIR)\$(EXEFILE)" "$(OUTDIR)\rntrack.bsc"
 
 !ELSE 
 
-ALL : "smapi - Win32 Debug" "$(OUTDIR)\rntrack.exe" "$(OUTDIR)\rntrack.bsc"
+ALL : "smapi - Win32 Debug" "$(OUTDIR)\$(EXEFILE)" "$(OUTDIR)\rntrack.bsc"
 
 !ENDIF 
 
@@ -226,7 +247,7 @@ CLEAN :
 	-@erase "$(INTDIR)\wildmat.obj"
 	-@erase "$(INTDIR)\wildmat.sbr"
 	-@erase "$(OUTDIR)\rntrack.bsc"
-	-@erase "$(OUTDIR)\rntrack.exe"
+	-@erase "$(OUTDIR)\$(EXEFILE)"
 	-@erase "$(OUTDIR)\rntrack.ilk"
 	-@erase "$(OUTDIR)\rntrack.map"
 	-@erase "$(OUTDIR)\rntrack.pdb"
@@ -277,7 +298,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.17 /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\rntrack.pdb" /map:"$(INTDIR)\rntrack.map" /debug /machine:I386 /out:"$(OUTDIR)\rntrack.exe" /pdbtype:sept 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.17 /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\rntrack.pdb" /map:"$(INTDIR)\rntrack.map" /debug /machine:I386 /out:"$(OUTDIR)\$(EXEFILE)" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\age.obj" \
 	"$(INTDIR)\aix_conv.obj" \
@@ -313,7 +334,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\wildmat.obj" \
 	".\smapi\Debug\smapi.lib"
 
-"$(OUTDIR)\rntrack.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\$(EXEFILE)" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -322,22 +343,22 @@ LINK32_OBJS= \
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
-   $(CPP_PROJ) $< 
+   $(CPP_PROJ) $(CPP_PERL) $<
 <<
 
 .cpp{$(INTDIR)}.obj::
    $(CPP) @<<
-   $(CPP_PROJ) $< 
+   $(CPP_PROJ) $(CPP_PERL) $<
 <<
 
 .cxx{$(INTDIR)}.obj::
    $(CPP) @<<
-   $(CPP_PROJ) $< 
+   $(CPP_PROJ) $(CPP_PERL) $<
 <<
 
 .c{$(INTDIR)}.sbr::
    $(CPP) @<<
-   $(CPP_PROJ) $< 
+   $(CPP_PROJ) $(CPP_PERL) $<
 <<
 
 .cpp{$(INTDIR)}.sbr::
@@ -347,7 +368,7 @@ LINK32_OBJS= \
 
 .cxx{$(INTDIR)}.sbr::
    $(CPP) @<<
-   $(CPP_PROJ) $< 
+   $(CPP_PROJ) $(CPP_PERL) $<
 <<
 
 
@@ -385,14 +406,14 @@ SOURCE=..\..\..\src\aix_conv.cpp
 
 
 "$(INTDIR)\aix_conv.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\aix_conv.obj"	"$(INTDIR)\aix_conv.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -403,14 +424,14 @@ SOURCE=..\..\..\src\aka.cpp
 
 
 "$(INTDIR)\aka.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\aka.obj"	"$(INTDIR)\aka.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -421,14 +442,14 @@ SOURCE=..\..\..\src\attach.cpp
 
 
 "$(INTDIR)\attach.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\attach.obj"	"$(INTDIR)\attach.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -439,14 +460,14 @@ SOURCE=..\..\..\src\badmsg.cpp
 
 
 "$(INTDIR)\badmsg.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\badmsg.obj"	"$(INTDIR)\badmsg.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -457,14 +478,14 @@ SOURCE=..\..\..\src\badpkt.cpp
 
 
 "$(INTDIR)\badpkt.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\badpkt.obj"	"$(INTDIR)\badpkt.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -475,14 +496,14 @@ SOURCE=..\..\..\src\cfg.cpp
 
 
 "$(INTDIR)\cfg.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\cfg.obj"	"$(INTDIR)\cfg.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -493,14 +514,14 @@ SOURCE=..\..\..\src\configure.cpp
 
 
 "$(INTDIR)\configure.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\configure.obj"	"$(INTDIR)\configure.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -511,14 +532,14 @@ SOURCE=..\..\..\src\dirent.c
 
 
 "$(INTDIR)\dirent.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\dirent.obj"	"$(INTDIR)\dirent.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -529,14 +550,14 @@ SOURCE=..\..\..\src\domain.cpp
 
 
 "$(INTDIR)\domain.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\domain.obj"	"$(INTDIR)\domain.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -547,14 +568,14 @@ SOURCE=..\..\..\src\fidoaddr.cpp
 
 
 "$(INTDIR)\fidoaddr.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\fidoaddr.obj"	"$(INTDIR)\fidoaddr.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -565,14 +586,14 @@ SOURCE=..\..\..\src\filebox.cpp
 
 
 "$(INTDIR)\filebox.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\filebox.obj"	"$(INTDIR)\filebox.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -583,14 +604,14 @@ SOURCE=..\..\..\src\getopt.cpp
 
 
 "$(INTDIR)\getopt.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\getopt.obj"	"$(INTDIR)\getopt.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -601,14 +622,14 @@ SOURCE=..\..\..\src\help.cpp
 
 
 "$(INTDIR)\help.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\help.obj"	"$(INTDIR)\help.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -619,14 +640,14 @@ SOURCE=..\..\..\src\log.cpp
 
 
 "$(INTDIR)\log.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\log.obj"	"$(INTDIR)\log.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -637,14 +658,14 @@ SOURCE=..\..\..\src\mask.cpp
 
 
 "$(INTDIR)\mask.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\mask.obj"	"$(INTDIR)\mask.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -655,14 +676,14 @@ SOURCE=..\..\..\src\msg.cpp
 
 
 "$(INTDIR)\msg.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\msg.obj"	"$(INTDIR)\msg.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -673,14 +694,14 @@ SOURCE=..\..\..\src\msgbase.cpp
 
 
 "$(INTDIR)\msgbase.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\msgbase.obj"	"$(INTDIR)\msgbase.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -691,14 +712,14 @@ SOURCE=..\..\..\src\nodelist.cpp
 
 
 "$(INTDIR)\nodelist.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\nodelist.obj"	"$(INTDIR)\nodelist.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -709,14 +730,14 @@ SOURCE=..\..\..\src\outbound.cpp
 
 
 "$(INTDIR)\outbound.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\outbound.obj"	"$(INTDIR)\outbound.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -727,14 +748,14 @@ SOURCE=..\..\..\src\parsetpl.cpp
 
 
 "$(INTDIR)\parsetpl.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\parsetpl.obj"	"$(INTDIR)\parsetpl.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -745,14 +766,14 @@ SOURCE=..\..\..\src\passwd.cpp
 
 
 "$(INTDIR)\passwd.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\passwd.obj"	"$(INTDIR)\passwd.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -763,14 +784,14 @@ SOURCE=..\..\..\src\pktbase.cpp
 
 
 "$(INTDIR)\pktbase.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\pktbase.obj"	"$(INTDIR)\pktbase.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -781,14 +802,14 @@ SOURCE=..\..\..\src\rntrack.cpp
 
 
 "$(INTDIR)\rntrack.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\rntrack.obj"	"$(INTDIR)\rntrack.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -799,14 +820,14 @@ SOURCE=..\..\..\src\scandir.cpp
 
 
 "$(INTDIR)\scandir.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\scandir.obj"	"$(INTDIR)\scandir.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -817,14 +838,14 @@ SOURCE=..\..\..\src\script.cpp
 
 
 "$(INTDIR)\script.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\script.obj"	"$(INTDIR)\script.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -835,14 +856,14 @@ SOURCE=..\..\..\src\sqbase.cpp
 
 
 "$(INTDIR)\sqbase.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\sqbase.obj"	"$(INTDIR)\sqbase.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -853,14 +874,14 @@ SOURCE=..\..\..\src\string.cpp
 
 
 "$(INTDIR)\string.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\string.obj"	"$(INTDIR)\string.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -871,14 +892,14 @@ SOURCE=..\..\..\src\tmstamp.cpp
 
 
 "$(INTDIR)\tmstamp.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\tmstamp.obj"	"$(INTDIR)\tmstamp.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -889,14 +910,14 @@ SOURCE=..\..\..\src\utils.cpp
 
 
 "$(INTDIR)\utils.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\utils.obj"	"$(INTDIR)\utils.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -907,14 +928,14 @@ SOURCE=..\..\..\src\vars.cpp
 
 
 "$(INTDIR)\vars.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\vars.obj"	"$(INTDIR)\vars.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
@@ -925,14 +946,14 @@ SOURCE=..\..\..\src\wildmat.cpp
 
 
 "$(INTDIR)\wildmat.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "rntrack - Win32 Debug"
 
 
 "$(INTDIR)\wildmat.obj"	"$(INTDIR)\wildmat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+	$(CPP) $(CPP_PROJ) $(CPP_PERL) $(SOURCE)
 
 
 !ENDIF 
