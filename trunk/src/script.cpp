@@ -438,11 +438,14 @@ void InitScriptValues(void) {
 int StopScriptSystem(void) {
 #if defined(__PERL_VERSION__)
    if (PerlSystem != NULL) {
+      CHP = 60056;
       perl_destruct(PerlSystem);
+      CHP = 60057;
       perl_free(PerlSystem);
+      CHP = 60058;
       PerlSystem = NULL;
-  }
-  return TRUE;
+   }
+   return TRUE;
 #else
    return TRUE;
 #endif /* defined(__PERL_VERSION__) */
