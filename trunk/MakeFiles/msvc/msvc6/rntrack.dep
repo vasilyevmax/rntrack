@@ -416,7 +416,6 @@
 	
 
 ..\..\..\src\utils.cpp : \
-	"..\..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	"..\..\..\hpp\a_list.hpp"\
 	"..\..\..\hpp\badmsg.hpp"\
 	"..\..\..\hpp\constant.hpp"\
