@@ -1,4 +1,15 @@
 # $Id$
+# Makefile for build RNTrack in linux
+# Build options:
+# ENABLE_SCRIPTS=1
+#    Build with embedded Perl
+# ENABLE_SYSLOG_LOG_FORMAT=1
+#    Write log file lines like syslog(3)
+# ENABLE_LOG_PID=1
+#    Write the Process ID number into log file lines.
+# CONFIG=/path/to/config.file
+#    Alternate config file location
+
 CC	= g++
 CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -O3
 CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \

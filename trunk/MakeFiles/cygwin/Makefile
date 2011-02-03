@@ -1,4 +1,15 @@
 # $Id$
+# Makefile for build RNTrack in cygwin enviroment
+# Build options:
+# ENABLE_SCRIPTS=1
+#    Build with embedded Perl
+# ENABLE_SYSLOG_LOG_FORMAT=1
+#    Write log file lines like syslog(3)
+# ENABLE_LOG_PID=1
+#    Write the Process ID number into log file lines.
+# CONFIG=/path/to/config.file
+#    Alternate config file location
+
 CC	= g++
 CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
 CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H \
@@ -13,10 +24,9 @@ SRCDIR	= ../../src/
 EXEEND= _w32.exe
 #CONFIG	= c:\\ftn\\rntrack.cfg
 
-# uncomment to enable
-#ENABLE_SCRIPTS=1
-#ENABLE_LOG_PID=1
-#ENABLE_SYSLOG_LOG_FORMAT=1
+ENABLE_SCRIPTS?=0
+ENABLE_LOG_PID?=0
+ENABLE_SYSLOG_LOG_FORMAT?=0
 
 ifeq ($(ENABLE_SCRIPTS), 1)
     CFLAGS += `perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]";'` `perl -MExtUtils::Embed -e ccopts`
