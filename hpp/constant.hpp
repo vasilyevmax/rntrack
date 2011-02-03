@@ -69,6 +69,8 @@
 #define VERSION        "1.24"
 #ifdef __PERL_VERSION__
 #define Perl "/Perl"
+#else
+#define Perl
 #endif
 #define ProgVersion    VERSION""OsType""Perl
 #define ProductLO 0xff
