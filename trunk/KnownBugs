@@ -1,11 +1,11 @@
 $Id$
 
 1. @MsgRoutedVia may be empty.
-2. Don't build on Win32 (mingw32) and OS/2 with ENABLE_SCRIPTS=1.
+2. Don't build on mingw32 and OS/2 with ENABLE_SCRIPTS=1 (MS VC build os OK)
 3. Sometimes accepts bad messages.
 4. Reports 'File not found' when routes attaches to fileboxes and use path
    change actions (ChangePath, ToUpperPath, ToLowerPath)
 5. Sometime crashes if scripts used.
 6. @MsgLoops, @MaxAge and @MaxAttachSize macroses not working
-7. Don't detects doublicated Origin, Tearline, Tagline in messages; removes
+7. Don't detects duplicated Origin, Tearline, Tagline in messages; removes
    all duplicates.
