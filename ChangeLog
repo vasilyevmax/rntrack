@@ -4,6 +4,29 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.25 2011-02-04
+---------------
+# A possibility to build RNTrack/W32 with embedded Perl (using MS
+  Visual Studio 6).
+! Fix manual: "AgeFromVia" not implemented but described.
+
+1.24 2011-02-02
+---------------
+# Add info about Perl in program banner and log messages (if RNTrack
+  compiled with embedded Perl).
+! Fix build with embedded Perl up to Perl version 5.12.2.
+! Fix build in FreeBSD.
+! Fix build in Cygwin (mingw).
+# Cygwin build instruction created.
+
+1.22 2010-01-29
+---------------
+# A possibility to build RNTrack using MS Visual Studio 6.
+
+1.20 2010-01-28
+---------------
+! Handling optional comma after boss node in a pointlist (FTS-5002).
+
 1.17 2009-11-02
 ---------------
 # The date of commit does not follow the program version number in
