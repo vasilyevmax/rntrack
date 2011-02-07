@@ -66,7 +66,7 @@
 #ifdef VERSION
 #undef VERSION
 #endif
-#define VERSION        "1.25"
+#define VERSION        "1.26"
 #ifdef __PERL_VERSION__
 #define Perl "/Perl"
 #else
@@ -105,6 +105,7 @@
 #define LOGE           100
 #define LOGW           101
 #define LOGI           102
+#define LOGN           103
 #define LOGD           105
 
 #define BUFF_SIZE 1024

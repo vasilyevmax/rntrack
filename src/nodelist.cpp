@@ -718,7 +718,7 @@ NodeListElem Elem;
       }
       if ((MaxNodelistAge != (time_t)-1) && (NodelistTurnOff != TRUE)) {
          if ((time(NULL) - (NList+i)->Time) > MaxNodelistAge) {
-            Log.Level(LOGI) << "Nodelist '" << (NList+i)->Name << "' too old." << EOL;
+            Log.Level(LOGW) << "Nodelist '" << (NList+i)->Name << "' too old." << EOL;
             Log.Level(LOGI) << "Checking existance in nodelists turned off." << EOL;
             NodelistTurnOff = TRUE;
             Log.Level(LOGD) << "Time  : " << (int) (time(NULL)) << EOL;
@@ -821,7 +821,7 @@ int i;
    for (i=0; i < Lists; i++) {
       if ((MaxNodelistAge != (time_t)-1) && (NodelistTurnOff != TRUE)) {
          if ((time(NULL) - (NList+i)->Time) > MaxNodelistAge) {
-            Log.Level(LOGI) << "Nodelist '" << (NList+i)->Name << "' too old." << EOL;
+            Log.Level(LOGW) << "Nodelist '" << (NList+i)->Name << "' too old." << EOL;
             Log.Level(LOGI) << "Checking of existence in nodelists is turned off." << EOL;
             NodelistTurnOff = TRUE;
             Log.Level(LOGD) << "Age   : " << (int) (time(NULL) - (NList+i)->Time) << EOL;
@@ -882,7 +882,7 @@ FILE *fh;
       {
          if(NodelistTurnOff)
          {
-            Log.Level(LOGI) << "Nodelists are not used." << EOL;
+            Log.Level(LOGN) << "Nodelists are not used." << EOL;
             return TRUE;
          }
          return FALSE;
@@ -892,7 +892,7 @@ FILE *fh;
    {
       if(NodelistTurnOff)
       {
-         Log.Level(LOGI) << "Nodelists are not used." << EOL;
+         Log.Level(LOGN) << "Nodelists are not used." << EOL;
          return TRUE;
       }
    }

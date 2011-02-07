@@ -313,17 +313,17 @@ MSGBASE *s;
       return FALSE;
    }
    if (!Flagged()) {
-      Log.Level(LOGI) << "Skip base '" << _Base->BaseName() << "' by Flag." << EOL;
+      Log.Level(LOGN) << "Skip base '" << _Base->BaseName() << "' by Flag." << EOL;
       _Base->Close();
       return TRUE;
    }
    if (!InTime(_Times.GetFirst())) {
-      Log.Level(LOGI) << "Skip base '" << _Base->BaseName() << "' by Time." << EOL;
+      Log.Level(LOGN) << "Skip base '" << _Base->BaseName() << "' by Time." << EOL;
       _Base->Close();
       return TRUE;
    }
    Log.Level(LOGD) << EOL;
-   Log.Level(LOGI) << "Scanning message base " << _Base->BaseName() << EOL;
+   Log.Level(LOGN) << "Scanning message base " << _Base->BaseName() << EOL;
    Log.Level(LOGD) << "--------------------------------------" << EOL;
    if (_ScriptBefore != NULL) {
       switch (DoSomeWordRc(_ScriptBefore)) {

@@ -249,7 +249,7 @@ size_t size;
       case ACT_IGNORE:
          CHP = 8;
          if (LogIgnore) {
-            Log.Level(LOGI) << "Ignore msg " << b.MessageName() << EOL;
+            Log.Level(LOGN) << "Ignore msg " << b.MessageName() << EOL;
          }
          break;
 
@@ -312,7 +312,7 @@ size_t size;
              } else {
                Log.Level(LOGI) << "Change path to attached files in " << tmt << " to " << _OutDir << EOL;
              }
-        } 
+        }
             tmt2 = FileInbound;
             if (sd->_FileInbound != NULL) {
                FileInbound = sd->_FileInbound;
@@ -331,7 +331,7 @@ size_t size;
              if (!ToUpperPath(m)) {
                FileInbound = tmt2;
                return FALSE;
-             }      
+             }
         }
             else
         {
