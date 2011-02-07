@@ -460,10 +460,14 @@ int rc;
 
 
    PUSHMARK(SP);
+#if __GNUC__>=4
+   rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
+#else
 #if __PERL_VERSION__ >= 5008000 /* for Perl 5.8.* and above, see Makefile */
    rc = perl_parse(PerlSystem, (void(*)( PerlInterpreter*))xs_init, 2, perlargs, NULL);
 #else  /* for old Perl */
    rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
+#endif
 #endif
    SPAGAIN;
    PUTBACK;
