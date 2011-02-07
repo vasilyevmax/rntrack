@@ -931,6 +931,7 @@ Template::~Template() {
 int Template::Set(char *c) {
    CHP = 77190;
    if (access(c,R_OK) != 0) {
+      Log.Level(LOGD) << "Template.Set: File '" << Dir << "' is not exist or not readable."<< EOL;
       return FALSE;
    }
    TplName = strdup(c);

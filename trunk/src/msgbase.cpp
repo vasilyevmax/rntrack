@@ -319,6 +319,7 @@ char Buff[1024];
    Clear();
 
    if (!DirExists(Dir) && !CreateMissingBase) {
+      Log.Level(LOGD) << "MSGASMSG.Set: Message base directory '" << Dir << "' is not exist."<< EOL;
       return FALSE;
    }
    DirName = (char *) malloc(strlen(Dir) + 2);
