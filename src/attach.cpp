@@ -319,7 +319,7 @@ char B[BUFF_SIZE];
 #ifdef __NT__
       CharToOem(tmt,tmt);
 #endif
-      Log.Level(LOGI) << "   File not found: '" << tmt << "'" << EOL;
+      Log.Level(LOGI) << "   File not found: '" << tmt << "', can't copy." << EOL;
       return TRUE;
    }
    RSTRLCPY(B,NewPath,BUFF_SIZE);
