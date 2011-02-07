@@ -4,6 +4,8 @@
 ! - Bug fixed
 # - Added feature or changes
 
+! Fix build on unix-like OS using GNU C 4.x
+
 1.25 2011-02-04
 ---------------
 # A possibility to build RNTrack/W32 with embedded Perl (using MS
