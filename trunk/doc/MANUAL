@@ -1,5 +1,5 @@
 $Id$
-                      FTN Messages tracker 1.25
+                      FTN Messages tracker 1.26
 -------------------------------------------------------------------------------
  +------+----------------------------------------------------------------+
  |0.    | Table of contents.                                             |
@@ -29,12 +29,14 @@ $Id$
   Thanks...............................................................14
   How to contact me....................................................15
 
+
  +------+----------------------------------------------------------------+
  |1.    | What is this program for                                       |
  +------+----------------------------------------------------------------+
 
  It is so called netmail "tracker". It's puprose is to process netmail on
 netmail hubs, though it can be useful for an ordinary node.
+
 
  +------+----------------------------------------------------------------+
  |2.    | How does it work                                               |
@@ -68,10 +70,10 @@ Possible keys for command line are:
        right now.
   -h - Shows help-screen
 
+
  +------+----------------------------------------------------------------+
  |4.    | rntrack.cfg                                                    |
  +------+----------------------------------------------------------------+
-
 
  All keywords are case-insensitive. Colons are parts of keywords. That's why
 you should write "Address:" instead of "Address :"
@@ -329,13 +331,16 @@ to put it at the beginning of the configuration file.
 LogLevel: 1
 ---------
  Level of log detalization. Possible values are from 0 to 5.
- Level 0:  - Only error messages and information from Action: Display
- Level 1:  - Additional warnings are added
- Level 2:  - All messages are displayed
+ Level 0:  - Errors. Output only serious error messages and information from
+             'Action: Display'.
+ Level 1:  - Warnings. Additional warnings are added.
+ Level 2:  - Information. Additional messages about all changes in letters and
+             files,
+ Level 3:  - Notice. Additional messages about all actions, for example,
+             messagebase scannig began.
  Level 5:  - Debug mode. I wouldn't recomment to use this level in usual
              situations, because log-file grows terribly quickly, and work
              speed slows.
-	     
 
 LoopStr: " 2:5030/9999 RNtrack"
 --------
@@ -630,6 +635,7 @@ time shift then you can use this command.
  If this keyword is omited and system time isn't set properly then only
 local time will be written to kludges.
 
+
  +------+----------------------------------------------------------------+
  |5.    | Parameters of Mask: keyword                                    |
  +------+----------------------------------------------------------------+
@@ -781,6 +787,7 @@ all out addresses in mask. For example:
   Mask * * * !@ * *
   Letters _NOT_ for 2:5030/9999, 7:1130/79 or 8:888/888 coincide.
 
+
  +------+----------------------------------------------------------------+
  |5.1   | Parameters of ScriptMask: keyword                              |
  +------+----------------------------------------------------------------+
@@ -796,6 +803,7 @@ return | result
 ---------------
 0      | message not match with mask
 1      | message match with mask
+
 
  +------+----------------------------------------------------------------+
  |6.    | Parameters of Action: keyword                                  |
@@ -1008,19 +1016,19 @@ letter, with subject "Bad source address" and with Local flag set.
      @Subject           - Subject of the original letter.
      @MsgDate           - Date of the original letter.
      @MsgAge            - Age of the letter.
-     @MsgHeader         - Header of the original letter..
-     @MsgKludges        - Kludges of the original letter..
-     @MsgBody           - Body of the original letter..
+     @MsgHeader         - Header of the original letter.
+     @MsgKludges        - Kludges of the original letter.
+     @MsgBody           - Body of the original letter.
      @MsgVias           - Via and other technical strings of the original
-                          letter..
-     @MsgAttr           - Attributes of the letter
+                          letter.
+     @MsgAttr           - Attributes of the letter.
      @MsgAreaName       - If the message is echomail then name of the echo
                           from what the message came.
-     @MsgAttachSize     - Size of all attached files
-     @MsgSize           - Size of the message in bytes (without kludges)
-     @MsgID             - MSGID of the letter
-     @MsgLines          - Number of lines in the message (without kludges)
-     @MsgLoops          - Loop Counter
+     @MsgAttachSize     - Size of all attached files.
+     @MsgSize           - Size of the message in bytes (without kludges).
+     @MsgID             - MSGID of the letter.
+     @MsgLines          - Number of lines in the message (without kludges).
+     @MsgLoops          - Loop Counter (not implemented yet).
 
      @MsgTearline       - Tearline of the letter. Added invalidated.
      @MsgOrigin         - Origin of the letter. Added invalidated.
@@ -1037,10 +1045,10 @@ letter, with subject "Bad source address" and with Local flag set.
      @MsgReply          - Content of the 'Reply' kludge of the letter
      @Sysop             - Your name, shown in the configuration.
      @MyAddr            - Your address, shown in the configuration.
-     @MaxAge            - MaxAge: value.
+     @MaxAge            - MaxAge: value (not implemented yet).
      @MsgAreaName       - if the letter is an echomail message then
-                          name of the source area
-     @MaxAttachSize     - MaxAttachSize: value.
+                          name of the source area.
+     @MaxAttachSize     - MaxAttachSize: value (not implemented yet).
      @Date              - Current date.
      @NodeLists         - List of used nodelists.
      @Origin            - Origin, shown in configuration. Added
@@ -1049,8 +1057,9 @@ letter, with subject "Bad source address" and with Local flag set.
                           _non_-invalidated. If it isn't shown in
                           configuration files, then "--- RNtrack"Version
                           is added.
-     @Version		- RNtrack version.			  
+     @Version		- RNtrack version.
      @Pid		- Current RNtrack PID (only under UNIX).
+
 
  +------+----------------------------------------------------------------+
  |7.    | Prefixes "+" and "*" for masks                                 |
@@ -1108,6 +1117,7 @@ we'll see both lines.
 then the message, coincided with all these masks will also be compared
 to the following masks. More complicated examples of work with these
 prefixes you can find in the next chapter.
+
 
  +------+----------------------------------------------------------------+
  |8.    | Examples of using Mask: and Action:                            |
@@ -1268,6 +1278,7 @@ directly.
  3. *.MSG
  4. JAM
 
+
  +------+----------------------------------------------------------------+
  |10.1  | Squish                                                         |
  +------+----------------------------------------------------------------+
@@ -1283,6 +1294,7 @@ Action: Move "$p:\outmail"
 Limitations:
  * Can't be used as a base for BadMail.
  * Operation Renumber doesn't function.
+
 
  +------+----------------------------------------------------------------+
  |10.2  | *.PKT                                                          |
@@ -1311,6 +1323,7 @@ Limitations:
  * This type of base supports only operations of reading and deleting.
    Thus _any_ operation that changes message content is prohibited.
 
+
  +------+----------------------------------------------------------------+
  |10.3  | *.MSG                                                          |
  +------+----------------------------------------------------------------+
@@ -1328,6 +1341,7 @@ Limitations:
  *  If new messages appeared in base, that is scanning at the moment, RNtrack
 won't see them until the next run. This also concernes letters created by
 RNtrack.
+
 
  +------+----------------------------------------------------------------+
  |10.4  | JAM                                                            |
@@ -1383,6 +1397,7 @@ and network segment), then the next algorythm is used:
   * If in one nodelist a node is hub, but in another it is not, then RNtrack
     considers the node to be a hub.
 
+
  +------+----------------------------------------------------------------+
  |11.1  | Address mask "#  "                                             |
  +------+----------------------------------------------------------------+
@@ -1408,6 +1423,7 @@ and they'll considered to be listed.
                          way: if segment of a boss is absent in the
                          pointlist then point is considered to be valid.
                          Existence of boss in nodelist is still necessary.
+
 
  +------+----------------------------------------------------------------+
  |11.2  | Address mask "&"                                               |
@@ -1542,9 +1558,8 @@ will create message (msg) in 'msgs' directory from Alex@2:5030/1666 to User@2:50
 with subject 'msg test' and body 'It is My test'. Set of any flags and kludges currently 
 unsupported so values of $Flags and $Kludges arguments will be ignored.
 
- 
-
 Some examples you can find in test.pl file.
+
 
  +------+----------------------------------------------------------------+
  |13.   | Guarantees                                                     |
@@ -1554,6 +1569,7 @@ Some examples you can find in test.pl file.
 As Is, and I can't provide any guarantee. The only thing I promise is
 to correct founded mistakes more or less regulary and to produce new
 versions.
+
 
  +------+----------------------------------------------------------------+
  |14.   | Thanks                                                         |
@@ -1584,18 +1600,26 @@ to wit: Kirill Arushanov and Dennis Sulimov
  This product uses the JAM(mbp) API - Copyright 1993 Joaquim Homrighausen,
  Andrew Milner, Mats Birch, Mats Wallin. ALL RIGHTS RESERVED.
 
+
  +------+----------------------------------------------------------------+
  |15.   | How to find me                                                 |
  +------+----------------------------------------------------------------+
 
- All your notes and wishes please send to me via FIDO (2:5030/1157) or
-Internet (ph0enix@users.sourceforge.net)
+ All your notes and wishes:
+* publish into echoconference RU.FTRACK
+* publish into bugtrackon site http://sourceforge.net/projects/ftrack-as
+* sends to developers via personal mail.
+
+Developers:
+* 2003-2006 Alex Soukhotine
+  2:5030/1157@fidonet (ph0enix@users.sourceforge.net)
+* 2007-... Stas Degteff (the project maintainer after Alex)
+  2:5080/102@fidonet (stas_degteff@users.sourceforge.net)
+* 2009-... Michael Dukelsky
+  2:5020/1042@fidonet
 
 Project site:
 
 http://sourceforge.net/projects/ftrack-as
 
 -------------------------------------------------------------------------------
-
-With best regards,
-                  Alex
