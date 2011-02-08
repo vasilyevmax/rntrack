@@ -242,8 +242,8 @@ FileBoxType: <Type>
    <Type> : Long   - z.n.f.p (default)
           : Tmlong - z.n.f.p; z.n.f.p.h if hold (T-Mail long box)
           : Tmshort  znf.p; znf.ph if hold (T-mail short box, 32-base representation)
-	  : Brake - domain.z.n.f.p.flavour (The Brake! long box, flavour = hold, normal,
-	            direct, crash, immediate)
+      : Brake - domain.z.n.f.p.flavour (The Brake! long box, flavour = hold, normal,
+                direct, crash, immediate)
 
 z - zone
 n - net
@@ -323,24 +323,27 @@ debug-log of RNtrack.
 
 LogFile: "c:\log\rntrack.log"
 --------
- Log-file name. Pay attention that using of a logfile begins just at the
+Log filename. Pay attention that using of a log file begins just at the
 moment when RNtrack encounters this keyword. That's why I recommend
 to put it at the beginning of the configuration file.
- You can not to define logfile.
+
+You may omit the log file declaration.
 
 LogLevel: 1
 ---------
  Level of log detalization. Possible values are from 0 to 5.
- Level 0:  - Errors. Output only serious error messages and information from
-             'Action: Display'.
- Level 1:  - Warnings. Additional warnings are added.
- Level 2:  - Information. Additional messages about all changes in letters and
-             files,
- Level 3:  - Notice. Additional messages about all actions, for example,
-             messagebase scannig began.
- Level 5:  - Debug mode. I wouldn't recomment to use this level in usual
-             situations, because log-file grows terribly quickly, and work
-             speed slows.
+ Level 0:  - Errors. Only serious error messages and information from
+             'Action: Display' are reported.
+ Level 1:  - Warnings. Warnings on oddities in the messages and files are 
+             reported besides the errors from level 0.
+ Level 2:  - Information. Besides errors and warnings, all activity producing 
+             changes in messages and files is reported.
+ Level 3:  - Notice. Besides errors, warnings and information, all actions 
+             are reported, for example, that message base scanning has been 
+             started.
+ Level 5:  - Debug mode. I wouldn't recommend using this level in regular
+             work, because the log file grows terribly quickly, and the work
+             speed slows down.
 
 LoopStr: " 2:5030/9999 RNtrack"
 --------
@@ -893,12 +896,12 @@ Possible variants for this keyword are:
                                      Your address, that coincide with
                                      according mask, is used as the address
                                      of the sender of the packet. Message placed as
-				     individual packet to filebox.
+                     individual packet to filebox.
 
    Action: RouteHub <Mode>        -  Route this letter through hub of destination
                                      address. Mode can be Hold, Crash, Direct, Normal or Immediate.
-				     Routes to host of recipient if hub not found.
-				     
+                     Routes to host of recipient if hub not found.
+                     
    Action: Poll <Mode> Address    -  To create Poll to the shown address.
                                      Arguments Mode and Address are the
                                      same to these arguments in Action:Route
@@ -926,11 +929,11 @@ Possible variants for this keyword are:
                                      directory. Path in subject changes
                                      accordingly.If FileAttach flag is
                                      omited then the command is ignored.
-				     
+                     
    Action: MoveAttachFilebox <Mode> Address       -  Moves attached file(s) into filebox
-				     for specified address. Arguments Mode and 
-				     Address are the same to these arguments in 
-				     Action: Route (or Action: RouteFilebox, etc.).
+                     for specified address. Arguments Mode and 
+                     Address are the same to these arguments in 
+                     Action: Route (or Action: RouteFilebox, etc.).
                                      command. Path in subject changes
                                      accordingly. If FileAttach flag is omited
                                      then the command is ignored.
@@ -941,14 +944,14 @@ Possible variants for this keyword are:
                                      then the command is ignored.
 
    Action: CopyAttachFilebox <Mode> Address       -  Copies attached file(s) into filebox
-				     for specified address. Address are the same to these 
-				     arguments in Action: Route (or Action: RouteFilebox, 
-				     etc.). Path in subject doesn't
+                     for specified address. Address are the same to these 
+                     arguments in Action: Route (or Action: RouteFilebox, 
+                     etc.). Path in subject doesn't
                                      change. If FileAttach flag is omited
                                      then the command is ignored.
 
    Action: Script "Func"          -  Calls function "Func" from file, defined
-				     in ScriptFile variable.
+                     in ScriptFile variable.
 
    Action: Split <Lines>          -  Split the coincided message to
                                      several messages, with amount of lines
@@ -1012,7 +1015,7 @@ letter, with subject "Bad source address" and with Local flag set.
      @InetToAddr        - Address of the recepient of the original letter (internet style).
      @FromName          - Name of the sender of the original letter.
      @FromAddr          - Address of the sender of the original letter.
-     @InetFromAddr	- Address of the sender of the original letter (internet style).
+     @InetFromAddr  - Address of the sender of the original letter (internet style).
      @Subject           - Subject of the original letter.
      @MsgDate           - Date of the original letter.
      @MsgAge            - Age of the letter.
@@ -1057,8 +1060,8 @@ letter, with subject "Bad source address" and with Local flag set.
                           _non_-invalidated. If it isn't shown in
                           configuration files, then "--- RNtrack"Version
                           is added.
-     @Version		- RNtrack version.
-     @Pid		- Current RNtrack PID (only under UNIX).
+     @Version       - RNtrack version.
+     @Pid       - Current RNtrack PID (only under UNIX).
 
 
  +------+----------------------------------------------------------------+
@@ -1255,12 +1258,19 @@ request receipt" +l
 final letter can have another length. It's joined with the fact that when
 these commands are executed a letter is created anew, and carriage returns,
 lacking kludges and so on can be added.
+
+When RNtrack handles a message with attachments, it takes a space in the
+Subject field as a delimiter between file names. If an attacment filename
+contains a space, such a filename is considered as two filenames: one before 
+the space and one after it. As a result the file is not handled.
+
  Another peculiarity. During execution of Action: Delete a message is
 deleted at once, but it continues to exist in memory. That's why commands
 Copy-Delete or Delete-Copy will done the same- Move. But in the first case
 a new message will be created first, and only after this the old letter'll be
 deleted, and in the second case the old letter will be deleted first and
 after that a new one'll be created.
+
  By the way, remember that Frack won't delete or put any flag on a letter
 itself. It won't delete a message or a file without special request. That's
 why if you want RNtrack to put +s flag on messages after sending, or to
@@ -1468,35 +1478,35 @@ Variables and functions defined in scripts
 
 Constants:
 
-$ConfigFile	- Config file path
-$LogFile	- Log file path
-$LogLevel	- Log detalization level
-$SysopName	- Sysop name
-$TrafficLog	- Traffic log path
-$Version	- RNtrack version
+$ConfigFile - Config file path
+$LogFile    - Log file path
+$LogLevel   - Log detalization level
+$SysopName  - Sysop name
+$TrafficLog - Traffic log path
+$Version    - RNtrack version
 
 %FMSG - current message
 
 Keys:
 
-$FMSG{"FromName"}	- Name of the sender of the original letter.
-$FMSG{"FromAddr"}	- Address of the sender of the original letter.
-$FMSG{"InetFromAddr"}	- Address of the sender of the original letter (internet style).
-$FMSG{"ToName"}		- Name of the recepient of the original letter.
-$FMSG{"ToAddr"}		- Address of the recepient of the original letter.
-$FMSG{"InetToAddr"}	- Address of the recepient of the original letter (internet style).
-$FMSG{"Subject"}	- Subject of the original letter.
-$FMSG{"Date"}		- Date of the original letter.
-$FMSG{"Age"}		- Age of the letter.
-$FMSG{"Attr"}		- Attributes of the letter
-$FMSG{"Lines"}		- Number of lines in the message (without kludges)
-$FMSG{"Cost"}		- Cost
-$FMSG{"TimesRead"}	- TimesRead
-$FMSG{"ReplyTo"}	- ReplyTo
-$FMSG{"NextReply"}	- NextReply
-$FMSG{"AreaName"}	- If the message is echomail then name of the echo
+$FMSG{"FromName"}   - Name of the sender of the original letter.
+$FMSG{"FromAddr"}   - Address of the sender of the original letter.
+$FMSG{"InetFromAddr"}   - Address of the sender of the original letter (internet style).
+$FMSG{"ToName"}     - Name of the recepient of the original letter.
+$FMSG{"ToAddr"}     - Address of the recepient of the original letter.
+$FMSG{"InetToAddr"} - Address of the recepient of the original letter (internet style).
+$FMSG{"Subject"}    - Subject of the original letter.
+$FMSG{"Date"}       - Date of the original letter.
+$FMSG{"Age"}        - Age of the letter.
+$FMSG{"Attr"}       - Attributes of the letter
+$FMSG{"Lines"}      - Number of lines in the message (without kludges)
+$FMSG{"Cost"}       - Cost
+$FMSG{"TimesRead"}  - TimesRead
+$FMSG{"ReplyTo"}    - ReplyTo
+$FMSG{"NextReply"}  - NextReply
+$FMSG{"AreaName"}   - If the message is echomail then name of the echo
                           from what the message came.
-$FMSG{"Body"}		- Message body (without kludges)
+$FMSG{"Body"}       - Message body (without kludges)
 
 
 %FKludges - Current message kludges
@@ -1510,40 +1520,40 @@ Attention! You must use all special symbols in kludge name (0x01, ":", etc.).
 
 Functions:
 
-Log("text"); 		- Text output to log and screen.
-Update();		- Update current message after script-made changes.
-			  You can change following keys of %FMSG hash:
-			  
-			  FromName, FromAddr, ToName, ToAddr, Subject, Body,
-			  AreaName, Cost, TimesRead, ReplyTo, NextReply.
-			  
-			  Lines, InetFromAddr, InetToAddr not require modify
-			  because its values automatically redefines ob
-			  Body, FromAddr and ToAddr changes.
-			  
-			  Warning! Changes take effect only only for next Action 
-			  directives. In that reason for file change after 
-			  Action: Script add Action: Rewrite.
-			  
-			  Example:
-			  
-			  --- test.pl ---
-			  sub maskfunc
-			  {
-			   $FMSG{"Subject"}="My new subject!";
-			   Update();
-			  }
-			  --- test.pl ---
-			  
-			  
-			  Mask: * * * * * *
-			  Action: Script "maskfunc"
-			  \ After that message file left unchanged
-			  Action: Rewrite * * * * * *
-			  \ Now subject in message file replaced to "My new subject!"
-			  
-			  
-ExistsInNodelist("99:99/999");	- Check existing in nodelist(s).
+Log("text");        - Text output to log and screen.
+Update();       - Update current message after script-made changes.
+              You can change following keys of %FMSG hash:
+              
+              FromName, FromAddr, ToName, ToAddr, Subject, Body,
+              AreaName, Cost, TimesRead, ReplyTo, NextReply.
+              
+              Lines, InetFromAddr, InetToAddr not require modify
+              because its values automatically redefines ob
+              Body, FromAddr and ToAddr changes.
+              
+              Warning! Changes take effect only only for next Action 
+              directives. In that reason for file change after 
+              Action: Script add Action: Rewrite.
+              
+              Example:
+              
+              --- test.pl ---
+              sub maskfunc
+              {
+               $FMSG{"Subject"}="My new subject!";
+               Update();
+              }
+              --- test.pl ---
+              
+              
+              Mask: * * * * * *
+              Action: Script "maskfunc"
+              \ After that message file left unchanged
+              Action: Rewrite * * * * * *
+              \ Now subject in message file replaced to "My new subject!"
+              
+              
+ExistsInNodelist("99:99/999");  - Check existing in nodelist(s).
 FindHub("99:99/999");           - Return hub number for 99:99/999. It returns 0 if hub not found.
 
 NewMsg($MsgBase,$FromName,$FromAddr,$ToName,$ToAddr,$Subject,$Flags,$Kludges,$Body) - create message and put it to base
@@ -1605,10 +1615,11 @@ to wit: Kirill Arushanov and Dennis Sulimov
  |15.   | How to find me                                                 |
  +------+----------------------------------------------------------------+
 
- All your notes and wishes:
-* publish into echoconference RU.FTRACK
-* publish into bugtrackon site http://sourceforge.net/projects/ftrack-as
-* sends to developers via personal mail.
+ If you have any notes and wishes, please
+* publish them in echoconference RU.FTRACK 
+  (though the echo is mainly in Russian you are welcome to write in English)
+* make a ticket in the bug tracker http://sourceforge.net/projects/ftrack-as
+* send them to developers via personal mail.
 
 Developers:
 * 2003-2006 Alex Soukhotine
