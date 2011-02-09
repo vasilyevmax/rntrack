@@ -9,3 +9,4 @@ $Id$
 6. @MsgLoops, @MaxAge and @MaxAttachSize macroses not working
 7. Don't detects duplicated Origin, Tearline, Tagline in messages; removes
    all duplicates.
+8. Windows version with embedded perl crashes at exit.
