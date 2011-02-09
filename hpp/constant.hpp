@@ -75,7 +75,7 @@
 #define ProgVersion    VERSION""OsType""Perl
 #define ProductLO 0xff
 #define ProductHI 0x16
-#define Copyright      "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007-2011 Stas Degteff (2:5080/102)\n    2009-2010 Michael Dukelsky (2:5020/1042)\n"
+#define Copyright      "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007-2011 Stas Degteff (2:5080/102)\n    2009-2011 Michael Dukelsky (2:5020/1042)\n"
 
 #ifndef DefaultConfig
 # ifdef __unix__
