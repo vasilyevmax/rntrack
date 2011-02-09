@@ -255,18 +255,19 @@ char *tmpCf;
    } /* while */
 
 // ---
-   atexit(&DoneSystem);
 
    CHP = 99002;
    if (!InitSystem()) {
       return (-1);
    }
    CHP = 99003;
+   atexit(&DoneSystem);
    if (DoScan) {
       LastTime = 0;
    }
 // ---
 
+   CHP = 99004;
    if (UnpackNeed) {
       if (!DoRepack()) {
          return (-1);
@@ -277,6 +278,7 @@ char *tmpCf;
       PrintScanDirs();
    }
 
+   CHP = 99005;
    DoScanDirs();
 
    return (0);
