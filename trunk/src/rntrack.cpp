@@ -230,7 +230,6 @@ char *tmpCf;
    CHP = 99000;
    ut.actime = time(NULL);
    ut.modtime = time(NULL);
-   Hello();
 
    DoScan = FALSE;
    CHP = 99001;
@@ -240,7 +239,7 @@ char *tmpCf;
    if (tmpCf)
     ConfigFile = strdup(tmpCf);
 
-   while ((Option = ParseCmdArgs(argc, argv, "c:uh?t")) != EOF) {
+   while ((Option = ParseCmdArgs(argc, argv, "c:uh?tv")) != EOF) {
       switch (Option) {
          case 'u' : UnpackNeed = TRUE;
                     break;
@@ -249,8 +248,9 @@ char *tmpCf;
                     break;
          case 't' : DoScan = TRUE;
                     break;
-         case '?' :
-         case 'h' : Help(); exit(0);
+         case '?' : Help(); exit(1);
+         case 'h' : Hello(); Help(); exit(0);
+         case 'v' : Hello(); exit(0);
       } /* switch */
    } /* while */
 
