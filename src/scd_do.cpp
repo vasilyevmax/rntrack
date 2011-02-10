@@ -855,7 +855,7 @@ size_t size;
 
                while (*tmt2 != '\0') {
                   tmt = stmt;
-                  sprintf(tmt,"\1SPLIT by RNtrack. Part %d of %d\r",CurPart, Parts);
+                  sprintf(tmt,"\1SPLIT: by RNtrack. Part %d of %d\r",CurPart, Parts);
                   tmt += strlen(tmt);
                   for(Lns = 0; Lns < _Lines && *tmt2 != '\0'; tmt2++,tmt++) {
                      if (*tmt2 == '\r') Lns++;
