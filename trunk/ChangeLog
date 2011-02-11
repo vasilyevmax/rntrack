@@ -4,21 +4,21 @@
 ! - Bug fixed
 # - Added feature or changes
 
-1.26 2011-02-08
----------------
+1.26 2011-02-08 (Subversion rev.95)
+-----------------------------------
 # New log level 3 "Notice" for messages without action ("Scanning...",
   "Skip...", "Ignore...", "...not used" & etc.)
 # Update manual (described nuances works with the attached files)
 ! Fix build on unix-like OS using GNU C 4.x
 
-1.25 2011-02-04
----------------
+1.25 2011-02-04 (Subversion rev.87)
+-----------------------------------
 # A possibility to build RNTrack/W32 with embedded Perl (using MS
   Visual Studio 6).
 ! Fix manual: "AgeFromVia" not implemented but described.
 
-1.24 2011-02-02
----------------
+1.24 2011-02-02 (Subversion rev.80)
+-----------------------------------
 # Add info about Perl in program banner and log messages (if RNTrack
   compiled with embedded Perl).
 ! Fix build with embedded Perl up to Perl version 5.12.2.
@@ -26,16 +26,16 @@
 ! Fix build in Cygwin (mingw).
 # Cygwin build instruction created.
 
-1.22 2010-01-29
----------------
+1.22 2010-01-29 (Subversion rev.63)
+-----------------------------------
 # A possibility to build RNTrack using MS Visual Studio 6.
 
-1.20 2010-01-28
----------------
+1.20 2010-01-28 (Subversion rev.61)
+-----------------------------------
 ! Handling optional comma after boss node in a pointlist (FTS-5002).
 
-1.17 2009-11-02
----------------
+1.17 2009-11-02 (Subversion rev.59)
+-----------------------------------
 # The date of commit does not follow the program version number in
   printed strings any more, since the version number changes at each 
   commit now.
