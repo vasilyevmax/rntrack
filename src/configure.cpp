@@ -353,7 +353,7 @@ int LoadScriptFile(char *fname) {
    if (_LoadScriptFile(fname) != 0) return (-1);
    return 0;
 #else
-   yyerror("RNtrack compiled withoud script system support. Sorry.");
+   yyerror("RNtrack compiled without script system support. Sorry.");
    fname = fname;
    return (-1);
 #endif /* defined(__PERL_VERSION__) */
