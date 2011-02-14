@@ -4,6 +4,16 @@
 ! - Bug fixed
 # - Added feature or changes
 
+! A logic of the match to pattern fixed
+# Russian manual is now in OpenDocument format instead of the plain
+  text. ODF will be converted into HTML and PDF for releases.
+! SPLIT kludge is fixed ("^aSPLIT text" -> "^aSPLIT: text")
+# Gentoo ebuild added.
+! Perl deinitialisation fixed, rntrack/w32/perl don't crashed at exit.
+# Don't show version and copyrigth information in normal work. Use
+  command line options -v or -h for viewing this info.
+# New command line option '-v' (view program version).
+
 1.26 2011-02-08 (Subversion rev.95)
 -----------------------------------
 # New log level 3 "Notice" for messages without action ("Scanning...",
