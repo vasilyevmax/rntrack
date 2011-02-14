@@ -410,7 +410,7 @@ int SetSetViaAlways(void) {
       yyerror("SetViaAlways already set.");
       return (-1);
    }
-   SetViaAlways = TRUE;
+   SetViaAlways = 1;
    return (0);
 }
 

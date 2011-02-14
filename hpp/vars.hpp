@@ -95,7 +95,7 @@ extern ScanDir *BeforeRoute;
 extern ScanDir *AfterRoute;
 
 extern bool NewVIAType;
-extern bool SetViaAlways;
+extern int  SetViaAlways;
 extern bool SoftCheckInNodelists;
 extern CheckPointsT CheckPoints;
 extern fileboxType FileBoxType;

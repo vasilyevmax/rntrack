@@ -770,7 +770,7 @@ SdParam     : _RENUMBER
                }
             | _BEFORESCRIPT _STRING
                = {
-                  if (ScriptWordExists($<ch>2) == FALSE) {
+                  if (!ScriptWordExists($<ch>2)) {
                      yyerror("Script function not found.");
                      YYABORT;
                   }
@@ -778,7 +778,7 @@ SdParam     : _RENUMBER
                }
             | _AFTERSCRIPT  _STRING
                = {
-                  if (ScriptWordExists($<ch>2) == FALSE) {
+                  if (!ScriptWordExists($<ch>2)) {
                      yyerror("Script function not found.");
                      YYABORT;
                   }
@@ -1243,7 +1243,7 @@ SCRMParam   : ={
             }
             _STRING ={
                ((ScriptMask *)msk)->_ScriptName = strdup($<ch>2);
-               if (ScriptWordExists($<ch>2) != TRUE) {
+               if (!ScriptWordExists($<ch>2)) {
                   yyerror("Subroutine not found in scripts.");
                   YYABORT;
                }
@@ -1378,7 +1378,7 @@ ADisplay : _DISPLAY _STRING ={
 
 AScript  : _ASCRIPT _STRING ={
             act->_Act = ACT_SCRIPT;
-            if (ScriptWordExists($<ch>2) == FALSE) {
+            if (!ScriptWordExists($<ch>2)) {
                yyerror("Script function not found.");
                YYABORT;
             }

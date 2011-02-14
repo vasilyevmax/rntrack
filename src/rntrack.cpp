@@ -197,7 +197,7 @@ int i;
    CHP = 99201;
    DestroyPasswd();
    CHP = 99202;
-   if (StopScriptSystem()!=TRUE) {
+   if (!StopScriptSystem()) {
       if (Log.Opened()) {
          CHP = 99203;
          Log.Level(LOGE) << "Error at deinitialisation scripts subsystem." << EOL;

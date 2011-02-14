@@ -2183,7 +2183,7 @@ case 146:
     break;}
 case 147:
 {
-                  if (ScriptWordExists(yyvsp[0].ch) == FALSE) {
+                  if (!ScriptWordExists(yyvsp[0].ch)) {
                      yyerror("Script function not found.");
                      YYABORT;
                   }
@@ -2192,7 +2192,7 @@ case 147:
     break;}
 case 148:
 {
-                  if (ScriptWordExists(yyvsp[0].ch) == FALSE) {
+                  if (!ScriptWordExists(yyvsp[0].ch)) {
                      yyerror("Script function not found.");
                      YYABORT;
                   }
@@ -2737,7 +2737,7 @@ case 247:
 case 248:
 {
                ((ScriptMask *)msk)->_ScriptName = strdup(yyvsp[0].ch);
-               if (ScriptWordExists(yyvsp[0].ch) != TRUE) {
+               if (!ScriptWordExists(yyvsp[0].ch)) {
                   yyerror("Subroutine not found in scripts.");
                   YYABORT;
                }
@@ -2847,7 +2847,7 @@ case 288:
 case 289:
 {
             act->_Act = ACT_SCRIPT;
-            if (ScriptWordExists(yyvsp[0].ch) == FALSE) {
+            if (!ScriptWordExists(yyvsp[0].ch)) {
                yyerror("Script function not found.");
                YYABORT;
             }
