@@ -48,7 +48,7 @@
 #undef YYSTYPE               /* Perl also uses bison? damn! */
 
 extern int DetectError;
-extern int NoTokensF;
+extern bool NoTokensF;
 
 extern FA   cffa;
 extern FA   cffa1;
