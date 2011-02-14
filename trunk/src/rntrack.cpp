@@ -197,25 +197,30 @@ int i;
    CHP = 99201;
    DestroyPasswd();
    CHP = 99202;
-   StopScriptSystem();
+   if (StopScriptSystem()!=TRUE) {
+      if (Log.Opened()) {
+         CHP = 99203;
+         Log.Level(LOGE) << "Error at deinitialisation scripts subsystem." << EOL;
+      }
+   }
    if (Log.Opened() && LogLevel != 0) {
-      CHP = 99203;
+      CHP = 99204;
       Log.Level(LOGE) << "--- RNtrack " << ProgVersion << " stopped." << EOL;
       Log.Close();
    }
-   CHP = 99204;
+   CHP = 99205;
    if (TimeStampFile != NULL) {
-      CHP = 99205;
+      CHP = 99206;
       if (utime(TimeStampFile,&ut) != 0) {
-         CHP = 99206;
+         CHP = 99207;
          i = errno;
          Log.Level(LOGE) << "Unable to set modification time for file '" << TimeStampFile << "'. Errno: " << i << EOL;
-         CHP = 99207;
+         CHP = 99208;
       }
-      CHP = 99208;
+      CHP = 99209;
    }
    ReleaseSemaphore();
-   CHP = 99209;
+   CHP = 99210;
 }
 
 // --------------------------------------------------------------------
