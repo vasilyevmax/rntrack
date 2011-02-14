@@ -921,7 +921,7 @@ char *cMSG::SomeFlagsToStr(char *Str) {
 
 void cMSG::ParseMem(char *Buff) {
 char *tmt1, *tmt2;
-int NewLine;
+bool NewLine;
 char BuffForSearch[128];
 
    CHP = 229;

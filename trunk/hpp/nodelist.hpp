@@ -51,9 +51,9 @@ class NodeLists {
    Nch          *Index;
    int          StartZone;
 private:
-   int CompileNeed(void);
-   int Compile(void);
-   int LoadOneIndex(FILE *fh, Nch *&Ind);
+   bool CompileNeed(void);
+   bool Compile(void);
+   bool LoadOneIndex(FILE *fh, Nch *&Ind);
    Nch *Srch(Nch *Addr, unsigned int Number);
 public:
    NodeLists();
@@ -61,10 +61,10 @@ public:
    int AddNodelist(char *tmt, int TempZone);
    void IndexFile(char *Name);
    void Print(void);
-   int Load(void);
+   bool Load(void);
    unsigned int ExistInNodelist(FA const &f);
    unsigned int GetFlags(FA const &f);
-   int InSubHubs(FA const &Addr, FA const &Mask);
+   bool InSubHubs(FA const &Addr, FA const &Mask);
 unsigned int FindHub(FA const &f);
    int Enabled(void) { return (Lists != 0); };
    char *Names(char *Buf);

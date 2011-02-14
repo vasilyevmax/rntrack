@@ -111,7 +111,7 @@ void SQUISH::Clear(void) {
 
 // ---------------------------
 
-int SQUISH::Open(void) {
+bool SQUISH::Open(void) {
 int TypeOfBase;
 
    if (bType == '$') {
@@ -131,7 +131,7 @@ int TypeOfBase;
 }
 // ---------------------------
 
-int SQUISH::Close(void) {
+bool SQUISH::Close(void) {
    CHP = 51720;
    if (Area != NULL) {
       MsgCloseArea(Area);
@@ -141,7 +141,7 @@ int SQUISH::Close(void) {
 }   
 // ---------------------------
 
-int SQUISH::Set(char *Dir, int BaseType) {
+bool SQUISH::Set(char *Dir, int BaseType) {
 int TypeOfBase;
 
    CHP = 518;
@@ -198,7 +198,7 @@ int TypeOfBase;
 
 // ---------------------------
 
-int SQUISH::Next(void) {
+bool SQUISH::Next(void) {
 HMSG fh;
 
    Log.Level(LOGD) << "(1) SQUISH.Next: MsgNum == " << MsgNum
@@ -243,7 +243,7 @@ HMSG fh;
 
 // ---------------------------
 
-int SQUISH::Rewind(void) {
+bool SQUISH::Rewind(void) {
    if (Area == NULL) {
 //      Log.Level(LOGD) << "Base not opened!!! " << EOL;
       CHP = 524;
@@ -268,14 +268,14 @@ int SQUISH::Rewind(void) {
 
 // ---------------------------
 
-int SQUISH::Renumber(void) {
+bool SQUISH::Renumber(void) {
    CHP = 528;
-   return TRUE;   
+   return TRUE;
 }
 
 // ---------------------------
 
-int SQUISH::DeleteMsg(void) {
+bool SQUISH::DeleteMsg(void) {
    CHP = 530;
    if (MsgKillMsg(Area,MsgNum) != 0) {
       CHP = 531;
@@ -312,7 +312,7 @@ static char Buff[2048];
 
 // ---------------------------
 
-int SQUISH::WriteFromMem(char *Buff) {
+bool SQUISH::WriteFromMem(char *Buff) {
    CHP = 537;
    CHP = 538;
    Buff = Buff;
@@ -321,7 +321,7 @@ int SQUISH::WriteFromMem(char *Buff) {
 
 // ---------------------------
 
-int SQUISH::ReadMsg(cMSG &m) {
+bool SQUISH::ReadMsg(cMSG &m) {
 HMSG fh;
 XMSG rm;
 char *Ctrl;
@@ -438,7 +438,7 @@ char *tmt, *tmt2;
 
 // ---------------------------
 
-int SQUISH::WriteOneMsg(unsigned int Num, cMSG &m) {
+bool SQUISH::WriteOneMsg(unsigned int Num, cMSG &m) {
 HMSG fh;
 char *Ctrl;
 int  CtrlLen;
@@ -547,13 +547,13 @@ char *tmt, *tmt2;
 
 // ---------------------------
 
-int SQUISH::WriteMsg(cMSG &m) {
+bool SQUISH::WriteMsg(cMSG &m) {
    return WriteOneMsg(MsgNum,m);
 }
 
 // ---------------------------
 
-int SQUISH::WriteNewMsg(cMSG &m) {
+bool SQUISH::WriteNewMsg(cMSG &m) {
 int Num;
    Num = 0;
    return WriteOneMsg(Num,m);

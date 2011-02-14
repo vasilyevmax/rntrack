@@ -48,7 +48,7 @@ public:
    int Parse(void);
    void SetMsg(cMSG &F, cMSG &T) { From = &F; To = &T;};
    void SetMsg(cMSG &F) { From = &F; To = &F;};
-   int Set(char *Name);
+   bool Set(char *Name);
    int Save(char *name,int Mode);
    int Save(cMSG &m);
    void Normalise(void);

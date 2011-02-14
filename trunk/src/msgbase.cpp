@@ -150,7 +150,7 @@ int olen;
    free(buff);
 }
 
-void PrepKluChain(char *&Ctrl, cMSG &m, int IsKludge) {
+void PrepKluChain(char *&Ctrl, cMSG &m, bool IsKludge) {
 IndBiList<Kludge>::ElemPtr Klu;
 
    CHP = 201;
@@ -183,7 +183,7 @@ IndBiList<Kludge>::ElemPtr Klu;
    CHP = 206;
 }
 
-int WriteMsgBody(cMSG &m,FILE *fh) {
+bool WriteMsgBody(cMSG &m,FILE *fh) {
 char *Buff;
 unsigned int FSize;
 char *Ctrl;
@@ -311,7 +311,7 @@ void MSGASMSG::Clear(void) {
 
 // ---------------------------
 
-int MSGASMSG::Set(char *Dir, int BaseType) {
+bool MSGASMSG::Set(char *Dir, int BaseType) {
 char Buff[1024];
 
    BaseType++;
@@ -339,7 +339,7 @@ char Buff[1024];
 
 // ---------------------------
 
-int MSGASMSG::Next(void) {
+bool MSGASMSG::Next(void) {
 
    CHP = 219;
    if (DirName == NULL) {
@@ -367,7 +367,7 @@ int MSGASMSG::Next(void) {
 
 // ---------------------------
 
-int MSGASMSG::Rewind(void) {
+bool MSGASMSG::Rewind(void) {
 char bb[512];
 DIR *ff;
 struct dirent *pp;
@@ -375,7 +375,7 @@ struct dirent *pp;
    if (DirName == NULL) {
       return FALSE;
    }
-   
+
    if (MsgMask != NULL) {
       free(MsgMask);
       MsgMask = NULL;
@@ -430,7 +430,7 @@ struct dirent *pp;
 
 // ---------------------------
 
-int MSGASMSG::Renumber(void) {
+bool MSGASMSG::Renumber(void) {
 unsigned int Num, NewNum;
 char Buff[1024];
 char Buff2[1024];
@@ -476,7 +476,7 @@ char Buff2[1024];
 
 // ---------------------------
 
-int MSGASMSG::DeleteMsg(void) {
+bool MSGASMSG::DeleteMsg(void) {
 char Buff[1024];
    if (MsgMask[MsgNum] == 0) {
       return TRUE;
@@ -541,7 +541,7 @@ static char Buff[2048];
 
 // ---------------------------
 
-int MSGASMSG::WriteFromMem(char *Buff) {
+bool MSGASMSG::WriteFromMem(char *Buff) {
 FILE *fh;
 unsigned long FSize;
 unsigned int Num;
@@ -576,7 +576,7 @@ char tmt[1024];
 
 // ---------------------------
 
-int MSGASMSG::ReadMsg(cMSG &m) {
+bool MSGASMSG::ReadMsg(cMSG &m) {
 MsgHeader Hdr;
 FILE *fh;
 char *Buff;
@@ -601,7 +601,7 @@ int i;
      }
     } 
    }*/
-   
+
    fh = fopen(Buff,"rb");
    i = errno;
    if (fh == NULL) {
@@ -653,7 +653,7 @@ int i;
 //      Log.Level(LOGD) << "MSGASMSG::ReadMsg. Message after parsing header: " << EOL;
 //      m.Print();
 //   }
-   
+
    CHP = 225;
 // Now, read body...
    if (fseek(fh,0L,SEEK_END) != 0) {
@@ -673,7 +673,7 @@ int i;
       fclose (fh);
       return TRUE;
    }
-   
+
    CHP = 226;
    if (fseek(fh,sizeof(Hdr),SEEK_SET) != 0) {
       i = errno;
@@ -706,7 +706,7 @@ int i;
 
 // ---------------------------
 
-int MSGASMSG::WriteOneMsg(unsigned int Num, cMSG &m) {
+bool MSGASMSG::WriteOneMsg(unsigned int Num, cMSG &m) {
 MsgHeader Hdr;
 FILE *fh;
 char *Buff;
@@ -730,10 +730,10 @@ char *Buff;
    free(Buff);
 
    CHP = 23707;
-   Hdr.OrigNode = m._FromAddr.Node();
-   Hdr.OrigNet = m._FromAddr.Net();
-   Hdr.DestNode = m._ToAddr.Node();
-   Hdr.DestNet = m._ToAddr.Net();
+   Hdr.OrigNode = (unsigned short)(m._FromAddr.Node());
+   Hdr.OrigNet = (unsigned short)(m._FromAddr.Net());
+   Hdr.DestNode = (unsigned short)(m._ToAddr.Node());
+   Hdr.DestNet = (unsigned short)(m._ToAddr.Net());
    strncpy(Hdr.Subject,m._Subject,72);
    strncpy(Hdr.FromName,m._FromName,36);
    strncpy(Hdr.ToName,m._ToName,36);
@@ -779,13 +779,13 @@ char *Buff;
 
 // ---------------------------
 
-int MSGASMSG::WriteMsg(cMSG &m) {
+bool MSGASMSG::WriteMsg(cMSG &m) {
    return WriteOneMsg(MsgNum,m);
 }
 
 // ---------------------------
 
-int MSGASMSG::WriteNewMsg(cMSG &m) {
+bool MSGASMSG::WriteNewMsg(cMSG &m) {
 unsigned int Num;
 char Buff[1024];
 

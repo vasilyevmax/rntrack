@@ -38,24 +38,24 @@
 class MSGBASE {
 public:
 //   MSGBASE();
-   virtual int Rewind(void) = 0;
-   virtual int Set(char *c, int BaseType) = 0;
-   virtual int Next(void) = 0;
-   virtual int ReadMsg(cMSG &m) = 0;
-   virtual int WriteMsg(cMSG &m) = 0;
-   virtual int DeleteMsg(void) = 0;
-   virtual int WriteNewMsg(cMSG &m) = 0;
+   virtual bool Rewind(void) = 0;
+   virtual bool Set(char *c, int BaseType) = 0;
+   virtual bool Next(void) = 0;
+   virtual bool ReadMsg(cMSG &m) = 0;
+   virtual bool WriteMsg(cMSG &m) = 0;
+   virtual bool DeleteMsg(void) = 0;
+   virtual bool WriteNewMsg(cMSG &m) = 0;
    virtual void Clear(void) = 0;
    virtual void Print(void) = 0;
    virtual char *ReadToMem(void) = 0;
-   virtual int WriteFromMem(char *Buff) = 0;
+   virtual bool WriteFromMem(char *Buff) = 0;
    virtual char *MessageName(void) = 0;
    virtual char *BaseName(void) = 0;
-   virtual int  Renumber(void) = 0;
-   virtual int  CheckOut(void) = 0;
-   virtual int  CheckIn(void) = 0;
-   virtual int  Open(void) = 0;
-   virtual int  Close(void) = 0;
+   virtual bool Renumber(void) = 0;
+   virtual bool CheckOut(void) = 0;
+   virtual bool CheckIn(void) = 0;
+   virtual bool Open(void) = 0;
+   virtual bool Close(void) = 0;
    virtual ~MSGBASE();
 };
 
@@ -68,35 +68,34 @@ class MSGASMSG: public MSGBASE {
 // private:
 public:
    void AddToMask(unsigned int Num);
-   int WriteOneMsg(unsigned int Num, cMSG &m);
+   bool WriteOneMsg(unsigned int Num, cMSG &m);
    MSGASMSG();
    ~MSGASMSG();
    void Print(void);
-   int Set(char *c, int BaseType);
+   bool Set(char *c, int BaseType);
    void Clear(void);
-   int Next(void);
-   int Rewind(void);
-   int DeleteMsg(void);
-   int ReadMsg(cMSG &m);
-   int WriteMsg(cMSG &m);
-   int WriteNewMsg(cMSG &m);
+   bool Next(void);
+   bool Rewind(void);
+   bool DeleteMsg(void);
+   bool ReadMsg(cMSG &m);
+   bool WriteMsg(cMSG &m);
+   bool WriteNewMsg(cMSG &m);
    char *ReadToMem(void);
-   int WriteFromMem(char *Buff);
+   bool WriteFromMem(char *Buff);
    char *MessageName(void);
    char *BaseName(void) { return DirName; };
-   int  Renumber(void);
-   int CheckOut(void) { return TRUE; };
-   int CheckIn(void) { return TRUE; };
-   int Open(void) { return TRUE; };
-   int Close(void) { return TRUE; };
+   bool Renumber(void);
+   bool CheckOut(void) { return TRUE; };
+   bool CheckIn(void) { return TRUE; };
+   bool Open(void) { return TRUE; };
+   bool Close(void) { return TRUE; };
 };
 
 MSGBASE *MakeBase(char *BName);
 void SetMsgAttr(cMSG &m,unsigned short int &Attr);
 void SetMsgAttr(unsigned short int &Attr,cMSG &m);
-int WriteMsgBody(cMSG &m,FILE *fh);
-void PrepKluChain(char *&cl, cMSG &m, int IsKludge);
+bool WriteMsgBody(cMSG &m,FILE *fh);
+void PrepKluChain(char *&cl, cMSG &m, bool IsKludge);
 void AddKluToChain(char *&cl, char *Kn, char *Kb);
-
 
 #endif

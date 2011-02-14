@@ -40,37 +40,37 @@ class PKTBASE: public MSGBASE {
    int          fForWrite;
    int          fCreated;
 
-   int _Close(void);
-   int _Open(void);
+   bool _Close(void);
+   bool _Open(void);
    void AddToMask(unsigned int Num);
-   int CopyHeader(FILE *tf);
-   int CopyTail(FILE *tf);
-   int CopyMessages(FILE *tf);
-   int CopyOneMessage(FILE *tf);
-   int ReadHeader(FILE *tf, char *Buff);
+   bool CopyHeader(FILE *tf);
+   bool CopyTail(FILE *tf);
+   bool CopyMessages(FILE *tf);
+   bool CopyOneMessage(FILE *tf);
+   bool ReadHeader(FILE *tf, char *Buff);
 public:
-   int WriteOneMsg(unsigned int Num, cMSG &m);
+  bool WriteOneMsg(unsigned int Num, cMSG &m);
    PKTBASE();
    ~PKTBASE();
    void Print(void);
-   int Set(char *c, int BaseType);
+   bool Set(char *c, int BaseType);
    void Clear(void);
-   int Next(void);
-   int Rewind(void);
-   int DeleteMsg(void);
-   int ReadMsg(cMSG &m);
-   int WriteMsg(cMSG &m);
-   int WriteNewMsg(cMSG &m);
+   bool Next(void);
+   bool Rewind(void);
+   bool DeleteMsg(void);
+   bool ReadMsg(cMSG &m);
+   bool WriteMsg(cMSG &m);
+   bool WriteNewMsg(cMSG &m);
    char *ReadToMem(void);
-   int WriteFromMem(char *Buff);
+   bool WriteFromMem(char *Buff);
    //  { return FALSE; };
    char *MessageName(void);
    char *BaseName(void);
-   int  Renumber(void);
-   int CheckOut(void);
-   int CheckIn(void) { return TRUE; };
-   int Open(void) { return TRUE; };
-   int Close(void) { return _Close(); };
+   bool  Renumber(void);
+   bool CheckOut(void);
+   bool CheckIn(void) { return TRUE; };
+   bool Open(void) { return TRUE; };
+   bool Close(void) { return _Close(); };
 };
 
 #endif

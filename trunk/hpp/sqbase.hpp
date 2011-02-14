@@ -31,33 +31,32 @@ class SQUISH: public MSGBASE {
    unsigned int MsgNum;
    unsigned int tMsgNum;
    unsigned int MaxNum;
-   int PrevIsDel;
+   bool PrevIsDel;
    char bType;
 // private:
 public:
-   int WriteOneMsg(unsigned int Num, cMSG &m);
+   bool WriteOneMsg(unsigned int Num, cMSG &m);
    SQUISH();
    SQUISH(char _bType);
    ~SQUISH();
    void Print(void);
-   int  Set(char *c, int BaseType);
+   bool Set(char *c, int BaseType);
    void Clear(void);
-   int  Next(void);
-   int  Rewind(void);
-   int  DeleteMsg(void);
-   int  ReadMsg(cMSG &m);
-   int  WriteMsg(cMSG &m);
-   int  WriteNewMsg(cMSG &m);
+   bool Next(void);
+   bool Rewind(void);
+   bool DeleteMsg(void);
+   bool ReadMsg(cMSG &m);
+   bool WriteMsg(cMSG &m);
+   bool WriteNewMsg(cMSG &m);
    char *ReadToMem(void);
-   int  WriteFromMem(char *Buff);
+   bool WriteFromMem(char *Buff);
    char *MessageName(void);
    char *BaseName(void) { return DirName; };
-   int  Renumber(void);
-   int  CheckOut(void) { return TRUE; };
-   int  CheckIn(void) { return TRUE; };
-   int  Open(void);
-   int  Close(void);
+   bool Renumber(void);
+   bool CheckOut(void) { return TRUE; };
+   bool CheckIn(void) { return TRUE; };
+   bool Open(void);
+   bool Close(void);
 };
 
 #endif
-

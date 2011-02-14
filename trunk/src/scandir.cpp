@@ -277,7 +277,8 @@ int ScanDir::Flagged(void) {
 
 // ---------------------------------------------------------
 
-int ScanDir::Execute(MSGBASE &b, cMSG &m) {
+// Alwais return TRUE !!! Fix it!
+bool ScanDir::Execute(MSGBASE &b, cMSG &m) {
 IndBiList<DoList>::ElemPtr tmt;
 MaskType tmtm;
    CHP = 67;
@@ -286,7 +287,7 @@ MaskType tmtm;
       CHP = 68;
       if ((tmtm = tmt->InMask(m)) != MASK_ERROR) {
          CHP = 69;
-	 tmt->Do(b,m);
+           tmt->Do(b,m);
 /*         if (!tmt->Do(b,m)) {
             CHP = 70;
             return(FALSE);

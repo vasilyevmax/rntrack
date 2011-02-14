@@ -231,7 +231,7 @@ char *tmt;
 
 
 
-int Action::Do(MSGBASE &b, cMSG &m) {
+bool Action::Do(MSGBASE &b, cMSG &m) {
 char *tmt;
 char *tmt2;
 cMSG *d;
@@ -351,7 +351,7 @@ size_t size;
             }
          }
          break;
-     
+
       case ACT_MOVEATTACH:
       case ACT_MOVEATTACHFBOX:
          CHP = 13;
@@ -383,7 +383,7 @@ size_t size;
              if (!MoveAttach(m,_OutDir)) {
                FileInbound = tmt2;
                return FALSE;
-             }       
+             }
         }
 
             FileInbound = tmt2;
@@ -451,7 +451,7 @@ size_t size;
             Log.Level(LOGE) << "Error opening base '" << _Base->BaseName() << "'" << EOL;
             return FALSE;
          }
-         
+
          CHP = 1403;
          if (!_Base->WriteNewMsg(m)) {
             CHP = 1404;
@@ -824,7 +824,7 @@ size_t size;
 
       case ACT_SCRIPT:
          CHP = 2001;
-         if (DoThisWord(_TplName) != TRUE) {
+         if (DoThisWord(_TplName) != SS_OK) {
             return FALSE;
          }
          break;

@@ -79,7 +79,7 @@ int CharNumber;             // Position in the current line
 char *chpool;               // Pool for String's & Token's
 int  avail = 0;             // Current position in Pool.
 int DetectError;            // Detected error in config file
-int NoTokensF = FALSE;      // Special state of lexx. No tokens!
+bool NoTokensF = FALSE;     // Special state of lexx. No tokens!
 char *CurrentLine;          // Current translated line
 FA   cffa;
 FA   cffa1;
@@ -963,7 +963,7 @@ char *tmt;
       strcat(Buf,tmt);
    } else if (StrIsXNum(env)) {
       tmt = Buf+ strlen(Buf);
-      *tmt++ = strtol(env,NULL,16);
+      *tmt++ = char(strtol(env,NULL,16));
       *tmt = '\0';
    } else {
 //      strcat(Buf,env);

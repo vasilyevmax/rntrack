@@ -308,8 +308,8 @@ int FA::Valid(void) const {
 void Parse_NetNode(char *netnode,word *zone,word *net,word *node,word *point) {
 FA f;
    f.Parse(netnode);
-   *zone = f.Zone() & 0xffff;
-   *net = f.Net() & 0xffff;
-   *node = f.Node() & 0xffff;
-   *point = f.Point() & 0xffff;
+   *zone = word(f.Zone() & 0xffff);
+   *net = word(f.Net() & 0xffff);
+   *node = word(f.Node() & 0xffff);
+   *point = word(f.Point() & 0xffff);
 }

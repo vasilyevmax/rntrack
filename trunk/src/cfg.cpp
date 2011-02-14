@@ -183,7 +183,7 @@ extern FA   cffa;
 extern FA   cffa1;
 extern FA   cffa2;
 
-static int brf = FALSE, arf = FALSE, renumberf = FALSE, unpackf = FALSE, freshf = FALSE;
+static bool brf = FALSE, arf = FALSE, renumberf = FALSE, unpackf = FALSE, freshf = FALSE;
 static ScanDir *wsd = NULL;
 static char *FileName = NULL;
 static char *BPktDir = NULL;
