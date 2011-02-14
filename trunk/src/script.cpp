@@ -363,7 +363,7 @@ XSdEfInE(perl_NewMsg)
 
  CHP = 60060;
 
- if (SetViaAlways == TRUE) 
+ if (SetViaAlways) 
   msg->AddOurVia();
 
  if (!mb->WriteNewMsg(*msg))
@@ -401,7 +401,7 @@ static char *file = __FILE__;
 
 #endif /* defined(__PERL_VERSION__) */
 
-bool InitScriptSystem(void) {
+int InitScriptSystem(void) {
 #if defined(__PERL_VERSION__)
 //char *embedding[] = { NULL, "", "0" };
 
@@ -409,12 +409,12 @@ bool InitScriptSystem(void) {
       if (PerlSystem != NULL) {
          perl_construct(PerlSystem);
 //         perl_parse(PerlSystem, xs_init, 1, embedding, NULL);
-         return TRUE;
+         return 1;
    } else {
-       return FALSE;
+       return 0;
    }
 #else
-   return TRUE;
+   return 1;
 #endif /* defined(__PERL_VERSION__) */
 }
 
@@ -432,7 +432,7 @@ void InitScriptValues(void) {
 #endif /* defined(__PERL_VERSION__) */
 }
 
-bool StopScriptSystem(void) {
+int StopScriptSystem(void) {
 #if defined(__PERL_VERSION__)
    if (PerlSystem != NULL) {
       CHP = 60056;
@@ -442,9 +442,9 @@ bool StopScriptSystem(void) {
       CHP = 60058;
       PerlSystem = NULL;
    }
-   return TRUE;
+   return 1;
 #else
-   return TRUE;
+   return 1;
 #endif /* defined(__PERL_VERSION__) */
 }
 
@@ -490,21 +490,21 @@ int rc;
 // --------------------------------------------------------------------
 
 
-bool ScriptWordExists(char *word) {
+int ScriptWordExists(char *word) {
 #if defined(__PERL_VERSION__)
 char Buff[1024];
 SV *val;
 
-   if (!ScriptSystemInitialised) return FALSE;
+   if (!ScriptSystemInitialised) return 0;
    sprintf(Buff,"defined(&%s);",word);
    val = perl_eval_pv(Buff,TRUE);
    if (SvIV(val) == 1) {
-      return TRUE;
+      return 1;
    }
-   return FALSE;
+   return 0;
 #else
    word = word;
-   return FALSE;
+   return 0;
 #endif /* defined(__PERL_VERSION__) */
 }
 

@@ -24,10 +24,10 @@ typedef enum {
 
 int _LoadScriptFile(char *fname);
 void PrepareMsgForScript(cMSG &sm);
-bool ScriptWordExists(char *word);
-bool InitScriptSystem(void);
+int  ScriptWordExists(char *word);
+int  InitScriptSystem(void);
 void InitScriptValues(void);
-bool StopScriptSystem(void);
+int  StopScriptSystem(void);
 ScrRet DoSomeWord(char *word);
 ScrRet DoSomeWordRc(char *word);
 ScrRet DoThisWord(char *word);

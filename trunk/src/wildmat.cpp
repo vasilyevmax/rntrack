@@ -70,7 +70,7 @@
 **  Match text and p, return TRUE, FALSE, or ABORT.
 */
 
-static int DoMatch(char *text, char *p) {
+static bool DoMatch(char *text, char *p) {
 int    last;
 int    matched;
 int    reverse;

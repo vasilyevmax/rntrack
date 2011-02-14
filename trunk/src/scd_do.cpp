@@ -342,7 +342,7 @@ size_t size;
         }
             FileInbound = tmt2;
 //            m.fChanged = 1;
-            if (SetViaAlways == TRUE) {
+            if (SetViaAlways) {
                m.AddOurVia();
             }
             if (!b.WriteMsg(m)) {
@@ -388,7 +388,7 @@ size_t size;
 
             FileInbound = tmt2;
 //            m.fChanged = 1;
-            if (SetViaAlways == TRUE) {
+            if (SetViaAlways) {
                m.AddOurVia();
             }
             if (!b.WriteMsg(m)) {
@@ -439,7 +439,7 @@ size_t size;
       case ACT_COPY:
          CHP = 14;
          m.Normalise();
-         if (SetViaAlways == TRUE) {
+         if (SetViaAlways) {
             m.AddOurVia();
          }
          CHP = 1401;
@@ -469,7 +469,7 @@ size_t size;
          CHP = 15;
          m.Normalise();
          CHP = 1501;
-         if (SetViaAlways == TRUE) {
+         if (SetViaAlways) {
             m.AddOurVia();
          }
          tmt = b.MessageName();
@@ -532,7 +532,7 @@ size_t size;
       case ACT_ADDNOTE:
          CHP = 16100;
          m.Normalise();
-         if (SetViaAlways == TRUE) {
+         if (SetViaAlways) {
             m.AddOurVia();
          }
          _Tpl->Clean();
@@ -771,7 +771,7 @@ size_t size;
             return FALSE;
          }
          CHP = 1810;
-         if (SetViaAlways == TRUE) {
+         if (SetViaAlways) {
             d->AddOurVia();
          }
          if (!_Base->WriteNewMsg(*d)) {
@@ -793,7 +793,7 @@ size_t size;
          Log.Level(LOGI) << "Rewrite msg " << tmt << EOL;
          PrepareMsg(m,m,(NormalMask*)_Mask);
          m.Normalise();
-         if (SetViaAlways == TRUE) {
+         if (SetViaAlways) {
             m.AddOurVia();
          }
 //         m.fChanged = 1;
@@ -837,7 +837,7 @@ size_t size;
          char *tmt2;
          char *stmt = NULL;
             m.Normalise();
-            if (SetViaAlways == TRUE) {
+            if (SetViaAlways) {
                m.AddOurVia();
             }
             tmt = b.MessageName();
