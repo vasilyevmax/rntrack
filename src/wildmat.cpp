@@ -67,10 +67,10 @@
 
 
 /*
-**  Match text and p, return TRUE, FALSE, or ABORT.
+**  Match text and p, return TRUE (positive integer), FALSE (zero), or ABORT (negative integer).
 */
 
-static bool DoMatch(char *text, char *p) {
+static int DoMatch(char *text, char *p) {
 int    last;
 int    matched;
 int    reverse;
@@ -82,14 +82,14 @@ int    reverse;
                     p++;
                       //!!!!!!!!!!!!!!! do not change it!!!!!!!!!!
             default: /* FALLTHROUGH */
-                    if (*text != *p) return FALSE;
+                    if (*text != *p) return 0;
                     continue;
 
             case '#': /* Match with digit */
-                    if (!isdigit((uchar)*text)) return FALSE;
+                    if (!isdigit((uchar)*text)) return 0;
                     continue;
             case '$': /* Match with any _char_ great than space */
-                    if (*text <= ' ') return FALSE;
+                    if (*text <= ' ') return 0;
                     continue;
             case '?': /* Match anything. */
                     continue;
@@ -99,37 +99,37 @@ int    reverse;
                     while (*++p == '*') continue;
 
         /* Trailing star matches everything. */
-                    if (*p == '\0')  return TRUE;
+                    if (*p == '\0')  return 1;
 
                     while (*text) {
-                        if ((matched = DoMatch(text++, p)) != FALSE) {
+                        if ((matched = DoMatch(text++, p)) != 1) {
                             return matched;
                         }
                     }
                     return -2;
 
             case '[':
-                    reverse = p[1] == NEGATE_CLASS ? TRUE : FALSE;
+                    reverse = p[1] == NEGATE_CLASS ? 1 : 0;
                     if (reverse) p++; /* Inverted character class. */
-        
+
                     p++;
-                    matched = FALSE;
+                    matched = 0;
 //                    if (p[1] == ']' || p[1] == '-')
-                        if (*p == *text)  matched = TRUE;
+                        if (*p == *text)  matched = 1;
                     for (last = *p; *++p && *p != ']'; last = *p) {
                         /* This next line requires a good C compiler. */
                         if (*p == '-' && p[1] != ']'
                             ? *text <= *++p && *text >= last : *text == *p)
-                            matched = TRUE;
+                            matched = 1;
                     }
-                    if (matched == reverse) return FALSE;
+                    if (matched == reverse) return 0;
                     continue;
         }
     }
 
 #ifdef  MATCH_TAR_PATTERN
     if (*text == '/')
-    return TRUE;
+    return 1;
 #endif  /* MATCH_TAR_PATTERN */
 
     return *text == '\0';
@@ -142,8 +142,8 @@ int    reverse;
 int
 wildmat(char *text, char *p) {
     if (p[0] == '*' && p[1] == '\0')
-    return TRUE;
-    return DoMatch(text, p) == TRUE;
+      return TRUE;
+    return (DoMatch(text, p)>0);
 }
 
 #if defined(TEST)
