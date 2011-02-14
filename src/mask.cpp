@@ -125,7 +125,7 @@ int Comp;
 }
 
 int EquFA(FA const &m, FA const &f) {
-int NotFlag;
+bool NotFlag;
    CHP = 23123;
    NotFlag = FALSE;
    if (m.Zone() & FA_NOTMASK) NotFlag = TRUE;
