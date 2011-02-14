@@ -54,22 +54,19 @@ static int ScriptSystemInitialised = FALSE;
 // --------------------------------------------------------------------
 //        Perl extensions.
 // --------------------------------------------------------------------
+
 #if __PERL_VERSION__ < 5010000
+# ifndef _MSC_VER
 //  extern "C" static void boot_DynaLoader _((CV *cv)); // not used
-  extern "C" static void perl_Log( CV* cv);
-  extern "C" static void perl_Update( CV* cv);
-  extern "C" static void perl_ExistsInNodelist( CV* cv);
-  extern "C" static void perl_FindHub( CV* cv);
-  extern "C" static void perl_NewMsg( CV* cv);
+    extern "C" static void perl_Log( CV* cv);
+    extern "C" static void perl_Update( CV* cv);
+    extern "C" static void perl_ExistsInNodelist( CV* cv);
+    extern "C" static void perl_FindHub( CV* cv);
+    extern "C" static void perl_NewMsg( CV* cv);
+# endif
 # define XSdEfInE XS
 #else
-//  static void boot_DynaLoader _((CV *cv)); // not used
-  static void perl_Log( CV* cv);
-  static void perl_Update( CV* cv);
-  static void perl_ExistsInNodelist( CV* cv);
-  static void perl_FindHub( CV* cv);
-  static void perl_NewMsg( CV* cv);
-# define XSdEfInE XSPROTO
+# define XSdEfInE static XSPROTO
 #endif
 
 #define FromSP(i)       (char *)SvPV(ST(i), n_a); if (n_a == 0) sp_s  = ""
