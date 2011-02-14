@@ -40,7 +40,7 @@
 
 char *NodelistPath;
 
-static int NodelistTurnOff = FALSE;
+static bool NodelistTurnOff = FALSE;
 static int NodelistLineNum = 0;
 
 static char mErrReadIndex[] = "Error reading index file.";
@@ -131,10 +131,10 @@ static int  CurrentNet = -1;
 static int  CurrentZone = -1;
 static Ntr  **CurrentHub = NULL;
 static Ntr  *_pNodeList = NULL;
-static int PointListMode = FALSE;
+static bool PointListMode = FALSE;
 static Ntr *BossNode = NULL;
 
-int OpenNodelist(char *FName) {
+bool OpenNodelist(char *FName) {
    nh = fopen(FName,"rt");
    if (nh == NULL) {
       Log.Level(LOGE) << "Unable to open nodelist '" << FName << "'" << EOL;
@@ -143,7 +143,7 @@ int OpenNodelist(char *FName) {
    return TRUE;
 }
 
-int CloseNodelist(void) {
+bool CloseNodelist(void) {
    return (fclose (nh) == 0);
 }
 
@@ -198,7 +198,7 @@ Ntr *tmt;
    }
 }
 
-int DelDupNode(unsigned int Node) {
+bool DelDupNode(unsigned int Node) {
 // Remove a node from the list if it is already present there but check
 // whether it is a hub. If it is a hub then do not remove it. If the node
 // is also a hub now then we set the current hub pointer to the hub.
@@ -265,7 +265,7 @@ void _AddNode(unsigned int Node) {
 // the node as usual. If the node is already present in the list
 // then do nothing.
 Ntr *tr, *tmt;
-   
+
    if (DelDupNode(Node) == TRUE) {
       if (CurrentHub != NULL) {
          tmt = (Ntr *) malloc(sizeof(Ntr));
@@ -291,7 +291,7 @@ void _SetCurrentNet(unsigned int Net) {
    }
 }
 
-int _SetCurrentBoss(char *tmt) {
+bool _SetCurrentBoss(char *tmt) {
 FA f;
 Ntr *tp;
 
@@ -318,7 +318,7 @@ void _AddPoint(int pnt) {
    }
 }
 
-int ParseNodeLine(char *tmt) {
+bool ParseNodeLine(char *tmt) {
 unsigned int tmp;
 
 // DumpNdl();
@@ -460,7 +460,7 @@ unsigned int tmp;
    return TRUE;
 }
 
-int ParseOneNodelist (NodeListElem *Elem) {
+bool ParseOneNodelist (NodeListElem *Elem) {
 char Buff[512];
    Log.Level(LOGI) << "Compile nodelist '" << Elem->Name << "'";
    if (Elem->StartZone != 0) {
@@ -522,7 +522,7 @@ int Elems;
    return Elems;
 }
 
-int SaveElements(FILE *fh, Ntr *Addr) {
+bool SaveElements(FILE *fh, Ntr *Addr) {
 Ntr *tmt;
    tmt = Addr;
    while (tmt != NULL) {
@@ -537,7 +537,7 @@ Ntr *tmt;
    return TRUE;
 }
 
-int FlushElements(FILE *fh, Ntr *tmt) {
+bool FlushElements(FILE *fh, Ntr *tmt) {
 int Elems;
 
    Elems = ElementsInList(tmt);
@@ -549,7 +549,7 @@ int Elems;
    return TRUE;
 }
 
-int FlushSubElements(FILE *fh, Ntr *tmt) {
+bool FlushSubElements(FILE *fh, Ntr *tmt) {
    if (FlushElements(fh,tmt) == FALSE) return FALSE;
    while (tmt != NULL) {
       if (tmt->Number != (unsigned int)-1) {
@@ -557,12 +557,12 @@ int FlushSubElements(FILE *fh, Ntr *tmt) {
       }
       tmt = tmt->Next;
    }
-   return TRUE;   
+   return TRUE;
 }
 
-int FlushElementsTree(FILE *fh) {
+bool FlushElementsTree(FILE *fh) {
    return (FlushSubElements(fh, _pNodeList));
-}   
+}
 
 // ------------------------------------------------------
 // Free parser memory
@@ -587,7 +587,7 @@ void FreeParserMem(void) {
 
 // ------------------------------------------------------
 
-int FlushNodelist (FILE *fh) {
+bool FlushNodelist (FILE *fh) {
 #if 0
 char Buff[1024];
    PrintNtr(_pNodeList,Buff);
@@ -663,7 +663,7 @@ void NodeLists::IndexFile(char *File) {
    IndexName = strdup(File);
 }
 
-int NodeLists::CompileNeed(void) {
+bool NodeLists::CompileNeed(void) {
 FILE *fh;
 unsigned int tmp;
 NodeListElem Elem;
@@ -765,7 +765,7 @@ char *tmt;
    return Buff;
 }
 
-int NodeLists::Compile(void) {
+bool NodeLists::Compile(void) {
 FILE *fh;
 char *tmt;
 int tmp;
@@ -850,7 +850,7 @@ void IPrint(Nch *Ind) {
    }
 }
 #endif
-int NodeLists::LoadOneIndex(FILE *fh, Nch *&Ind) {
+bool NodeLists::LoadOneIndex(FILE *fh, Nch *&Ind) {
 unsigned int tmp;
 Nch *tmt;
 unsigned int i;
@@ -870,7 +870,7 @@ unsigned int i;
    return TRUE;
 }
 
-int NodeLists::Load(void) {
+bool NodeLists::Load(void) {
 FILE *fh;
    if (!Enabled() || NodelistTurnOff)
    {
@@ -1043,9 +1043,9 @@ unsigned int i;
    if (i == A_REGION) Log.Level(LOGD) << "REGION";
 }
 
-int NodeLists::InSubHubs(FA const &Addr, FA const &Mask) {
+bool NodeLists::InSubHubs(FA const &Addr, FA const &Mask) {
 Nch *tmt;
-int Existing;
+bool Existing;
 // If the node used as a mask is in the nodelist and it is a hub or host
 // then check if the Addr belongs to the "subhub" list of nodes linked in
 // the nodelist to the hub or to the host. Otherwise check a point.
@@ -1136,7 +1136,7 @@ int Existing;
       tmt++;
    }
    return FALSE;
-}      
+}
 
 int NodeLists::AddNodelist(char *tmt, int TempZone) {
 char Buff[512];

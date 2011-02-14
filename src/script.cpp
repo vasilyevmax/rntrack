@@ -401,7 +401,7 @@ static char *file = __FILE__;
 
 #endif /* defined(__PERL_VERSION__) */
 
-int InitScriptSystem(void) {
+bool InitScriptSystem(void) {
 #if defined(__PERL_VERSION__)
 //char *embedding[] = { NULL, "", "0" };
 
@@ -432,7 +432,7 @@ void InitScriptValues(void) {
 #endif /* defined(__PERL_VERSION__) */
 }
 
-int StopScriptSystem(void) {
+bool StopScriptSystem(void) {
 #if defined(__PERL_VERSION__)
    if (PerlSystem != NULL) {
       CHP = 60056;
@@ -490,7 +490,7 @@ int rc;
 // --------------------------------------------------------------------
 
 
-int ScriptWordExists(char *word) {
+bool ScriptWordExists(char *word) {
 #if defined(__PERL_VERSION__)
 char Buff[1024];
 SV *val;

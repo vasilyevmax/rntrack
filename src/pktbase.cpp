@@ -92,7 +92,7 @@ void PKTBASE::AddToMask(unsigned int Num) {
 
 // ---------------------------
 
-int PKTBASE::CopyHeader(FILE *tf) {
+bool PKTBASE::CopyHeader(FILE *tf) {
 tPKTH PKTH;
 
    if (fread(&PKTH,sizeof(tPKTH),1,fh) != 1) {
@@ -114,7 +114,7 @@ tPKTH PKTH;
 
 // ---------------------------
 
-int PKTBASE::CopyTail(FILE *tf) {
+bool PKTBASE::CopyTail(FILE *tf) {
 char Buffer[10240];
 int rc;
 
@@ -137,7 +137,7 @@ int rc;
 
 #define READBLOCKLEN  4096
 
-int PKTBASE::CopyOneMessage(FILE *tf) {
+bool PKTBASE::CopyOneMessage(FILE *tf) {
 char *Buff;
 int I,i;
 
@@ -164,7 +164,7 @@ int I,i;
       Log.Level(LOGE) << "   Error: Unable to read packed message header." << EOL;
       return FALSE;
    }
-   
+
    I = sizeof(tPMSG);
    for (i = 0; i < 3; i++) {
       do {
@@ -207,7 +207,7 @@ int I,i;
 
 // ---------------------------
 
-int PKTBASE::CopyMessages(FILE *tf) {
+bool PKTBASE::CopyMessages(FILE *tf) {
 uint Num;
 
    for(Num = 1; Num <= MaxMsgNum; Num++) {
@@ -221,7 +221,7 @@ uint Num;
 }
 // ---------------------------
 
-int PKTBASE::_Close(void) {
+bool PKTBASE::_Close(void) {
 uint Num;
 char TempName[BUFF_SIZE];
 char *tmt;
@@ -237,7 +237,7 @@ FILE *tf;
    }
 
    Log.Level(LOGD) << "...Handle is not NULL" << EOL;
-   
+
    if (MaxMsgNum == 0) {
       if (!fCreated) {
          fclose(fh);
@@ -355,7 +355,7 @@ FILE *tf;
       MaxMsgNum = 0;
       return FALSE;
    }
-   
+
    Log.Level(LOGD) << "...Copying messages completed." << EOL;
    if (!CopyTail(tf)) {
       fclose(fh);
@@ -413,7 +413,7 @@ void PKTBASE::Clear(void) {
 
 // ---------------------------
 
-int PKTBASE::Set(char *Dir, int BaseType) {
+bool PKTBASE::Set(char *Dir, int BaseType) {
 char *tmt;
 char *Buff;
 struct stat dd;
@@ -478,7 +478,7 @@ struct stat dd;
 
 // ---------------------------
 
-int PKTBASE::Next(void) {
+bool PKTBASE::Next(void) {
 int SIGN;
 char Buff[1024];
 struct dirent *de;
@@ -548,7 +548,7 @@ struct dirent *de;
 
 // ---------------------------
 
-int PKTBASE::_Open(void) {
+bool PKTBASE::_Open(void) {
 tPKTH PKTH;
 FA f;
 char Buff[4096];
@@ -573,7 +573,7 @@ s_stat tmp_stat;
      }
     } 
    }
-   
+
    Log.Level(LOGD) << "_Open PKT '" << PktName << "'" << EOL;
    if (!_Close()) return FALSE;
    fh = fopen(PktName,"r+b");
@@ -625,7 +625,7 @@ s_stat tmp_stat;
    }
    f.Node(PKTH.FromNode);
    Log.Level(LOGD) << "PKT from: " << f << EOL;
-   
+
    if (f != FMask) {
       fclose(fh);
       fh = NULL;
@@ -649,14 +649,14 @@ s_stat tmp_stat;
          return TRUE;      
       }
    }
- 
+
    MsgNum = 0;
    return TRUE;
 }
 
 // ---------------------------
 
-int PKTBASE::Rewind(void) {
+bool PKTBASE::Rewind(void) {
 
    Log.Level(LOGD) << "------ Rewind for *.PKT --------" << EOL;
    if (!_Close()) return FALSE;
@@ -680,13 +680,13 @@ int PKTBASE::Rewind(void) {
 
 // ---------------------------
 
-int PKTBASE::Renumber(void) {
+bool PKTBASE::Renumber(void) {
    return TRUE;
 }
 
 // ---------------------------
 
-int PKTBASE::DeleteMsg(void) {
+bool PKTBASE::DeleteMsg(void) {
    MsgMask[MsgNum] = 0;
    return TRUE;
 }
@@ -710,7 +710,7 @@ static char Buff[2048];
 
 // ---------------------------
 
-int PKTBASE::WriteFromMem(char *Buff) {
+bool PKTBASE::WriteFromMem(char *Buff) {
    CHP = 537;
    CHP = 538;
    if (Buff != NULL) *Buff = *Buff;
@@ -721,7 +721,7 @@ int PKTBASE::WriteFromMem(char *Buff) {
 // MHM fix: HTML2FIDO v 1.1.33 is known to produce non-FTSC0001 compliant
 // messages (where the date occupies less than 20 characters). We fix it here.
 
-int PKTBASE::ReadHeader(FILE *tf, char *Buff) {
+bool PKTBASE::ReadHeader(FILE *tf, char *Buff) {
 int i, c;
 
    if (fread(Buff,sizeof(tPMSG)-20,1,tf) != 1) {
@@ -742,7 +742,7 @@ int i, c;
 
 // ---------------------------
 
-int PKTBASE::ReadMsg(cMSG &m) {
+bool PKTBASE::ReadMsg(cMSG &m) {
 tPMSG p;
 char *Buff;
 uint i, I;
@@ -854,21 +854,21 @@ uint i, I;
 
 // ---------------------------
 
-int PKTBASE::WriteOneMsg(unsigned int Num, cMSG &m) {
+bool PKTBASE::WriteOneMsg(unsigned int Num, cMSG &m) {
    if (&m != NULL)Num++;
-   
+
    return FALSE;
 }
 
 // ---------------------------
 
-int PKTBASE::WriteMsg(cMSG &m) {
+bool PKTBASE::WriteMsg(cMSG &m) {
    return WriteOneMsg(MsgNum,m);
 }
 
 // ---------------------------
 
-int PKTBASE::WriteNewMsg(cMSG &m) {
+bool PKTBASE::WriteNewMsg(cMSG &m) {
    return WriteOneMsg(MsgNum,m);
 }
 
@@ -879,7 +879,7 @@ void PKTBASE::Print(void) {
 
 // ---------------------------
 
-int PKTBASE::CheckOut(void) {
+bool PKTBASE::CheckOut(void) {
 struct stat dd;
 
    yyerror("You can't save to or rewrite in *.PKT base.");

@@ -786,8 +786,8 @@ static void AddInvalidatedKlu(Template *Tpl, Kludge *Klu) {
    }
 }   
 
-static int AddMsgKlu(Template *Tpl, IndBiList<Kludge>::ElemPtr Klu, int IsKludge) {
-int FirstKlu;
+static int AddMsgKlu(Template *Tpl, IndBiList<Kludge>::ElemPtr Klu, bool IsKludge) {
+bool FirstKlu;
 
    CHP = 77140;
    FirstKlu = TRUE;
@@ -928,7 +928,7 @@ Template::~Template() {
    if (FName != NULL) free(FName);
 }
 
-int Template::Set(char *c) {
+bool Template::Set(char *c) {
    CHP = 77190;
    if (access(c,R_OK) != 0) {
       Log.Level(LOGD) << "Template.Set: File '" << c << "' is not exist or not readable."<< EOL;

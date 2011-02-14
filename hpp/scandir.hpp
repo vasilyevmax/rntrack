@@ -56,7 +56,7 @@ public:
    Action();
    ~Action();
    void Print(void);
-   int Do(MSGBASE &b, cMSG &m);
+   bool Do(MSGBASE &b, cMSG &m);
 };
 
 class DoList {
@@ -97,7 +97,7 @@ public:
    void Print(void);
    int Do(void);
    int DoWithRoute(MSGBASE &b, cMSG &m);
-   int Execute(MSGBASE &b, cMSG &m);
+   bool Execute(MSGBASE &b, cMSG &m);
    int Flagged(void);
 inline   uint MaxAge(void) { if (_MaxAge == 0) { return ::MaxAge; } else { return _MaxAge;}; };
 inline   uint MaxAttachSize(void) { if (_MaxAttachSize == 0) return ::MaxAttachSize; else return _MaxAttachSize; };

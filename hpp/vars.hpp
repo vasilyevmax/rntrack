@@ -47,14 +47,14 @@ extern char *LogFileName;
 extern NodeLists Ndl;
 extern FA MyAddr;
 extern char *SysopName;
-extern int UseOwnZone;
+extern bool UseOwnZone;
 extern char *LoopStr;
-extern int ForceINTL;
+extern bool ForceINTL;
 extern unsigned int MaxAge;
 
-extern int UseASO;
-extern int UseBrake;
-extern int UseFileBoxes;
+extern bool UseASO;
+extern bool UseBrake;
+extern bool UseFileBoxes;
 
 extern char *CurrLinePos;
 extern char *LastCfgLine;
@@ -64,25 +64,25 @@ extern tBadMsgMode BadMsgMode;
 extern tBadMsgMode BadPktMode;
 extern MSGBASE *BadMsgBase;
 
-extern int LogIgnore;
+extern bool LogIgnore;
 
-extern int SkipHiddenFiles;
+extern bool SkipHiddenFiles;
 extern char *FileInbound;
 
-extern int AddToNullPkt;
+extern bool AddToNullPkt;
 extern char *Outbound;
 extern char *FileBoxDir;
 extern char *TrafficLog;
 extern MSGBASE *TempMail;
 extern int UTC;
 extern sdword CHP;
-extern int UnpackNeed;
+extern bool UnpackNeed;
 
 extern char *Origin;
 extern char *Tearline;
 
 extern time_t LastTime;
-extern int CreateMissingBase;
+extern bool CreateMissingBase;
 extern char *APktDir;
 extern unsigned int MaxAttachSize;
 extern unsigned int MaxMsgSize;
@@ -94,9 +94,9 @@ class ScanDir;
 extern ScanDir *BeforeRoute;
 extern ScanDir *AfterRoute;
 
-extern int NewVIAType;
-extern int SetViaAlways;
-extern int SoftCheckInNodelists;
+extern bool NewVIAType;
+extern bool SetViaAlways;
+extern bool SoftCheckInNodelists;
 extern CheckPointsT CheckPoints;
 extern fileboxType FileBoxType;
 class DoList;
@@ -107,9 +107,8 @@ extern char *BadPktDir;
 extern char *Semaphore;
 extern unsigned int  SemaphoreTime;
 extern char *TrafficLogTpl;
-extern int IgnoreBSY;
-extern int IgnoreAttachPath;
-extern int StripPathInPKT;
-extern int AgeFromVia;
+extern bool IgnoreBSY;
+extern bool IgnoreAttachPath;
+extern bool StripPathInPKT;
+extern bool AgeFromVia;
 #endif
-

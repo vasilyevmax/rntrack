@@ -624,27 +624,27 @@ char Buff[BUFF_SIZE];
    }
 
    memset(&p,0,sizeof(tPKTH));
-   p.FromZone = GetMyAka(Addr).Zone();
-   p.FromZone2 = GetMyAka(Addr).Zone();
-   p.FromNet = GetMyAka(Addr).Net();
-   p.FromNode = GetMyAka(Addr).Node();
+   p.FromZone = (unsigned short)(GetMyAka(Addr).Zone() & 0xffff);
+   p.FromZone2 = (unsigned short)(GetMyAka(Addr).Zone() & 0xffff);
+   p.FromNet = (unsigned short)(GetMyAka(Addr).Net() & 0xffff);
+   p.FromNode = (unsigned short)(GetMyAka(Addr).Node() & 0xffff);
 // FSC-0048
 //   if (GetMyAka(Addr).Point() & 0xffff) {
 //      p.FromPoint = GetMyAka(Addr).Point() & 0xffff;
 //      p.AuxNet = p.FromNet;
 //      p.FromNet = -1;
 //   }
-   p.FromPoint = GetMyAka(Addr).Point() & 0xffff;
+   p.FromPoint = (unsigned short)(GetMyAka(Addr).Point() & 0xffff);
 
    if ((tmt = GetPasswd(Addr)) != NULL) {
       RSTRLCPY(p.Passwd,tmt,8);
    }
 
-   p.ToZone = Addr.Zone();
-   p.ToZone2 = Addr.Zone();
-   p.ToNet = Addr.Net();
-   p.ToNode = Addr.Node();
-   p.ToPoint = Addr.Point();
+   p.ToZone = (unsigned short)(Addr.Zone() & 0xffff);
+   p.ToZone2 = (unsigned short)(Addr.Zone() & 0xffff);
+   p.ToNet = (unsigned short)(Addr.Net() & 0xffff);
+   p.ToNode = (unsigned short)(Addr.Node() & 0xffff);
+   p.ToPoint = (unsigned short)(Addr.Point() & 0xffff);
    p.c0002 = 2;
    p.c0001 = 1;
    p.c0100 = 256;
@@ -677,10 +677,10 @@ char Buff[BUFF_SIZE];
    }
    memset(&pm,0,sizeof(tPMSG));
    pm.c0002 = 2;
-   pm.FromNode = m._FromAddr.Node();
-   pm.ToNode = m._ToAddr.Node();
-   pm.FromNet = m._FromAddr.Net();
-   pm.ToNet = m._ToAddr.Net();
+   pm.FromNode = (unsigned short)(m._FromAddr.Node() & 0xffff);
+   pm.ToNode = (unsigned short)(m._ToAddr.Node() & 0xffff);
+   pm.FromNet = (unsigned short)(m._FromAddr.Net() & 0xffff);
+   pm.ToNet = (unsigned short)(m._ToAddr.Net() & 0xffff);
    pm.Cost  = m._Cost;
    RSTRLCPY(pm.DateTime,FromTime(m._Time),20);
    SetMsgAttr(m,pm.Attr);
