@@ -1,4 +1,4 @@
-// $Id: $
+// $Id$
 //
 // prepare6.js prepares files for building RNtrack using MSVC 6.0
 //
