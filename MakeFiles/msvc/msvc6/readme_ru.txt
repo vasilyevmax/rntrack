@@ -22,12 +22,12 @@
 щёлкнуть по нему мышкой в проводнике. Если на компьютере установлена MS Visual 
 Studio 6.0, то будут сгенерированы файлы:
 
-	build.bat
-	makefile.dep
-	makefile.vc6
-	rebuild.bat
-	rntrack.dsp
-	rntrack.dsw
+    build.bat
+    makefile.dep
+    makefile.vc6
+    rebuild.bat
+    rntrack.dsp
+    rntrack.dsw
 
 Если окажется, что при установке Visual Studio ты не создал файл VCVARS32.BAT,
 то будет выдано сообщение об ошибке. Кстати, все сообщения об ошибках выдаются
@@ -39,12 +39,12 @@ cscript prepare6.js
 Если на компьютере установлен ActiveState Perl, то также будут сгенерированы
 файлы:
 
-	build_perl.bat
-	makeperl.dep
-	makeperl.vc6
-	rebuild_perl.bat
-	rntrack_perl.dsp
-	rntrack_perl.dsw
+    build_perl.bat
+    makeperl.dep
+    makeperl.vc6
+    rebuild_perl.bat
+    rntrack_perl.dsp
+    rntrack_perl.dsw
 
 Если Perl не установлен, то ты сможешь собрать RNtrack только без поддержки 
 скриптов.
@@ -127,3 +127,4 @@ is successfully built", значит всё в порядке. rntrack_perl.exe 
 Для того, чтобы пересобрать RNtrack после того, как он был уже однажды собран,
 предварительно удалив результаты предыдущей сборки, запускай rebuild_perl.bat.
 
+$Id$

@@ -22,12 +22,12 @@ reading now. To run prepare6.js just double-click it in the Windows Explorer.
 If MS Visual Studio 6.0 has been installed, then the following files are 
 generated:
 
-	build.bat
-	makefile.dep
-	makefile.vc6
-	rebuild.bat
-	rntrack.dsp
-	rntrack.dsw
+    build.bat
+    makefile.dep
+    makefile.vc6
+    rebuild.bat
+    rntrack.dsp
+    rntrack.dsw
 
 If it turns out that you have not created VCVARS32.BAT during the Visual Studio
 installation, an error message pops up. By the way all error messages pop up as
@@ -39,12 +39,12 @@ cscript prepare6.js
 If ActiveState Perl has already been installed, the following files are also
 generated:
 
-	build_perl.bat
-	makeperl.dep
-	makeperl.vc6
-	rebuild_perl.bat
-	rntrack_perl.dsp
-	rntrack_perl.dsw
+    build_perl.bat
+    makeperl.dep
+    makeperl.vc6
+    rebuild_perl.bat
+    rntrack_perl.dsp
+    rntrack_perl.dsw
 
 If Perl is not installed, you will be able to build RNtrack without script 
 support only.
@@ -126,3 +126,4 @@ subdirectory.
 If RNtrack has already been built once and you want to delete the results of 
 the previous build and then build RNtrack again, please run rebuild_perl.bat.
 
+$Id$
