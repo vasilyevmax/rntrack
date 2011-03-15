@@ -2583,7 +2583,8 @@ else
         
         // Run perlconf to create perlvars.js with declarations
         // of perl config variables
-        var exitCode = RunCmd('perl -e "' + perlvars + '"');
+        var cmd = 'perl -e "' + perlvars + '"';
+        var exitCode = RunCmd(cmd);
         if(exitCode > 0)
         {
             WScript.Echo("Error at running " + cmd);
