@@ -30,70 +30,92 @@
 
 // --------------------------------------------------------------------
 
-class tAka {
+class tAka
+{
 public:
-   FA _Addr;
-   FA _Mask;
-   tAka() { _Addr.Clean(); _Mask.Clean(); };
-   ~tAka() { return; };
+    FA _Addr;
+    FA _Mask;
+    tAka()
+    {
+        _Addr.Clean();
+        _Mask.Clean();
+    }
+
+    ~tAka()
+    {
+        return;
+    }
 };
 
 IndBiList<tAka> Aka;
 // --------------------------------------------------------------------
 
-void AddAka(FA &Addr, FA &Mask) {
-tAka *a;
+void AddAka(FA & Addr, FA & Mask)
+{
+    tAka * a;
 
-   Log.Level(LOGD) << "AddAka: " << Addr << " " << Mask << EOL;
-   a = new tAka;
-   a->_Addr = Addr;
-   a->_Mask = Mask;
-   Aka.AddToEnd(a);
+    Log.Level(LOGD) << "AddAka: " << Addr << " " << Mask << EOL;
+    a = new tAka;
+    a->_Addr = Addr;
+    a->_Mask = Mask;
+    Aka.AddToEnd(a);
 }
 
-FA &GetMyAka(FA const &Addr) {
-IndBiList<tAka>::ElemPtr tmt;
+FA & GetMyAka(FA const & Addr)
+{
+    IndBiList<tAka>::ElemPtr tmt;
 
-   for (tmt = Aka.GetFirst(); tmt != NULL; tmt++) {
-      if (tmt->_Mask == Addr) {
-         return tmt->_Addr;
-      }
-   }
-   return MyAddr;
+    for(tmt = Aka.GetFirst(); tmt != NULL; tmt++)
+    {
+        if(tmt->_Mask == Addr)
+        {
+            return tmt->_Addr;
+        }
+    }
+    return MyAddr;
 }
 
-int IsMyAka(FA const &Addr) {
-IndBiList<tAka>::ElemPtr tmt;
+int IsMyAka(FA const & Addr)
+{
+    IndBiList<tAka>::ElemPtr tmt;
 
-   for (tmt = Aka.GetFirst(); tmt != NULL; tmt++) {
-      if (tmt->_Addr == Addr) {
-         return TRUE;
-      }
-   }
-   return (MyAddr == Addr);
+    for(tmt = Aka.GetFirst(); tmt != NULL; tmt++)
+    {
+        if(tmt->_Addr == Addr)
+        {
+            return TRUE;
+        }
+    }
+    return MyAddr == Addr;
 }
 
-int SetAka(FA &f, FA &m) {
+int SetAka(FA & f, FA & m)
+{
+    if(!f.Valid())
+    {
+        yyerror("Our address is invalid.");
+        return -1;
+    }
 
-   if (!f.Valid()) {
-      yyerror("Our address is invalid.");
-      return (-1);
-   }
-   if (f.Masked()) {
-      yyerror("Our AKA Address should not be a mask.");
-      return (-1);
-   }
+    if(f.Masked())
+    {
+        yyerror("Our AKA Address should not be a mask.");
+        return -1;
+    }
 
-   if (!m.Valid()) {
-      yyerror("Invalid address.");
-      return (-1);
-   }
-   AddAka(f,m);
-   return(0);
+    if(!m.Valid())
+    {
+        yyerror("Invalid address.");
+        return -1;
+    }
+
+    AddAka(f, m);
+    return 0;
 }
 
-void DestroyAka(void) {
-   Aka.Clear();
+void DestroyAka(void)
+{
+    Aka.Clear();
 }
 
 // ---------------------------- END --------------------------------------

@@ -4,7 +4,7 @@
  *  string.cpp - String subroutines
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *  
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -39,31 +39,39 @@
  * Returns strlen(src); if retval >= siz, truncation occurred.
  */
 size_t
-my_strlcpy(char *dst, const char *src, size_t siz)
+my_strlcpy(char * dst, const char * src, size_t siz)
 {
-    register char *d = dst;
-    register const char *s = src;
+    register char * d = dst;
+    register const char * s = src;
     register size_t n = siz;
 
     /* Copy as many bytes as will fit */
-    if (n != 0 && --n != 0) {
-        do {
-            if ((*d++ = *s++) == 0)
+    if(n != 0 && --n != 0)
+    {
+        do
+        {
+            if((*d++ = *s++) == 0)
+            {
                 break;
-        } while (--n != 0);
+            }
+        }
+        while(--n != 0);
     }
 
     /* Not enough room in dst, add NUL and traverse rest of src */
-    if (n == 0) {
-        if (siz != 0)
+    if(n == 0)
+    {
+        if(siz != 0)
+        {
             *d = '\0';      /* NUL-terminate dst */
-        while (*s++)
-            ;
+        }
+
+        while(*s++)
+        {}
     }
 
-    return(s - src - 1);    /* count does not include NUL */
-}
-
+    return s - src - 1;     /* count does not include NUL */
+} // my_strlcpy
 
 /*
  * Appends src to string dst of size siz (unlike strncat, siz is the
@@ -73,29 +81,37 @@ my_strlcpy(char *dst, const char *src, size_t siz)
  * If retval >= siz, truncation occurred.
  */
 size_t
-my_strlcat(char *dst, const char *src, size_t siz)
+my_strlcat(char * dst, const char * src, size_t siz)
 {
-    register char *d = dst;
-    register const char *s = src;
+    register char * d = dst;
+    register const char * s = src;
     register size_t n = siz;
     size_t dlen;
 
     /* Find the end of dst and adjust bytes left but don't go past end */
-    while (n-- != 0 && *d != '\0')
+    while(n-- != 0 && *d != '\0')
+    {
         d++;
+    }
     dlen = d - dst;
-    n = siz - dlen;
+    n    = siz - dlen;
 
-    if (n == 0)
-        return(dlen + strlen(s));
-    while (*s != '\0') {
-        if (n != 1) {
+    if(n == 0)
+    {
+        return dlen + strlen(s);
+    }
+
+    while(*s != '\0')
+    {
+        if(n != 1)
+        {
             *d++ = *s;
             n--;
         }
+
         s++;
     }
     *d = '\0';
 
-    return(dlen + (s - src));   /* count does not include NUL */
-}
+    return dlen + (s - src);    /* count does not include NUL */
+} // my_strlcat

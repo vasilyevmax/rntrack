@@ -4,7 +4,7 @@
  *  widmat.cpp - Pattern matching
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *  
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -56,128 +56,203 @@
 
 // #define TEST 1
 
-    /* What character marks an inverted character class? */
-#define NEGATE_CLASS        '!'
+/* What character marks an inverted character class? */
+#define NEGATE_CLASS '!'
 
-    /* Is "*" a common pattern? */
+/* Is "*" a common pattern? */
 #define OPTIMIZE_JUST_STAR
 
-    /* Do tar(1) matching rules, which ignore a trailing slash? */
+/* Do tar(1) matching rules, which ignore a trailing slash? */
 #undef MATCH_TAR_PATTERN
 
 
 /*
-**  Match text and p, return TRUE (positive integer), FALSE (zero), or ABORT (negative integer).
+**  Match text and p, return TRUE (positive integer), FALSE (zero), or ABORT
+****(negative integer).
 */
 
-static int DoMatch(char *text, char *p) {
-int    last;
-int    matched;
-int    reverse;
+static int DoMatch(char * text, char * p)
+{
+    int last;
+    int matched;
+    int reverse;
 
-    for (; *p; text++, p++) {
-        if (*text == '\0' && *p != '*') return -2;
-        switch (*p) {
+    for( ; *p; text++, p++)
+    {
+        if(*text == '\0' && *p != '*')
+        {
+            return -2;
+        }
+
+        switch(*p)
+        {
             case '\\': /* Literal match with following character. */
-                    p++;
-                      //!!!!!!!!!!!!!!! do not change it!!!!!!!!!!
+                p++;
+
+            //!!!!!!!!!!!!!!! do not change it!!!!!!!!!!
             default: /* FALLTHROUGH */
-                    if (*text != *p) return 0;
-                    continue;
+
+                if(*text != *p)
+                {
+                    return 0;
+                }
+
+                continue;
 
             case '#': /* Match with digit */
-                    if (!isdigit((uchar)*text)) return 0;
-                    continue;
+
+                if(!isdigit((uchar) * text))
+                {
+                    return 0;
+                }
+
+                continue;
+
             case '$': /* Match with any _char_ great than space */
-                    if (*text <= ' ') return 0;
-                    continue;
+
+                if(*text <= ' ')
+                {
+                    return 0;
+                }
+
+                continue;
+
             case '?': /* Match anything. */
-                    continue;
+                continue;
 
             case '*':
-                    /* Consecutive stars act just like one. */
-                    while (*++p == '*') continue;
 
-        /* Trailing star matches everything. */
-                    if (*p == '\0')  return 1;
+                /* Consecutive stars act just like one. */
+                while(*++p == '*')
+                {
+                    continue;
+                }
 
-                    while (*text) {
-                        if ((matched = DoMatch(text++, p)) != 1) {
-                            return matched;
-                        }
+                /* Trailing star matches everything. */
+                if(*p == '\0')
+                {
+                    return 1;
+                }
+
+                while(*text)
+                {
+                    if((matched = DoMatch(text++, p)) != 1)
+                    {
+                        return matched;
                     }
-                    return -2;
+                }
+                return -2;
 
             case '[':
-                    reverse = p[1] == NEGATE_CLASS ? 1 : 0;
-                    if (reverse) p++; /* Inverted character class. */
+                reverse = p[1] == NEGATE_CLASS ? 1 : 0;
 
-                    p++;
-                    matched = 0;
-//                    if (p[1] == ']' || p[1] == '-')
-                        if (*p == *text)  matched = 1;
-                    for (last = *p; *++p && *p != ']'; last = *p) {
-                        /* This next line requires a good C compiler. */
-                        if (*p == '-' && p[1] != ']'
-                            ? *text <= *++p && *text >= last : *text == *p)
-                            matched = 1;
+                if(reverse)
+                {
+                    p++;              /* Inverted character class. */
+                }
+
+                p++;
+                matched = 0;
+
+                // if (p[1] == ']' || p[1] == '-')
+                if(*p == *text)
+                {
+                    matched = 1;
+                }
+
+                for(last = *p; *++p && *p != ']'; last = *p)
+                {
+                    /* This next line requires a good C compiler. */
+                    if(*p == '-' && p[1] != ']' ?
+                       *text <= *++p && *text >= last : *text == *p)
+                    {
+                        matched = 1;
                     }
-                    if (matched == reverse) return 0;
-                    continue;
-        }
+                }
+
+                if(matched == reverse)
+                {
+                    return 0;
+                }
+
+                continue;
+        } // switch
     }
 
 #ifdef  MATCH_TAR_PATTERN
-    if (*text == '/')
-    return 1;
-#endif  /* MATCH_TAR_PATTERN */
+
+    if(*text == '/')
+    {
+        return 1;
+    }
+
+#endif /* MATCH_TAR_PATTERN */
 
     return *text == '\0';
-}
-
+} // DoMatch
 
 /*
 **  User-level routine.  Returns TRUE or FALSE.
 */
-int
-wildmat(char *text, char *p) {
-    if (p[0] == '*' && p[1] == '\0')
-      return TRUE;
-    return (DoMatch(text, p)>0);
+int wildmat(char * text, char * p)
+{
+    if(p[0] == '*' && p[1] == '\0')
+    {
+        return TRUE;
+    }
+
+    return DoMatch(text, p) > 0;
 }
 
-#if defined(TEST)
+#if defined (TEST)
 
 #include <stdio.h>
 
 /* Yes, we use gets not fgets.  Sue me. */
 
-int main(void) {
-    char     p[80];
-    char     text[80];
+    int main(void)
+    {
+        char p[80];
+        char text[80];
 
-    printf("Wildmat tester.  Enter pattern, then strings to test.\n");
-    printf("A blank line gets prompts for a new pattern; a blank pattern\n");
-    printf("exits the program.\n");
+        printf("Wildmat tester.  Enter pattern, then strings to test.\n");
+        printf(
+            "A blank line gets prompts for a new pattern; a blank pattern\n");
+        printf("exits the program.\n");
 
-    for ( ; ; ) {
-    printf("\nEnter pattern:  ");
-    (void)fflush(stdout);
-    if (gets(p) == NULL || p[0] == '\0')
-        break;
-    for ( ; ; ) {
-        printf("Enter text:  ");
-        (void)fflush(stdout);
-        if (gets(text) == NULL)
-        return (0);
-        if (text[0] == '\0')
-        /* Blank line; go back and get a new pattern. */
-        break;
-        printf("      %s\n", wildmat(text, p) ? "YES" : "NO");
-    }
-    }
+        for( ; ; )
+        {
+            printf("\nEnter pattern:  ");
+            (void)fflush(stdout);
 
-    return (0);
-    /* NOTREACHED */
-}
-#endif  /* defined(TEST) */
+            if(gets(p) == NULL || p[0] == '\0')
+            {
+                break;
+            }
+
+            for( ; ; )
+            {
+                printf("Enter text:  ");
+                (void)fflush(stdout);
+
+                if(gets(text) == NULL)
+                {
+                    return 0;
+                }
+
+                if(text[0] == '\0')
+                {
+                    /* Blank line; go back and get a new pattern. */
+                    break;
+                }
+
+                printf("      %s\n", wildmat(text, p) ? "YES" : "NO");
+            }
+        }
+
+        return 0;
+        /* NOTREACHED */
+    } // main
+
+#endif /* defined(TEST) */
+
