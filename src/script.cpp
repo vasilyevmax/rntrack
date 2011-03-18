@@ -56,7 +56,7 @@
 // --------------------------------------------------------------------
 
     #if __PERL_VERSION__ < 5010000
-        #ifndef _MSC_VER
+        # if !defined _MSC_VER && __GNUC__ < 4
 //  extern "C" static void boot_DynaLoader _((CV *cv)); // not used
             extern "C" static void perl_Log( CV* cv);
             extern "C" static void perl_Update( CV* cv);
@@ -603,7 +603,7 @@ int _LoadScriptFile(char * fname)
 
 
         PUSHMARK(SP);
-        #if __GNUC__ >= 4
+        #if __GNUC__ >= 4 && __PERL_VERSION__ >= 5010000
             rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
         #else
             #if __PERL_VERSION__ >= 5008000 
