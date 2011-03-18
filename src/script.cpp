@@ -56,7 +56,7 @@
 // --------------------------------------------------------------------
 
     #if __PERL_VERSION__ < 5010000
-        # if !defined _MSC_VER && __GNUC__ < 4
+        # if !defined _MSC_VER && (__GNUC__ + 0 < 4)
 //  extern "C" static void boot_DynaLoader _((CV *cv)); // not used
             extern "C" static void perl_Log( CV* cv);
             extern "C" static void perl_Update( CV* cv);
