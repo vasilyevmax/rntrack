@@ -18,60 +18,68 @@
 
 #include "fidoaddr.hpp"
 
-#define DefaultIndex   "rntrack.ndl"           // default index file
-#define NdlSign        0xfeda3033U             // Signature of nodelist index
-#define A_NONE         0x00000000U
-#define A_DOWN         0x01000000U
-#define A_HOLD         0x02000000U
-#define A_HUB          0x03000000U
-#define A_HOST         0x04000000U
-#define A_PVT          0x05000000U
-#define A_REGION       0x06000000U
-#define A_NONODE       0xffffffffU
-#define A_MASK         0xffff0000U
+#define DefaultIndex "rntrack.ndl" // default index file
+#define NdlSign      0xfeda3033U   // Signature of nodelist index
+#define A_NONE       0x00000000U
+#define A_DOWN       0x01000000U
+#define A_HOLD       0x02000000U
+#define A_HUB        0x03000000U
+#define A_HOST       0x04000000U
+#define A_PVT        0x05000000U
+#define A_REGION     0x06000000U
+#define A_NONODE     0xffffffffU
+#define A_MASK       0xffff0000U
 
-extern char *NodelistPath;
+extern char * NodelistPath;
 
-typedef struct {
-   char Name[512];
-   time_t  Time;
-   dword   StartZone;
+typedef struct
+{
+    char     Name[512];
+    time_t   Time;
+    dword    StartZone;
 } NodeListElem;
 
-typedef struct _Nch {
-   dword         Number;
-   struct _Nch  *Sub;
+typedef struct _Nch
+{
+    dword         Number;
+    struct _Nch * Sub;
 } Nch;
 
 
-class NodeLists {
-   NodeListElem *NList;
-   int          Lists;
-   char         *IndexName;
-   Nch          *Index;
-   int          StartZone;
+class NodeLists
+{
+    NodeListElem * NList;
+    int Lists;
+    char * IndexName;
+    Nch * Index;
+    int StartZone;
 private:
-   bool CompileNeed(void);
-   bool Compile(void);
-   bool LoadOneIndex(FILE *fh, Nch *&Ind);
-   Nch *Srch(Nch *Addr, unsigned int Number);
+    bool CompileNeed(void);
+    bool Compile(void);
+    bool LoadOneIndex(FILE * fh, Nch * & Ind);
+    Nch * Srch(Nch * Addr, unsigned int Number);
+
 public:
-   NodeLists();
-   ~NodeLists();
-   int AddNodelist(char *tmt, int TempZone);
-   void IndexFile(char *Name);
-   void Print(void);
-   bool Load(void);
-   unsigned int ExistInNodelist(FA const &f);
-   unsigned int GetFlags(FA const &f);
-   bool InSubHubs(FA const &Addr, FA const &Mask);
-unsigned int FindHub(FA const &f);
-   int Enabled(void) { return (Lists != 0); };
-   char *Names(char *Buf);
+    NodeLists();
+    ~NodeLists();
+    int AddNodelist(char * tmt, int TempZone);
+    void IndexFile(char * Name);
+    void Print(void);
+    bool Load(void);
+    unsigned int ExistInNodelist(FA const & f);
+    unsigned int GetFlags(FA const & f);
+    bool InSubHubs(FA const & Addr, FA const & Mask);
+    unsigned int FindHub(FA const & f);
+
+    int Enabled(void)
+    {
+        return Lists != 0;
+    }
+    char * Names(char * Buf);
 };
 
 int SetMaxNodelistAge(int tmt);
-int SetNodelist(char *tmt, int TempZone);
-void SayNodelistFlags(FA const &f);
+int SetNodelist(char * tmt, int TempZone);
+void SayNodelistFlags(FA const & f);
 
 #endif

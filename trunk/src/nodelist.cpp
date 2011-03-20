@@ -14,16 +14,16 @@
  */
 
 #ifndef __GNUC__
-  #include <io.h>
-  #include <direct.h>
-  #ifdef _MSC_VER
-    #include "dirent/dirent.h"
-  #endif
+    #include <io.h>
+    #include <direct.h>
+    #ifdef _MSC_VER
+        #include "dirent/dirent.h"
+    #endif
 #else
-  #include <unistd.h>
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <sys/stat.h>
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <dirent.h>
+    #include <sys/stat.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -704,27 +704,26 @@ bool ParseOneNodelist(NodeListElem * Elem)
 // ------------------------------------------------------
 
 #if 0
-void PrintNtr(Ntr * tmt, char * Buff)
-{
-    int len;
-    Ntr * tmt2;
-
-    len  = strlen(Buff);
-    tmt2 = tmt;
-
-    while(tmt != NULL)
+    void PrintNtr(Ntr * tmt, char * Buff)
     {
-        sprintf(Buff + len, "%d ", tmt->Number & 0xffff);
-        PrintNtr(tmt->Sub, Buff);
-        tmt = tmt->Next;
+        int len;
+        Ntr * tmt2;
+    
+        len  = strlen(Buff);
+        tmt2 = tmt;
+    
+        while(tmt != NULL)
+        {
+            sprintf(Buff + len, "%d ", tmt->Number & 0xffff);
+            PrintNtr(tmt->Sub, Buff);
+            tmt = tmt->Next;
+        }
+    
+        if(tmt2 == NULL)
+        {
+            printf("%s\n", Buff);
+        }
     }
-
-    if(tmt2 == NULL)
-    {
-        printf("%s\n", Buff);
-    }
-}
-
 #endif
 
 int ElementsInList(Ntr * Addr)
@@ -890,27 +889,26 @@ NodeLists::~NodeLists()
 }
 
 #if 0
-void PrintNch(Nch * tmt, char * Buff)
-{
-    int i;
-    int len;
-
-    len = strlen(Buff);
-    i   = 0;
-
-    while(tmt[i].Number != -1)
+    void PrintNch(Nch * tmt, char * Buff)
     {
-        sprintf(Buff + len, "%d ", tmt[i].Number & 0xffff);
-        PrintNch(tmt[i].Sub, Buff);
-        i++;
+        int i;
+        int len;
+    
+        len = strlen(Buff);
+        i   = 0;
+    
+        while(tmt[i].Number != -1)
+        {
+            sprintf(Buff + len, "%d ", tmt[i].Number & 0xffff);
+            PrintNch(tmt[i].Sub, Buff);
+            i++;
+        }
+    
+        if(tmt[0].Number == -1)
+        {
+            printf("%s\n", Buff);
+        }
     }
-
-    if(tmt[0].Number == -1)
-    {
-        printf("%s\n", Buff);
-    }
-}
-
 #endif
 
 void NodeLists::Print(void)

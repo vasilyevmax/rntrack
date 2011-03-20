@@ -15,10 +15,11 @@
 
 #ifndef _PASSWD_HPP_
 #define _PASSWD_HPP_
+
 #include "fidoaddr.hpp"
 
-char *GetPasswd(FA const &Addr);
-int SetPasswd(FA &f, char *tmt);
+char * GetPasswd(FA const & Addr);
+int SetPasswd(FA & f, char * tmt);
 void DestroyPasswd(void);
 
 #endif

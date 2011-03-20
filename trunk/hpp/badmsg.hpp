@@ -15,6 +15,7 @@
 
 #ifndef _BADMSG_HPP_
 #define _BADMSG_HPP_
+
 #include "msgbase.hpp"
 
 typedef enum { SKIP, EXIT, MOVE, REMOVE } tBadMsgMode;

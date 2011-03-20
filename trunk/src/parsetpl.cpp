@@ -14,14 +14,14 @@
  */
 
 #ifndef __GNUC__
-  #include <io.h>
-  #include <direct.h>
+    #include <io.h>
+    #include <direct.h>
 #else
-  #include <unistd.h>
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <sys/stat.h>
-  #include <errno.h>
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <dirent.h>
+    #include <sys/stat.h>
+    #include <errno.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +39,7 @@
 #include "mytypes.hpp"
 
 #if defined (__sun__) || defined (__OSX__)
-  #define strftim strftime
+    #define strftim strftime
 #endif
 
 // --------------------------------------------------------------------
@@ -107,9 +107,9 @@ static int AddNewMsgId(Template * Tpl);
 static int AddProgVersion(Template * Tpl);
 
 #ifdef __unix__
-static int AddFPid(Template * Tpl);
-
+    static int AddFPid(Template * Tpl);
 #endif
+
 static int AddInetFromAddr(Template * Tpl);
 static int AddInetToAddr(Template * Tpl);
 

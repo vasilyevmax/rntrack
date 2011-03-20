@@ -15,15 +15,16 @@
 
 #ifndef _FILEBOX_HPP_
 #define _FILEBOX_HPP_
+
 #include "fidoaddr.hpp"
 
 int SetUseFileBoxes(void);
-char *GetFilebox(FA const &Addr);
-int SetFilebox(FA &f, char *tmt);
+char * GetFilebox(FA const & Addr);
+int SetFilebox(FA & f, char * tmt);
 void DestroyFilebox(void);
-int SetFileBoxDir(char *tmt);
+int SetFileBoxDir(char * tmt);
 int SetFileBoxType(fileboxType fbtype);
-char *MakeFileboxName(FA &f, PKTMode m);
+char * MakeFileboxName(FA & f, PKTMode m);
 
 #endif
 

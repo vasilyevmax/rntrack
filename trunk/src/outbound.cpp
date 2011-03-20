@@ -14,14 +14,14 @@
  */
 
 #ifndef __GNUC__
-  #include <io.h>
-  #include <direct.h>
+    #include <io.h>
+    #include <direct.h>
 #else
-  #include <unistd.h>
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <sys/stat.h>
-  #include <errno.h>
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <dirent.h>
+    #include <sys/stat.h>
+    #include <errno.h>
 #endif
 #include <fcntl.h>
 #include <stdio.h>
@@ -49,7 +49,7 @@
 #include "tpkt.hpp"
 
 #ifdef _AIX_CONV
-  #include "aix_conv.hpp"
+    #include "aix_conv.hpp"
 #endif
 
 #if defined (__sun__) || defined (__OSX__)
