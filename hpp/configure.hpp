@@ -19,7 +19,6 @@
 typedef enum {LEX_START, LEX_PARSE, LEX_DIGIT, LEX_COMMENT, LEX_STRING,
               LEX_CRLF, LEX_END, LEX_TOKEN, LEX_ERROR, LEX_COMMLINE} tLexState;
 
-
 int ParseConfig(char *CfgFile);
 #undef yyerror
 int yyerror(char *s);
@@ -60,4 +59,5 @@ int SetIgnoreBSY(void);
 int SetIgnoreAttachPath(void);
 int LoadScriptFile(char *Fname);
 int SetStripPathInPkt(void);
+
 #endif

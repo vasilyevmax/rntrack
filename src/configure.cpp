@@ -18,7 +18,7 @@
 /*--------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-  #include "aconfig.h"
+    #include "aconfig.h"
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -26,17 +26,17 @@
 /*--------------------------------------------------------------------*/
 
 #ifdef HAVE_UNISTD_H
-  #include <unistd.h>
+    #include <unistd.h>
 #endif
 #ifdef HAVE_IO_H
-  #include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef HAVE_STRING_H
-  #include <string.h>
+    #include <string.h>
 #endif
 #ifdef HAVE_STDLIB_H
-  #include <stdlib.h>
+    #include <stdlib.h>
 #endif
 #include <ctype.h>
 
@@ -45,7 +45,7 @@
 /*--------------------------------------------------------------------*/
 
 #if !defined (stricmp) && !defined (HAVE_STRICMP) && defined (HAVE_STRCASECMP)
-  #define stricmp(s1, s2) strcasecmp(s1, s2)
+    #define stricmp(s1, s2) strcasecmp(s1, s2)
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -59,7 +59,7 @@
 #include "scandir.hpp"
 #include "cfg.hpp"
 #if defined (__PERL_VERSION__)
-  #include "script.hpp"
+    #include "script.hpp"
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -989,7 +989,7 @@ int ParseConfig(char * CfgFile)
     int rc;
 
 //  Open configuration File
-// yydebug = 1;
+//  yydebug = 1;
     CHP = 1003;
 
     if(access(CfgFile, R_OK) != 0)
@@ -1029,11 +1029,12 @@ int ParseConfig(char * CfgFile)
 
 //  Done?
 
-//   if (!feof(fh)) {
-//      Log.Level(LOGE) << "Error(s) in configuration file '" << CfgFile << "'."
-// << EOL;
+//  if(!feof(fh))
+//  {
+//      Log.Level(LOGE) << "Error(s) in configuration file '" << CfgFile <<
+//                         "'." << EOL;
 //      rc = -1;
-//   }
+//  }
     free(CurrentLine);
     CurrentLine = NULL;
     free(chpool);
@@ -1123,7 +1124,8 @@ int SearchToken(char * s)
         }
     }
 
-//    if (LogLevel >= 5) {
+//    if (LogLevel >= 5)
+//    {
     if(kwtable[i].kw != NULL)
     {
         Pos += strlen(Buff);
@@ -1525,13 +1527,13 @@ int SetInclude(char * tmt)
         return -1;
     }
 
-    sLineNumber = LineNumber;
-    sCharNumber = CharNumber;
-    sFh         = fh;
-    sAvail      = avail;
-    snxtch      = nxtch;
-    sConfigFile = ConfigFile;
-    ConfigFile  = strdup(tmt);
+    sLineNumber  = LineNumber;
+    sCharNumber  = CharNumber;
+    sFh = fh;
+    sAvail       = avail;
+    snxtch       = nxtch;
+    sConfigFile  = ConfigFile;
+    ConfigFile   = strdup(tmt);
     CheckMem(ConfigFile);
     schpool      = chpool;
     sCurrentLine = CurrentLine;
@@ -1545,11 +1547,11 @@ int SetInclude(char * tmt)
     chpool      = schpool;
     CurrentLine = sCurrentLine;
     LineNumber  = sLineNumber;
-    nxtch  = _CRLF;
-    yychar = _CRLF;
-    fh     = sFh;
+    nxtch = _CRLF;
+    yychar      = _CRLF;
+    fh = sFh;
     free(ConfigFile);
-    ConfigFile = sConfigFile;
-    NeedLoad   = TRUE;
+    ConfigFile  = sConfigFile;
+    NeedLoad    = TRUE;
     return 0;
 } // SetInclude

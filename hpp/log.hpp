@@ -21,36 +21,42 @@
 
 #define EOL '\n'
 
-class LogStream {
-   FILE *fh;
-   uint _LogLevel;
-   uint cLogLevel;
-   int  NewLine;
+class LogStream
+{
+    FILE * fh;
+    uint _LogLevel;
+    uint cLogLevel;
+    int NewLine;
 private:
-   void ShowLine(const char *format, ...)
+    void ShowLine(const char * format, ...)
 #ifdef __GNUC__
-   __attribute__ ((format (printf, 2, 3)))
+        __attribute__ ((format(printf, 2, 3)))
 #endif
-   ;
+    ;
 
 public:
-    LogStream ();
-    ~LogStream ();
-    int Open(char *FName);
-    int Opened(void) { return (fh != NULL); };
+    LogStream();
+    ~LogStream();
+    int Open(char * FName);
+
+    int Opened(void)
+    {
+        return fh != NULL;
+    }
     int Close(void);
+
     void LogLevel(uint);
-    LogStream &Level(uint);
-    LogStream &operator << (const char *p);
-    LogStream &operator << (char p);
-    LogStream & operator << (int i);    
-    LogStream & operator << (unsigned int i);    
-    LogStream & operator << (word i);    // word/sword is always a 16 bit int,
-    LogStream & operator << (sword i);   // smapi takes care for this, and
-    LogStream & operator << (dword i);   // dword/sdword is always 32 bit, even
-    LogStream & operator << (sdword i);  // on a 64 bit host
+    LogStream & Level(uint);
+    LogStream & operator <<(const char * p);
+    LogStream & operator <<(char p);
+    LogStream & operator <<(int i);
+    LogStream & operator <<(unsigned int i);
+    LogStream & operator <<(word i);     // word/sword is always a 16 bit int,
+    LogStream & operator <<(sword i);    // smapi takes care for this, and
+    LogStream & operator <<(dword i);    // dword/sdword is always 32 bit, even
+    LogStream & operator <<(sdword i);   // on a 64 bit host
 };
 
-char *Date(void);
+char * Date(void);
 
 #endif

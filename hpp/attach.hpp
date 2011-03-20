@@ -15,6 +15,7 @@
 
 #ifndef _ATTACH_HPP_
 #define _ATTACH_HPP_
+
 #include "time.h"
 #include "fidoaddr.hpp"
 

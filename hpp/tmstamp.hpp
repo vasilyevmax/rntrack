@@ -17,30 +17,38 @@
 #define _TMSTAMP_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "constant.hpp"
+    #include "constant.hpp"
 #endif
 
 #ifdef HAVE_TIME_H
-#include <time.h>
+    #include <time.h>
 #elif HAVE_SYS_TIME_H
-#include <sys/time.h>
+    #include <sys/time.h>
 #endif
 
 #include "scandir.hpp"
 
 class ScanDir;
 
-class tTimes {
+class tTimes
+{
 public:
-   time_t _STime;
-   time_t _ETime;
-   tTimes() { _STime = 0; _ETime = 0; };
-   ~tTimes() { return; };
-   void Print(void);
+    time_t _STime;
+    time_t _ETime;
+    tTimes()
+    {
+        _STime = 0;
+        _ETime = 0;
+    }
+    ~tTimes()
+    {
+        return;
+    }
+    void Print(void);
 };
 
 time_t TimeOfBeginOfDay(int Day);
-int GetLastTime(char *FName);
+int GetLastTime(char * FName);
 int InTime(IndBiList<tTimes>::ElemPtr tmt);
 
 #endif

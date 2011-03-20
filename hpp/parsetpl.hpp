@@ -15,48 +15,58 @@
 
 #ifndef _PARSETPL_HPP_
 #define _PARSETPL_HPP_
+
 #include "fidoaddr.hpp"
 #include "msg.hpp"
 #include "configure.hpp"
 
 class ScanDir;
 
-#define TPLADD   4096
+#define TPLADD 4096
 
-class Template {
-   char *TplName;
-   FILE *fh;
-   char *CurrLinePos;
-   uint MaxBodySize;
-   char *FName;
+class Template
+{
+    char * TplName;
+    FILE * fh;
+    char * CurrLinePos;
+    uint MaxBodySize;
+    char * FName;
 public:
-   char *LastTplLine;
-   cMSG  *From;
-   cMSG  *To;
-   ScanDir *sd;
-   char *RoutedVia;
-   char *Body;
-   uint BodySize;
-   Template();
-   ~Template();
-   int AddTok(char *T);
-   void AddChar(char c);
-   void AddStr(const char *c);
-   void AddInt(int i);
-   int GetOneLine (void);
-   int ParseOneLine (void);
-   int Parse(void);
-   void SetMsg(cMSG &F, cMSG &T) { From = &F; To = &T;};
-   void SetMsg(cMSG &F) { From = &F; To = &F;};
-   bool Set(char *Name);
-   int Save(char *name,int Mode);
-   int Save(cMSG &m);
-   void Normalise(void);
-   void Clean(void);
+    char * LastTplLine;
+    cMSG * From;
+    cMSG * To;
+    ScanDir * sd;
+    char * RoutedVia;
+    char * Body;
+    uint BodySize;
+    Template();
+    ~Template();
+    int AddTok(char * T);
+    void AddChar(char c);
+    void AddStr(const char * c);
+    void AddInt(int i);
+    int GetOneLine(void);
+    int ParseOneLine(void);
+    int Parse(void);
+
+    void SetMsg(cMSG & F, cMSG & T)
+    {
+        From = &F;
+        To   = &T;
+    }
+    void SetMsg(cMSG & F)
+    {
+        From = &F;
+        To   = &F;
+    }
+    bool Set(char * Name);
+    int  Save(char * name, int Mode);
+    int  Save(cMSG & m);
+    void Normalise(void);
+    void Clean(void);
 };
 
-char *StrAsTpl(cMSG &m, char *s);
-
+char * StrAsTpl(cMSG & m, char * s);
 
 #endif
 

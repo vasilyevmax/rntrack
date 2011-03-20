@@ -18,11 +18,11 @@
 #define _MYTYPES_HPP_
 
 #ifdef HAVE_CONFIG_H
-# include "constant.hpp"
+    #include "constant.hpp"
 #endif
 
 #ifdef HAVE_SYS_STAT_H
-#include <sys/stat.h>
+    #include <sys/stat.h>
 #endif
 
 #include "smapi/typedefs.h"
@@ -31,12 +31,12 @@ typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef struct stat s_stat;
 #ifndef FALSE
-#define FALSE (0)
+    #define FALSE (0)
 #endif
 #ifndef TRUE
-#define TRUE  (!FALSE)
+    #define TRUE  (!FALSE)
 #endif
-#define OK    (0)
-#define On    (1)
+#define OK        (0)
+#define On        (1)
 
 #endif

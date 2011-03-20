@@ -396,13 +396,13 @@ bool Action::Do(MSGBASE & b, cMSG & m)
                     if(strlen(_OutDir) == 0)
                     {
                         Log.Level(LOGI) <<
-                        "Strip path to attached files in " << tmt << EOL;
+                            "Strip path to attached files in " << tmt << EOL;
                     }
                     else
                     {
                         Log.Level(LOGI) <<
-                        "Change path to attached files in " << tmt <<
-                        " to " <<
+                            "Change path to attached files in " << tmt <<
+                            " to " <<
                         _OutDir << EOL;
                     }
                 }
@@ -456,7 +456,8 @@ bool Action::Do(MSGBASE & b, cMSG & m)
                 if(!b.WriteMsg(m))
                 {
                     Log.Level(LOGE) <<
-                    "Error writing message with new subject " << tmt << EOL;
+                        "Error writing message with new subject " << 
+                        tmt << EOL;
                     return FALSE;
                 }
             }
@@ -526,7 +527,8 @@ bool Action::Do(MSGBASE & b, cMSG & m)
                 if(!b.WriteMsg(m))
                 {
                     Log.Level(LOGE) <<
-                    "Error writing message with new subject " << tmt << EOL;
+                        "Error writing message with new subject " << 
+                        tmt << EOL;
                     return FALSE;
                 }
             }
@@ -902,7 +904,8 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
                 case NULLPKT:
                     Log.Level(LOGW) << "?UT file for address " << f <<
-                                       " is null size. Message " << b.MessageName() <<
+                                       " is null size. Message " << 
+                                       b.MessageName() <<
                                        " skipped." << EOL;
                     p.Clean();
                     FileInbound = tmt2;
@@ -927,7 +930,8 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
                 case BADPKT:
                     Log.Level(LOGE) << "?LO file for address " << f <<
-                                       " is invalid. Message " << b.MessageName() <<
+                                       " is invalid. Message " << 
+                                       b.MessageName() <<
                                        " skipped." << EOL;
                     p.Clean();
                     FileInbound = tmt2;

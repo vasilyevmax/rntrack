@@ -13,38 +13,38 @@
  *  $Id$
  */
 #ifdef HAVE_CONFIG_H
-  #include "aconfig.h"
+    #include "aconfig.h"
 #endif
 
 #ifdef TIME_WITH_SYS_TIME_H
-  #include <time.h>
-  #include <sys/time.h>
+    #include <time.h>
+    #include <sys/time.h>
 #elif defined (HAVE_TIME_H)
-  #include <time.h>
+    #include <time.h>
 #elif defined (HAVE_SYS_TIME_H)
-  #include <sys/time.h>
+    #include <sys/time.h>
 #endif
 #ifdef HAVE_LOCALE_H
-  #include <locale.h>
+    #include <locale.h>
 #endif
 #ifdef HAVE_IO_H
-  #include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAVE_STRING_H
-  #include <string.h>
+    #include <string.h>
 #endif
 #ifdef HAVE_SYS_UTIME_H
-  #include <sys/utime.h>
+    #include <sys/utime.h>
 #elif defined (HAVE_UTIME_H)
-  #include <utime.h>
+    #include <utime.h>
 #endif
 #ifdef HAVE_SYS_TYPES_H
-  #include <sys/types.h>
+    #include <sys/types.h>
 #elif defined (HAVE_TYPES_H)
-  #include <types.h>
+    #include <types.h>
 #endif
 #ifdef HAVE_UNISTD_H
-  #include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #include <stdio.h>

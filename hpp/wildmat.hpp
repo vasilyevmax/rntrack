@@ -54,6 +54,6 @@
 #ifndef _WILDMAT_HPP_
 #define _WILDMAT_HPP_
 
-int wildmat(char *text, char *p);
+int wildmat(char * text, char * p);
 
 #endif

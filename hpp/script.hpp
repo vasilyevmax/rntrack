@@ -15,25 +15,27 @@
 
 #ifndef _SCRIPT_HPP_
 #define _SCRIPT_HPP_
+
 #include "msg.hpp"
 #include "sqbase.hpp"
 
-typedef enum { 
-   SS_NOTDEF, SS_OK, SS_ERROR, SS_FALSE
+typedef enum
+{
+    SS_NOTDEF, SS_OK, SS_ERROR, SS_FALSE
 } ScrRet;
 
-int _LoadScriptFile(char *fname);
-void PrepareMsgForScript(cMSG &sm);
-int  ScriptWordExists(char *word);
-int  InitScriptSystem(void);
+int _LoadScriptFile(char * fname);
+void PrepareMsgForScript(cMSG & sm);
+int ScriptWordExists(char * word);
+int InitScriptSystem(void);
 void InitScriptValues(void);
-int  StopScriptSystem(void);
-ScrRet DoSomeWord(char *word);
-ScrRet DoSomeWordRc(char *word);
-ScrRet DoThisWord(char *word);
-ScrRet DoThisWordRc(char *word);
+int StopScriptSystem(void);
+ScrRet DoSomeWord(char * word);
+ScrRet DoSomeWordRc(char * word);
+ScrRet DoThisWord(char * word);
+ScrRet DoThisWordRc(char * word);
 
 /* definitions for error codes */
-#define FTR_OUTOFRANGE	 -400
+#define FTR_OUTOFRANGE -400
 
 #endif

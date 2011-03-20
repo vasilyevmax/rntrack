@@ -15,6 +15,7 @@
 
 #ifndef _DOMAIN_HPP_
 #define _DOMAIN_HPP_
+
 #include "fidoaddr.hpp"
 
 char *GetDomain(FA const &Addr);

@@ -17,7 +17,7 @@
 /*--------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-  #include "aconfig.h"
+    #include "aconfig.h"
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -29,12 +29,12 @@
 #include <stdio.h>
 #include <time.h>
 #ifdef HAVE_IO_H
-  #include <io.h>
+    #include <io.h>
 #endif
 #include <string.h>
 #include <assert.h>
 #ifdef HAVE_UNISTD_H
-  #include <unistd.h>
+    #include <unistd.h>
 #endif
 
 /*--------------------------------------------------------------------*/

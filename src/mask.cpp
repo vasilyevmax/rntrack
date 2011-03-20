@@ -14,7 +14,7 @@
  *  $Id$
  */
 #ifdef HAVE_CONFIG_H
-  #include "aconfig.h"
+    #include "aconfig.h"
 #endif
 
 #include <errno.h>

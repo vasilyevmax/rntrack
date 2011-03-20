@@ -41,8 +41,8 @@
     #include <XSUB.h>
 #endif
 
-#define MSGVARNAME        "main::FMSG"
-#define KLUVARNAME        "main::FKludges"
+#define MSGVARNAME "main::FMSG"
+#define KLUVARNAME "main::FKludges"
 
 #if defined(__PERL_VERSION__)
     static HV *m = NULL;                      // MSG
@@ -56,7 +56,7 @@
 // --------------------------------------------------------------------
 
     #if __PERL_VERSION__ < 5010000
-        # if !defined _MSC_VER && (__GNUC__ + 0 < 4)
+        #if !defined _MSC_VER && (__GNUC__ + 0 < 4)
 //  extern "C" static void boot_DynaLoader _((CV *cv)); // not used
             extern "C" static void perl_Log( CV* cv);
             extern "C" static void perl_Update( CV* cv);
@@ -70,7 +70,8 @@
     #endif
 
     #define FromSP(i)       (char *)SvPV(ST(i), n_a); if (n_a == 0) sp_s  = ""
-    #define XCAL            (char *)malloc(n_a+1)
+    #define XCAL            (char *)malloc(n_a + 1)
+
 
     XSdEfInE(perl_Log)
     {
@@ -274,7 +275,8 @@
         XSRETURN_IV(Ndl.ExistInNodelist(fa) != (unsigned int)-1);
     }
 
-    XSdEfInE(perl_FindHub){
+    XSdEfInE(perl_FindHub)
+    {
         dXSARGS;
         char * sp_s;
         char * str;
@@ -307,8 +309,8 @@
     
         if(LogLevel >= 5)
         {
-            Log.Level(LOGD) << "perl_FindHub(\"" << str << "\") as " << fa << 
-                               EOL;
+            Log.Level(LOGD) << "perl_FindHub(\"" << str << "\") as " << 
+                               fa << EOL;
         }
     
         free(str);
@@ -323,7 +325,9 @@
     }
 
     //usage:
-    // NewMsg($MsgBase,$FromName,$FromAddr,$ToName,$ToAddr,$Subject,$Flags,$Kludges,$Body)
+    // NewMsg($MsgBase, $FromName, $FromAddr, $ToName, $ToAddr, $Subject, 
+    //        $Flags, $Kludges, $Body)
+
     XSdEfInE(perl_NewMsg)
     {
         dXSARGS;
@@ -603,13 +607,14 @@ int _LoadScriptFile(char * fname)
 
 
         PUSHMARK(SP);
-        #if __GNUC__ >= 4 && __PERL_VERSION__ >= 5010000
+        #if __GNUC__ + 0 >= 4 && __PERL_VERSION__ >= 5010000
             rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
         #else
             #if __PERL_VERSION__ >= 5008000 
                 /* for Perl 5.8.* and above, see Makefile */
-                rc = perl_parse(PerlSystem, (void (*)(PerlInterpreter *))
-                                xs_init, 2, perlargs, NULL);
+                rc = perl_parse(PerlSystem, 
+                                (void (*)(PerlInterpreter *))xs_init, 
+                                2, perlargs, NULL);
             #else
                 /* for old Perl */
                 rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
@@ -621,8 +626,7 @@ int _LoadScriptFile(char * fname)
         if(rc != 0)
         {
             Log.Level(100) << "Error parsing script file '" <<
-            fname <<
-            "'." << EOL;
+                              fname << "'." << EOL;
             Log.Level(100) <<
             "See output to stderr to look error message." << EOL;
             return -1;

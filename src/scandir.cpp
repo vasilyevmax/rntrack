@@ -14,14 +14,14 @@
  */
 
 #ifndef __GNUC__
-  #include <io.h>
-  #include <direct.h>
+    #include <io.h>
+    #include <direct.h>
 #else
-  #include <unistd.h>
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <sys/stat.h>
-  #include <errno.h>
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <dirent.h>
+    #include <sys/stat.h>
+    #include <errno.h>
 #endif
 
 #include <stdio.h>
@@ -676,7 +676,8 @@ void ScanDir::Print(void)
     Log.Level(LOGD) << "------------------------------------" << EOL;
     Log.Level(LOGD) << "ScanDir.Print()" << EOL;
     Log.Level(LOGD) << "Base: '" <<
-                       ((_Base != NULL) ? _Base->BaseName() : "--NONE--") << "'" << EOL;
+                       ((_Base != NULL) ? _Base->BaseName() : "--NONE--") << 
+                       "'" << EOL;
     Log.Level(LOGD) << "Renumber: " << ((_Renumber) ? "YES" : "NO") << EOL;
     Log.Level(LOGD) << "Unpack: " << ((_Unpack) ? "YES" : "NO") << EOL;
     Log.Level(LOGD) << "Fresh: " << ((_Fresh) ? "YES" : "NO") << EOL;

@@ -14,32 +14,32 @@
  */
 
 #ifndef __unix__
-  #include <process.h>
+    #include <process.h>
 #endif
 #ifndef __GNUC__
-  #include <io.h>
-  #include <direct.h>
+    #include <io.h>
+    #include <direct.h>
 #else
-  #include <limits.h>
-  #include <unistd.h>
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <sys/stat.h>
-  #include <errno.h>
+    #include <limits.h>
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <dirent.h>
+    #include <sys/stat.h>
+    #include <errno.h>
 #endif
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #ifdef __EMX__
-  #include <sys/nls.h>
+    #include <sys/nls.h>
 #endif
 #include <ctype.h>
 #if defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__) || \
     defined (__OSX__)
-  #include <stdlib.h>
+    #include <stdlib.h>
 #else
-  #include <malloc.h>
+    #include <malloc.h>
 #endif
 #include "log.hpp"
 #include "mytypes.hpp"
@@ -50,18 +50,18 @@
 #include "wildmat.hpp"
 
 #ifdef __WATCOMC__
-  #include <dos.h>
-  #undef far
+    #include <dos.h>
+    #undef far
 #endif
 
 #ifdef __OS2__
-  #include <os2.h>
+    #include <os2.h>
 #endif
 
 #ifdef __NT__
-  #undef byte
-  #undef EXPENTRY
-  #include <windows.h>
+    #undef byte
+    #undef EXPENTRY
+    #include <windows.h>
 #endif
 
 extern LogStream Log;
@@ -432,11 +432,11 @@ int tzoffset()
 
 // #ifndef __unix__
 #ifndef MAX_PATH
-  #ifdef PATH_MAX
-    #define MAX_PATH PATH_MAX
-  #else
-    #define MAX_PATH 1025
-  #endif
+    #ifdef PATH_MAX
+        #define MAX_PATH PATH_MAX
+    #else
+        #define MAX_PATH 1025
+    #endif
 #endif
 // #endif
 
@@ -550,7 +550,8 @@ int ReleaseSemaphore(void)
     return TRUE;
 }
 
-extern "C" {
+extern "C" 
+{
     void ShowLogLine(char * msg)
     {
         Log.Level(102) << msg;

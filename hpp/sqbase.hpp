@@ -25,38 +25,51 @@
 #include "mytypes.hpp"
 
 
-class SQUISH: public MSGBASE {
-   HAREA Area;
-   char *DirName;
-   unsigned int MsgNum;
-   unsigned int tMsgNum;
-   unsigned int MaxNum;
-   bool PrevIsDel;
-   char bType;
+class SQUISH : public MSGBASE
+{
+    HAREA Area;
+    char * DirName;
+    unsigned int MsgNum;
+    unsigned int tMsgNum;
+    unsigned int MaxNum;
+    bool PrevIsDel;
+    char bType;
 // private:
 public:
-   bool WriteOneMsg(unsigned int Num, cMSG &m);
-   SQUISH();
-   SQUISH(char _bType);
-   ~SQUISH();
-   void Print(void);
-   bool Set(char *c, int BaseType);
-   void Clear(void);
-   bool Next(void);
-   bool Rewind(void);
-   bool DeleteMsg(void);
-   bool ReadMsg(cMSG &m);
-   bool WriteMsg(cMSG &m);
-   bool WriteNewMsg(cMSG &m);
-   char *ReadToMem(void);
-   bool WriteFromMem(char *Buff);
-   char *MessageName(void);
-   char *BaseName(void) { return DirName; };
-   bool Renumber(void);
-   bool CheckOut(void) { return TRUE; };
-   bool CheckIn(void) { return TRUE; };
-   bool Open(void);
-   bool Close(void);
+    bool WriteOneMsg(unsigned int Num, cMSG & m);
+
+    SQUISH();
+    SQUISH(char _bType);
+    ~SQUISH();
+    void Print(void);
+    bool Set(char * c, int BaseType);
+    void Clear(void);
+    bool Next(void);
+    bool Rewind(void);
+    bool DeleteMsg(void);
+    bool ReadMsg(cMSG & m);
+    bool WriteMsg(cMSG & m);
+    bool WriteNewMsg(cMSG & m);
+    char * ReadToMem(void);
+    bool WriteFromMem(char * Buff);
+    char * MessageName(void);
+
+    char * BaseName(void)
+    {
+        return DirName;
+    }
+    bool Renumber(void);
+
+    bool CheckOut(void)
+    {
+        return TRUE;
+    }
+    bool CheckIn(void)
+    {
+        return TRUE;
+    }
+    bool Open(void);
+    bool Close(void);
 };
 
 #endif

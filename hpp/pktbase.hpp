@@ -16,8 +16,8 @@
 #ifndef _PKTBASE_HPP_
 #define _PKTBASE_HPP_
 
-#if defined(__MSVC__)
-#include "dirent/dirent.h"
+#if defined (__MSVC__)
+    #include "dirent/dirent.h"
 #endif
 #include "a_list.hpp"
 #include "utils.hpp"
@@ -27,50 +27,62 @@
 #include "mytypes.hpp"
 
 
-class PKTBASE: public MSGBASE {
-   FA           FMask;
-   char         *DirName;
-   char         *PktName;
-   char         *MsgMask;
-   unsigned int MsgNum;
-   unsigned int MaxMsgNum;
-   int          fNoCheckPwd;
-   FILE         *fh;
-   DIR          *dp;
-   int          fForWrite;
-   int          fCreated;
+class PKTBASE : public MSGBASE
+{
+    FA FMask;
+    char * DirName;
+    char * PktName;
+    char * MsgMask;
+    unsigned int MsgNum;
+    unsigned int MaxMsgNum;
+    int fNoCheckPwd;
+    FILE * fh;
+    DIR * dp;
+    int fForWrite;
+    int fCreated;
 
-   bool _Close(void);
-   bool _Open(void);
-   void AddToMask(unsigned int Num);
-   bool CopyHeader(FILE *tf);
-   bool CopyTail(FILE *tf);
-   bool CopyMessages(FILE *tf);
-   bool CopyOneMessage(FILE *tf);
-   bool ReadHeader(FILE *tf, char *Buff);
+    bool _Close(void);
+    bool _Open(void);
+    void AddToMask(unsigned int Num);
+    bool CopyHeader(FILE * tf);
+    bool CopyTail(FILE * tf);
+    bool CopyMessages(FILE * tf);
+    bool CopyOneMessage(FILE * tf);
+    bool ReadHeader(FILE * tf, char * Buff);
+
 public:
-  bool WriteOneMsg(unsigned int Num, cMSG &m);
-   PKTBASE();
-   ~PKTBASE();
-   void Print(void);
-   bool Set(char *c, int BaseType);
-   void Clear(void);
-   bool Next(void);
-   bool Rewind(void);
-   bool DeleteMsg(void);
-   bool ReadMsg(cMSG &m);
-   bool WriteMsg(cMSG &m);
-   bool WriteNewMsg(cMSG &m);
-   char *ReadToMem(void);
-   bool WriteFromMem(char *Buff);
-   //  { return FALSE; };
-   char *MessageName(void);
-   char *BaseName(void);
-   bool  Renumber(void);
-   bool CheckOut(void);
-   bool CheckIn(void) { return TRUE; };
-   bool Open(void) { return TRUE; };
-   bool Close(void) { return _Close(); };
+    bool WriteOneMsg(unsigned int Num, cMSG & m);
+
+    PKTBASE();
+    ~PKTBASE();
+    void Print(void);
+    bool Set(char * c, int BaseType);
+    void Clear(void);
+    bool Next(void);
+    bool Rewind(void);
+    bool DeleteMsg(void);
+    bool ReadMsg(cMSG & m);
+    bool WriteMsg(cMSG & m);
+    bool WriteNewMsg(cMSG & m);
+    char * ReadToMem(void);
+    bool WriteFromMem(char * Buff); // { return FALSE; };
+    char * MessageName(void);
+    char * BaseName(void);
+    bool Renumber(void);
+    bool CheckOut(void);
+
+    bool CheckIn(void)
+    {
+        return TRUE;
+    }
+    bool Open(void)
+    {
+        return TRUE;
+    }
+    bool Close(void)
+    {
+        return _Close();
+    }
 };
 
 #endif

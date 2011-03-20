@@ -15,6 +15,7 @@
 
 #ifndef _AKA_HPP_
 #define _AKA_HPP_
+
 #include "fidoaddr.hpp"
 
 int IsMyAka(FA const &Addr);
