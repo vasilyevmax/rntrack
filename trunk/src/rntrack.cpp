@@ -145,7 +145,7 @@ int InitSystem(void)
     CHP = 99104;
 
 
-    if(InitScriptSystem() != TRUE)
+    if(!InitScriptSystem())
     {
         Log.Level(LOGE) << "Unable to start script system" << EOL;
         return FALSE;
