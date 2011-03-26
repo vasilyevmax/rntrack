@@ -16,8 +16,8 @@
 #ifndef _BADPKT_HPP_
 #define _BADPKT_HPP_
 
-int SetBadPktMode(tBadMsgMode bpmode, char *bpath);
-int BadPkt(char *PktName);
+int SetBadPktMode(tBadMsgMode bpmode, char * bpath);
+int BadPkt(char * PktName);
 
 #endif
 

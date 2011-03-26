@@ -18,9 +18,9 @@
 
 #include "msgbase.hpp"
 
-typedef enum { SKIP, EXIT, MOVE, REMOVE } tBadMsgMode;
-int SetBadMode(tBadMsgMode bmode, char *bname);
-void DoBadMsg(MSGBASE &b);
+typedef enum {SKIP, EXIT, MOVE, REMOVE} tBadMsgMode;
+int SetBadMode(tBadMsgMode bmode, char * bname);
+void DoBadMsg(MSGBASE & b);
 
 #endif
 

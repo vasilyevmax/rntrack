@@ -18,9 +18,9 @@
 
 #include "fidoaddr.hpp"
 
-int IsMyAka(FA const &Addr);
-FA &GetMyAka(FA const &Addr);
-int SetAka(FA &f, FA &m);
+int IsMyAka(FA const & Addr);
+FA & GetMyAka(FA const & Addr);
+int SetAka(FA & f, FA & m);
 void DestroyAka(void);
 
 #endif

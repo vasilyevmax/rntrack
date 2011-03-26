@@ -19,16 +19,16 @@
 typedef enum {LEX_START, LEX_PARSE, LEX_DIGIT, LEX_COMMENT, LEX_STRING,
               LEX_CRLF, LEX_END, LEX_TOKEN, LEX_ERROR, LEX_COMMLINE} tLexState;
 
-int ParseConfig(char *CfgFile);
+int ParseConfig(char * CfgFile);
 #undef yyerror
-int yyerror(char *s);
+int yyerror(char * s);
 int yylex(void);
 
 extern int avail;
 
-int SetMyAddr(FA &f);
-int SetLogFile(char *tmt);
-int SetTimeStampFile(char *tmt);
+int SetMyAddr(FA & f);
+int SetLogFile(char * tmt);
+int SetTimeStampFile(char * tmt);
 int SetLogLevel(int tmt);
 int SetCreateMissingBase(void);
 int SetForceINTL(void);
@@ -37,27 +37,27 @@ int SetSetViaAlways(void);
 int SetMaxAttach(int tmt);
 int SetMaxMsgSize(int tmt);
 int SetMaxPktSize(int tmt);
-int SetLoopStr(char *tmt);
-int SetOrigin(char *tmt);
-int SetSysopName(char *tmt);
-int SetTearline(char *tmt);
+int SetLoopStr(char * tmt);
+int SetOrigin(char * tmt);
+int SetSysopName(char * tmt);
+int SetTearline(char * tmt);
 int SetNewVia(void);
 int SetUseOwnZone(void);
 int SetUseASO(void);
 int SetUseBrake(void);
 int SetAgeFromVia(void);
 int SetSoftCheckInNodelists(void);
-int SetAPktDir(char *tmt);
+int SetAPktDir(char * tmt);
 int SetCheckPoints(CheckPointsT pmode);
-int SetNodelistPath(char *tmt);
-int SetIndexFile(char *tmt);
+int SetNodelistPath(char * tmt);
+int SetIndexFile(char * tmt);
 int SetUTC(int i);
-int SetInclude(char *tmt);
-int SetSemaphoreName(char *File, unsigned int SemTime);
-int SetTrafficLogTemplate(char *tmt);
+int SetInclude(char * tmt);
+int SetSemaphoreName(char * File, unsigned int SemTime);
+int SetTrafficLogTemplate(char * tmt);
 int SetIgnoreBSY(void);
 int SetIgnoreAttachPath(void);
-int LoadScriptFile(char *Fname);
+int LoadScriptFile(char * Fname);
 int SetStripPathInPkt(void);
 
 #endif
