@@ -18,8 +18,8 @@
 
 #include "fidoaddr.hpp"
 
-char *GetDomain(FA const &Addr);
-int SetDomain(FA &f, char *tmt);
+char * GetDomain(FA const & Addr);
+int SetDomain(FA & f, char * tmt);
 void DestroyDomain(void);
 
 #endif

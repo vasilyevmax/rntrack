@@ -19,20 +19,20 @@
 #include "time.h"
 #include "fidoaddr.hpp"
 
-int SetFileInbound(char *tmt);
+int SetFileInbound(char * tmt);
 int SetSkipHiddenFiles(void);
-int PrintAttach(cMSG &m);
-int DeleteAttach(cMSG &m);
-int ChangePath(cMSG &m,char *Path);
-int ToLowerPath(cMSG &m);
-int ToUpperPath(cMSG &m);
-int MoveAttach(cMSG &m,char *Path);
-int CopyAttach(cMSG &m,char *Path);
-int AttachExists(cMSG &m);
-int AddAttachToLo(cMSG &m);
-int AddFboxAttachToLo(cMSG &m, char *path);
-int DelAttachFromLo(cMSG &m);
-int GetAttSize(cMSG &m);
+int PrintAttach(cMSG & m);
+int DeleteAttach(cMSG & m);
+int ChangePath(cMSG & m, char * Path);
+int ToLowerPath(cMSG & m);
+int ToUpperPath(cMSG & m);
+int MoveAttach(cMSG & m, char * Path);
+int CopyAttach(cMSG & m, char * Path);
+int AttachExists(cMSG & m);
+int AddAttachToLo(cMSG & m);
+int AddFboxAttachToLo(cMSG & m, char * path);
+int DelAttachFromLo(cMSG & m);
+int GetAttSize(cMSG & m);
 
 #endif
 
