@@ -184,7 +184,7 @@ int EquFA(FA const & m, FA const & f)
 
     if(m.Zone() & FA_OURMASK)
     {
-        return IsMyAka(f) != NotFlag;
+        return IsMyAka(f) != (int)NotFlag;
     }
 
     if(m.Point() & FA_SUBMASK)
