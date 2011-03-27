@@ -26,7 +26,7 @@ ENABLE_SYSLOG_LOG_FORMAT?=0
 
 ifeq ($(ENABLE_SCRIPTS), 1)
     CFLAGS += $(shell perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]";')
-    CFLAGS += $(shell perl -MExtUtils::Embed -e ccopts)
+    CFLAGS += $(shell perl -e 'my $$a=`perl -MExtUtils::Embed -e ccopts`; $$a=~s/ -Wdeclaration-after-statement//; print $$a;')
     LFLAGS += $(shell perl -MExtUtils::Embed -e ldopts)
 endif
 
