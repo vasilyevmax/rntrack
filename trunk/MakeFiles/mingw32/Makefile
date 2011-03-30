@@ -19,8 +19,9 @@ RM      = del /Q
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 ifeq ($(ENABLE_SCRIPTS), 1)
-    CFLAGS += `perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]";'` `perl -MExtUtils::Embed -e ccopts`
-    LFLAGS += `perl -MExtUtils::Embed -e ldopts`
+#    CFLAGS += $(shell perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]"; use ExtUtils::Embed; ccopts' | sed 's/-fstack-protector//' )
+    CFLAGS += $(shell perl -MExtUtils::Embed -MConfig -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] $$Config{ccdlflags} ", join(" ",grep(!/-fstack-protector/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE";' )
+    LFLAGS += $(shell perl -MExtUtils::Embed -e ldopts )
 endif
 
 ifeq ($(ENABLE_SYSLOG_LOG_FORMAT), 1)
