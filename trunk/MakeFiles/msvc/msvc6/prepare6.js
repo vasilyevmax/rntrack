@@ -288,6 +288,7 @@ $perl_incl =~ s/\\/\\\\/g;
 my $perl_version = "$]";
 my ($perl_major, $perl_minor) = split /\./, $perl_version;
 $perl_version =~ s/\.//;
+$perl_minor += 0;
 open(OUT, '>@@file@@') or die  "Cannot open the file @@file@@: $!";
 print OUT "perl_incl = \'$perl_incl\'; perl_lib = \'$perl_lib\'; ";
 print OUT "perl_version = $perl_version; perl_major = $perl_major; ";
