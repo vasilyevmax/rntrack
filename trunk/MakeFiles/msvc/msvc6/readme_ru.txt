@@ -23,7 +23,6 @@
 MS Visual Studio 6.0, то будут сгенерированы файлы:
 
     build.bat
-    makefile.dep
     makefile.vc6
     rebuild.bat
     rntrack.dsp
@@ -40,7 +39,6 @@ cscript prepare6.js
 файлы:
 
     build_perl.bat
-    makeperl.dep
     makeperl.vc6
     rebuild_perl.bat
     rntrack_perl.dsp

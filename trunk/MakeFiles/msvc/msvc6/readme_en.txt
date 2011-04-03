@@ -23,7 +23,6 @@ If MS Visual Studio 6.0 has been installed, then the following files are
 generated:
 
     build.bat
-    makefile.dep
     makefile.vc6
     rebuild.bat
     rntrack.dsp
@@ -40,7 +39,6 @@ If ActiveState Perl has already been installed, the following files are also
 generated:
 
     build_perl.bat
-    makeperl.dep
     makeperl.vc6
     rebuild_perl.bat
     rntrack_perl.dsp
