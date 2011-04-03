@@ -607,18 +607,14 @@ int _LoadScriptFile(char * fname)
 
 
         PUSHMARK(SP);
-        #if __GNUC__ + 0 >= 4 && __PERL_VERSION__ >= 5010000
-            rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
+        #if __PERL_VERSION__ >= 5008000 
+            /* for Perl 5.8.* and above, see Makefile */
+            rc = perl_parse(PerlSystem, 
+                            (void (*)(PerlInterpreter *))xs_init, 
+                            2, perlargs, NULL);
         #else
-            #if __PERL_VERSION__ >= 5008000 
-                /* for Perl 5.8.* and above, see Makefile */
-                rc = perl_parse(PerlSystem, 
-                                (void (*)(PerlInterpreter *))xs_init, 
-                                2, perlargs, NULL);
-            #else
-                /* for old Perl */
-                rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
-            #endif
+            /* for old Perl */
+            rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
         #endif
         SPAGAIN;
         PUTBACK;
