@@ -4,6 +4,9 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.28 2011-04-03 (Subversion rev.144)
+-----------------------------------
+! Compilation with __PERL_VERSION__ >= 5010000 was fixed.
 # External dependency file is not used any more with a MSVC 6 makefile.
 ! Try to make rntrack with perl in mingw
 ! An unappropriate compiler option was deleted (linux).
