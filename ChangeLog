@@ -4,6 +4,7 @@
 ! - Bug fixed
 # - Added feature or changes
 
+# External dependency file is not used any more with a MSVC 6 makefile.
 ! Try to make rntrack with perl in mingw
 ! An unappropriate compiler option was deleted (linux).
 
