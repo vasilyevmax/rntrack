@@ -4,13 +4,23 @@
 ! - Bug fixed
 # - Added feature or changes
 
+! Try to make rntrack with perl in mingw
+! An unappropriate compiler option was deleted (linux).
+
+1.27 2011-03-18 (Subversion rev.129)
+-----------------------------------
+! Compiling with gcc 4.1 and Perl 5.8.8 was fixed.
+! Building with script support using GNU make 3.81 was fixed.
+! Reporting an error message in prepare6.js was fixed.
+# One has to run prepare6.js now to create MS Visual Studio 6.0 project
+  files, makefiles and also batch files.
 ! A logic of the match to pattern fixed
 # Russian manual is now in OpenDocument format instead of the plain
   text. ODF will be converted into HTML and PDF for releases.
 ! SPLIT kludge is fixed ("^aSPLIT text" -> "^aSPLIT: text")
 # Gentoo ebuild added.
 ! Perl deinitialisation fixed, rntrack/w32/perl don't crashed at exit.
-# Don't show version and copyrigth information in normal work. Use
+# Don't show version and copyright information in normal work. Use
   command line options -v or -h for viewing this info.
 # New command line option '-v' (view program version).
 

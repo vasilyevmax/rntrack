@@ -559,7 +559,7 @@ SOURCE=..\..\..\hpp\constant.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\hpp\dirent.h
+SOURCE=..\..\..\hpp\dirent\dirent.h
 # End Source File
 # Begin Source File
 
