@@ -1114,15 +1114,6 @@ LINK32_OBJS= \
 !ENDIF 
 
 
-!IF "$(NO_EXTERNAL_DEPS)" != "1"
-!IF EXISTS("@@makefile_depName@@")
-!INCLUDE "@@makefile_depName@@"
-!ELSE 
-!MESSAGE Warning: cannot find "@@makefile_depName@@"
-!ENDIF 
-!ENDIF 
-
-
 !IF "$(CFG)" == "@@projectName@@ - Win32 Release" || "$(CFG)" == "@@projectName@@ - Win32 Debug"
 SOURCE=..\..\..\src\age.cpp
 
