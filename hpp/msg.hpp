@@ -41,8 +41,8 @@
 
 class Kludge
 {
-    char * _Name;            // name of Kludhe;
-    char * _Body;            // Body of Kludge
+    const char * _Name;      // Name of the Kludge;
+    char * _Body;            // Body of the Kludge
 
 public:
 
@@ -51,15 +51,15 @@ public:
         _Name = NULL;
         _Body = NULL;
     }
-    Kludge(char * N, char * B);
+    Kludge(const char * N, char * B);
     Kludge(char * Txt);
-    void Set(char * N, char * B);
+    void Set(const char * N, char * B);
     void Clear(void);
 
     ~Kludge();
     int operator ==(const Kludge & k) const;
 
-    char * Name(void)
+    const char * Name(void)
     {
         return _Name;
     }
@@ -136,7 +136,7 @@ public:
         _Body = b;
     }
     void Clear(void);
-    void AddKludge(char * & Txt);
+    void AddKludge(const char * & Txt);
     void AddOurVia(void);
     void DelLastOurVia(void);
     void Print(void);

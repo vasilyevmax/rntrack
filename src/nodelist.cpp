@@ -43,13 +43,14 @@ char * NodelistPath;
 static bool NodelistTurnOff = FALSE;
 static int NodelistLineNum  = 0;
 
-static char mErrReadIndex[] = "Error reading index file.";
-static char mNdlChanged[]   =
+static const char mErrReadIndex[] = "Error reading index file.";
+static const char mNdlChanged[] =
     "Some nodelists have changed. Recompilation is necessary.";
-static char mIndNFound[] = "Index file not found. Create new index file.";
-static char mErrNdlMustFull[] =
+static const char mIndNFound[] = 
+    "Index file not found. Create new index file.";
+static const char mErrNdlMustFull[] =
     "Error: You must define default Zone for Regional and Network versions of nodelist.";
-static char mErrNdlFormat[] = "Incorrect nodelist format.";
+static const char mErrNdlFormat[] = "Incorrect nodelist format.";
 
 #define ErrReadIndex Log.Level(LOGE) << mErrReadIndex << EOL
 #define IndexChanged Log.Level(LOGI) << mNdlChanged << EOL
@@ -64,7 +65,7 @@ typedef struct _Ntr
     struct _Ntr * Sub;
 } Ntr;
 
-void ErrNdlFormat(char * m)
+void ErrNdlFormat(const char * m)
 {
     Log.Level(LOGE) << "Error in line " << NodelistLineNum << ", " <<
                        mErrNdlFormat << EOL;
@@ -398,7 +399,7 @@ bool _SetCurrentBoss(char * tmt)
     Ntr * tp;
 
     BossNode = NULL;
-    f.Parse(tmt);
+    f.Parse((const char * &)tmt);
 
     if(f.Masked())
     {

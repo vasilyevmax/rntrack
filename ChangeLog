@@ -4,6 +4,10 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.29 2011-04-04 (Subversion rev.146)
+-----------------------------------
+# (char *) was replaced by (const char *) where it was necessary and possible
+
 1.28 2011-04-03 (Subversion rev.144)
 -----------------------------------
 ! Compilation with __PERL_VERSION__ >= 5010000 was fixed.

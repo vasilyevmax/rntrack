@@ -158,7 +158,7 @@ int InitSystem(void)
 
     CHP = 99105;
 
-    if(ParseConfig(ConfigFile) != 0)
+    if(ParseConfig((const char *)ConfigFile) != 0)
     {
         CHP = 9910501;
         return FALSE;
@@ -194,7 +194,8 @@ int InitSystem(void)
 
     InitScriptValues();
 
-    switch(DoSomeWordRc("BeforeWork"))
+    char * tmp = (char *)"BeforeWork";
+    switch(DoSomeWordRc(tmp))
     {
         case SS_ERROR:
             return FALSE;
@@ -225,7 +226,8 @@ void DoneSystem(void)
     int i;
 
 //   ScanDirs.clearAndDestroy();
-    DoSomeWord("AfterWork");
+    char * tmp = (char *)"AfterWork";
+    DoSomeWord(tmp);
     CHP = 99200;
     DestroyAka();
     CHP = 99201;

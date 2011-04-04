@@ -1,3 +1,6 @@
+/** @file utils.cpp
+ *  @brief Common routines
+ */
 /*
  *  RNtrack - FTN message tracker/router
  *
@@ -193,7 +196,7 @@ int FileMove(char * Dst, char * Src)
     return TRUE;
 }
 
-FILE * fcopen(char * Name, char * Mode)
+FILE * fcopen(const char * Name, const char * Mode)
 {
 // Open file and create path if need.
     char * tmt;
@@ -458,7 +461,18 @@ const char * dirslashbug(const char * dirname)
     return newname;
 }
 
-int fsCompareName(char * Name, char * Mask)
+/** @brief get the first WORD (unsigned short) of a DWORD (unsigned int)
+ *  @param[in] Dword
+ *  @return the first WORD
+ */
+unsigned short & FirstWord(const unsigned int & Dword)
+{
+    struct SplitDWORD {unsigned short first; unsigned short second;};
+    SplitDWORD * p = (SplitDWORD *)&Dword;
+    return p->first;
+}
+
+int fsCompareName(const char * Name, const char * Mask)
 {
 #ifdef __unix__
     return wildmat(Name, Mask);

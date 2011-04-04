@@ -499,7 +499,7 @@ bool SQUISH::ReadMsg(cMSG & m)
 
     Log.Level(LOGD) << "MSGAPI::ReadMsg FromAddr == " << m._FromAddr << EOL;
     Log.Level(LOGD) << "MSGAPI::ReadMsg ToAddr   == " << m._ToAddr << EOL;
-    SetMsgAttr((unsigned short &)rm.attr, m);
+    SetMsgAttr(FirstWord((const unsigned int &)rm.attr), m);
 
     if(rm.attr & MSGSCANNED)
     {
@@ -525,7 +525,7 @@ bool SQUISH::ReadMsg(cMSG & m)
             *tmt2 = '\0';
         }
 
-        m.AddKludge(tmt);
+        m.AddKludge((const char * &)tmt);
 
         if(tmt2 != NULL)
         {
@@ -587,7 +587,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
     rm.dest.net   = (unsigned short)(m._ToAddr.Net());
     rm.dest.node  = (unsigned short)(m._ToAddr.Node());
     rm.dest.point = (unsigned short)(m._ToAddr.Point());
-    SetMsgAttr(m, (unsigned short &)rm.attr);
+    SetMsgAttr(m, FirstWord((const unsigned int &)rm.attr));
 
     if(m.fScanned)
     {

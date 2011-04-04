@@ -113,7 +113,7 @@ FA & FA::operator =(const FA & r)
  *
  **/
 
-unsigned int _ParseOneDigit(char * & p)
+unsigned int _ParseOneDigit(const char * & p)
 {
     unsigned int tmp;
 
@@ -197,9 +197,9 @@ unsigned int _ParseOneDigit(char * & p)
     return tmp;
 } // _ParseOneDigit
 
-unsigned int _ParseZone(char * & p)
+unsigned int _ParseZone(const char * & p)
 {
-    char * t;
+    const char * t;
     unsigned int tmp;
 
 // Parsing zone 'XX:'
@@ -225,9 +225,9 @@ unsigned int _ParseZone(char * & p)
     return tmp;
 } // _ParseZone
 
-unsigned int _ParseNet(char * & p)
+unsigned int _ParseNet(const char * & p)
 {
-    char * t;
+    const char * t;
     unsigned int tmp;
 
     t   = p;
@@ -252,9 +252,9 @@ unsigned int _ParseNet(char * & p)
     return tmp;
 }
 
-unsigned int _ParseNode(char * & p)
+unsigned int _ParseNode(const char * & p)
 {
-    char * t;
+    const char * t;
     unsigned int tmp;
 
     if(*p == '.')    // catch '.XX'
@@ -284,7 +284,7 @@ unsigned int _ParseNode(char * & p)
     return tmp;
 } // _ParseNode
 
-int FA::Parse(char * & p)
+int FA::Parse(const char * & p)
 {
     int NotFlag;
 
@@ -545,7 +545,7 @@ int FA::Valid(void) const
     }
 }
 
-void Parse_NetNode(char * netnode, word * zone, word * net, word * node,
+void Parse_NetNode(const char * netnode, word * zone, word * net, word * node,
                    word * point)
 {
     FA f;

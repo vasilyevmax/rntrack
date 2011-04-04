@@ -19,9 +19,9 @@
 typedef enum {LEX_START, LEX_PARSE, LEX_DIGIT, LEX_COMMENT, LEX_STRING,
               LEX_CRLF, LEX_END, LEX_TOKEN, LEX_ERROR, LEX_COMMLINE} tLexState;
 
-int ParseConfig(char * CfgFile);
+int ParseConfig(const char * CfgFile);
 #undef yyerror
-int yyerror(char * s);
+int yyerror(const char * s);
 int yylex(void);
 
 extern int avail;
@@ -52,7 +52,7 @@ int SetCheckPoints(CheckPointsT pmode);
 int SetNodelistPath(char * tmt);
 int SetIndexFile(char * tmt);
 int SetUTC(int i);
-int SetInclude(char * tmt);
+int SetInclude(const char * tmt);
 int SetSemaphoreName(char * File, unsigned int SemTime);
 int SetTrafficLogTemplate(char * tmt);
 int SetIgnoreBSY(void);

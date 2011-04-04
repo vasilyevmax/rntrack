@@ -50,7 +50,7 @@ int StrIsXNum(char * Str);
 int DirExists(char * ptr);
 int FileCopy(char * Dst, char * Src);
 int FileMove(char * Dst, char * Src);
-FILE * fcopen(char * Name, char * Mode);
+FILE * fcopen(const char * Name, const char * Mode);
 int ExecP(char * Name);
 int SetSemaphore(void);
 int ReleaseSemaphore(void);
@@ -64,8 +64,9 @@ char * GetFilePath(char * Path, char * Name);
 char * GetFileName(char * FName, char * Name);
 void nls_strupr(char * s);
 const char * dirslashbug(const char * dirname);
+unsigned short & FirstWord(const unsigned int & Dword);
 
-int fsCompareName(char * Name, char * Mask);
+int fsCompareName(const char * Name, const char * Mask);
 
 #if defined (__WATCOMC__) && defined (MSDOS)
     #ifdef __cplusplus

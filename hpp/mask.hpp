@@ -31,8 +31,8 @@ public:
 
     virtual ~Mask();
     virtual void Print(void) const;
-    virtual int operator ==(cMSG & m) const = 0;
-    virtual char * MaskName(void) const     = 0;
+    virtual int operator ==(cMSG & m) const   = 0;
+    virtual const char * MaskName(void) const = 0;
 };
 
 class BodyMask : public Mask
@@ -46,7 +46,7 @@ public:
     void Print(void) const;
     int operator ==(cMSG & m) const;
 
-    char * MaskName(void) const
+    const char * MaskName(void) const
     {
         return "BodyMask";
     }
@@ -62,7 +62,7 @@ public:
     void Print(void) const;
     int operator ==(cMSG & m) const;
 
-    char * MaskName(void) const
+    const char * MaskName(void) const
     {
         return "ScriptMask";
     }
@@ -80,7 +80,7 @@ public:
     void Print(void) const;
     int operator ==(cMSG & m) const;
 
-    char * MaskName(void) const
+    const char * MaskName(void) const
     {
         return "KludgeMask";
     }
@@ -133,7 +133,7 @@ public:
     void Print(void) const;
     int operator ==(cMSG & m) const;
 
-    char * MaskName(void) const
+    const char * MaskName(void) const
     {
         return "Mask";
     }
