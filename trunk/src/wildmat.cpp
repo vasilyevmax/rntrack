@@ -71,7 +71,7 @@
 ****(negative integer).
 */
 
-static int DoMatch(char * text, char * p)
+static int DoMatch(const char * text, const char * p)
 {
     int last;
     int matched;
@@ -194,7 +194,7 @@ static int DoMatch(char * text, char * p)
 /*
 **  User-level routine.  Returns TRUE or FALSE.
 */
-int wildmat(char * text, char * p)
+int wildmat(const char * text, const char * p)
 {
     if(p[0] == '*' && p[1] == '\0')
     {

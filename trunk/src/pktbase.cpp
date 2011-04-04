@@ -583,7 +583,7 @@ bool PKTBASE::Set(char * Dir, int BaseType)
 
     if(tmt == NULL)
     {
-        tmt = "*";
+        tmt = (char *)"*";
     }
     else
     {
@@ -592,7 +592,7 @@ bool PKTBASE::Set(char * Dir, int BaseType)
     }
 
     Log.Level(LOGD) << "PKTBASE FTN Mask: '" << tmt << "'" << EOL;
-    FMask.Parse(tmt);
+    FMask.Parse((const char * &)tmt);
 
     if(!FMask.PKTValid())
     {
@@ -764,7 +764,7 @@ bool PKTBASE::_Open(void)
     tPKTH PKTH;
     FA f;
     char Buff[4096];
-    char * tmt;
+    const char * tmt;
     s_stat tmp_stat;
 
     if(PktName == NULL)

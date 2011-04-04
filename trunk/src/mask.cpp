@@ -44,7 +44,7 @@
 /*                         CHP = 231*                                 */
 /*--------------------------------------------------------------------*/
 
-static int SoftCmp(char * Str, char * Mask)
+static int SoftCmp(const char * Str, char * Mask)
 {
 // compare string with mask
     int NotFlag;
@@ -152,7 +152,7 @@ static int SoftKluCmp(cMSG & m, char * StrName, char * StrBody)
             {
                 CHP = 23109;
 
-                if(SoftCmp(Klu->Body(), StrBody))
+                if(SoftCmp((const char *)Klu->Body(), StrBody))
                 {
                     rc++;
                 }
@@ -330,7 +330,7 @@ int BodyMask::operator ==(cMSG & m) const
         Log.Level(LOGD) << "'" << EOL;
     }
 
-    if(!SoftCmp(m.Body(), _Body))
+    if(!SoftCmp((const char *)m.Body(), _Body))
     {
         return FALSE;
     }
@@ -883,17 +883,17 @@ int NormalMask::operator ==(cMSG & m) const
         return FALSE;
     }
 
-    if(!SoftCmp(m._FromName, _FromName))
+    if(!SoftCmp((const char *)m._FromName, _FromName))
     {
         return FALSE;
     }
 
-    if(!SoftCmp(m._ToName, _ToName))
+    if(!SoftCmp((const char *)m._ToName, _ToName))
     {
         return FALSE;
     }
 
-    if(!SoftCmp(m._Subject, _Subject))
+    if(!SoftCmp((const char *)m._Subject, _Subject))
     {
         return FALSE;
     }

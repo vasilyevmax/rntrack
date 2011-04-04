@@ -115,7 +115,7 @@ static int AddInetToAddr(Template * Tpl);
 
 typedef struct
 {
-    char * Token;
+    const char * Token;
     int (* Func)(Template * Tpl);
 } TplTok;
 
@@ -1154,7 +1154,7 @@ static int AddRoutedVia(Template * Tpl)
     return TRUE;
 }
 
-static int AddSomeKludge(Template * Tpl, char * Klud)
+static int AddSomeKludge(Template * Tpl, const char * Klud)
 {
     IndBiList<Kludge>::ElemPtr Klu;
 

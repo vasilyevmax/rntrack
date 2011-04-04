@@ -22,11 +22,11 @@ static int optionInd = 1;
 static int optionOpt;
 char * optionArg;
 
-int ParseCmdArgs(int argc, char ** argv, char * opts)
+int ParseCmdArgs(int argc, char ** argv, const char * opts)
 {
     static int sp = 1;
     int c;
-    char * cp;
+    const char * cp;
 
     if(optionInd < argc && argv[optionInd][0] == '-' && argv[optionInd][1] ==
        '\0')

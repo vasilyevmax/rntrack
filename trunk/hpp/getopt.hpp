@@ -13,7 +13,7 @@
  *  $Id$
  */
 
-int ParseCmdArgs(int argc, char ** argv, char * opts);
+int ParseCmdArgs(int argc, char ** argv, const char * opts);
 
 extern char * optionArg;
 

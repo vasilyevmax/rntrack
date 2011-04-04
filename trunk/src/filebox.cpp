@@ -48,7 +48,7 @@ IndBiList<tFilebox> Filebox;
 
 // --------------------------------------------------------------------
 
-char * dec232_tbl = "0123456789abcdefghijklmnopqrstuv";
+const char * dec232_tbl = "0123456789abcdefghijklmnopqrstuv";
 
 char * dec232(short n, short digits)
 {

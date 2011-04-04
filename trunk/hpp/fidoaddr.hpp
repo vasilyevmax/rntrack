@@ -61,7 +61,7 @@ private:
     dword node_v;
     dword point_v;
 public:
-    int Parse(char * & p);
+    int Parse(const char * & p);
 
     inline dword Zone()  const
     {

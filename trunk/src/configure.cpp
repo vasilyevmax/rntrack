@@ -91,7 +91,7 @@ FA cffa2;
 
 static struct
 {
-    char * kw;
+    const char * kw;
     int ltp;
 }
 kwtable[] =
@@ -984,7 +984,7 @@ int SetUTC(int i)
 
 // extern int yydebug;
 
-int ParseConfig(char * CfgFile)
+int ParseConfig(const char * CfgFile)
 {
     int rc;
 
@@ -1051,7 +1051,7 @@ int ParseConfig(char * CfgFile)
 
 static int Pos = 0;
 
-int yyerror(char * s)
+int yyerror(const char * s)
 {
     int i;
 
@@ -1147,7 +1147,7 @@ int SearchToken(char * s)
 /*    Search token in table by number and return its name             */
 /*--------------------------------------------------------------------*/
 
-char * TokenName(int s)
+const char * TokenName(int s)
 {
     int i;
 
@@ -1503,7 +1503,7 @@ int yylex(void)
 /*--------------------------------------------------------------------*/
 extern int yychar;
 
-int SetInclude(char * tmt)
+int SetInclude(const char * tmt)
 {
     int sLineNumber;
     int sCharNumber;

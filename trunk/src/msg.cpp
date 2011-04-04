@@ -255,6 +255,7 @@ time_t FTime(time_t * p)
 // ---------------------------
 
 #endif // if 0
+
 int Kludge::operator ==(const Kludge & k) const
 {
     if(_Name == NULL && k._Name != NULL)
@@ -340,7 +341,7 @@ int Kludge::Save(FILE * fh)
     return TRUE;
 } // Save
 
-Kludge::Kludge(char * N, char * B)
+Kludge::Kludge(const char * N, char * B)
 {
     _Name = NULL;
     _Body = NULL;
@@ -408,7 +409,7 @@ Kludge::Kludge(char * Txt)
     {
         // Origin:'
         CHP = 314;
-        Set(" * Origin:", p2 + 10);
+        Set((char *)" * Origin:", p2 + 10);
     }
     else
     {
@@ -419,7 +420,7 @@ Kludge::Kludge(char * Txt)
     CHP = 315;
 }
 
-void Kludge::Set(char * N, char * B)
+void Kludge::Set(const char * N, char * B)
 {
     char * MY_N; // _N is defined in NetBSD system headers ...
     char * MY_B;
@@ -444,7 +445,7 @@ void Kludge::Set(char * N, char * B)
 
     if(_Name != NULL)
     {
-        free(_Name);
+        free((void *)_Name);
     }
 
     if(_Body != NULL)
@@ -466,7 +467,7 @@ void Kludge::Clear(void)
 {
     if(_Name != NULL)
     {
-        free(_Name);
+        free((void *)_Name);
         _Name = NULL;
     }
 
@@ -494,7 +495,7 @@ void Kludge::Recode(char * RecodeTable)
 
     if(_Name != NULL)
     {
-        tmt = _Name;
+        tmt = (char *)_Name;
 
         while(*tmt != '\0')
         {
@@ -829,10 +830,11 @@ void cMSG::Normalise(void)
 //   NewVia.Clear();
 } // Normalise
 
-void cMSG::AddKludge(char * & Txt)
+void cMSG::AddKludge(const char * & Txt)
 {
     char * tmt, * tmt2;
     char * p, * p2, * s, * s2;
+    const char * p1;
     FA tAddr;
     Kludge * TKlu;
 
@@ -843,18 +845,18 @@ void cMSG::AddKludge(char * & Txt)
         return;
     }
 
-    p = Txt;
+    p1 = Txt;
 
     while(*Txt != '\0' && *Txt != '\n' && *Txt != '\r')
     {
         Txt++;
     }
     CHP = 302;
-    tmt = (char *)malloc(Txt - p + 1);
+    tmt = (char *)malloc(Txt - p1 + 1);
     CheckMem(tmt);
     CHP = 303;
-    strncpy(tmt, p, Txt - p);
-    tmt[Txt - p] = '\0';
+    strncpy(tmt, p1, Txt - p1);
+    tmt[Txt - p1] = '\0';
 
 // Skip one eol after kludge.
     if(Txt[0] != '\0')
@@ -901,7 +903,7 @@ void cMSG::AddKludge(char * & Txt)
 
     if(*s == '\0')
     {
-        p2 = "\0";
+        p2 = (char *)"\0";
     }
     else
     {
@@ -937,7 +939,7 @@ void cMSG::AddKludge(char * & Txt)
         if(s != NULL)
         {
             s++;
-            tAddr.Parse(s);
+            tAddr.Parse((const char * &)s);
         }
 
         CHP = 30911;
@@ -971,7 +973,7 @@ void cMSG::AddKludge(char * & Txt)
     }
     else if(stricmp(p, "\1INTL") == 0)    // INTL ToAddr FromAddr
     {
-        tAddr.Parse(p2);
+        tAddr.Parse((const char * &)p2);
         Log.Level(LOGD) << "Parse INTL: ToAddr   == '" << tAddr << "'" << EOL;
 
         if(tAddr.Valid())
@@ -981,7 +983,7 @@ void cMSG::AddKludge(char * & Txt)
             _ToAddr.Node(tAddr.Node());
         }
 
-        tAddr.Parse(p2);
+        tAddr.Parse((const char * &)p2);
         Log.Level(LOGD) << "Parse INTL: FromAddr == '" << tAddr << "'" << EOL;
 
         if(tAddr.Valid())
@@ -1068,7 +1070,7 @@ void cMSG::AddKludge(char * & Txt)
     else if(stricmp(p, "\1MSGID:") == 0)    // MSGID: <SomeId>
     {
         // from MSGID: we take only missing parameters.
-        tAddr.Parse(p2);
+        tAddr.Parse((const char * &)p2);
 
         if(tAddr.Valid())
         {
@@ -1474,7 +1476,7 @@ void cMSG::ParseMem(char * Buff)
             *tmt2 = '\0';
         }
 
-        AddKludge(tmt1);
+        AddKludge((const char * &)tmt1);
         fEchomail = 1;
     }
 
@@ -1524,12 +1526,12 @@ void cMSG::ParseMem(char * Buff)
                (strstr(BuffForSearch, "---\n") == BuffForSearch) ||
                (strstr(BuffForSearch, "---\r") == BuffForSearch))
             {
-                AddKludge(tmt1);
+                AddKludge((const char * &)tmt1);
                 continue;
             }
             else if(*tmt1 == '\1')
             {
-                AddKludge(tmt1);
+                AddKludge((const char * &)tmt1);
                 continue;
             }
         }
@@ -1617,7 +1619,7 @@ void cMSG::AddOurVia(void)
     }
 
     tmt = Buff;
-    AddKludge(tmt);
+    AddKludge((const char * &)tmt);
 } // AddOurVia
 
 void cMSG::DelLastOurVia(void)

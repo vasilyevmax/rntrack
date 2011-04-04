@@ -103,7 +103,7 @@ Action::~Action()
 
 void Action::Print(void)
 {
-    char * tmt2;
+    const char * tmt2;
     char Buff[1024];
 
     IndBiList<tTimes>::ElemPtr tmt;

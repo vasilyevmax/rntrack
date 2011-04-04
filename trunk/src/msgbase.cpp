@@ -245,7 +245,7 @@ void SetMsgAttr(unsigned short int & Attr, cMSG & m)
 
 // ---------------------------
 
-void AddKluToChain(char * & cl, char * Kn, char * Kb)
+void AddKluToChain(char * & cl, const char * Kn, const char * Kb)
 {
     char * buff;
     int olen;
@@ -1133,7 +1133,7 @@ MSGBASE * MakeBase(char * BName)
 // $ -- Squish style area
 // @ -- JAM style area
 // # -- PKT style area
-// Without this characters it is a MSG style area
+// Without these characters it is a MSG style area
 
     if(*BName == '$')
     {

@@ -255,7 +255,7 @@ static void AddReadyMask(Mask & m)
     LastDo->AddMask(m);
 }
 
-static int CheckMaskMode(char * f)
+static int CheckMaskMode(const char * f)
 {
     char Buff[128];
 
@@ -2837,19 +2837,19 @@ yyreduce:
             break;
 
         case 185:
-            yyval.ch = "$";
+            yyval.ch = (char *)"$";
             break;
 
         case 186:
-            yyval.ch = "*";
+            yyval.ch = (char *)"*";
             break;
 
         case 187:
-            yyval.ch = "%";
+            yyval.ch = (char *)"%";
             break;
 
         case 189:
-            yyval.ch = "*";
+            yyval.ch = (char *)"*";
             break;
 
         case 190:
