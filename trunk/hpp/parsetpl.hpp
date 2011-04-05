@@ -66,7 +66,7 @@ public:
     void Clean(void);
 };
 
-char * StrAsTpl(cMSG & m, char * s);
+char * StrAsTpl(cMSG & m, const char * s);
 
 #endif
 

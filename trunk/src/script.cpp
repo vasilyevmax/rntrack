@@ -69,7 +69,7 @@
         #define XSdEfInE static XSPROTO
     #endif
 
-    #define FromSP(i)       (char *)SvPV(ST(i), n_a); if (n_a == 0) sp_s  = ""
+    #define FromSP(i)       (char *)SvPV(ST(i), n_a); if (n_a == 0) sp_s  = (char *)""
     #define XCAL            (char *)malloc(n_a + 1)
 
 
@@ -143,7 +143,7 @@
         if(tmt != NULL)
         {
             str = SvPV(*tmt, n_a);
-            a.Parse(str);
+            a.Parse((const char * &)str);
             CurrMsg->_FromAddr = a;
         }
     
@@ -161,7 +161,7 @@
         if(tmt != NULL)
         {
             str = SvPV(*tmt, n_a);
-            a.Parse(str);
+            a.Parse((const char * &)str);
             CurrMsg->_ToAddr = a;
         }
     
@@ -256,7 +256,7 @@
         str = XCAL;
         strcpy(str, sp_s);
         tmt = str;
-        fa.Parse(tmt);
+        fa.Parse((const char * &)tmt);
     
         if(LogLevel >= 5)
         {
@@ -305,7 +305,7 @@
         str = XCAL;
         strcpy(str, sp_s);
         tmt = str;
-        fa.Parse(tmt);
+        fa.Parse((const char * &)tmt);
     
         if(LogLevel >= 5)
         {
@@ -405,7 +405,7 @@
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
         RSTRLCPY(msg->_FromName, tmp, 36);
@@ -414,17 +414,17 @@
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
-        addr.Parse(tmp);
+        addr.Parse((const char * &)tmp);
     
         msg->_FromAddr = addr;
         tmp = SvPV(ST(3), n_a);
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
         RSTRLCPY(msg->_ToName, tmp, 36);
@@ -433,17 +433,17 @@
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
-        addr.Parse(tmp);
+        addr.Parse((const char * &)tmp);
     
         msg->_ToAddr = addr;
         tmp = SvPV(ST(5), n_a);
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
         RSTRLCPY(msg->_Subject, tmp, 72);
@@ -453,7 +453,7 @@
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
         // 7 - kludges (not implemented yet)
@@ -461,14 +461,14 @@
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
         tmp = SvPV(ST(8), n_a);
     
         if(n_a == 0)
         {
-            tmp = "";
+            tmp = (char *)"";
         }
     
         msg->SetBody(tmp, n_a);
@@ -516,7 +516,7 @@
 
     static void xs_init(void)
     {
-        static char * file = __FILE__;
+        static char * file = (char *)__FILE__;
     
         newXS("Log", perl_Log, file);
         newXS("Update", perl_Update, file);
@@ -601,7 +601,7 @@ int _LoadScriptFile(char * fname)
 
         char * perlargs[] =
         {
-            "", fname, NULL
+            (char *)"", (char *)fname, NULL
         };
         int rc;
 
@@ -802,7 +802,7 @@ ScrRet DoSomeWordRc(char * word)
 }
 
 #if defined (__PERL_VERSION__)
-    void MakeHash(char * KName, char * KBody)
+    void MakeHash(const char * KName, char * KBody)
     {
         char * buff;
         char * tmt;
