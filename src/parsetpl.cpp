@@ -1180,7 +1180,7 @@ static int AddSomeKludge(Template * Tpl, const char * Klud)
     return TRUE;
 }
 
-char * StrAsTpl(cMSG & m, char * s)
+char * StrAsTpl(cMSG & m, const char * s)
 {
     char * tmt;
     Template * tpl;

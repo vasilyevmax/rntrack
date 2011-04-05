@@ -4,6 +4,10 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.30 2011-04-05 (Subversion rev.147)
+-----------------------------------
+! Fix the previous commit
+
 1.29 2011-04-04 (Subversion rev.146)
 -----------------------------------
 # (char *) was replaced by (const char *) where it was necessary and possible
