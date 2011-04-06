@@ -13,7 +13,7 @@ ESVN_REPO_URI="https://ftrack-as.svn.sourceforge.net/svnroot/ftrack-as/trunk"
 SLOT="0"
 LICENSE="GPL"
 KEYWORDS="~amd64 ~x86"
-IUSE="-perl -log_pid -syslog_log_format"
+IUSE="-perl -perl_fix -log_pid -syslog_log_format"
 
 DEPEND="sys-devel/automake
 	perl? ( dev-lang/perl )"
@@ -23,23 +23,19 @@ S=${WORKDIR}/${PN}
 AT_M4DIR="MakeFiles"
 
 src_unpack() {
+	einfo "Please specify perl_fix flag if your build with perl support is unsuccessfull"
 	subversion_src_unpack
 }
 
 src_prepare() {
 	eautoreconf || die "eautoreconf failed"
 	
+	# apply patch for perl support if need
+	use perl_fix && (epatch ${FILESDIR}/perl.patch.gz || die "epatch failed")
+	
 	# prevent to strip while linking
 	sed -e "s:-s -L:-L:" -i MakeFiles/linux/Makefile
 }
-
-#src_configure() {
-#	econf \
-#		$( use_enable perl ) \
-#		$( use_enable log_pid ) \
-#		$( use_enable syslog_log_format ) \
-#		|| die "econf failed"
-#}
 
 src_compile() {
 	cd MakeFiles/linux
