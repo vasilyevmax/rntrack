@@ -34,9 +34,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef __EMX__
-    #include <sys/nls.h>
-#endif
 #include <ctype.h>
 #if defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__) || \
     defined (__OSX__)
@@ -380,11 +377,7 @@ void nls_strupr(char * s)
 #else
     while(*s)
     {
-  #ifdef __EMX__
-        *s = _nls_toupper((uchar) * s);
-  #else
         *s = toupper((uchar) * s);
-  #endif
         s++;
     }
 #endif

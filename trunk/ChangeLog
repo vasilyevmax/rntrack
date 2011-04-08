@@ -4,6 +4,12 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.31 2011-04-08 (Subversion rev.149)
+-----------------------------------
+! OS/2 build using gcc 3.3.5 without script support was fixed.
+  Patch by Max Vasilyev 2:5057/77.
+# Added patch for building with perl and USE-flag perl_fix for it
+
 1.30 2011-04-05 (Subversion rev.147)
 -----------------------------------
 ! Fix the previous commit
