@@ -15,6 +15,7 @@ COPT=	-I../../hpp -I../../.. -I$(SRCDIR) -I$(PERL)/CORE -O3
 SRCDIR= ../../src/
 LFLAGS=	-Zcrtdll -L../../src/smapi -lsmapiemx -g
 EXEEND= _os2.exe
+STRIP=	-s
 
 ALL: rntrack$(EXEEND)
 
@@ -74,7 +75,7 @@ PERLLIBS=\
 
 
 rntrack$(EXEEND): $(OBJS)
-	$(CC) $(LFLAGS) -o rntrack$(EXEEND) $(OBJS) $(PERLLIBS)
+	$(CC) $(STRIP) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) $(PERLLIBS)
 
 clean:
 	-del *.o
