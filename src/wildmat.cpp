@@ -136,7 +136,7 @@ static int DoMatch(const char * text, const char * p)
 
                 while(*text)
                 {
-                    if((matched = DoMatch(text++, p)) != 1)
+                    if((matched = DoMatch(text++, p)) == 1)
                     {
                         return matched;
                     }
