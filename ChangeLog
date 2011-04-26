@@ -4,6 +4,12 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.32 2011-04-26 (Subversion rev.155)
+-----------------------------------
+# Some editorial changes in the manual
+! A syntax error was fixed in the manual text
+! A bug in comparing a text to a mask was fixed
+
 1.31 2011-04-08 (Subversion rev.149)
 -----------------------------------
 ! OS/2 build using gcc 3.3.5 without script support was fixed.
