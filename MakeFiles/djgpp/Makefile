@@ -1,12 +1,12 @@
 # $Id$
 CC	= gxx
-CFLAGS	= -Wall -W -Werror -fno-rtti -I../../hpp -I../../src -O3
-CDEFS	= -D__FLAT__ -DNOSEMAPHORES -DHAVE_DOS_H
+CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
+CDEFS	= -D__FLAT__ -DNOSEMAPHORES -DHAVE_DOS_H -DHAVE_UNISTD_H -DHAVE_IO_H -DHAS_strupr -DHAVE_LOCALE_H -DHAVE_TIME_H -DHAVE_UTIME_H
 LFLAGS	= -s $(SRCDIR)smapi/smapidjg.a
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
 EXEEND	= _386.exe
-#CONFIG	= c:\\\\ftn\\\\rntrack.cfg
+#CONFIG = c:\\\\ftn\\\\rntrack.cfg
 
 # uncomment to enable
 #ENABLE_SCRIPTS=1
