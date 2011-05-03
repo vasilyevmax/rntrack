@@ -1,14 +1,18 @@
 # $Id$
-CC      = g++
+CC		= g++
 CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
 CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H -DHAVE_IO_H \
-          -DHAVE_TIME_H -DHAVE_UTIME_H -DHAVE_LOCALE_H
+		  -DHAVE_TIME_H -DHAVE_UTIME_H -DHAVE_LOCALE_H
 LFLAGS	= -s -L$(SRCDIR)smapi -lsmapimgw
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
-EXEEND  = _w32.exe
-RM      = del /Q
-#CONFIG	= c:\\\\ftn\\\\rntrack.cfg
+EXEEND	= _w32.exe
+ifeq ($(TERM),msys)
+RM	= rm
+else
+RM	= del /Q
+endif
+#CONFIG = c:\\\\ftn\\\\rntrack.cfg
 
 # uncomment or use in comand line to enable features: 
 # Embedded Perl
@@ -19,21 +23,21 @@ RM      = del /Q
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
 ifeq ($(ENABLE_SCRIPTS), 1)
-#    CFLAGS += $(shell perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]"; use ExtUtils::Embed; ccopts' | sed 's/-fstack-protector//' )
-    CFLAGS += $(shell perl -MExtUtils::Embed -MConfig -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] $$Config{ccdlflags} ", join(" ",grep(!/-fstack-protector/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE";' )
-    LFLAGS += $(shell perl -MExtUtils::Embed -e ldopts )
+#	 CFLAGS += $(shell perl -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1]"; use ExtUtils::Embed; ccopts' | sed 's/-fstack-protector//' )
+	CFLAGS += $(shell perl -MExtUtils::Embed -MConfig -e '@v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] $$Config{ccdlflags} ", join(" ",grep(!/-fstack-protector/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE";' )
+	LFLAGS += $(shell perl -MExtUtils::Embed -e ldopts )
 endif
 
 ifeq ($(ENABLE_SYSLOG_LOG_FORMAT), 1)
-    CFLAGS += -DSYSLOG_LOG_FORMAT
+	CFLAGS += -DSYSLOG_LOG_FORMAT
 endif
 
 ifeq ($(ENABLE_LOG_PID), 1)
-    CFLAGS += -DLOG_SHOW_PID
+	CFLAGS += -DLOG_SHOW_PID
 endif
 
 ifdef CONFIG
-    CDEFS += -DDefaultConfig=\"$(CONFIG)\"
+	CDEFS += -DDefaultConfig=\"$(CONFIG)\"
 endif
 
 all: rntrack
@@ -61,7 +65,7 @@ OBJS=	fidoaddr.o \
 	sqbase.o \
 	tmstamp.o \
 	utils.o \
-	mask.o  \
+	mask.o	\
 	wildmat.o \
 	badpkt.o \
 	script.o \
@@ -86,8 +90,8 @@ rntrack$(EXEEND): $(OBJS) smapi
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS)
 
 clean:
-	-$(RM) $(SRCDIR1)smapi\\*.o
-	-$(RM) $(SRCDIR1)smapi\\*.a
+	-$(RM) $(SRCDIR)smapi/*.o
+	-$(RM) $(SRCDIR)smapi/*.a
 	-$(RM) *.o
 	-$(RM) *~
 	-$(RM) core
