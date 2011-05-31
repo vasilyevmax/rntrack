@@ -45,7 +45,7 @@ src_compile() {
 		|| die "emake failed"
 }
 
-src_install () {
+src_install() {
 	dobin MakeFiles/linux/rntrack
 	doman doc/rntrack.1
 	dodoc doc/MANUAL* doc/FAQ*

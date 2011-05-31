@@ -7,12 +7,12 @@ EAPI="2"
 inherit eutils versionator
 
 DESCRIPTION="A FTN Messages tracker"
-SRC_URI="mirror://sourceforge/ftrack-as/1.26/${PN}-$(replace_version_separator ${V} . _)-src.tgz"
+SRC_URI="mirror://sourceforge/ftrack-as/1.32/${PN}-$(replace_version_separator ${V} . _)-src.tar.bz2"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
 
 SLOT="0"
 LICENSE="GPL"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="-perl -log_pid -syslog_log_format"
 
 DEPEND="perl? ( dev-lang/perl )"
