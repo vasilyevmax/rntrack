@@ -45,6 +45,7 @@ public:
     void AddChar(char c);
     void AddStr(const char * c);
     void AddInt(int i);
+	char * GetName(void);
     int GetOneLine(void);
     int ParseOneLine(void);
     int Parse(void);

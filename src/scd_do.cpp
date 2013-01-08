@@ -731,7 +731,7 @@ bool Action::Do(MSGBASE & b, cMSG & m)
             _Tpl->Clean();
             _Tpl->SetMsg(m);
             tmt = b.MessageName();
-            Log.Level(LOGI) << "Add note " << _OutDir << " to msg " << tmt <<
+            Log.Level(LOGI) << "Add note " << _Tpl->GetName() << " to msg " << tmt <<
                                EOL;
 
             if(!_Tpl->Parse())
