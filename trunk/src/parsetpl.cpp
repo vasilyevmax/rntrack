@@ -1276,6 +1276,13 @@ bool Template::Set(char * c)
 
 // --------------------------------------------------------------------
 
+char * Template::GetName(void)
+{
+	return TplName;
+}
+
+// --------------------------------------------------------------------
+
 int Template::GetOneLine(void)
 {
     CHP = 77200;
