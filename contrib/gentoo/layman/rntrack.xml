@@ -5,9 +5,9 @@
     <name><![CDATA[rntrack]]></name>
     <description><![CDATA[Semen Panevin's overlay for rntrack]]></description>
     <owner type="person">
-      <email>panevin@box.vsi.ru</email>
+      <email>semen@icelan.ru</email>
       <name><![CDATA[Semen Panevin]]></name>
     </owner>
-    <source type="svn">https://ftrack-as.svn.sourceforge.net/svnroot/ftrack-as/trunk/contrib/gentoo/portage</source>
+    <source type="svn">http://svn.code.sf.net/p/ftrack-as/trunk/contrib/gentoo/portage</source>
   </repo>
 </repositories>

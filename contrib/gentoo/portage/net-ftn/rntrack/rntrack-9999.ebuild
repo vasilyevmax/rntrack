@@ -8,7 +8,7 @@ inherit eutils autotools flag-o-matic subversion
 
 DESCRIPTION="A FTN Messages tracker"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
-ESVN_REPO_URI="https://ftrack-as.svn.sourceforge.net/svnroot/ftrack-as/trunk"
+ESVN_REPO_URI="http://svn.code.sf.net/p/ftrack-as/code/trunk"
 
 SLOT="0"
 LICENSE="GPL"
