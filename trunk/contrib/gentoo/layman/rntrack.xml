@@ -8,6 +8,6 @@
       <email>semen@icelan.ru</email>
       <name><![CDATA[Semen Panevin]]></name>
     </owner>
-    <source type="svn">http://svn.code.sf.net/p/ftrack-as/trunk/contrib/gentoo/portage</source>
+    <source type="svn">http://svn.code.sf.net/p/ftrack-as/code/trunk/contrib/gentoo/portage</source>
   </repo>
 </repositories>
