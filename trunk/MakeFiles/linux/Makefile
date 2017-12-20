@@ -10,6 +10,7 @@
 # CONFIG=/path/to/config.file
 #    Alternate config file location
 
+PREFIX=/usr
 CC	= g++
 CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -O3
 CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
@@ -17,6 +18,7 @@ CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
 	  -DHAVE_LOCALE_H
 LFLAGS	= -s -L$(SRCDIR)smapi -lsmapilnx
 SRCDIR	= ../../src/
+DOCDIR	= ../../doc/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
 # set to 1 for enable (in command line: make ENABLE_SCRIPTS=1 ENABLE_LOG_PID=1 ENABLE_SYSLOG_LOG_FORMAT=1)
@@ -85,17 +87,33 @@ OBJS=	fidoaddr.o \
 $(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
 	bison -l -d $< -o $(SRCDIR)cfg.cpp
 
-# Thunderbirds are go!
 smapi:
 	make -C $(SRCDIR)smapi -f makefile.lnx
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
 
+rntrack.1.gz : $(DOCDIR)rntrack.1
+	gzip -9c $(DOCDIR)rntrack.1 > $(DOCDIR)rntrack.1.gz
+
+.PHONY: install
+install: rntrack rntrack.1.gz
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp $< $(DESTDIR)$(PREFIX)/bin
+	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
+	cp $(DOCDIR)rntrack.1.gz $(DESTDIR)$(PREFIX)/share/man/man1
+
+.PHONY: uninstall
+uninstall:
+	-rm -f $(BINDIR)$(DIRSEP)rntrack
+	-rm -f $(MAN1DIR)$(DIRSEP)rntrack.1.gz
+
+.PHONY: clean
 clean:
 	-rm -f $(SRCDIR)smapi/*.o
 	-rm -f $(SRCDIR)smapi/*.a
 	-rm -f *.o
+	-rm -f $(DOCDIR)rntrack.1.gz
 	-rm -f *~
 	-rm -f core
 	-rm -f rntrack
