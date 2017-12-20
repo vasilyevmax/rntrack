@@ -16,5 +16,5 @@ rntrack_LDFLAGS = -L$(srcdir)/smapi
 rntrack_LDADD = $(srcdir)/smapi/libsmapi.a
 
 INCLUDES = -I$(top_srcdir)/hpp -I$(srcdir)
-CFLAGS = $(CFLAGS) -pedantic -Wall -fno-rtti @PERL_CFLAGS@
-#LFLAGS = $(LFLAGS) @PERL_LFLAGS@
+CFLAGS = -pedantic -Wall -fno-rtti @PERL_CFLAGS@
+#LFLAGS = @PERL_LFLAGS@
