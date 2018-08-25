@@ -66,7 +66,7 @@
 #ifdef VERSION
     #undef VERSION
 #endif
-#define VERSION               "1.33"
+#define VERSION               "1.34"
 #ifdef __PERL_VERSION__
     #define Perl              "/Perl"
 #else
