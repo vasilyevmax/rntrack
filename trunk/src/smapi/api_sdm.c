@@ -226,8 +226,8 @@ static sword _XPENTRY SdmCloseArea(MSGA * mh)
             msg.replyto = mh->high_water;
             msg.attr = MSGPRIVATE | MSGREAD | MSGLOCAL | MSGSENT;
 
-            SdmWriteMsg(msgh, FALSE, &msg, msgbody, strlen((char *) msgbody) + 1,
-              strlen((char *) msgbody) + 1, 0L, NULL);
+            SdmWriteMsg(msgh, FALSE, &msg, msgbody, (dword)strlen((char *) msgbody) + 1,
+              (dword)strlen((char *) msgbody) + 1, 0L, NULL);
 
             SdmCloseMsg(msgh);
         }
@@ -631,7 +631,7 @@ static dword _XPENTRY SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
         if (msgh->ctrl != NULL)
         {
             msgh->clen = (dword) strlen((char *) msgh->ctrl) + 1;
-            msgh->msgtxt_start = newtext - text;
+            msgh->msgtxt_start = (sdword)(newtext - text);
 
             /* Shift back the text buffer to counter absence of ^a strings */
 
@@ -1189,6 +1189,13 @@ static void MSGAPI Convert_Fmsg_To_Xmsg(struct _omsg *fmsg, XMSG * msg,
     msg->attr = (dword) fmsg->attr;
     msg->xmtimesread = fmsg->times;
     msg->xmcost = fmsg->cost;
+
+    /* Convert 4d pointnets */
+
+    if (fmsg->times == ~fmsg->cost && fmsg->times)
+    {
+        msg->orig.point = fmsg->times;
+    }
 }
 
 static void MSGAPI Convert_Xmsg_To_Fmsg(XMSG * msg, struct _omsg *fmsg)
@@ -1236,6 +1243,17 @@ static void MSGAPI Convert_Xmsg_To_Fmsg(XMSG * msg, struct _omsg *fmsg)
     fmsg->attr = (word) (msg->attr & 0xffffL);
     fmsg->times = (word)msg->xmtimesread;
     fmsg->cost =  (word)msg->xmcost;
+
+    /*
+     *  Non-standard point kludge to ensure that 4D pointmail works
+     *  correctly.
+     */
+
+    if (orig->point)
+    {
+        fmsg->times = orig->point;
+        fmsg->cost = (word) ~fmsg->times;
+    }
 }
 
 int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * kludges)
@@ -1255,21 +1273,21 @@ int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * k
           msg->dest.node, msg->orig.zone, msg->orig.net, msg->orig.node);
 
         (*wfunc) (temp);
-        bytes += strlen((char *) temp);
+        bytes += (int)strlen((char *) temp);
     }
 
     if (msg->orig.point && !strstr((char *) kludges, "\001" "FMPT"))
     {
         sprintf((char *) temp, "\001" "FMPT %hu\r", msg->orig.point);
         (*wfunc) (temp);
-        bytes += strlen((char *) temp);
+        bytes += (int)strlen((char *) temp);
     }
 
     if (msg->dest.point && !strstr((char *) kludges, "\001" "TOPT"))
     {
         sprintf((char *) temp, "\001" "TOPT %hu\r", msg->dest.point);
         (*wfunc) (temp);
-        bytes += strlen((char *) temp);
+        bytes += (int)strlen((char *) temp);
     }
 
     return bytes;
@@ -1277,7 +1295,7 @@ int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * k
 
 static void _stdc WriteToFd(byte * str)
 {
-    farwrite(statfd, str, strlen((char *) str));
+    farwrite(statfd, str, (unsigned)strlen((char *) str));
 }
 
 static void near Get_Binary_Date(struct _stamp *todate, struct _stamp *fromdate, byte * asciidate)
