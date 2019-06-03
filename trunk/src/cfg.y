@@ -198,7 +198,7 @@ Conf     :   /* empty */
 
 
 ConfLine :  Action _CRLF
-         |  IncludeF _CRLF ={
+         |  IncludeF _CRLF {
             if (SetInclude($<ch>1) != 0) {
                YYABORT;
             }
@@ -206,7 +206,7 @@ ConfLine :  Action _CRLF
          |  TimeStampFile _CRLF
          |  Address _CRLF
          |  _ADDTONULLPKT _CRLF
-            = {
+            {
                if (SetAddToNullPkt() != 0) {
                   YYABORT;
                }
@@ -218,14 +218,14 @@ ConfLine :  Action _CRLF
          |  PBodyMask _CRLF
          |  CheckPoints _CRLF
          |  _CREATEMISSINGBASE _CRLF
-            = {
+            {
                if (SetCreateMissingBase() != 0) {
                   YYABORT;
                }
             }
          |  FileInbound _CRLF
          |  _FORCEINTL  _CRLF
-            = {
+            {
                if (SetForceINTL() != 0) {
                   YYABORT;
                }
@@ -250,7 +250,7 @@ ConfLine :  Action _CRLF
          |  Nodelist _CRLF
          |  NodelistPath _CRLF
          |  _NOLOGIGNORE _CRLF
-            = {
+            {
                if (SetNoLogIgnore() != 0) {
                   YYABORT;
                }
@@ -263,31 +263,31 @@ ConfLine :  Action _CRLF
          |  SScriptMask _CRLF
          |  PScriptMask _CRLF
          |  _IGNOREBSY _CRLF
-            = {
+            {
                if (SetIgnoreBSY() != 0) {
                   YYABORT;
                }
             }
          |  _IGNOREATTACHPATH _CRLF
-            = {
+            {
                if (SetIgnoreAttachPath() != 0) {
                   YYABORT;
                }
             }
          |  _SETVIAALWAYS _CRLF
-            = {
+            {
                if (SetSetViaAlways() != 0) {
                   YYABORT;
                }
             }
          |  _SKIPHIDDENFILES _CRLF
-            = {
+            {
                if (SetSkipHiddenFiles() != 0) {
                   YYABORT;
                }
             }
          |  _SOFTCHECKINNODELIST _CRLF
-            = {
+            {
                if (SetSoftCheckInNodelists() != 0) {
                   YYABORT;
                }
@@ -295,43 +295,43 @@ ConfLine :  Action _CRLF
          |  SysopName _CRLF
          |  TearLine _CRLF
          |  _USENEWVIA _CRLF
-            = {
+            {
                if (SetNewVia() != 0) {
                   YYABORT;
                }
             }
          |  _USEOWNZONE _CRLF
-            = {
+            {
                if (SetUseOwnZone() != 0) {
                   YYABORT;
                }
             }
          |  _USEASO _CRLF
-	         = {
+	         {
 	            if (SetUseASO() != 0) {
                   YYABORT;
 	            }
 	         }
 	 | _USEBRAKE _CRLF
-	         = {
+	         {
 		    if (SetUseBrake() != 0) {
 		  YYABORT;
 		    }
 		 }
 	 |  _USEFILEBOXES _CRLF
-	         = {
+	         {
 	            if (SetUseFileBoxes() != 0) {
                   YYABORT;
 	            }
 	         }
          | _STRIPPATHINPKT _CRLF
-			   = {
+			   {
 				   if (SetStripPathInPkt() != 0) {
 					   YYABORT;
                }
             }
          |  _AGEFROMVIA _CRLF
-            = {
+            {
                if (SetAgeFromVia() != 0) {
                   YYABORT;
                }
@@ -347,23 +347,23 @@ ConfLine :  Action _CRLF
          |  ScriptFile _CRLF
 	 |  FileBoxDir _CRLF
 	 |  FileBoxType _CRLF
-         |   error _CRLF ={ YYABORT; }
-         = { DetectError = TRUE;
+         |   error _CRLF { YYABORT; }
+         { DetectError = TRUE;
          }
          | _CRLF
-         = {
+         {
             avail = 0;
          }
          ;
 
-ScriptFile : _SCRIPTFILE _STRING ={
+ScriptFile : _SCRIPTFILE _STRING {
                if (LoadScriptFile($<ch>2) != 0) {
                   YYABORT;
                }
              }
            ;
 
-FileBoxDir : _FILEBOXDIR _STRING ={
+FileBoxDir : _FILEBOXDIR _STRING {
                if (SetFileBoxDir($<ch>2) != 0) {
                   YYABORT;
                }
@@ -371,27 +371,27 @@ FileBoxDir : _FILEBOXDIR _STRING ={
            ;
 
 FileBoxType: _FILEBOXTYPE FBOXTYPE
-              ={
+              {
                 if (SetFileBoxType($<fbtype>2) != 0) {
 		  YYABORT;
                 }
               }
             ;
-FBOXTYPE  : _LONG ={ $<fbtype>$ = FILEBOXLONG}
-            | _TMLONG ={ $<fbtype>$ = FILEBOXTMLONG }
-            | _TMSHORT ={ $<fbtype>$ = FILEBOXTMSHORT }
-	    | _BRAKE = { $<fbtype>$ = FILEBOXBRAKE }
+FBOXTYPE  : _LONG { $<fbtype>$ = FILEBOXLONG}
+            | _TMLONG { $<fbtype>$ = FILEBOXTMLONG }
+            | _TMSHORT { $<fbtype>$ = FILEBOXTMSHORT }
+	    | _BRAKE { $<fbtype>$ = FILEBOXBRAKE }
             ;
 
 
-TrafficLogTemplate : _TRAFFICLOGTEMPLATE _STRING ={
+TrafficLogTemplate : _TRAFFICLOGTEMPLATE _STRING {
                       if (SetTrafficLogTemplate($<ch>2) != 0) {
                          YYABORT;
                       }
                    }
                    ;
 
-Semaphore : _SEMAPHORE _DIGIT_ _STRING ={
+Semaphore : _SEMAPHORE _DIGIT_ _STRING {
              if (SetSemaphoreName($<ch>3, $<ln>2) != 0) {
                 YYABORT;
              }
@@ -399,11 +399,11 @@ Semaphore : _SEMAPHORE _DIGIT_ _STRING ={
           ;
 
 
-IncludeF : _INCLUDE _STRING ={ $<ch>$ = $<ch>2; }
+IncludeF : _INCLUDE _STRING { $<ch>$ = $<ch>2; }
          ;
 
-Aka      : _AKA ={ cffa.Clean(); } faddress = { cffa1 = cffa; cffa.Clean(); } faddress
-            = {
+Aka      : _AKA { cffa.Clean(); } faddress { cffa1 = cffa; cffa.Clean(); } faddress
+            {
                if (SetAka(cffa1, cffa) != 0) {
                   YYABORT;
                }
@@ -413,7 +413,7 @@ Aka      : _AKA ={ cffa.Clean(); } faddress = { cffa1 = cffa; cffa.Clean(); } fa
          ;
 
 TimeStampFile : _TIMESTAMPFILE _STRING
-            = {
+            {
                if (SetTimeStampFile($<ch>2) != 0) {
                   YYABORT;
                }
@@ -421,15 +421,15 @@ TimeStampFile : _TIMESTAMPFILE _STRING
               ;
 
 APktDir  : _APKTDIR _STRING
-            = {
+            {
                if (SetAPktDir($<ch>2) != 0) {
                   YYABORT;
                }
             }
          ;
 
-Address  : _ADDRESS ={ cffa.Clean(); } faddress
-            = {
+Address  : _ADDRESS { cffa.Clean(); } faddress
+            {
                if (SetMyAddr(cffa) != 0) {
                   YYABORT;
                }
@@ -437,24 +437,24 @@ Address  : _ADDRESS ={ cffa.Clean(); } faddress
             }
          ;
 
-CheckPoints : _CHECKPOINTS ChkPntMode = { SetCheckPoints($<pmode>2); }
+CheckPoints : _CHECKPOINTS ChkPntMode { SetCheckPoints($<pmode>2); }
             ;
 
-ChkPntMode  : _NEVER ={ $<pmode>$ = CHECKPNT_NEVER; }
-            | _HARD  ={ $<pmode>$ = CHECKPNT_HARD; }
-            | _SOFT  ={ $<pmode>$ = CHECKPNT_SOFT; }
+ChkPntMode  : _NEVER { $<pmode>$ = CHECKPNT_NEVER; }
+            | _HARD  { $<pmode>$ = CHECKPNT_HARD; }
+            | _SOFT  { $<pmode>$ = CHECKPNT_SOFT; }
             ;
 
-KillRoutedMessage : _KILLROUTEDMESSAGE KillRMode = { SetKillRoutedMessages($<kmode>2); }
+KillRoutedMessage : _KILLROUTEDMESSAGE KillRMode { SetKillRoutedMessages($<kmode>2); }
                   ;
 
-KillRMode         : _ALWAYS = { $<kmode>$ = KILL_ALWAYS; }
-                  | _NEVER  = { $<kmode>$ = KILL_NEVER; }
-                  | _FLAG   = { $<kmode>$ = KILL_FLAG; }
+KillRMode         : _ALWAYS { $<kmode>$ = KILL_ALWAYS; }
+                  | _NEVER  { $<kmode>$ = KILL_NEVER; }
+                  | _FLAG   { $<kmode>$ = KILL_FLAG; }
                   ;
 
 SysopName: _SYSOPNAME _STRING
-            = {
+            {
                if (SetSysopName($<ch>2) != 0) {
                   YYABORT;
                }
@@ -462,7 +462,7 @@ SysopName: _SYSOPNAME _STRING
          ;
 
 TearLine : _TEARLINE _STRING
-            = {
+            {
                if (SetTearline($<ch>2) != 0) {
                   YYABORT;
                }
@@ -470,7 +470,7 @@ TearLine : _TEARLINE _STRING
          ;
 
 LogFile  : _LOGFILE _STRING
-            = {
+            {
                if (SetLogFile($<ch>2) != 0) {
                   YYABORT;
                }
@@ -478,7 +478,7 @@ LogFile  : _LOGFILE _STRING
          ;
 
 LogLevel : _LOGLEVEL _DIGIT_
-            = {
+            {
                if (SetLogLevel($<ln>2) != 0) {
                   YYABORT;
                }
@@ -486,7 +486,7 @@ LogLevel : _LOGLEVEL _DIGIT_
          ;
 
 Origin   : _ORIGIN _STRING
-            = {
+            {
                if (SetOrigin($<ch>2) != 0) {
                   YYABORT;
                }
@@ -494,19 +494,19 @@ Origin   : _ORIGIN _STRING
          ;
 
 Nodelist : _NODELIST _STRING NdlZone
-            = {
+            {
                if (SetNodelist($<ch>2,$<ln>3) != 0) {
                   YYABORT;
                }
             }
          ;
 
-NdlZone  : ={ $<ln>$ = -3; }
-         | _DIGIT_  ={ $<ln>$ = $<ln>1; }
+NdlZone  : { $<ln>$ = -3; }
+         | _DIGIT_  { $<ln>$ = $<ln>1; }
          ;
 
 NodelistPath : _NODELISTPATH _STRING
-            = {
+            {
                if (SetNodelistPath($<ch>2) != 0) {
                   YYABORT;
                }
@@ -514,7 +514,7 @@ NodelistPath : _NODELISTPATH _STRING
              ;
 
 IndexFile: _INDEXFILE _STRING
-            = {
+            {
                if (SetIndexFile($<ch>2) != 0) {
                   YYABORT;
                }
@@ -522,7 +522,7 @@ IndexFile: _INDEXFILE _STRING
          ;
 
 LoopStr  : _LOOPSTR _STRING
-            = {
+            {
                if (SetLoopStr($<ch>2) != 0) {
                   YYABORT;
                }
@@ -530,7 +530,7 @@ LoopStr  : _LOOPSTR _STRING
          ;
 
 MaxAttachSize : _MAXATTACHSIZE _DIGIT_
-            = {
+            {
                if (SetMaxAttach($<ln>2) != 0) {
                   YYABORT;
                }
@@ -538,7 +538,7 @@ MaxAttachSize : _MAXATTACHSIZE _DIGIT_
               ;
 
 MaxNodelistAge : _MAXNODELISTAGE _DIGIT_
-            = {
+            {
                if (SetMaxNodelistAge($<ln>2) != 0) {
                   YYABORT;
                }
@@ -546,7 +546,7 @@ MaxNodelistAge : _MAXNODELISTAGE _DIGIT_
                ;
 
 Outbound : _OUTBOUND _STRING
-            = {
+            {
                if (SetOutbound($<ch>2) != 0) {
                   YYABORT;
                }
@@ -554,7 +554,7 @@ Outbound : _OUTBOUND _STRING
          ;
 
 TempMail : _TEMPMAIL _STRING
-            = {
+            {
                if (SetTempMail($<ch>2) != 0) {
                   YYABORT;
                }
@@ -562,7 +562,7 @@ TempMail : _TEMPMAIL _STRING
          ;
 
 TrafficLog : _TRAFFICLOG _STRING
-            = {
+            {
                if (SetTrafficLog($<ch>2) != 0) {
                   YYABORT;
                }
@@ -570,7 +570,7 @@ TrafficLog : _TRAFFICLOG _STRING
            ;
 
 FileInbound : _FILEINBOUND _STRING
-            = {
+            {
                if (SetFileInbound($<ch>2) != 0) {
                   YYABORT;
                }
@@ -578,7 +578,7 @@ FileInbound : _FILEINBOUND _STRING
             ;
 
 MaxAge      : _MAXAGE _DIGIT_
-            = {
+            {
                if (SetMaxAge($<ln>2) != 0) {
                   YYABORT;
                }
@@ -587,7 +587,7 @@ MaxAge      : _MAXAGE _DIGIT_
             ;
 
 MaxMsgSize   : _MAXMSGSIZE _DIGIT_
-            = {
+            {
                if (SetMaxMsgSize($<ln>2) != 0) {
                   YYABORT;
                }
@@ -596,7 +596,7 @@ MaxMsgSize   : _MAXMSGSIZE _DIGIT_
             ;
 
 MaxPktSize   : _MAXPKTSIZE _DIGIT_
-            = {
+            {
                if (SetMaxPktSize($<ln>2) != 0) {
                   YYABORT;
                }
@@ -605,7 +605,7 @@ MaxPktSize   : _MAXPKTSIZE _DIGIT_
             ;
 
 Password    : _PASSWORD _STRING
-            = {
+            {
                if (strlen($<ch>2) > 8){
                   yyerror("Password too long. Max password length is a 8 characters.");
                   YYABORT;
@@ -613,7 +613,7 @@ Password    : _PASSWORD _STRING
                cffa.Clean();
             }
               faddress
-            = {
+            {
                if (SetPasswd(cffa, $<ch>2) != 0) {
                   YYABORT;
                }
@@ -622,7 +622,7 @@ Password    : _PASSWORD _STRING
             ;
 
 Domain    : _DOMAIN _STRING
-            = {
+            {
                if (strlen($<ch>2) > 10){
                   yyerror("Domain too long. Max domain length is a 10 characters.");
                   YYABORT;
@@ -630,7 +630,7 @@ Domain    : _DOMAIN _STRING
                cffa.Clean();
             }
               faddress
-            = {
+            {
                if (SetDomain(cffa, $<ch>2) != 0) {
                   YYABORT;
                }
@@ -639,7 +639,7 @@ Domain    : _DOMAIN _STRING
             ;
 
 FileBox    : _FILEBOX _STRING
-            = {
+            {
                if (strlen($<ch>2) > 100){
                   yyerror("Path too long. Max path length is a 100 characters.");
                   YYABORT;
@@ -647,7 +647,7 @@ FileBox    : _FILEBOX _STRING
                cffa.Clean();
             }
               faddress
-            = {
+            {
                if (SetFilebox(cffa, $<ch>2) != 0) {
                   YYABORT;
                }
@@ -657,50 +657,50 @@ FileBox    : _FILEBOX _STRING
 
 
 BadMessages : _BADMESSAGES BadMsgMode
-              ={
+              {
                 if (SetBadMode($<bmode>2,FileName) != 0) {
                   YYABORT;
                 }
                 FileName = NULL;
               }
             ;
-BadMsgMode  : _SKIP ={ $<bmode>$ = SKIP; FileName = NULL;}
-            | _EXIT ={ $<bmode>$ = EXIT; FileName = NULL;}
-            | _DELETE ={ $<bmode>$ = REMOVE; FileName = NULL;}
-            | _MOVE _STRING ={ $<bmode>$ = MOVE; FileName = $<ch>2;}
+BadMsgMode  : _SKIP { $<bmode>$ = SKIP; FileName = NULL;}
+            | _EXIT { $<bmode>$ = EXIT; FileName = NULL;}
+            | _DELETE { $<bmode>$ = REMOVE; FileName = NULL;}
+            | _MOVE _STRING { $<bmode>$ = MOVE; FileName = $<ch>2;}
             ;
 
 BadPackets  : _BADPACKETS BadPktMode
-              ={
+              {
                 if (SetBadPktMode($<bpmode>2,BPktDir) != 0) {
                   YYABORT;
                 }
 		BPktDir = NULL;
               }
             ;
-BadPktMode  : _SKIP ={ $<bpmode>$ = SKIP; BPktDir = NULL;}
-            | _EXIT ={ $<bpmode>$ = EXIT; BPktDir = NULL;}
-            | _DELETE ={ $<bpmode>$ = REMOVE; BPktDir = NULL;}
-            | _MOVE _STRING ={ $<bpmode>$ = MOVE; BPktDir = $<ch>2;}
+BadPktMode  : _SKIP { $<bpmode>$ = SKIP; BPktDir = NULL;}
+            | _EXIT { $<bpmode>$ = EXIT; BPktDir = NULL;}
+            | _DELETE { $<bpmode>$ = REMOVE; BPktDir = NULL;}
+            | _MOVE _STRING { $<bpmode>$ = MOVE; BPktDir = $<ch>2;}
             ;
 
 Utc         : _UTC UtcOffs
-              ={
+              {
                 if (SetUTC($<ln>2) != 0) {
                   YYABORT;
                 }
               }
             ;
 
-UtcOffs     : _DIGIT_ ={ $<ln>$ = $<ln>1; }
-            | '+' _DIGIT_ ={ $<ln>$ = $<ln>2; }
-            | '-' _DIGIT_ ={ $<ln>$ = -$<ln>2; }
+UtcOffs     : _DIGIT_ { $<ln>$ = $<ln>1; }
+            | '+' _DIGIT_ { $<ln>$ = $<ln>2; }
+            | '-' _DIGIT_ { $<ln>$ = -$<ln>2; }
             ;
 
 /* ScanDir --------- */
 
 ScanDir  : _SCANDIR
-           = {
+           {
               wsd = new ScanDir();
               CheckMem((char *)wsd);
               renumberf = FALSE;
@@ -716,7 +716,7 @@ ScanDir  : _SCANDIR
               FileName = NULL;
            }
            SDType
-           = {
+           {
               wsd->SetBase(mbase);
               wsd->_Renumber = renumberf;
               wsd->_Unpack = unpackf;
@@ -732,7 +732,7 @@ ScanDir  : _SCANDIR
 
 SDType  : BeforeAfter Flag
         | _STRING
-          = {
+          {
              mbase = MakeBase($<ch>1);
              if (mbase == NULL) {
                 YYABORT;
@@ -751,8 +751,8 @@ SDType  : BeforeAfter Flag
           AddSdParam Flag
         ;
 
-BeforeAfter : _BEFOREROUTE = { brf = TRUE; }
-            | _AFTERROUTE = { arf = TRUE; }
+BeforeAfter : _BEFOREROUTE { brf = TRUE; }
+            | _AFTERROUTE { arf = TRUE; }
             ;
 
 AddSdParam  :
@@ -760,7 +760,7 @@ AddSdParam  :
             ;
 
 SdParam     : _RENUMBER
-               = {
+               {
                   if (renumberf == TRUE) {
                      yyerror("Renumber for this base already set.");
                      YYABORT;
@@ -769,7 +769,7 @@ SdParam     : _RENUMBER
                   }
                }
             | _BEFORESCRIPT _STRING
-               = {
+               {
                   if (!ScriptWordExists($<ch>2)) {
                      yyerror("Script function not found.");
                      YYABORT;
@@ -777,7 +777,7 @@ SdParam     : _RENUMBER
                   ScriptBefore = strdup($<ch>2);
                }
             | _AFTERSCRIPT  _STRING
-               = {
+               {
                   if (!ScriptWordExists($<ch>2)) {
                      yyerror("Script function not found.");
                      YYABORT;
@@ -785,7 +785,7 @@ SdParam     : _RENUMBER
                   ScriptAfter = strdup($<ch>2);
                }
             | _FRESH
-               = {
+               {
                   if (freshf == TRUE) {
                      yyerror("Fresh scripts for this base already set.");
                      YYABORT;
@@ -794,7 +794,7 @@ SdParam     : _RENUMBER
                   }
                }
             | _UNPACK
-               = {
+               {
                   if (unpackf == TRUE) {
                      yyerror("Unpack for this base already set.");
                      YYABORT;
@@ -807,7 +807,7 @@ SdParam     : _RENUMBER
                   }
                }
             | STime
-               = {
+               {
                   if (TimeStampFile == NULL) {
                      yyerror("You can't set scanning time without Timestamp File.");
                      YYABORT;
@@ -817,26 +817,26 @@ SdParam     : _RENUMBER
             ;
 
 STime       : _DAILY
-               = {
+               {
                   tt = new tTimes;
                   tt->_STime = TimeOfBeginOfDay(-1);
                   tt->_ETime = 0;
                }
               DaySTime
-               = {
+               {
                   if (tt->_STime != 0) {
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
                   }
                }
             | _WEEKLY
-               = {
+               {
                   tt = new tTimes;
                   tt->_STime = TimeOfBeginOfDay(0);
                   tt->_ETime = 0;
                }
               WeekSTime
-               = {
+               {
                   if (tt->_STime != 0) {
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
@@ -846,7 +846,7 @@ STime       : _DAILY
 
 DaySTime    :
             | DaySTime DaySSTime
-               = {
+               {
                   if (tt->_STime != 0) {
                      CheckETTime();
                      _TTimes->AddToEnd(tt);
@@ -856,15 +856,15 @@ DaySTime    :
             ;
 
 DaySSTime   : Time
-               = {
+               {
                   tt->_STime = $<t>1 + TimeOfBeginOfDay(-1);
                }
             | Time '-' Time
-               = {
+               {
                   tt->_STime = $<t>1 + TimeOfBeginOfDay(-1);
                   tt->_ETime = $<t>3 + TimeOfBeginOfDay(-1) + 59;
                }
-            | AnyP '.' Time ={
+            | AnyP '.' Time {
                   time_t i_time;
                   time_t b_time;
                   if ($<t>3 == (time_t) 0) {
@@ -890,7 +890,7 @@ AnyP        : 'p'
             ;
 
 Time        : _DIGIT_
-              = {
+              {
                  if ($<ln>1 < 0 || $<ln>1 > 23) {
                     yyerror("Hour should be between 00 and 23");
                     YYABORT;
@@ -899,7 +899,7 @@ Time        : _DIGIT_
                  }
               }
               ':' _DIGIT_
-              = {
+              {
                  if ($<ln>4 < 0 || $<ln>4 > 59 || $<t>2 == (time_t) -1) {
                     $<t>$ = (time_t)-1;
                     yyerror("Minutes should be between 00 and 59");
@@ -913,7 +913,7 @@ Time        : _DIGIT_
 
 WeekSTime   :
             | WeekSTime WeekSSTime
-               = {
+               {
                   CheckETTime();
                   _TTimes->AddToEnd(tt);
                   tt = new tTimes;
@@ -921,7 +921,7 @@ WeekSTime   :
             ;
 
 WeekSSTime  : _DIGIT_
-              = {
+              {
                  if ($<ln>1 < 0 || $<ln>1 > 6) {
                     yyerror("Day of week should be between 0 and 6");
                     YYABORT;
@@ -930,7 +930,7 @@ WeekSSTime  : _DIGIT_
                  }
               }
             | _DIGIT_ '-' _DIGIT_
-              = {
+              {
                  if ($<ln>1 < 0 || $<ln>1 > 6 || $<ln>3 < 0 || $<ln>3 > 6) {
                     yyerror("Day of week should be between 0 and 6");
                     YYABORT;
@@ -941,31 +941,31 @@ WeekSSTime  : _DIGIT_
               }
             ;
 
-Flag        : = { FileName = NULL; }
-            | AFlag = { FileName = strdup($<ch>1); }
+Flag        : { FileName = NULL; }
+            | AFlag { FileName = strdup($<ch>1); }
             ;
 
 /* -------------- */
 
-Mask        : _MASK ={ MaskMode = 0; } MParam ={
+Mask        : _MASK { MaskMode = 0; } MParam {
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(NormalMask *)msk);
             }
             ;
 
-SMask       : _SMASK ={ MaskMode = 0; } MParam ={
+SMask       : _SMASK { MaskMode = 0; } MParam {
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(NormalMask *)msk);
             }
             ;
 
-PMask       : _PMASK ={ MaskMode = 0; } MParam ={
+PMask       : _PMASK { MaskMode = 0; } MParam {
                msk->_Type = MASK_ADD;
                AddReadyMask(*(NormalMask *)msk);
             }
             ;
 
-MParam      : ={
+MParam      : {
                msk = new NormalMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -973,11 +973,11 @@ MParam      : ={
                   YYABORT;
                }
             }
-            SyName ={
+            SyName {
                ((NormalMask *)msk)->_FromName = strdup($<ch>2);
                cffa.Clean();
             }
-            faddress ={
+            faddress {
                ((NormalMask *)msk)->_FromAddr = cffa;
                if (MaskMode == 0) {
                   rc = ((NormalMask *)msk)->_FromAddr.MaskValid();
@@ -989,11 +989,11 @@ MParam      : ={
                   YYABORT;
                }
             }
-            SyName  ={
+            SyName  {
                ((NormalMask *)msk)->_ToName = strdup($<ch>6);
                cffa.Clean();
             }
-            faddress ={
+            faddress {
                ((NormalMask *)msk)->_ToAddr = cffa;
                if (MaskMode == 0) {
                   rc = ((NormalMask *)msk)->_ToAddr.MaskValid();
@@ -1013,53 +1013,53 @@ MParam      : ={
                   YYABORT;
                }
             }
-            MString ={
+            MString {
                ((NormalMask *)msk)->_Subject = strdup($<ch>10);
                NoTokensF = TRUE;
             }
-            MsgAttr ={
+            MsgAttr {
                NoTokensF = FALSE;
             }
             ;
 
 SyName      : _STRING
-            | '$' ={ $<ch>$ = "$"; }
-            | '*' ={ $<ch>$ = "*"; }
-            | '%' ={ $<ch>$ = "%"; }
+            | '$' { $<ch>$ = "$"; }
+            | '*' { $<ch>$ = "*"; }
+            | '%' { $<ch>$ = "%"; }
             ;
 
 MString     : _STRING
-            | '*' ={ $<ch>$ = "*"; }
+            | '*' { $<ch>$ = "*"; }
             ;
 
-MDigit      : MNot _DIGIT_ ={
+MDigit      : MNot _DIGIT_ {
                if ($<ln>2 > 65535) {
                   yyerror("Parameter shoul be less that 65535");
                   YYABORT;
                }
                $<ln>$ = $<ln>1 | $<ln>2;
             }
-            | '*' ={ $<ln>$ = -1; }
+            | '*' { $<ln>$ = -1; }
             ;
 
-MNot        : ={ $<ln>$ = 0; }
-            | '!' ={ $<ln>$ = 0x08000000; }
+MNot        : { $<ln>$ = 0; }
+            | '!' { $<ln>$ = 0x08000000; }
             ;
 
 MsgAttr     : '*'
-            | ={ FlagMode = 1; } MsgFAttr
+            | { FlagMode = 1; } MsgFAttr
             ;
 MsgFAttr    : FlagsMode
             | MsgFAttr FlagsMode
             ;
 
 FlagsMode   : FlagsChar
-            | '+' ={ FlagMode = 1; } FlagsChar
-            | '-' ={ FlagMode = 2; } FlagsChar
+            | '+' { FlagMode = 1; } FlagsChar
+            | '-' { FlagMode = 2; } FlagsChar
             ;
 
-FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1; }
-            | 'A' ={ /* Check MaxAttach size*/
+FlagsChar   : 'a' { ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1; }
+            | 'A' { /* Check MaxAttach size*/
                if (CheckMaskMode("A") != 0) {
                   YYABORT;
                }
@@ -1069,7 +1069,7 @@ FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1;
                }
                ((NormalMask *)msk)->fMaxAttach = (FlagMode == 2) ? 2 : 1;
             }
-            | 'M' ={ /* Check MaxMsg size*/
+            | 'M' { /* Check MaxMsg size*/
                if (CheckMaskMode("M") != 0) {
                   YYABORT;
                }
@@ -1079,23 +1079,23 @@ FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1;
                }
                ((NormalMask *)msk)->fMaxMsg = (FlagMode == 2) ? 2 : 1;
             }
-            | 'b' ={ ((NormalMask *)msk)->fARQ = (FlagMode == 2) ? 2 : 1; }
-            | 'c' ={ ((NormalMask *)msk)->fCrash = (FlagMode == 2) ? 2 : 1; }
-            | 'd' ={ ((NormalMask *)msk)->fDIR = (FlagMode == 2) ? 2 : 1; }
-            | 'e' ={ /* Empty message */
+            | 'b' { ((NormalMask *)msk)->fARQ = (FlagMode == 2) ? 2 : 1; }
+            | 'c' { ((NormalMask *)msk)->fCrash = (FlagMode == 2) ? 2 : 1; }
+            | 'd' { ((NormalMask *)msk)->fDIR = (FlagMode == 2) ? 2 : 1; }
+            | 'e' { /* Empty message */
                if (CheckMaskMode("e") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fEmpty = (FlagMode == 2) ? 2 : 1;
             }
-            | 'E' ={ /* Check echomail */
+            | 'E' { /* Check echomail */
                if (CheckMaskMode("E") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fEchomail = (FlagMode == 2) ? 2 : 1;
             }
-            | 'f' ={ ((NormalMask *)msk)->fFileRequest = (FlagMode == 2) ? 2 : 1; }
-            | 'g' ={ /* Check age */
+            | 'f' { ((NormalMask *)msk)->fFileRequest = (FlagMode == 2) ? 2 : 1; }
+            | 'g' { /* Check age */
                if (CheckMaskMode("g") != 0) {
                   YYABORT;
                }
@@ -1105,31 +1105,31 @@ FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1;
                }
                ((NormalMask *)msk)->fMaxAge = (FlagMode == 2) ? 2 : 1;
             }
-            | 'h' ={ ((NormalMask *)msk)->fHold = (FlagMode == 2) ? 2 : 1; }
-            | 'i' ={ ((NormalMask *)msk)->fTransit = (FlagMode == 2) ? 2 : 1; }
-            | 'j' ={ ((NormalMask *)msk)->fKFS = (FlagMode == 2) ? 2 : 1; }
-            | 'k' ={ ((NormalMask *)msk)->fKillSend = (FlagMode == 2) ? 2 : 1; }
-            | 'l' ={ ((NormalMask *)msk)->fLocal = (FlagMode == 2) ? 2 : 1; }
-            | 'L' ={ ((NormalMask *)msk)->fLok = (FlagMode == 2) ? 2 : 1; }
-            | 'm' ={ ((NormalMask *)msk)->fIMM = (FlagMode == 2) ? 2 : 1; }
-            | 'n' ={ ((NormalMask *)msk)->fCFM = (FlagMode == 2) ? 2 : 1; }
-            | 'o' ={ ((NormalMask *)msk)->fOrphan = (FlagMode == 2) ? 2 : 1; }
-            | 'p' ={ ((NormalMask *)msk)->fPrivate = (FlagMode == 2) ? 2 : 1; }
-            | 'q' ={ ((NormalMask *)msk)->fRRQ = (FlagMode == 2) ? 2 : 1; }
-            | 'r' ={ ((NormalMask *)msk)->fReceived = (FlagMode == 2) ? 2 : 1; }
-            | 's' ={ ((NormalMask *)msk)->fSend = (FlagMode == 2) ? 2 : 1; }
-            | 'S' ={ ((NormalMask *)msk)->fAS = (FlagMode == 2) ? 2 : 1; }
-            | 't' ={ ((NormalMask *)msk)->fTFS = (FlagMode == 2) ? 2 : 1; }
-            | 'u' ={ ((NormalMask *)msk)->fFURQ = (FlagMode == 2) ? 2 : 1; }
-            | 'v' ={ ((NormalMask *)msk)->fScanned = (FlagMode == 2) ? 2 : 1; }
-            | 'x' ={ /* Check existing attach */
+            | 'h' { ((NormalMask *)msk)->fHold = (FlagMode == 2) ? 2 : 1; }
+            | 'i' { ((NormalMask *)msk)->fTransit = (FlagMode == 2) ? 2 : 1; }
+            | 'j' { ((NormalMask *)msk)->fKFS = (FlagMode == 2) ? 2 : 1; }
+            | 'k' { ((NormalMask *)msk)->fKillSend = (FlagMode == 2) ? 2 : 1; }
+            | 'l' { ((NormalMask *)msk)->fLocal = (FlagMode == 2) ? 2 : 1; }
+            | 'L' { ((NormalMask *)msk)->fLok = (FlagMode == 2) ? 2 : 1; }
+            | 'm' { ((NormalMask *)msk)->fIMM = (FlagMode == 2) ? 2 : 1; }
+            | 'n' { ((NormalMask *)msk)->fCFM = (FlagMode == 2) ? 2 : 1; }
+            | 'o' { ((NormalMask *)msk)->fOrphan = (FlagMode == 2) ? 2 : 1; }
+            | 'p' { ((NormalMask *)msk)->fPrivate = (FlagMode == 2) ? 2 : 1; }
+            | 'q' { ((NormalMask *)msk)->fRRQ = (FlagMode == 2) ? 2 : 1; }
+            | 'r' { ((NormalMask *)msk)->fReceived = (FlagMode == 2) ? 2 : 1; }
+            | 's' { ((NormalMask *)msk)->fSend = (FlagMode == 2) ? 2 : 1; }
+            | 'S' { ((NormalMask *)msk)->fAS = (FlagMode == 2) ? 2 : 1; }
+            | 't' { ((NormalMask *)msk)->fTFS = (FlagMode == 2) ? 2 : 1; }
+            | 'u' { ((NormalMask *)msk)->fFURQ = (FlagMode == 2) ? 2 : 1; }
+            | 'v' { ((NormalMask *)msk)->fScanned = (FlagMode == 2) ? 2 : 1; }
+            | 'x' { /* Check existing attach */
                if (CheckMaskMode("x") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fAttExists = (FlagMode == 2) ? 2 : 1;
             }
-            | 'y' ={ ((NormalMask *)msk)->fIRR = (FlagMode == 2) ? 2 : 1; }
-            | _DIGIT_ = {
+            | 'y' { ((NormalMask *)msk)->fIRR = (FlagMode == 2) ? 2 : 1; }
+            | _DIGIT_ {
                if (CheckMaskMode("loop flag") != 0) {
                   YYABORT;
                }
@@ -1144,25 +1144,25 @@ FlagsChar   : 'a' ={ ((NormalMask *)msk)->fFileAttach = (FlagMode == 2) ? 2 : 1;
 
 /* -------------- */
 
-KludgeMask  : _KLUDGEMASK KMParam ={
+KludgeMask  : _KLUDGEMASK KMParam {
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(KludgeMask *)msk);
             }
             ;
 
-SKludgeMask : _SKLUDGEMASK KMParam ={
+SKludgeMask : _SKLUDGEMASK KMParam {
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(KludgeMask *)msk);
             }
             ;
 
-PKludgeMask : _PKLUDGEMASK KMParam ={
+PKludgeMask : _PKLUDGEMASK KMParam {
                msk->_Type = MASK_ADD;
                AddReadyMask(*(KludgeMask *)msk);
             }
             ;
 
-KMParam     : ={
+KMParam     : {
                msk = new KludgeMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -1170,7 +1170,7 @@ KMParam     : ={
                   YYABORT;
                }
             }
-            MString MString MDigit ={
+            MString MString MDigit {
                ((KludgeMask *)msk)-> _KludgeName = strdup($<ch>2);
                ((KludgeMask *)msk)-> _KludgeBody = strdup($<ch>3);
                ((KludgeMask *)msk)-> _Times = $<ln>4;
@@ -1179,25 +1179,25 @@ KMParam     : ={
 
 /* -------------- */
 
-BodyMask    : _BODYMASK BMParam ={
+BodyMask    : _BODYMASK BMParam {
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(BodyMask *)msk);
             }
             ;
 
-SBodyMask   : _SBODYMASK BMParam ={
+SBodyMask   : _SBODYMASK BMParam {
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(BodyMask *)msk);
             }
             ;
 
-PBodyMask   : _PBODYMASK BMParam ={
+PBodyMask   : _PBODYMASK BMParam {
                msk->_Type = MASK_ADD;
                AddReadyMask(*(BodyMask *)msk);
             }
             ;
 
-BMParam     : ={
+BMParam     : {
                msk = new BodyMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -1205,7 +1205,7 @@ BMParam     : ={
                   YYABORT;
                }
             }
-            MString MDigit MDigit ={
+            MString MDigit MDigit {
                ((BodyMask *)msk)-> _Body = strdup($<ch>2);
                ((BodyMask *)msk)-> _Lines = $<ln>3;
                ((BodyMask *)msk)-> _Bytes = $<ln>4;
@@ -1215,25 +1215,25 @@ BMParam     : ={
 
 /* -------------- */
 
-ScriptMask  : _SCRIPTMASK SCRMParam ={
+ScriptMask  : _SCRIPTMASK SCRMParam {
                msk->_Type = MASK_NORMAL;
                AddReadyMask(*(ScriptMask *)msk);
             }
             ;
 
-SScriptMask : _SSCRIPTMASK SCRMParam ={
+SScriptMask : _SSCRIPTMASK SCRMParam {
                msk->_Type = MASK_SKIP;
                AddReadyMask(*(ScriptMask *)msk);
             }
             ;
 
-PScriptMask : _PSCRIPTMASK SCRMParam ={
+PScriptMask : _PSCRIPTMASK SCRMParam {
                msk->_Type = MASK_ADD;
                AddReadyMask(*(ScriptMask *)msk);
             }
             ;
 
-SCRMParam   : ={
+SCRMParam   : {
                msk = new ScriptMask();
                CheckMem((char *)msk);
                msk->_Type = MASK_NORMAL;
@@ -1241,7 +1241,7 @@ SCRMParam   : ={
                   YYABORT;
                }
             }
-            _STRING ={
+            _STRING {
                ((ScriptMask *)msk)->_ScriptName = strdup($<ch>2);
                if (!ScriptWordExists($<ch>2)) {
                   yyerror("Subroutine not found in scripts.");
@@ -1252,7 +1252,7 @@ SCRMParam   : ={
 
 /* -------------- */
 
-Action : _ACTION ={
+Action : _ACTION {
           if (PrevMask == 0) {
              yyerror("Action without Mask.");
              YYABORT;
@@ -1265,7 +1265,7 @@ Action : _ACTION ={
           act->After = AfterRoute;
          _TTimes = &act->_Times;
        }
-       ActionCmd ={
+       ActionCmd {
           LastDo->AddAction(*act);
        }
        MayBeActTime
@@ -1276,11 +1276,11 @@ MayBeActTime  :
               ;
 
 ActionCmd : AAddNote
-          | _DELETE ={ act->_Act = ACT_DELETE; }
+          | _DELETE { act->_Act = ACT_DELETE; }
           | AMove
           | ACopy
           | ARewrite
-          | _IGNORE ={ act->_Act = ACT_IGNORE; }
+          | _IGNORE { act->_Act = ACT_IGNORE; }
           | ADisplay
           | AAFlag
           | ADelFile
@@ -1292,7 +1292,7 @@ ActionCmd : AAddNote
 	  | ARouteFbox
 	  | ARouteHub
           | APoll
-          | _DELETEATTACH ={ act->_Act = ACT_DELETEATTACH; }
+          | _DELETEATTACH { act->_Act = ACT_DELETEATTACH; }
           | AChangePath
 	  | AToLowerPath
 	  | AToUpperPath
@@ -1306,7 +1306,7 @@ ActionCmd : AAddNote
 	  | AAddKludge
           ;
 
-AAddNote : _ADDNOTE _STRING ={
+AAddNote : _ADDNOTE _STRING {
             act->_Act = ACT_ADDNOTE;
             act->_Tpl = new Template();
             if (!act->_Tpl->Set($<ch>2)) {
@@ -1319,7 +1319,7 @@ AAddNote : _ADDNOTE _STRING ={
          }
          ;
 
-AMove    : _MOVE _STRING ={
+AMove    : _MOVE _STRING {
             act->_Act = ACT_MOVE;
             act->_Base = MakeBase($<ch>2);
             if (act->_Base == NULL) {
@@ -1340,7 +1340,7 @@ AMove    : _MOVE _STRING ={
          }
          ;
 
-ACopy    : _COPY _STRING ={
+ACopy    : _COPY _STRING {
             act->_Act = ACT_COPY;
             act->_Base = MakeBase($<ch>2);
             if (act->_Base == NULL) {
@@ -1361,22 +1361,22 @@ ACopy    : _COPY _STRING ={
          }
          ;
 
-ARewrite : _REWRITE ={
+ARewrite : _REWRITE {
               MaskMode = 1;
               act->_Act = ACT_REWRITE;
            }
-           MParam ={
+           MParam {
               act->_Mask = msk;
            }
          ;
 
-ADisplay : _DISPLAY _STRING ={
+ADisplay : _DISPLAY _STRING {
             act->_Act = ACT_DISPLAY;
             act->_TplName = strdup($<ch>2);
          }
          ;
 
-AScript  : _ASCRIPT _STRING ={
+AScript  : _ASCRIPT _STRING {
             act->_Act = ACT_SCRIPT;
             if (!ScriptWordExists($<ch>2)) {
                yyerror("Script function not found.");
@@ -1386,26 +1386,26 @@ AScript  : _ASCRIPT _STRING ={
          }
          ;
 
-AAFlag   : AFlag ={
+AAFlag   : AFlag {
             act->_Act = ACT_FLAG;
             act->_OutDir = strdup($<ch>1);
          }
          ;
 
-AFlag    : _FLAG _STRING = { $<ch>$ = $<ch>2; }
+AFlag    : _FLAG _STRING { $<ch>$ = $<ch>2; }
          ;
 
-ADelFile : _DELFILE _STRING ={
+ADelFile : _DELFILE _STRING {
             act->_Act = ACT_DELFILE;
             act->_OutDir = strdup($<ch>2);
          }
          ;
 
-ANewMsg  : _NEWMSG  ={
+ANewMsg  : _NEWMSG  {
             MaskMode = 1;
             act->_Act = ACT_NEWMSG;
          }
-         _STRING _STRING MParam ={
+         _STRING _STRING MParam {
             act->_Tpl = new Template();
             if (!act->_Tpl->Set($<ch>3)) {
                yyerror("Template file is not accesible.");
@@ -1442,7 +1442,7 @@ ANewMsg  : _NEWMSG  ={
          }
          ;
 
-AWriteFile : _WRITEFILE _STRING _STRING ={
+AWriteFile : _WRITEFILE _STRING _STRING {
               act->_Act = ACT_WRITEFILE;
               act->_Tpl = new Template();
               if (!act->_Tpl->Set($<ch>2)) {
@@ -1456,7 +1456,7 @@ AWriteFile : _WRITEFILE _STRING _STRING ={
            }
            ;
 
-AAppendToFile : _APPENDTOFILE _STRING _STRING ={
+AAppendToFile : _APPENDTOFILE _STRING _STRING {
                    act->_Act = ACT_ADDFILE;
                    act->_Tpl = new Template();
                    if (!act->_Tpl->Set($<ch>2)) {
@@ -1470,7 +1470,7 @@ AAppendToFile : _APPENDTOFILE _STRING _STRING ={
               }
               ;
 
-ACall : _CALL _STRING _STRING _STRING ={
+ACall : _CALL _STRING _STRING _STRING {
            act->_Act = ACT_CALL;
            act->_Tpl = new Template();
            if (!act->_Tpl->Set($<ch>2)) {
@@ -1483,13 +1483,13 @@ ACall : _CALL _STRING _STRING _STRING ={
            act->_OutDir = strdup($<ch>3);
            act->_TplName = strdup($<ch>4);
       }
-      | _CALL _STRING ={
+      | _CALL _STRING {
            act->_Act = ACT_CALL;
            act->_TplName = strdup($<ch>2);
       }
       ;
 
-ARoute : _ROUTE RouMode ={ cffa.Clean(); } faddress ={
+ARoute : _ROUTE RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_ROUTE;
           if (act->sd == act->Before|| act->sd == act->After) {
              yyerror("You can not use the Action Route in 'ScanDir: @AfterRoute|@BeforeRoute'");
@@ -1507,7 +1507,7 @@ ARoute : _ROUTE RouMode ={ cffa.Clean(); } faddress ={
        }
        ;
 
-ARouteFbox : _ROUTEFBOX RouMode ={ cffa.Clean(); } faddress ={
+ARouteFbox : _ROUTEFBOX RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_ROUTEFBOX;
 	  if (FileBoxDir == NULL)
 	  {
@@ -1530,7 +1530,7 @@ ARouteFbox : _ROUTEFBOX RouMode ={ cffa.Clean(); } faddress ={
        }
        ;
 
-ARouteHub : _ROUTEHUB RouMode ={ cffa.Clean(); } ={
+ARouteHub : _ROUTEHUB RouMode { cffa.Clean(); } {
           act->_Act = ACT_ROUTEHUB;
           if (act->sd == act->Before|| act->sd == act->After) {
              yyerror("You can not use the Action RouteHub in 'ScanDir: @AfterRoute|@BeforeRoute'");
@@ -1541,7 +1541,7 @@ ARouteHub : _ROUTEHUB RouMode ={ cffa.Clean(); } ={
        ;
 
 
-ACopyAttachFbox : _COPYATTACHFBOX RouMode ={ cffa.Clean(); } faddress ={
+ACopyAttachFbox : _COPYATTACHFBOX RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_COPYATTACHFBOX;
 	  if (FileBoxDir == NULL)
 	  {
@@ -1553,7 +1553,7 @@ ACopyAttachFbox : _COPYATTACHFBOX RouMode ={ cffa.Clean(); } faddress ={
        }
        ;
 
-AMoveAttachFbox : _MOVEATTACHFBOX RouMode ={ cffa.Clean(); } faddress ={
+AMoveAttachFbox : _MOVEATTACHFBOX RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_MOVEATTACHFBOX;
 	  if (FileBoxDir == NULL)
 	  {
@@ -1565,14 +1565,14 @@ AMoveAttachFbox : _MOVEATTACHFBOX RouMode ={ cffa.Clean(); } faddress ={
        }
        ;
 
-RouMode : _HOLD   ={ $<pktmode>$ = F_HOLD; }
-        | _CRASH  ={ $<pktmode>$ = F_CRASH; }
-        | _DIRECT ={ $<pktmode>$ = F_DIRECT; }
-        | _NORMAL ={ $<pktmode>$ = F_NORMAL; }
-	| _IMMEDIATE={ $<pktmode>$ = F_IMMEDIATE; }
+RouMode : _HOLD   { $<pktmode>$ = F_HOLD; }
+        | _CRASH  { $<pktmode>$ = F_CRASH; }
+        | _DIRECT { $<pktmode>$ = F_DIRECT; }
+        | _NORMAL { $<pktmode>$ = F_NORMAL; }
+	| _IMMEDIATE{ $<pktmode>$ = F_IMMEDIATE; }
         ;
 
-APoll : _POLL RouMode ={ cffa.Clean(); } faddress ={
+APoll : _POLL RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_POLL;
           act->_Flav = $<pktmode>2;
           act->_f = cffa;
@@ -1586,7 +1586,7 @@ APoll : _POLL RouMode ={ cffa.Clean(); } faddress ={
        }
       ;
 
-AChangePath : _CHANGEPATH _STRING ={
+AChangePath : _CHANGEPATH _STRING {
                act->_Act = ACT_CHANGEPATH;
                if (strlen($<ch>2) > 72) {
                   yyerror("New path too long");
@@ -1596,18 +1596,18 @@ AChangePath : _CHANGEPATH _STRING ={
             }
             ;
 
-AToLowerPath : _TOLOWERPATH ={
+AToLowerPath : _TOLOWERPATH {
                act->_Act = ACT_TOLOWERPATH;
             }
             ;
 
 
-AToUpperPath : _TOUPPERPATH ={
+AToUpperPath : _TOUPPERPATH {
                act->_Act = ACT_TOUPPERPATH;
             }
             ;
 
-AAddKludge : _ADDKLUDGE _STRING _STRING ={
+AAddKludge : _ADDKLUDGE _STRING _STRING {
                act->_Act = ACT_ADDKLUDGE;
 	       act->_OutDir = strdup($<ch>2);
 	       act->_TplName = strdup($<ch>3);
@@ -1615,7 +1615,7 @@ AAddKludge : _ADDKLUDGE _STRING _STRING ={
             ;
 
 
-AMoveAttach : _MOVEATTACH _STRING ={
+AMoveAttach : _MOVEATTACH _STRING {
                act->_Act = ACT_MOVEATTACH;
                if (!DirExists($<ch>2)) {
 	         Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
@@ -1628,7 +1628,7 @@ AMoveAttach : _MOVEATTACH _STRING ={
             }
             ;
 
-ACopyAttach : _COPYATTACH _STRING ={
+ACopyAttach : _COPYATTACH _STRING {
                act->_Act = ACT_COPYATTACH;
                if (!DirExists($<ch>2)) {
 	         Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
@@ -1641,7 +1641,7 @@ ACopyAttach : _COPYATTACH _STRING ={
             }
             ;
 
-ASplit      : _SPLIT _DIGIT_ ={
+ASplit      : _SPLIT _DIGIT_ {
                act->_Act = ACT_SPLIT;
                if ($<ln>2 < 1 || $<ln>2 > 65535) {
                   yyerror("Parameter 'Lines' should be positive integer between 1 and 65535");
@@ -1651,7 +1651,7 @@ ASplit      : _SPLIT _DIGIT_ ={
             }
             ;
 
-ARecode     : _RECODE _STRING ={
+ARecode     : _RECODE _STRING {
                FILE *fp = NULL;
                char buf[512],*p,*q;
                int in,on,count;
@@ -1704,76 +1704,76 @@ ARecode     : _RECODE _STRING ={
 /* -------------- */
 
 faddress : FullFtnAddr
-         | '!' FullFtnAddr = { cffa.Zone(cffa.Zone() | FA_NOTMASK); }
+         | '!' FullFtnAddr { cffa.Zone(cffa.Zone() | FA_NOTMASK); }
          ;
 
 FullFtnAddr : nodeaddr
             | pointaddr
             | '*'
-               = {
+               {
                   cffa.Zone(FA_ANYMASK);
                   cffa.Net(FA_ANYMASK);
                   cffa.Node(FA_ANYMASK);
                   cffa.Point(FA_ANYMASK);
                }
             | '#'
-               = {
+               {
                   cffa.Zone(FA_LSTMASK);
                   cffa.Net(FA_LSTMASK);
                   cffa.Node(FA_LSTMASK);
                   cffa.Point(FA_LSTMASK);
                }
             | 'H'
-               = {
+               {
                   cffa.Zone(FA_HOLDMASK);
                   cffa.Net(FA_HOLDMASK);
                   cffa.Node(FA_HOLDMASK);
                   cffa.Point(FA_HOLDMASK);
                }
             | 'U'
-               = {
+               {
                   cffa.Zone(FA_HUBMASK);
                   cffa.Net(FA_HUBMASK);
                   cffa.Node(FA_HUBMASK);
                   cffa.Point(FA_HUBMASK);
                }
             | 'D'
-               = {
+               {
                   cffa.Zone(FA_DOWNMASK);
                   cffa.Net(FA_DOWNMASK);
                   cffa.Node(FA_DOWNMASK);
                   cffa.Point(FA_DOWNMASK);
                }
             | 'P'
-               = {
+               {
                   cffa.Zone(FA_PVTMASK);
                   cffa.Net(FA_PVTMASK);
                   cffa.Node(FA_PVTMASK);
                   cffa.Point(FA_PVTMASK);
                }
             | '@'
-               = {
+               {
                   cffa.Zone(FA_OURMASK);
                   cffa.Net(FA_OURMASK);
                   cffa.Node(FA_OURMASK);
                   cffa.Point(FA_OURMASK);
                }
             | '$'
-               = {
+               {
                   cffa.Zone(FA_FROMMASK);
                   cffa.Net(FA_FROMMASK);
                   cffa.Node(FA_FROMMASK);
                   cffa.Point(FA_FROMMASK);
                }
             | '%'
-               = {
+               {
                   cffa.Zone(FA_TOMASK);
                   cffa.Net(FA_TOMASK);
                   cffa.Node(FA_TOMASK);
                   cffa.Point(FA_TOMASK);
                }
             | '%' '.' _DIGIT_
-               = {
+               {
                   if ($<ln>3 != 0) {
                      yyerror("parse error");
                      YYABORT;
@@ -1788,12 +1788,12 @@ FullFtnAddr : nodeaddr
 pointaddr: nodeaddr '.' PntAddr
          ;
 
-PntAddr  : dw   = { cffa.Point($<ln>1); }
-         | '&'  = { cffa.Point(FA_SUBMASK); }
+PntAddr  : dw   { cffa.Point($<ln>1); }
+         | '&'  { cffa.Point(FA_SUBMASK); }
          ;
 
 nodeaddr : dw ':' dw '/' dw
-            = {
+            {
                cffa.Zone($<ln>1);
                cffa.Net($<ln>3);
                cffa.Node($<ln>5);
@@ -1801,8 +1801,8 @@ nodeaddr : dw ':' dw '/' dw
             }
          ;
 
-dw       : _DIGIT_ = { $<ln>$ = $<ln>1; }
-         | '*' = { $<ln>$ = FA_ANYMASK; }
+dw       : _DIGIT_ { $<ln>$ = $<ln>1; }
+         | '*' { $<ln>$ = FA_ANYMASK; }
          ;
 
 
