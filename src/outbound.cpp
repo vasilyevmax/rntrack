@@ -349,7 +349,7 @@ int AddToLo(char * Txt)
     LoFile = (char *)realloc(LoFile, size);
     CheckMem(LoFile);
     RSTRLCPY(LoFile + ind, Txt, size);
-    ind += (int)strlen(Txt);
+    ind += strlen(Txt);
     LoFile[ind++] = '\0';
     LoFile[ind]   = '\0';
     return TRUE;

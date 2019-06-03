@@ -587,7 +587,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
     rm.dest.net   = (unsigned short)(m._ToAddr.Net());
     rm.dest.node  = (unsigned short)(m._ToAddr.Node());
     rm.dest.point = (unsigned short)(m._ToAddr.Point());
-    SetMsgAttr(m, FirstWord((const unsigned int &)rm.attr));
+    SetMsgAttr(m, (unsigned short &)rm.attr);
 
     if(m.fScanned)
     {
@@ -625,7 +625,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
             tmt2++;
         }
         while(*(tmt - 1) != '\0');
-        CtrlLen = (int)strlen(Ctrl);
+        CtrlLen = strlen(Ctrl);
     }
     else
     {
@@ -662,7 +662,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
     if(Body != NULL)
     {
         CHP = 578;
-        BodyLen = (int)strlen(Body);
+        BodyLen = strlen(Body);
     }
     else
     {

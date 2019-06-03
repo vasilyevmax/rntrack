@@ -270,7 +270,7 @@ void AddKluToChain(char * & cl, const char * Kn, const char * Kb)
 
     if(cl != NULL)
     {
-        olen = (int)strlen(cl);
+        olen = strlen(cl);
         cl   = (char *)realloc(cl, olen + strlen(buff) + 1);
         CheckMem(cl);
         strcat(cl, buff);
@@ -371,7 +371,7 @@ bool WriteMsgBody(cMSG & m, FILE * fh)
 
     if(!m.fEmpty)
     {
-        FSize = (unsigned)strlen(m.Body());
+        FSize = strlen(m.Body());
 
         if(fwrite(m.Body(), FSize, 1, fh) != 1)
         {

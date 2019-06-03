@@ -223,7 +223,7 @@ int ReadNdlLine(char * Buff, int Count)
             Buff[0] = ';';
         }
     }
-    return (int)strlen(Buff);
+    return strlen(Buff);
 } // ReadNdlLine
 
 Ntr * ExistByNumber(Ntr * Addr, unsigned int Number)

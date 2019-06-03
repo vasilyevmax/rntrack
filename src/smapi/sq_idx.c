@@ -642,11 +642,11 @@ int _SquishEndBuffer(HIDX hix)
 
         size -= j;
 
-        uiWriteSize=(unsigned)((size_t)size * (size_t)SQIDX_SIZE);
+        uiWriteSize=(size_t)size * (size_t)SQIDX_SIZE;
 
         if (rc)
         {
-          if (write_sqidx(HixSqd->ifd, (hix->pss[i].psqi+j), (dword)size)
+          if (write_sqidx(HixSqd->ifd, (hix->pss[i].psqi+j), size)
                  != 1)
 
           {
