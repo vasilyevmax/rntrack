@@ -135,7 +135,7 @@ bool PKTBASE::CopyTail(FILE * tf)
 
     while(!feof(fh))
     {
-        if((rc = (int)fread(Buffer, 1, 10240, fh)) != 10240)
+        if((rc = fread(Buffer, 1, 10240, fh)) != 10240)
         {
             if(!feof(fh))
             {

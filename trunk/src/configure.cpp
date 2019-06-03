@@ -13,21 +13,6 @@
  *  $Id$
  */
 
-
-/*--------------------------------------------------------------------*/
-/*                        Program include files                       */
-/*--------------------------------------------------------------------*/
-
-#include "constant.hpp"
-#include "vars.hpp"
-#include "log.hpp"
-#include "configure.hpp"
-#include "scandir.hpp"
-#include "cfg.hpp"
-#if defined (__PERL_VERSION__)
-    #include "script.hpp"
-#endif
-
 /*--------------------------------------------------------------------*/
 /*                  Autoconf-generated include files                  */
 /*--------------------------------------------------------------------*/
@@ -40,14 +25,14 @@
 /*                        System include files                        */
 /*--------------------------------------------------------------------*/
 
-#ifdef HAS_UNISTD_H
+#ifdef HAVE_UNISTD_H
     #include <unistd.h>
 #endif
-#ifdef HAS_IO_H
+#ifdef HAVE_IO_H
     #include <io.h>
 #endif
 
-#ifdef HAS_STRING_H
+#ifdef HAVE_STRING_H
     #include <string.h>
 #endif
 #ifdef HAVE_STDLIB_H
@@ -61,6 +46,20 @@
 
 #if !defined (stricmp) && !defined (HAVE_STRICMP) && defined (HAVE_STRCASECMP)
     #define stricmp(s1, s2) strcasecmp(s1, s2)
+#endif
+
+/*--------------------------------------------------------------------*/
+/*                        Program include files                       */
+/*--------------------------------------------------------------------*/
+
+#include "constant.hpp"
+#include "vars.hpp"
+#include "log.hpp"
+#include "configure.hpp"
+#include "scandir.hpp"
+#include "cfg.hpp"
+#if defined (__PERL_VERSION__)
+    #include "script.hpp"
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -1091,7 +1090,7 @@ int SearchToken(char * s)
     int l;
     char * Buff;
 
-    l = (int)strlen(s);
+    l = strlen(s);
 
     if(l == 0)
     {
@@ -1129,7 +1128,7 @@ int SearchToken(char * s)
 //    {
     if(kwtable[i].kw != NULL)
     {
-        Pos += (int)strlen(Buff);
+        Pos += strlen(Buff);
 //          Log.Level(LOGD) << "Found token: '" << kwtable[i].kw << "'." << EOL;
     }
     else
@@ -1398,7 +1397,7 @@ int yylex(void)
 
             case LEX_DIGIT:
 
-                if(nxtch < 256 && isdigit(nxtch))
+                if(isdigit(nxtch) && nxtch < 256)
                 {
                     yylval.ln = (yylval.ln * 10) + nxtch - '0';
                     nxtch = TakeChar();
@@ -1468,9 +1467,9 @@ int yylex(void)
                 else if(nxtch == '"')
                 {
                     chpool[avail] = '\0';
-                    avail -= (int)strlen(p);
+                    avail -= strlen(p);
                     strcpy(p, PrepareString(p));
-                    avail += (int)(strlen(p) + 1);
+                    avail += (strlen(p) + 1);
                     yylval.ch = p;
                     LexStat   = LEX_START;
                     return _STRING;

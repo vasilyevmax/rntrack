@@ -93,7 +93,7 @@ char *extract_CVS_keyword(char *str)
     if ((!tmp)||(!*(++tmp)))
         return NULL;
 
-    l = (int)strlen(tmp);
+    l = strlen(tmp);
 
     if (l<3)
         return NULL;
@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
             break;
         }
         s = argv[i];
-        for(j=(int)strlen(argv[i]); j>0; j--, s++)
+        for(j=strlen(argv[i]); j>0; j--, s++)
             if (!isdigit((int)(*s)))
             {
                 fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);

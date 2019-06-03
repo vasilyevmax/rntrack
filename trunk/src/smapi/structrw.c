@@ -1001,7 +1001,7 @@ static void decode_subfield(byte *buf, JAMSUBFIELD2LISTptr *subfield, dword *Sub
 
    pbuf = buf;
    i = 0;
-   while ((dword)(pbuf - buf + 8) < *SubfieldLen) {
+   while ((pbuf - buf + 8) < *SubfieldLen) {
       i++;
       pbuf += get_dword(pbuf+4) + sizeof(JAMBINSUBFIELD);
    }
@@ -1014,7 +1014,7 @@ static void decode_subfield(byte *buf, JAMSUBFIELD2LISTptr *subfield, dword *Sub
    subfieldNext = subfield[0]->subfield;
    pbuf = buf;
 
-   while ((dword)(pbuf - buf + 8) < *SubfieldLen) {
+   while ((pbuf - buf + 8) < *SubfieldLen) {
       /* 02 bytes LoID */
       subfieldNext->LoID = get_word(pbuf);
       pbuf += 2;
@@ -1048,7 +1048,7 @@ static void decode_subfield(byte *buf, JAMSUBFIELD2LISTptr *subfield, dword *Sub
 
    } /* endwhile */
 
-   *SubfieldLen = (dword)(pbuf - buf);
+   *SubfieldLen = pbuf - buf;
 }
 
 int read_subfield(int handle, JAMSUBFIELD2LISTptr *subfield, dword *SubfieldLen)
@@ -1106,7 +1106,7 @@ int read_allidx(JAMBASEptr jmb)
    } else
       jmb->actmsg_read = 2;
    allocated = jmb->HdrInfo.ActiveMsgs;
-   if (allocated > (dword)len/IDX_SIZE) allocated = (dword)len/IDX_SIZE;
+   if (allocated > len/IDX_SIZE) allocated = len/IDX_SIZE;
    if (allocated) {
       jmb->actmsg = (JAMACTMSGptr)farmalloc(allocated * sizeof(JAMACTMSG));
       if (jmb->actmsg == NULL) {
@@ -1137,7 +1137,7 @@ int read_allidx(JAMBASEptr jmb)
                   }
                   jmb->actmsg = newptr;
                }
-               jmb->actmsg[i].IdxOffset = (dword)(pbuf - buf);
+               jmb->actmsg[i].IdxOffset = pbuf - buf;
                jmb->actmsg[i].TrueMsg = offset;
                jmb->actmsg[i].UserCRC = get_dword(pbuf);
                memcpy(&(jmb->actmsg[i].hdr), &hbuf, sizeof(hbuf));
