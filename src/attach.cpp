@@ -19,13 +19,10 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifdef HAVE_IO_H
-  #include <io.h>
-#endif
-#ifdef HAVE_UNISTD_H
+#ifdef HAS_UNISTD_H
   #include <unistd.h>
 #endif
-#ifdef HAVE_DOS_H
+#ifdef HAS_DOS_H
   #include <dos.h>
 #endif
 #include <stdio.h>
@@ -47,6 +44,9 @@
 #include "outbound.hpp"
 #include "mytypes.hpp"
 #include "msg.hpp"
+#ifdef HAS_IO_H
+  #include <io.h>
+#endif
 
 #ifdef __WATCOMC__
   #undef far
@@ -70,7 +70,7 @@ static char * BaseName(char * name)
     static char Buff[BUFF_SIZE];
     char Buff1[BUFF_SIZE];
     char * tmt;
-
+	
     Buff[0] = '\0';
     RSTRLCPY(Buff1, name, BUFF_SIZE);
 
@@ -326,7 +326,7 @@ int _AttachExists(char * Buff)
     if(SkipHiddenFiles)
     {
         struct _finddata_t fd;
-        int h = _findfirst(tmt, &fd);
+        int h = (int)_findfirst(tmt, &fd);
 
         if(h != -1)
         {

@@ -366,7 +366,7 @@ void nls_strupr(char * s)
 
     if(s2)
     {
-        int slen = strlen(s);
+        int slen = (int)strlen(s);
 
         OemToChar(s2, s);
         LCMapString(LOCALE_SYSTEM_DEFAULT, LCMAP_UPPERCASE, s, slen, s2,
@@ -444,7 +444,7 @@ const char * dirslashbug(const char * dirname)
 //   len = GetFullPathName(dirname, MAX_PATH, newname, &p);
 //   if ((len > 3) && (newname[len-1] == PATHDELIMC)) {
     strcpy(newname, dirname);
-    len = strlen(newname);
+    len = (int)strlen(newname);
 
     if((len > 1) && (newname[len - 1] == PATHDELIMC))
     {

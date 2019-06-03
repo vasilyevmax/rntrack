@@ -322,3 +322,23 @@ LogStream & LogStream::operator <<(sdword i)
     ShowLine("%ld", (long)i);
     return *this;
 }
+
+//#if defined(__NT__) || defined(_WINDOWS)
+//LogStream & LogStream::operator <<(__int64 i)
+//#else
+//LogStream & LogStream::operator <<(__int64_t i)
+//#endif
+//{
+//    ShowLine("%lld", i);
+//    return *this;
+//}
+
+//#if defined(__NT__) || defined(_WINDOWS)
+//LogStream & LogStream::operator <<(unsigned __int64 i)
+//#else
+//LogStream & LogStream::operator <<(__uint64 i)
+//#endif
+//{
+//    ShowLine("%llu", i);
+//    return *this;
+//}

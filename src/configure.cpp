@@ -13,40 +13,6 @@
  *  $Id$
  */
 
-/*--------------------------------------------------------------------*/
-/*                  Autoconf-generated include files                  */
-/*--------------------------------------------------------------------*/
-
-#ifdef HAVE_CONFIG_H
-    #include "aconfig.h"
-#endif
-
-/*--------------------------------------------------------------------*/
-/*                        System include files                        */
-/*--------------------------------------------------------------------*/
-
-#ifdef HAVE_UNISTD_H
-    #include <unistd.h>
-#endif
-#ifdef HAVE_IO_H
-    #include <io.h>
-#endif
-
-#ifdef HAVE_STRING_H
-    #include <string.h>
-#endif
-#ifdef HAVE_STDLIB_H
-    #include <stdlib.h>
-#endif
-#include <ctype.h>
-
-/*--------------------------------------------------------------------*/
-/*                 Library function (re)definitions                   */
-/*--------------------------------------------------------------------*/
-
-#if !defined (stricmp) && !defined (HAVE_STRICMP) && defined (HAVE_STRCASECMP)
-    #define stricmp(s1, s2) strcasecmp(s1, s2)
-#endif
 
 /*--------------------------------------------------------------------*/
 /*                        Program include files                       */
@@ -60,6 +26,41 @@
 #include "cfg.hpp"
 #if defined (__PERL_VERSION__)
     #include "script.hpp"
+#endif
+
+/*--------------------------------------------------------------------*/
+/*                  Autoconf-generated include files                  */
+/*--------------------------------------------------------------------*/
+
+#ifdef HAVE_CONFIG_H
+    #include "aconfig.h"
+#endif
+
+/*--------------------------------------------------------------------*/
+/*                        System include files                        */
+/*--------------------------------------------------------------------*/
+
+#ifdef HAS_UNISTD_H
+    #include <unistd.h>
+#endif
+#ifdef HAS_IO_H
+    #include <io.h>
+#endif
+
+#ifdef HAS_STRING_H
+    #include <string.h>
+#endif
+#ifdef HAVE_STDLIB_H
+    #include <stdlib.h>
+#endif
+#include <ctype.h>
+
+/*--------------------------------------------------------------------*/
+/*                 Library function (re)definitions                   */
+/*--------------------------------------------------------------------*/
+
+#if !defined (stricmp) && !defined (HAVE_STRICMP) && defined (HAVE_STRCASECMP)
+    #define stricmp(s1, s2) strcasecmp(s1, s2)
 #endif
 
 /*--------------------------------------------------------------------*/
@@ -1090,7 +1091,7 @@ int SearchToken(char * s)
     int l;
     char * Buff;
 
-    l = strlen(s);
+    l = (int)strlen(s);
 
     if(l == 0)
     {
@@ -1128,7 +1129,7 @@ int SearchToken(char * s)
 //    {
     if(kwtable[i].kw != NULL)
     {
-        Pos += strlen(Buff);
+        Pos += (int)strlen(Buff);
 //          Log.Level(LOGD) << "Found token: '" << kwtable[i].kw << "'." << EOL;
     }
     else
@@ -1397,7 +1398,7 @@ int yylex(void)
 
             case LEX_DIGIT:
 
-                if(isdigit(nxtch) && nxtch < 256)
+                if(nxtch < 256 && isdigit(nxtch))
                 {
                     yylval.ln = (yylval.ln * 10) + nxtch - '0';
                     nxtch = TakeChar();
@@ -1467,9 +1468,9 @@ int yylex(void)
                 else if(nxtch == '"')
                 {
                     chpool[avail] = '\0';
-                    avail -= strlen(p);
+                    avail -= (int)strlen(p);
                     strcpy(p, PrepareString(p));
-                    avail += (strlen(p) + 1);
+                    avail += (int)(strlen(p) + 1);
                     yylval.ch = p;
                     LexStat   = LEX_START;
                     return _STRING;

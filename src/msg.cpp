@@ -46,7 +46,6 @@
   #define strftim strftime
 #endif
 
-#ifdef _MSC_VER
 char months_ab[][4] =
 {
     "Jan",
@@ -62,7 +61,6 @@ char months_ab[][4] =
     "Nov",
     "Dec"
 };
-#endif
 
 char * FromTime(time_t tmt)
 {
@@ -574,7 +572,7 @@ unsigned long MsgID(void)
 {
     static unsigned int LastMSGID = 0;
 
-    return (time(NULL) << 3) + LastMSGID++;
+    return (dword)(time(NULL) << 3) + LastMSGID++;
 }
 
 // ---------------------------
@@ -1241,7 +1239,7 @@ unsigned int cMSG::Bytes(void)
         return 0;
     }
 
-    return strlen(_Body);
+    return (unsigned int)strlen(_Body);
 }
 
 // ---------------------------

@@ -1563,7 +1563,7 @@ int Template::Save(cMSG & m)
     char * tmt;
 
     CHP = 77312;
-    m.SetBody(Body, strlen(Body));
+    m.SetBody(Body, (unsigned)strlen(Body));
     CHP = 77314;
 
     while((tmt = strchr(m.Body(), '\n')) != NULL)

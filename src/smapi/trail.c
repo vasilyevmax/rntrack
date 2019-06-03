@@ -23,7 +23,7 @@
 char *_fast Strip_Trailing(char *str, char strip)
 {
     int x;
-    if (str && *str && str[x = strlen(str) - 1] == strip)
+    if (str && *str && str[x = (int)strlen(str) - 1] == strip)
     {
         str[x] = '\0';
     }
@@ -33,7 +33,7 @@ char *_fast Strip_Trailing(char *str, char strip)
 char *_fast Add_Trailing(char *str, char add)
 {
     int x;
-    if (str && *str && str[x = strlen(str) - 1] != add)
+    if (str && *str && str[x = (int)strlen(str) - 1] != add)
     {
         str[x + 1] = add;
         str[x + 2] = '\0';

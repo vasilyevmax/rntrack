@@ -308,7 +308,7 @@ byte *_XPENTRY CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length)
 
     if (length)
     {
-        *length -= (size_t) (end - txt);
+        *length -= (unsigned) (end - txt);
     }
 
     if (newtext)
@@ -325,7 +325,7 @@ byte *_XPENTRY GetCtrlToken(byte *where, byte *what)
     unsigned int len;
 
     if (where == NULL || what == NULL) return NULL;
-    len = strlen((char *)what);
+    len = (unsigned int)strlen((char *)what);
 
     do {
 	where = (byte *)strchr((char *)where, '\001');
@@ -473,7 +473,7 @@ byte *_XPENTRY CvtCtrlToKludge(byte * ctrl)
 void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what)
 {
     byte *p;
-    unsigned int len = strlen((char *)what);
+    unsigned int len = (unsigned int)strlen((char *)what);
 
     while (1) {
 	ctrl = (unsigned char *)strchr((char *)ctrl, '\001');

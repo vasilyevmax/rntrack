@@ -36,7 +36,7 @@ char *_fast firstchar(char *strng, char *delim, int findword)
         return NULL;
     }
 
-    sl_d = strlen(delim);
+    sl_d = (int)strlen(delim);
 
     for (string = strng; *string; string++)
     {
@@ -55,7 +55,7 @@ char *_fast firstchar(char *strng, char *delim, int findword)
         }
     }
 
-    sl_s = strlen(string);
+    sl_s = (int)strlen(string);
 
     for (wordno = 0; string - oldstring < sl_s; string++)
     {

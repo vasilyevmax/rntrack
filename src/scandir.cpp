@@ -552,6 +552,11 @@ int ScanDir::Do(void)
         Log.Level(LOGD) << "No masks in scandir." << EOL;
     }
 
+    if(_FlagFile != NULL && _FlagFile[0] == '#')
+    {
+        unlink(&_FlagFile[1]);
+    }
+
     if(_Renumber)
     {
         Log.Level(LOGI) << "Renumber message base " << _Base->BaseName() <<
@@ -560,20 +565,11 @@ int ScanDir::Do(void)
         if(!_Base->Renumber())
         {
             _Base->Close();
-            if(_FlagFile != NULL && _FlagFile[0] == '#')
-            {
-                unlink(&_FlagFile[1]);
-            }
             return FALSE;
         }
     }
 
 DoneOK:
-
-    if(_FlagFile != NULL && _FlagFile[0] == '#')
-    {
-        unlink(&_FlagFile[1]);
-    }
 
     if(_ScriptAfter != NULL)
     {
