@@ -4,6 +4,11 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.37 2019-06-07 (Subversion rev.179)
+-----------------------------------
+! Fix build under FreeBSD 12.0. Patch by andrew clarke 3:633/267.
+! Fix build under linux (Ubuntu server 18.04 LTS). Patch by mark lewis 1:3634/12.
+
 1.36 2018-08-25 (Subversion rev.174)
 -----------------------------------
 ! Fix a bug in not deleting a flag after ScanDir of an empty base.

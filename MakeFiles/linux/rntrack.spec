@@ -1,5 +1,5 @@
 Name: rntrack
-Version: 1.36
+Version: 1.37
 Release: 1%{?dist}
 Group: Applications/FTN
 Summary: RNtrack - a FTN netmail tracker

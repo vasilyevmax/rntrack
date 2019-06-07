@@ -7,7 +7,7 @@
 # No support for the Husky build environment.
 
 prefix=	/usr/local
-CC=	gcc
+CC=	cc
 CFLAGS=	-Wall
 CDEFS=	-DUNIX
 COPT=	-O3

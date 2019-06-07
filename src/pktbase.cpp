@@ -707,7 +707,7 @@ bool PKTBASE::Next(void)
 
             if(fsCompareName(de->d_name, "*.[Pp][Kk][Tt]") != 0)
             {
-                sprintf(Buff, "%s"PATHDELIMS "%s", DirName, de->d_name);
+                sprintf(Buff, "%s" PATHDELIMS "%s", DirName, de->d_name);
                 break;
             }
         }

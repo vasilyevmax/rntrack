@@ -190,7 +190,7 @@ char * MakePktName(FA & f, char * PathPrefix)
 
         if((f.Point() & 0xffff) != 0)
         {
-            RSTRLCAT(Buff, PntExtension ""PATHDELIMS "0000", BUFF_SIZE);
+            RSTRLCAT(Buff, PntExtension PATHDELIMS "0000", BUFF_SIZE);
             sprintf(Buff + strlen(Buff), "%04x", (word)(f.Point() & 0xffff));
         }
     }
@@ -317,7 +317,7 @@ char * MakeAPktName(char * PathPrefix)
 
     do
     {
-        sprintf(tmt, PATHDELIMS "%08lx"PktExtension, MsgID());
+        sprintf(tmt, PATHDELIMS "%08lx" PktExtension, MsgID());
     }
     while(access(Buff, F_OK) == 0);
     return Buff;
@@ -1529,7 +1529,7 @@ int DoRepackDir(char * Name)
         }
     }
 
-    if(tmt == NULL || stricmp(tmt, "pnt"PATHDELIMS) != 0)
+    if(tmt == NULL || stricmp(tmt, "pnt" PATHDELIMS) != 0)
     {
         DoRepackPoints(Name);
     }
