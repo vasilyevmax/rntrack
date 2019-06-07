@@ -212,7 +212,7 @@ static int AddTearline(Template * Tpl)
     if(Tearline == NULL)
     {
         CHP = 77010;
-        Tpl->AddStr("RNtrack "ProgVersion);
+        Tpl->AddStr("RNtrack " ProgVersion);
         CHP = 77011;
     }
     else
@@ -325,7 +325,7 @@ static int AddMsgNTearline(Template * Tpl)
     if(i == Tpl->BodySize)
     {
         CHP = 77068;
-        Tpl->AddStr("--- RNtrack "ProgVersion);
+        Tpl->AddStr("--- RNtrack " ProgVersion);
     }
     else
     {

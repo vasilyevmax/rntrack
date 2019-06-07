@@ -66,13 +66,13 @@
 #ifdef VERSION
     #undef VERSION
 #endif
-#define VERSION               "1.36"
+#define VERSION               "1.37"
 #ifdef __PERL_VERSION__
     #define Perl              "/Perl"
 #else
     #define Perl
 #endif
-#define ProgVersion           VERSION ""OsType ""Perl
+#define ProgVersion           VERSION OsType Perl
 #define ProductLO             0xff
 #define ProductHI             0x16
 #define Copyright \

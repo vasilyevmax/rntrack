@@ -598,7 +598,7 @@ bool MSGASMSG::Rewind(void)
     {
 // WARNING!!!!!!!!!!! i'm not sure about d_type in all operation systems
 //      if ((pp->d_type & 0x1a) == 0) {
-        if(fsCompareName(pp->d_name, "*"MsgExtension) != 0)
+        if(fsCompareName(pp->d_name, "*" MsgExtension) != 0)
         {
             strcpy(bb, pp->d_name);
             Log.Level(LOGD) << "File '" << bb << "' matched with mask." << EOL;
@@ -680,8 +680,8 @@ bool MSGASMSG::Renumber(void)
                 {
                     if(NewNum < Num)
                     {
-                        sprintf(Buff, "%s%u"MsgExtension, DirName, Num);
-                        sprintf(Buff2, "%s%u"MsgExtension, DirName, NewNum);
+                        sprintf(Buff, "%s%u" MsgExtension, DirName, Num);
+                        sprintf(Buff2, "%s%u" MsgExtension, DirName, NewNum);
                         Log.Level(LOGD) << "Rename '" << Buff << "' to '" <<
                                            Buff2 << "'" << EOL;
 
@@ -719,7 +719,7 @@ bool MSGASMSG::DeleteMsg(void)
         return TRUE;
     }
 
-    sprintf(Buff, "%s%u"MsgExtension, DirName, MsgNum);
+    sprintf(Buff, "%s%u" MsgExtension, DirName, MsgNum);
     int error = unlink(Buff);
 
     if(!error)
@@ -741,7 +741,7 @@ char * MSGASMSG::ReadToMem(void)
 
     Buff = (char *)malloc(4096);
     CheckMem(Buff);
-    sprintf(Buff, "%s%u"MsgExtension, DirName, MsgNum);
+    sprintf(Buff, "%s%u" MsgExtension, DirName, MsgNum);
     fh = fopen(Buff, "rb");
     free(Buff);
 
@@ -788,7 +788,7 @@ char * MSGASMSG::MessageName(void)
 {
     static char Buff[2048];
 
-    sprintf(Buff, "%s%u"MsgExtension, DirName, MsgNum);
+    sprintf(Buff, "%s%u" MsgExtension, DirName, MsgNum);
     return Buff;
 }
 
@@ -807,14 +807,14 @@ bool MSGASMSG::WriteFromMem(char * Buff)
     do
     {
         Num++;
-        sprintf(tmt, "%s%u"MsgExtension, DirName, Num);
+        sprintf(tmt, "%s%u" MsgExtension, DirName, Num);
     }
     while(access(tmt, F_OK) == 0);
     AddToMask(Num);
 
     b = (char *)malloc(4096);
     CheckMem(b);
-    sprintf(b, "%s%u"MsgExtension, DirName, Num);
+    sprintf(b, "%s%u" MsgExtension, DirName, Num);
     fh = fopen(b, "wb");
     free(b);
 
@@ -853,7 +853,7 @@ bool MSGASMSG::ReadMsg(cMSG & m)
     CHP  = 222;
     Buff = (char *)malloc(4096);
     CheckMem(Buff);
-    sprintf(Buff, "%s%u"MsgExtension, DirName, MsgNum);
+    sprintf(Buff, "%s%u" MsgExtension, DirName, MsgNum);
 
 /*   if (MaxMsgSize != 0)
    {
@@ -1009,7 +1009,7 @@ bool MSGASMSG::WriteOneMsg(unsigned int Num, cMSG & m)
     CHP  = 23702;
     CheckMem(Buff);
     CHP = 23703;
-    sprintf(Buff, "%s%u"MsgExtension, DirName, Num);
+    sprintf(Buff, "%s%u" MsgExtension, DirName, Num);
     CHP = 23704;
     fh  = fopen(Buff, "wb");
     CHP = 23705;
@@ -1093,7 +1093,7 @@ bool MSGASMSG::WriteNewMsg(cMSG & m)
     do
     {
         Num++;
-        sprintf(Buff, "%s%u"MsgExtension, DirName, Num);
+        sprintf(Buff, "%s%u" MsgExtension, DirName, Num);
     }
     while(access(Buff, F_OK) == 0);
     AddToMask(Num);
