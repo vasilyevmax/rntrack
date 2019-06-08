@@ -64,7 +64,7 @@ int SetNoLogIgnore(void);
 // --------------------------------------------------------------------
 
 static int AddSysop(Template * Tpl);
-static int AddMaxAge(Template * Tpl);
+//static int AddMaxAge(Template * Tpl);
 static int AddMyAddr(Template * Tpl);
 static int AddMsgDate(Template * Tpl);
 static int AddMsgAge(Template * Tpl);
@@ -94,16 +94,16 @@ static int AddMsgNOrigin(Template * Tpl);
 static int AddMsgNTearline(Template * Tpl);
 static int AddOrigin(Template * Tpl);
 static int AddTearline(Template * Tpl);
-static int AddMsgLoops(Template * Tpl);
+//static int AddMsgLoops(Template * Tpl);
 static int AddMsgAttachSize(Template * Tpl);
-static int AddMaxAttachSize(Template * Tpl);
+//static int AddMaxAttachSize(Template * Tpl);
 static int AddAreaName(Template * Tpl);
 static int AddSize(Template * Tpl);
 static int AddLines(Template * Tpl);
 static int AddRoutedVia(Template * Tpl);
 static int AddMsgId(Template * Tpl);
 static int AddMsgReply(Template * Tpl);
-static int AddNewMsgId(Template * Tpl);
+//static int AddNewMsgId(Template * Tpl);
 static int AddProgVersion(Template * Tpl);
 
 #ifdef __unix__
@@ -359,6 +359,7 @@ static int AddFPid(Template * Tpl)
 
 #endif
 
+#if 0
 static int AddMaxAge(Template * Tpl)
 {
     char Buff[128];
@@ -387,6 +388,7 @@ static int AddMaxAge(Template * Tpl)
     return TRUE;
 } // AddMaxAge
 
+
 static int AddMaxAttachSize(Template * Tpl)
 {
     char Buff[128];
@@ -407,6 +409,7 @@ static int AddMaxAttachSize(Template * Tpl)
     CHP = 77080;
     return TRUE;
 }
+#endif
 
 static int AddMsgAttachSize(Template * Tpl)
 {
@@ -594,6 +597,7 @@ static int AddMsgAge(Template * Tpl)
     return TRUE;
 }
 
+#if 0
 static int AddMsgLoops(Template * Tpl)
 {
     char Buff[128];
@@ -614,6 +618,7 @@ static int AddMsgLoops(Template * Tpl)
     CHP = 77104;
     return TRUE;
 }
+#endif
 
 static int AddFromName(Template * Tpl)
 {
@@ -1204,6 +1209,7 @@ static int AddMsgReply(Template * Tpl)
     return AddSomeKludge(Tpl, "\1REPLY:");
 }
 
+#if 0
 static int AddNewMsgId(Template * Tpl)
 {
     char Buff[50];
@@ -1212,6 +1218,7 @@ static int AddNewMsgId(Template * Tpl)
     Tpl->AddStr(Buff);
     return TRUE;
 }
+#endif
 
 // --------------------------------------------------------------------
 

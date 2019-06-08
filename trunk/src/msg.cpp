@@ -1576,12 +1576,10 @@ void cMSG::AddOurVia(void)
     time_t t;
     char Buff[1024];
     char * tmt;
-    struct tm * tt;
 
     DelLastOurVia();
     Buff[0] = '\0';
     t  = time(NULL);
-    tt = localtime(&t);
 
     if(UTC == 99)
     {

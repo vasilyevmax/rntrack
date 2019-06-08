@@ -1506,9 +1506,6 @@ extern int yychar;
 int SetInclude(const char * tmt)
 {
     int sLineNumber;
-    int sCharNumber;
-    int sAvail;
-    int snxtch;
     char * schpool;
     char * sCurrentLine;
 
@@ -1528,10 +1525,7 @@ int SetInclude(const char * tmt)
     }
 
     sLineNumber  = LineNumber;
-    sCharNumber  = CharNumber;
     sFh = fh;
-    sAvail       = avail;
-    snxtch       = nxtch;
     sConfigFile  = ConfigFile;
     ConfigFile   = strdup(tmt);
     CheckMem(ConfigFile);
