@@ -3124,25 +3124,25 @@ yyreduce:
 
   case 186:
 
-    { (yyval.ch) = "$"; }
+    { (yyval.ch) = (char *)"$"; }
 
     break;
 
   case 187:
 
-    { (yyval.ch) = "*"; }
+    { (yyval.ch) = (char *)"*"; }
 
     break;
 
   case 188:
 
-    { (yyval.ch) = "%"; }
+    { (yyval.ch) = (char *)"%"; }
 
     break;
 
   case 190:
 
-    { (yyval.ch) = "*"; }
+    { (yyval.ch) = (char *)"*"; }
 
     break;
 
@@ -3203,7 +3203,7 @@ yyreduce:
   case 206:
 
     { /* Check MaxAttach size*/
-               if (CheckMaskMode("A") != 0) {
+               if (CheckMaskMode((char *)"A") != 0) {
                   YYABORT;
                }
                if (((NormalMask *)msk)->sd->_MaxAttachSize == 0 && MaxAttachSize == 0) {
@@ -3218,7 +3218,7 @@ yyreduce:
   case 207:
 
     { /* Check MaxMsg size*/
-               if (CheckMaskMode("M") != 0) {
+               if (CheckMaskMode((char *)"M") != 0) {
                   YYABORT;
                }
                if (((NormalMask *)msk)->sd->_MaxMsgSize == 0 && MaxMsgSize == 0) {
@@ -3251,7 +3251,7 @@ yyreduce:
   case 211:
 
     { /* Empty message */
-               if (CheckMaskMode("e") != 0) {
+               if (CheckMaskMode((char *)"e") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fEmpty = (FlagMode == 2) ? 2 : 1;
@@ -3262,7 +3262,7 @@ yyreduce:
   case 212:
 
     { /* Check echomail */
-               if (CheckMaskMode("E") != 0) {
+               if (CheckMaskMode((char *)"E") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fEchomail = (FlagMode == 2) ? 2 : 1;
@@ -3279,7 +3279,7 @@ yyreduce:
   case 214:
 
     { /* Check age */
-               if (CheckMaskMode("g") != 0) {
+               if (CheckMaskMode((char *)"g") != 0) {
                   YYABORT;
                }
                if (((NormalMask *)msk)->sd->_MaxAge == 0 && MaxAge == 0) {
@@ -3396,7 +3396,7 @@ yyreduce:
   case 232:
 
     { /* Check existing attach */
-               if (CheckMaskMode("x") != 0) {
+               if (CheckMaskMode((char *)"x") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fAttExists = (FlagMode == 2) ? 2 : 1;
@@ -3413,7 +3413,7 @@ yyreduce:
   case 234:
 
     {
-               if (CheckMaskMode("loop flag") != 0) {
+               if (CheckMaskMode((char *)"loop flag") != 0) {
                   YYABORT;
                }
                ((NormalMask *)msk)->fLoop = (FlagMode == 2) ? 2 : 1;
