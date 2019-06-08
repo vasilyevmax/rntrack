@@ -168,7 +168,6 @@ int _SquishBeginBuffer(HIDX hix)
   for (i=0; i < hix->cSeg; i++)
   {
     dword dwSize=min(dwMsgs+MORE_SPACE, (long)SEGMENT_SIZE);
-    unsigned uiSize;
 
     /* Try to allocate memory for this segment */
 
@@ -189,8 +188,6 @@ int _SquishBeginBuffer(HIDX hix)
     /* Now read in the messages for this segment */
 
     dwSize=min(dwMsgs, SEGMENT_SIZE);
-
-    uiSize=(unsigned)dwSize * (unsigned)SQIDX_SIZE;
 
     if (read_sqidx(HixSqd->ifd, hix->pss[i].psqi, dwSize) != 1)
     {
@@ -621,8 +618,6 @@ int _SquishEndBuffer(HIDX hix)
 
     for (i=0; i < hix->cSeg; i++)
     {
-      unsigned uiWriteSize;
-
       /* If this buffer is within the "delta" range */
 
       if ((long)dwStart + (long)hix->pss[i].dwUsed > hix->lDeltaLo &&
@@ -641,8 +636,6 @@ int _SquishEndBuffer(HIDX hix)
           size = (size_t)(hix->pss[i].dwUsed);
 
         size -= j;
-
-        uiWriteSize=(size_t)size * (size_t)SQIDX_SIZE;
 
         if (rc)
         {

@@ -342,7 +342,6 @@ static dword _XPENTRY JamReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
    dword SubPos, bytesread;
    struct tm *s_time;
    SCOMBO *scombo;
-   unsigned char *ftsdate;
 
    if (InvalidMsgh(msgh))
    {
@@ -400,8 +399,6 @@ static dword _XPENTRY JamReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
       s_time = gmtime((time_t *)(&(msgh->Hdr.DateWritten)));
       scombo = (SCOMBO*)(&(msg->date_written));
       scombo = TmDate_to_DosDate(s_time, scombo);
-      /* ftsdate = msg->__ftsc_date; */
-      ftsdate = (unsigned char *)sc_time(scombo, (char *)(msg->__ftsc_date));
 
       if (msgh->Hdr.DateProcessed) {
          s_time = gmtime((time_t *)(&(msgh->Hdr.DateProcessed)));

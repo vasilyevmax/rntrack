@@ -402,7 +402,6 @@ int ReadLoFile(char * Name)
 {
     char TmtName[BUFF_SIZE];
     char * tmt2;
-    int ind;
 
 #if 0
     fpos_t LoSize;
@@ -421,7 +420,6 @@ int ReadLoFile(char * Name)
     LoFile = (char *)malloc(2);
     CheckMem(LoFile);
     memset(LoFile, 0, 2);
-    ind = 0;
 
     if(access(TmtName, F_OK) != 0)
     {

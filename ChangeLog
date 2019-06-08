@@ -4,10 +4,11 @@
 ! - Bug fixed
 # - Added feature or changes
 
-1.38 2019-06-08 (Subversion rev.182)
+1.38 2019-06-08 (Subversion rev.183)
 -----------------------------------
-! Fix conversion from string constant to ‘char*’
-! Fix similar issue in sqbase.cpp.
+! Fix defined and/or set but unused variables.
+! Fix conversion from string constant to ‘char *’.
+! Fix similar issue breaking strict-aliasing rules in sqbase.cpp.
 ! Fix dereferencing type-punned pointer breaking strict-aliasing rules in api_sdm.c.
 
 1.37 2019-06-07 (Subversion rev.179)
