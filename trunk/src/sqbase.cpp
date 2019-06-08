@@ -587,7 +587,9 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
     rm.dest.net   = (unsigned short)(m._ToAddr.Net());
     rm.dest.node  = (unsigned short)(m._ToAddr.Node());
     rm.dest.point = (unsigned short)(m._ToAddr.Point());
-    SetMsgAttr(m, (unsigned short &)rm.attr);
+    unsigned short attr;
+    SetMsgAttr(m, (unsigned short &)attr);
+    rm.attr = (unsigned long)attr;
 
     if(m.fScanned)
     {
