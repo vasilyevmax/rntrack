@@ -4,8 +4,9 @@
 ! - Bug fixed
 # - Added feature or changes
 
-1.38 2019-06-08 (Subversion rev.183)
+1.38 2019-06-08 (Subversion rev.184)
 -----------------------------------
+! Fix variable initialization.
 ! Fix defined and/or set but unused variables.
 ! Fix conversion from string constant to ‘char *’.
 ! Fix similar issue breaking strict-aliasing rules in sqbase.cpp.
