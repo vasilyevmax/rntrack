@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <BrowseInformation>true</BrowseInformation>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <BrowseInformation>true</BrowseInformation>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <OmitFramePointers>false</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_WIN64;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\age.cpp" />
+    <ClCompile Include="..\..\..\src\aix_conv.cpp" />
+    <ClCompile Include="..\..\..\src\aka.cpp" />
+    <ClCompile Include="..\..\..\src\attach.cpp" />
+    <ClCompile Include="..\..\..\src\badmsg.cpp" />
+    <ClCompile Include="..\..\..\src\badpkt.cpp" />
+    <ClCompile Include="..\..\..\src\cfg.cpp" />
+    <ClCompile Include="..\..\..\src\configure.cpp" />
+    <ClCompile Include="..\..\..\src\dirent.c" />
+    <ClCompile Include="..\..\..\src\domain.cpp" />
+    <ClCompile Include="..\..\..\src\fidoaddr.cpp" />
+    <ClCompile Include="..\..\..\src\filebox.cpp" />
+    <ClCompile Include="..\..\..\src\getopt.cpp" />
+    <ClCompile Include="..\..\..\src\help.cpp" />
+    <ClCompile Include="..\..\..\src\log.cpp" />
+    <ClCompile Include="..\..\..\src\mask.cpp" />
+    <ClCompile Include="..\..\..\src\msg.cpp" />
+    <ClCompile Include="..\..\..\src\msgbase.cpp" />
+    <ClCompile Include="..\..\..\src\nodelist.cpp" />
+    <ClCompile Include="..\..\..\src\outbound.cpp" />
+    <ClCompile Include="..\..\..\src\parsetpl.cpp" />
+    <ClCompile Include="..\..\..\src\passwd.cpp" />
+    <ClCompile Include="..\..\..\src\pktbase.cpp" />
+    <ClCompile Include="..\..\..\src\rntrack.cpp" />
+    <ClCompile Include="..\..\..\src\scandir.cpp">
+      <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</OmitFramePointers>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\script.cpp" />
+    <ClCompile Include="..\..\..\src\sqbase.cpp" />
+    <ClCompile Include="..\..\..\src\string.cpp" />
+    <ClCompile Include="..\..\..\src\tmstamp.cpp" />
+    <ClCompile Include="..\..\..\src\utils.cpp" />
+    <ClCompile Include="..\..\..\src\vars.cpp" />
+    <ClCompile Include="..\..\..\src\wildmat.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\hpp\age.hpp" />
+    <ClInclude Include="..\..\..\hpp\aix_conv.hpp" />
+    <ClInclude Include="..\..\..\hpp\aka.hpp" />
+    <ClInclude Include="..\..\..\hpp\attach.hpp" />
+    <ClInclude Include="..\..\..\hpp\a_list.hpp" />
+    <ClInclude Include="..\..\..\hpp\badmsg.hpp" />
+    <ClInclude Include="..\..\..\hpp\badpkt.hpp" />
+    <ClInclude Include="..\..\..\hpp\configure.hpp" />
+    <ClInclude Include="..\..\..\hpp\constant.hpp" />
+    <ClInclude Include="..\..\..\hpp\dirent\dirent.h" />
+    <ClInclude Include="..\..\..\hpp\domain.hpp" />
+    <ClInclude Include="..\..\..\hpp\fidoaddr.hpp" />
+    <ClInclude Include="..\..\..\hpp\filebox.hpp" />
+    <ClInclude Include="..\..\..\hpp\getopt.hpp" />
+    <ClInclude Include="..\..\..\hpp\help.hpp" />
+    <ClInclude Include="..\..\..\hpp\log.hpp" />
+    <ClInclude Include="..\..\..\hpp\mask.hpp" />
+    <ClInclude Include="..\..\..\hpp\msg.hpp" />
+    <ClInclude Include="..\..\..\hpp\msgbase.hpp" />
+    <ClInclude Include="..\..\..\hpp\mytypes.hpp" />
+    <ClInclude Include="..\..\..\hpp\nodelist.hpp" />
+    <ClInclude Include="..\..\..\hpp\outbound.hpp" />
+    <ClInclude Include="..\..\..\hpp\parsetpl.hpp" />
+    <ClInclude Include="..\..\..\hpp\passwd.hpp" />
+    <ClInclude Include="..\..\..\hpp\pktbase.hpp" />
+    <ClInclude Include="..\..\..\hpp\scandir.hpp" />
+    <ClInclude Include="..\..\..\hpp\script.hpp" />
+    <ClInclude Include="..\..\..\hpp\sqbase.hpp" />
+    <ClInclude Include="..\..\..\hpp\string.hpp" />
+    <ClInclude Include="..\..\..\hpp\tmstamp.hpp" />
+    <ClInclude Include="..\..\..\hpp\tpkt.hpp" />
+    <ClInclude Include="..\..\..\hpp\utils.hpp" />
+    <ClInclude Include="..\..\..\hpp\vars.hpp" />
+    <ClInclude Include="..\..\..\hpp\wildmat.hpp" />
+    <ClInclude Include="..\..\..\src\cfg.hpp" />
+    <ClInclude Include="..\..\..\src\smapi\apidebug.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_brow.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_jam.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_jamp.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_sdm.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_sdmp.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_sq.h" />
+    <ClInclude Include="..\..\..\src\smapi\api_sqp.h" />
+    <ClInclude Include="..\..\..\src\smapi\compiler.h" />
+    <ClInclude Include="..\..\..\src\smapi\cvsdate.h" />
+    <ClInclude Include="..\..\..\src\smapi\dr.h" />
+    <ClInclude Include="..\..\..\src\smapi\ffind.h" />
+    <ClInclude Include="..\..\..\src\smapi\msgapi.h" />
+    <ClInclude Include="..\..\..\src\smapi\old_msg.h" />
+    <ClInclude Include="..\..\..\src\smapi\patmat.h" />
+    <ClInclude Include="..\..\..\src\smapi\prog.h" />
+    <ClInclude Include="..\..\..\src\smapi\progprot.h" />
+    <ClInclude Include="..\..\..\src\smapi\stamp.h" />
+    <ClInclude Include="..\..\..\src\smapi\strextra.h" />
+    <ClInclude Include="..\..\..\src\smapi\typedefs.h" />
+    <ClInclude Include="..\..\..\src\smapi\unused.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\smapi\makefile.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
