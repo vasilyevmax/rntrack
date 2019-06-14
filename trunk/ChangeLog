@@ -4,7 +4,7 @@
 ! - Bug fixed
 # - Added feature or changes
 
-1.39 2019-06-14 (Subversion rev.185)
+1.39 2019-06-14 (Subversion rev.186)
 -----------------------------------
 ! Create solution for a build using MS Visual C++ 2010
   and fix sources for that.
