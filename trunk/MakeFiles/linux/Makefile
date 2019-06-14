@@ -84,8 +84,8 @@ OBJS=	fidoaddr.o \
 %.o: $(SRCDIR)%.cpp
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
-$(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
-	bison -l -d $< -o $(SRCDIR)cfg.cpp
+#$(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
+#	bison -l -d $< -o $(SRCDIR)cfg.cpp
 
 smapi:
 	make -C $(SRCDIR)smapi -f makefile.lnx

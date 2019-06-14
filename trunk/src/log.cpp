@@ -299,6 +299,12 @@ LogStream & LogStream::operator <<(int i)
     return *this;
 }
 
+LogStream & LogStream::operator <<(time_t t)
+{
+    ShowLine("%lld", (long long)t);
+    return *this;
+}
+
 LogStream & LogStream::operator <<(unsigned int i)
 {
     ShowLine("%u", (unsigned int)i);
@@ -314,11 +320,5 @@ LogStream & LogStream::operator <<(word i)
 LogStream & LogStream::operator <<(dword i)
 {
     ShowLine("%lu", (unsigned long)i);
-    return *this;
-}
-
-LogStream & LogStream::operator <<(sdword i)
-{
-    ShowLine("%ld", (long)i);
     return *this;
 }

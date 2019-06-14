@@ -37,6 +37,7 @@
 #include <smapi/msgapi.h>
 #include <smapi/progprot.h>
 #include <smapi/prog.h>
+#include "smapi/unused.h"
 
 #ifdef __WATCOMC__
   #include <smapi/months.c>
@@ -574,7 +575,7 @@ unsigned long MsgID(void)
 {
     static unsigned int LastMSGID = 0;
 
-    return (time(NULL) << 3) + LastMSGID++;
+    return (unsigned long)((time(NULL) << 3) + LastMSGID++);
 }
 
 // ---------------------------
@@ -1669,7 +1670,7 @@ cMSG & cMSG::operator =(const cMSG & m)
     strncpy(_FromName, m._FromName, 36);
     strncpy(_ToName, m._ToName, 36);
     _Cost        = m._Cost;
-    _TimesRead   = _TimesRead;
+    /* _TimesRead   = _TimesRead; */
     _ReplyTo     = m._ReplyTo;
     _NextReply   = m._NextReply;
     memcpy(_Reserved, m._Reserved, 8);

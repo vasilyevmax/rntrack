@@ -19,9 +19,6 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifdef HAVE_IO_H
-  #include <io.h>
-#endif
 #ifdef HAVE_UNISTD_H
   #include <unistd.h>
 #endif
@@ -47,6 +44,9 @@
 #include "outbound.hpp"
 #include "mytypes.hpp"
 #include "msg.hpp"
+#if defined(HAS_IO_H) || defined(HAVE_IO_H)
+  #include <io.h>
+#endif
 
 #ifdef __WATCOMC__
   #undef far
@@ -468,11 +468,6 @@ int ForAllFiles(int (* Action)(char * Fname), cMSG & m)
 // Action - int Action(char *FName);
     char Buff[73];
     char * tmt;
-
-    if(m._Subject == NULL)
-    {
-        return FALSE;
-    }
 
     if(strlen(m._Subject) == 0)
     {

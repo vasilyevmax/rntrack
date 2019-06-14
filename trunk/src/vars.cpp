@@ -25,7 +25,6 @@ char * SysopName   = NULL;
 bool UseOwnZone    = FALSE;
 char * LoopStr     = NULL;
 bool ForceINTL     = FALSE;
-char * CurrLinePos = NULL;
 char * LastCfgLine = NULL;
 uint MaxAge = 0;
 uint LastCfgLineNum    = 0;

@@ -392,7 +392,7 @@ unsigned _SquishFreeIndex(HAREA ha, dword dwMsg, SQIDX *psqi,
   unsigned rc=TRUE;
   long ofs;
 
-dwIdxSize=dwIdxSize; /* To prevent warning */
+  unused(dwIdxSize);
 
   if (fWrite)
   {

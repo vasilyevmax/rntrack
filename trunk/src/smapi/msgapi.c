@@ -41,7 +41,7 @@ static byte *fmpt = (byte *) "FMPT";
 static byte *topt = (byte *) "TOPT";
 static byte *area_colon = (byte *) "AREA:";
 
-static char *copyright = "MSGAPI - Copyright 1991 by Scott J. Dudley.  All rights reserved.";
+/* static char *copyright = "MSGAPI - Copyright 1991 by Scott J. Dudley.  All rights reserved."; */
 
 /* Global error value for message API routines */
 
@@ -59,10 +59,10 @@ void _MsgCloseApi(void)
     JamCloseOpenAreas();
 }
 
-#ifdef __unix__
+#ifdef HAS_SIGNAL_H /* old: #ifdef __UNIX__ */
 /* Just a dummy alarm-fnct */
 static void alrm(int x)
-{x=x;}
+{unused(x);}
 #endif
 
 sword _XPENTRY MsgOpenApi(struct _minf *minf)
@@ -71,7 +71,7 @@ sword _XPENTRY MsgOpenApi(struct _minf *minf)
     struct sigaction alrmact;
 #endif
 
-    unused(copyright);
+    /* unused(copyright); */
     mi.req_version = minf->req_version;
     mi.def_zone    = minf->def_zone;
     mi.haveshare   = minf->haveshare = shareloaded();

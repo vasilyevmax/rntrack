@@ -57,7 +57,6 @@ extern bool UseASO;
 extern bool UseBrake;
 extern bool UseFileBoxes;
 
-extern char * CurrLinePos;
 extern char * LastCfgLine;
 extern uint LastCfgLineNum;
 

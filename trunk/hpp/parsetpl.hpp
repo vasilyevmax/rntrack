@@ -28,7 +28,6 @@ class Template
 {
     char * TplName;
     FILE * fh;
-    char * CurrLinePos;
     uint MaxBodySize;
     char * FName;
 public:

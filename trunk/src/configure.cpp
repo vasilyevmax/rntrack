@@ -26,18 +26,13 @@
 /*--------------------------------------------------------------------*/
 
 #ifdef HAVE_UNISTD_H
-    #include <unistd.h>
+  #include <unistd.h>
 #endif
-#ifdef HAVE_IO_H
-    #include <io.h>
+#ifdef __NT__
+  #include <io.h>
 #endif
-
-#ifdef HAVE_STRING_H
-    #include <string.h>
-#endif
-#ifdef HAVE_STDLIB_H
-    #include <stdlib.h>
-#endif
+#include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 /*--------------------------------------------------------------------*/
@@ -61,6 +56,7 @@
 #if defined (__PERL_VERSION__)
     #include "script.hpp"
 #endif
+#include "smapi/unused.h"
 
 /*--------------------------------------------------------------------*/
 /*                         Global definitions                         */
@@ -408,7 +404,7 @@ int LoadScriptFile(char * fname)
 
 #else
     yyerror("RNtrack compiled without script system support. Sorry.");
-    fname = fname;
+    unused(fname);
     return -1;
 
 #endif /* defined(__PERL_VERSION__) */

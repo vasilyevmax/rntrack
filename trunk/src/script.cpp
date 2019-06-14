@@ -40,6 +40,7 @@
     #include "string.hpp"
     #include <XSUB.h>
 #endif
+#include "smapi/unused.h"
 
 #define MSGVARNAME "main::FMSG"
 #define KLUVARNAME "main::FKludges"
@@ -630,6 +631,8 @@ int _LoadScriptFile(char * fname)
 
         setlocale(LC_TIME, "C");
         ScriptSystemInitialised = TRUE;
+    #else
+        unused(fname);
     #endif /* defined(__PERL_VERSION__) */
     return 0;
 } // _LoadScriptFile
@@ -665,7 +668,7 @@ int ScriptWordExists(char * word)
 
         return 0;
     #else
-        word = word;
+        unused(word);
         return 0;
     #endif /* defined(__PERL_VERSION__) */
 } // ScriptWordExists
@@ -705,7 +708,7 @@ ScrRet DoThisWord(char * word)
         CHP = 60004;
         return SS_OK;
     #else
-        word = word;
+        unused(word);
         return SS_ERROR;
     #endif /* defined(__PERL_VERSION__) */
 } // DoThisWord
@@ -776,7 +779,7 @@ ScrRet DoThisWordRc(char * word)
                 return SS_OK;
         }
     #else
-        word = word;
+        unused(word);
         return SS_ERROR;
     #endif /* defined(__PERL_VERSION__) */
 } // DoThisWordRc

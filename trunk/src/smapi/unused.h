@@ -4,9 +4,9 @@
  */
 
 #ifndef unused
-#if defined(PACIFIC) || defined(_MSC_VER)
-#define unused(x)
-#elif defined(__HIGHC__)
+#if defined(PACIFIC)
+#define unused(x) while(0){if(x){};}
+#elif defined(__HIGHC__) || defined(__WATCOMC__)
 #define unused(x) ((x) = (x))
 #else
 #define unused(x) ((void)(x))
