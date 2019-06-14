@@ -3,6 +3,7 @@
 
 tar jxf rntrack-version.tar.bz2
 cd rntrack-version/MakeFiles/YourSystem
+(for example, for linux: cd rntrack-version/MakeFiles/linux)
 make
 
 Make options:
@@ -14,4 +15,4 @@ ENABLE_SCRIPTS=1           - Enable Perl scripts support (currently not availabl
 ENABLE_LOG_PID=1           - Enable pid logging (ex: 21.04.2004 12:02:39 [212] --- RNtrack 1.11/LNX started.)
 ENABLE_SYSLOG_LOG_FORMAT=1 - Use syslog-like log style (ex: Apr 04 22:00:02 --- RNtrack 1.11/LNX started.)
 
-This options disabled by default.
+This options are disabled by default.
