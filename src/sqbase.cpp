@@ -29,6 +29,7 @@
 #include "msgbase.hpp"
 #include "sqbase.hpp"
 #include "aka.hpp"
+#include "smapi/unused.h"
 
 
 static time_t dosftime(struct _stamp & time)
@@ -171,7 +172,7 @@ bool SQUISH::Set(char * Dir, int BaseType)
     int TypeOfBase;
 
     CHP = 518;
-    BaseType = BaseType;
+    unused(BaseType);
     CHP = 51801;
     Clear();
     CHP = 51802;
@@ -395,7 +396,7 @@ bool SQUISH::WriteFromMem(char * Buff)
 {
     CHP  = 537;
     CHP  = 538;
-    Buff = Buff;
+    unused(Buff);
     return FALSE;
 }
 

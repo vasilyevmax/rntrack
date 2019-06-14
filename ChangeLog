@@ -4,6 +4,11 @@
 ! - Bug fixed
 # - Added feature or changes
 
+1.39 2019-06-14 (Subversion rev.185)
+-----------------------------------
+! Create solution for a build using MS Visual C++ 2010
+  and fix sources for that.
+
 1.38 2019-06-08 (Subversion rev.184)
 -----------------------------------
 ! Fix variable initialization.

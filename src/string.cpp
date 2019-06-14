@@ -33,6 +33,10 @@
 #include <sys/types.h>
 #include <string.h>
 
+#ifdef __REGISTER_PREFIX__
+#define register __REGISTER_PREFIX__
+#endif
+
 /*
  * Copy src to string dst of size siz.  At most siz-1 characters
  * will be copied. NUL always terminates a string (unless siz == 0).

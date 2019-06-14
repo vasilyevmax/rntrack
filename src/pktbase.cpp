@@ -29,7 +29,7 @@
 #include "string.hpp"
 #include <assert.h>
 #include <errno.h>
-
+#include "smapi/unused.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -1227,11 +1227,11 @@ bool PKTBASE::ReadMsg(cMSG & m)
 
 bool PKTBASE::WriteOneMsg(unsigned int Num, cMSG & m)
 {
-    if(&m != NULL)
-    {
-        Num++;
-    }
-
+    Num++;
+    /* m is not used */
+//    (void)m;
+//    while(0){if((bool)m){};}
+    unused(m);
     return FALSE;
 }
 

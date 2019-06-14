@@ -31,6 +31,7 @@
 #include <fcntl.h>
 
 #include "compiler.h"
+#include "unused.h"
 
 #ifdef HAS_DIRECT_H
 #  include <direct.h>
@@ -427,7 +428,7 @@ int sopen(const char *name, int oflag, int ishared, int mode)
 {
     int fd = open(name, oflag, mode);
     /* prevent compiler warning */
-    ishared = ishared;
+    unused(ishared);
 
     /*
      * I removed this code, 'cause there is no more need for it (i hope so)

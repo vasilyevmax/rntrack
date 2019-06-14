@@ -14,6 +14,7 @@
  */
 
 #include        <string.h>
+#include        <time.h>
 #include        "fidoaddr.hpp"
 #include        <stdlib.h>
 #include        <ctype.h>

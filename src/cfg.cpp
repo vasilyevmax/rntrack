@@ -2739,7 +2739,7 @@ yyreduce:
   case 147:
 
     {
-                  if (renumberf == TRUE) {
+                  if (renumberf == (int)TRUE) {
                      yyerror("Renumber for this base already set.");
                      YYABORT;
                   } else {
@@ -2776,7 +2776,7 @@ yyreduce:
   case 150:
 
     {
-                  if (freshf == TRUE) {
+                  if (freshf == (int)TRUE) {
                      yyerror("Fresh scripts for this base already set.");
                      YYABORT;
                   } else {
@@ -2789,7 +2789,7 @@ yyreduce:
   case 151:
 
     {
-                  if (unpackf == TRUE) {
+                  if (unpackf == (int)TRUE) {
                      yyerror("Unpack for this base already set.");
                      YYABORT;
                   } else {

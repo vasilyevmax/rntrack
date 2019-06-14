@@ -1127,7 +1127,7 @@ int Jam_OpenFile(JAMBASE *jambase, word *mode, mode_t permissions)
       memset(&(jambase->HdrInfo), '\0', sizeof(JAMHDRINFO));
       strcpy((char*)(jambase->HdrInfo.Signature), HEADERSIGNATURE);
 
-      jambase->HdrInfo.DateCreated = time(NULL) + gettz();
+      jambase->HdrInfo.DateCreated = (dword)(time(NULL) + gettz());
       jambase->HdrInfo.ModCounter  = 1;
       jambase->HdrInfo.PasswordCRC = 0xffffffffUL;
       jambase->HdrInfo.BaseMsgNum  = 1;
@@ -1173,7 +1173,7 @@ int Jam_OpenFile(JAMBASE *jambase, word *mode, mode_t permissions)
 
       memset(&(jambase->HdrInfo), '\0', sizeof(JAMHDRINFO));
       strcpy((char*)(jambase->HdrInfo.Signature), HEADERSIGNATURE);
-      jambase->HdrInfo.DateCreated = time(NULL) + gettz();
+      jambase->HdrInfo.DateCreated = (dword)(time(NULL) + gettz());
       jambase->HdrInfo.ModCounter  = 1;
       jambase->HdrInfo.PasswordCRC = 0xffffffffUL;
       jambase->HdrInfo.BaseMsgNum  = 1;
@@ -1779,13 +1779,13 @@ static void MSGAPI ConvertXmsgToJamHdr(MSGH *msgh, XMSG *msg, JAMHDRptr jamhdr, 
       /* save arrived date for sqpack */
       ptm = &stm;
       ptm = DosDate_to_TmDate((SCOMBO*)(&(msg->date_arrived)), ptm);
-      jamhdr->DateProcessed = mktime(ptm) + gettz();
+      jamhdr->DateProcessed = (dword)(mktime(ptm) + gettz());
    }
    else
-      jamhdr->DateProcessed = time(NULL) + gettz();
+      jamhdr->DateProcessed = (dword)(time(NULL) + gettz());
    ptm = &stm;
    ptm = DosDate_to_TmDate((SCOMBO*)(&(msg->date_written)), ptm);
-   jamhdr->DateWritten = mktime(ptm) + gettz();
+   jamhdr->DateWritten = (dword)(mktime(ptm) + gettz());
 
    sublen = 0;
 
