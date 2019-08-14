@@ -7,7 +7,7 @@ EAPI="2"
 inherit eutils versionator
 
 DESCRIPTION="A FTN Messages tracker"
-SRC_URI="mirror://sourceforge/ftrack-as/1.26/${PN}-$(replace_version_separator ${V} . _)-src.tgz"
+SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(replace_version_separator ${V} . _)-src.tgz"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
 
 SLOT="0"
