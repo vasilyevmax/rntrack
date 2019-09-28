@@ -890,6 +890,8 @@ PKTrc PKT::AddMsg(cMSG & m, PKTMode mod, int Dest)
 
             case NEWPKT:
                 NewPkt = TRUE;
+                Log.Level(LOGI) << Buff;
+                Log.Level(LOGI) << " has been created" << EOL;
                 break;
 
             default:
