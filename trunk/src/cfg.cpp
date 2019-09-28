@@ -1582,7 +1582,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
           int yyx;
 
           for (yyx = yyxbegin; yyx < yyxend; ++yyx)
-            if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR
+            if (yyx != YYTERROR && yycheck[yyx + yyn] == yyx
                 && !yytable_value_is_error (yytable[yyx + yyn]))
               {
                 if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)

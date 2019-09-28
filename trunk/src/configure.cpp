@@ -1393,7 +1393,7 @@ int yylex(void)
 
             case LEX_DIGIT:
 
-                if(isdigit(nxtch) && nxtch < 256)
+                if(nxtch < 256 && isdigit(nxtch))
                 {
                     yylval.ln = (yylval.ln * 10) + nxtch - '0';
                     nxtch = TakeChar();

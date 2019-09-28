@@ -604,13 +604,13 @@ void cMSG::Normalise(void)
     fToptE   = FALSE;
     CHP      = 31502;
 
-    if((_FromAddr.Zone() & FA_NOTDEF) && UseOwnZone)
+    if(UseOwnZone && (_FromAddr.Zone() & FA_NOTDEF))
     {
         _FromAddr.Zone(FA_ANYMASK);
         _FromAddr.Zone(GetMyAka(_FromAddr).Zone());
     }
 
-    if((_ToAddr.Zone() & FA_NOTDEF) && UseOwnZone)
+    if(UseOwnZone && (_ToAddr.Zone() & FA_NOTDEF))
     {
         _ToAddr.Zone(FA_ANYMASK);
         _ToAddr.Zone(GetMyAka(_ToAddr).Zone());
@@ -797,7 +797,7 @@ void cMSG::Normalise(void)
         CHP = 31553;
     }
 
-    if((_FromAddr.Point() & 0xffff) && (!fFromptE))
+    if((!fFromptE) && (_FromAddr.Point() & 0xffff))
     {
         CHP  = 31554;
         sprintf(Buff, "\1FMPT %u", (word)(_FromAddr.Point() & 0xffff));
@@ -807,7 +807,7 @@ void cMSG::Normalise(void)
         CHP  = 31556;
     }
 
-    if((_ToAddr.Point() & 0xffff) && (!fToptE))
+    if((!fToptE) && (_ToAddr.Point() & 0xffff))
     {
         CHP  = 31557;
         sprintf(Buff, "\1TOPT %u", (word)(_ToAddr.Point() & 0xffff));
@@ -817,7 +817,7 @@ void cMSG::Normalise(void)
         CHP  = 31559;
     }
 
-    if(strlen(SomeFlagsToStr(Ad1)) != 0 && (!fFlagsE))
+    if((!fFlagsE) && strlen(SomeFlagsToStr(Ad1)) != 0)
     {
         CHP  = 31560;
         sprintf(Buff, "\1FLAGS %s", Ad1);
@@ -923,7 +923,7 @@ void cMSG::AddKludge(const char * & Txt)
 
     CHP = 307;
 
-    if(*p == '\0' && strstr(p2, "* Origin:") == p2 && fEchomail)  // Origin (
+    if(fEchomail && *p == '\0' && strstr(p2, "* Origin:") == p2)  // Origin (
     {
         CHP = 30909;
         s   = strrchr(p2, '(');

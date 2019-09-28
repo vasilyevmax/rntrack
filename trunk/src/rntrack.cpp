@@ -243,7 +243,7 @@ void DoneSystem(void)
         }
     }
 
-    if(Log.Opened() && LogLevel != 0)
+    if(LogLevel != 0 && Log.Opened())
     {
         CHP = 99204;
         Log.Level(LOGE) << "--- RNtrack " << ProgVersion << " stopped." << EOL;
