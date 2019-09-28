@@ -600,13 +600,13 @@ bool PKTBASE::Set(char * Dir, int BaseType)
         return FALSE;
     }
 
-    if(stat(dirslashbug(Buff), &dd) != 0 && BaseType != BASE_OUT)
+    if(BaseType != BASE_OUT && stat(dirslashbug(Buff), &dd) != 0)
     {
         free(Buff);
         return FALSE;
     }
 
-    if(S_ISDIR(dd.st_mode) && BaseType != BASE_OUT)
+    if(BaseType != BASE_OUT && S_ISDIR(dd.st_mode))
     {
         DirName = strdup(Buff);
         CheckMem(DirName);
@@ -618,7 +618,7 @@ bool PKTBASE::Set(char * Dir, int BaseType)
 
         Log.Level(LOGD) << "PKTBASE DirName: '" << DirName << "'" << EOL;
     }
-    else if(S_ISREG(dd.st_mode) && BaseType != BASE_OUT)
+    else if(BaseType != BASE_OUT && S_ISREG(dd.st_mode))
     {
         PktName = strdup(Buff);
         CheckMem(PktName);
