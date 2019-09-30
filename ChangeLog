@@ -4,8 +4,19 @@
 ! - Bug fixed
 # - Added feature or changes
 
-1.39 2019-06-14 (Subversion rev.186)
+1.41 2019-09-29 (Subversion rev.191)
 -----------------------------------
+# add a log message at LogLevel=2 with full path of the created pkt.
+
+1.40 2019-09-29 (Subversion rev.190)
+-----------------------------------
+! test simple boolean value before testing a function value.
+! fix compatibility with new portage version, add 1.39 version for gentoo.
+
+1.39 2019-06-14 (Subversion rev.188)
+-----------------------------------
+# change fonts in Manual_ru.odt.
+! fix small issues in README, INSTALL and BUG-REPORTING.
 ! Create solution for a build using MS Visual C++ 2010
   and fix sources for that.
 
