@@ -1,0 +1,29 @@
+$Id$
+                    What you need to do if RNtrack halts
+                    with message "Internal Error!!! Please,
+                    read report.err in documentation."
+
+1. Try to understand at which moment the error occured.  Check for the
+latest available version. If it's available, try it. Maybe, the error has
+already been fixed.
+
+2. Find file RNtrack.err.  It should have been created in current directory.
+
+3. Put "LogLevel: 5" in config, and run RNtrack once again.
+
+4. Send me the following files:
+   * RNtrack.err
+   * RNtrack.cfg
+   * RNtrack.log
+   * *.msg - if RNtrack halts on a certain message.
+   * What RNtrack put on the screen before halt.
+   * Indicate type and version of your OS.
+   * Indicate the location of stars and moon phase, if you are certain that
+     it affects the error.
+   * Indicate EVERYTHING, that you think might help to find the error.
+
+5. Describe the problem in _details_.  In looking for bugs there is no such
+thing as "too little info".
+
+6. Send all this information to me either to 2:5020/1042 or to
+dukelsky(at)users.sourceforge.net

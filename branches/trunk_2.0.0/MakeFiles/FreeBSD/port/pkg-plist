@@ -1,0 +1,12 @@
+etc/rntrack/rntrack.cfg-dist
+etc/rntrack/test.pl
+etc/rntrack/tbl/alt2koi.tbl
+etc/rntrack/tbl/koi2alt.tbl
+etc/rntrack/tpl/audit.tpl
+etc/rntrack/tpl/badfrom.tpl
+etc/rntrack/tpl/badto.tpl
+etc/rntrack/tpl/loop.tpl
+sbin/rntrack
+@dirrm etc/rntrack/tbl
+@dirrm etc/rntrack/tpl
+@dirrm etc/rntrack

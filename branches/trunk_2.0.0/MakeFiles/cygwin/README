@@ -1,0 +1,33 @@
+Short instruction for build RNTrack in cygwin enviroment
+
+1. Preparation: install cygwin
+
+1.1. Go to official Cygwin site http://www.cygwin.com/ and download
+universal Cygwin installer cygwin.exe.
+
+1.2. Select and install following additional components of Cygwin:
+- from "Devel" branch:
+  * binutils: The GNU assembler, linker and binary utilities
+  * byacc: The Berkeley LALR parser generator
+  * gcc: C compiler upgrade helper
+  * make: The GNU version of the 'make' utility
+
+1.3. Run cygwin shell and compile RNTrack.
+
+Run the cygwin shell (double-click the desktop icon "Cygwin").
+In the bash (shell window) change directory to RNTrack sources.
+
+Expample.
+
+If rntrack unpacked into OS directory "C:\rntrack.src\" you should
+run following command in the bash:
+
+  cd /cygdrive/c/rntrack.src
+
+Now current directory is "C:\rntrack.src\"
+
+  cd MakeFiles/cygwin
+  make
+
+after make stops, you may find file "rntrack_win32.exe" in the directory
+"C:\rntrack.src\MakeFiles\cygwin". This file is RNTrack/w32 executable.

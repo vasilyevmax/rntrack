@@ -1,0 +1,34 @@
+# $Id$
+# Legacy makefile for building on MaxOS X with cc
+# No support for the Husky build environment
+
+CC=	cc
+CFLAGS=	-Wall -funsigned-char
+CDEFS=	-DUNIX -D__OSX__ 
+COPT=	-O3
+OBJ=	.o
+
+LIB=	ar
+RANLIB= ranlib
+
+TARGET=	libsmapiosx.a
+
+all: $(TARGET)
+
+include makefile.inc
+
+
+# Thunderbirds are go!
+
+.c.o:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+
+$(TARGET): $(OBJS)
+	$(LIB) r $@ $?
+	$(RANLIB) $(TARGET)
+
+clean:
+	-rm *.o
+
+distclean: clean
+	-rm $(TARGET)

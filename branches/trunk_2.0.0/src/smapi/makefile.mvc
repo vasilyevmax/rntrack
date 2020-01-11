@@ -1,0 +1,32 @@
+# $Id$
+# Microsoft Visual C++ Makefile for build static library
+
+CC=     cl
+CFLAGS= -nologo -Zp1
+CDEFS=  -D__NT__ -D_CONSOLE -DPROCESSOR_ARCHITECTURE="$(PROCESSOR_ARCHITECTURE)"
+COPT=   -O2
+TLIB=    lib -nologo
+OBJ=	.obj
+
+SMAPIL= smapimvc.lib
+
+include makefile.inc
+
+
+.c.obj:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+
+all: $(SMAPIL) gnmsgid.exe
+
+$(SMAPIL): $(OBJS)
+	$(TLIB) /out:$@ $(OBJS)
+
+gnmsgid.exe: $(SMAPIL)
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ gnmsgid.c $(GMOBJS) /link /opt:nowin98
+
+clean:
+	-del *.obj
+	-del $(SMAPIL)
+
+distclean: clean
+	-del gnmsgid.exe

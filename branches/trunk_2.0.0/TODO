@@ -1,0 +1,9 @@
+$Id$
+
+* Fix @MsgRoutedVia macros.
+* Extend script subsystem.
+* Fix build with ENABLE_SCRIPTS=1 in OS/2
+* Allow write to PKT base.
+* Rewrite makefiles
+* Fix @MsgLoops, @MaxAge and @MaxAttachSize macroses
+* Use installed smapi library, not in source tree

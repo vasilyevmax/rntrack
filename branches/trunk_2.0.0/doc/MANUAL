@@ -1,0 +1,1636 @@
+$Id$
+                      FTN Messages tracker 1.26
+-------------------------------------------------------------------------------
+ +------+----------------------------------------------------------------+
+ |0.    | Table of contents.                                             |
+ +------+----------------------------------------------------------------+
+
+  Table of contents.....................................................0
+  What is this program for?.............................................1
+  How does it work?.....................................................2
+  How to run............................................................3
+  rntrack.cfg...........................................................4
+  Parameters of Mask: keyword...........................................5
+  Parameters of ScriptMask: keyword...................................5.1
+  Parameters of Action: keyword.........................................6
+  Prefixes "+" and "*" for masks........................................7
+  Examples of using Mask: and Action:...................................8
+  Peculiarities of work.................................................9
+  Supported types of bases:............................................10
+  Squish.............................................................10.1
+  *.PKT..............................................................10.2
+  *.MSG..............................................................10.3
+  JAM................................................................10.4
+  Work with nodelists..................................................11
+  Address mask "#"...................................................11.1
+  Address mask "&"...................................................11.2
+  Work with scripts....................................................12
+  Guarantees...........................................................13
+  Thanks...............................................................14
+  How to contact me....................................................15
+
+
+ +------+----------------------------------------------------------------+
+ |1.    | What is this program for                                       |
+ +------+----------------------------------------------------------------+
+
+ It is so called netmail "tracker". It's puprose is to process netmail on
+netmail hubs, though it can be useful for an ordinary node.
+
+
+ +------+----------------------------------------------------------------+
+ |2.    | How does it work                                               |
+ +------+----------------------------------------------------------------+
+
+  It takes a letter, compares it with a mask and, if comparison was
+successful, it executes corresponding operation with this letter.
+
+
+ +------+----------------------------------------------------------------+
+ |3.    | How to run                                                     |
+ +------+----------------------------------------------------------------+
+
+ If you run RNtrack without any parameter it tries to find `rntrack.cfg' in
+the current directory and to process it. 
+
+You can set RNTRACKCONFIG environment variable (or use special key for 
+command line) to choose different path.
+
+Possible keys for command line are:
+  -c - Configuration file name. For example: -c "d:\soft\fido\rntrack.cfg"'.
+       Space between -c and the beginning of path is obligatory. Quotation
+       marks are necessary. This parameter overrides RNTRACKCONFIG environment 
+       variable.
+  -u - Shows that outbound repack is necessary
+       Before execution of all main functions, described in configuration
+       file, RNtrack will repack all outbound to a directory, defined by
+       TempMail: keyword
+  -t - To do all Scandir: instructions for which single execution is
+       shown, without respect of whether or not they should be executed
+       right now.
+  -h - Shows help-screen
+
+
+ +------+----------------------------------------------------------------+
+ |4.    | rntrack.cfg                                                    |
+ +------+----------------------------------------------------------------+
+
+ All keywords are case-insensitive. Colons are parts of keywords. That's why
+you should write "Address:" instead of "Address :"
+Commentaries can start with '\' (till the end of the string) or with '('
+(till the closing bracket).
+
+ Everywhere, where a string is used as a parameter you can use substitution
+of environment variables in the form of %VAR%. For example:
+Nodelist: "%NDL%\nodelist.*"
+
+ If it was impossible to parse %..% like environment variable, then RNtrack
+will try to parse it like a hexadecimal number- a character code. Thus, %22%
+will be conceived like '"'.
+
+ To use symbol % in strings you should write it twice.
+For example:
+Action: NewMsg "tpl\badfrom.tpl" "h:\fido\post\netmail\out" "Alex Bagmanov"
+        @ "%%" % "Bad source address" +l
+
+ Below all keywords in alphabetical order are brought.
+
+Action: SomeAction { [Time] }
+-------
+ Shows an action which will be executed with a letter coincided with a
+mask. This is described in more details in chapter 6.
+ Time when this command will be executed can be shown. Format of the 'Time'
+parameter is equal to format of the same parameter in keyword 'ScanDir:', and
+it is described in details there.
+
+Address:  2:5030/9999
+--------
+ The address of you system. Should be 3D (or 4D, but I hardly imagine
+a point installing RNtrack).
+
+AddToNullPkt
+------------
+ Allows adding messages to ?UT of zero-lenght. By default RNtrack will
+swears on these ?UTs.
+
+AgeFromVia
+----------
+ Not implemented yet.
+
+Aka: 7:1130/79 7:*/*.*
+----
+ Your AKAs. The first parameter is your AKA, the second is a mask. AKA will
+be used in work with address space, shown by the mask. Work with AKAs is
+described in more details in the description of '@' address modifier and
+Action: Route (or Action: RouteFilebox) command.
+
+APktDir: "Dir"
+--------
+ Changes the way of routing letters with attached files. By default these
+letters are routed as usual letters (that is they're added to common ?UT
+and attached files are added to corresponding ?LO). If you show APktDir then
+letters with attached files will be put to separate PKTs (one letter in one
+PKT) in the shown directory and will be written in ?LO-file after attached
+files. This guarantees that files will be transmitted first and only after
+them the corresponding letter will be sent.
+ The directory, shown in APktDir: shouldn't coincide to directory, shown as
+Outbound.
+
+CheckPoints: <Mode>
+------------
+ This keyword defines checking of points existence in pointlist
+   <Mode> : Never       - Do not check
+          : Hard        - To check "hardly".
+          : Soft        - To check "softly".
+ This keyword is described in more details in chapters 10.1 and 10.2
+ If the keyword is omitted then Checkpoints: is set to Never
+
+BadMessages: <Mode>
+------------
+ Shows to RNtrack what to do if it encountered "bad" (of zero-length,
+with corrupted structure, locked by other process) letter.
+   <Mode> : Skip         - to skip "bad" message.
+          : Delete       - to delete "bad" message.
+          : Move "Dir"   - to move "bad" message into shown base.
+          : Exit         - to exit from RNtrack.
+By default Exit mode is used.
+
+ Please remember that "Delete" and "Move" mode can be inpredictable
+in _really_ difficult situations. That's why I recommend to use them
+only if you're absolutely sure in the things you do.
+
+ Additional limitations:
+ 1. You can show only *.MSG base with Move: "Dir" operation
+ 2. For all bases except *.MSG Delete and Move instructions work like Skip.
+    It is connected with the fact that improper reading from these bases is
+    the first sign that these bases are damaged. Any attempt to delete "bad"
+    messages can lead to more serious damages.
+
+BadPackets: <Mode>
+------------
+ Shows to RNtrack what to do if it encountered "bad" (of zero-length,
+with corrupted structure, locked by other process) packet.
+   <Mode> : Skip         - to skip "bad" packet.
+          : Delete       - to delete "bad" packet.
+          : Move "Dir"   - to move "bad" packet into shown directory.
+          : Exit         - to exit from RNtrack.
+By default Skip mode is used.
+
+BodyMask: * * *
+---------
+ Mask, with that body of every message from directory, defined by ScanDir
+keyword, is compared. Order of keywords is the next:
+BodyMask: "StringInBody" <Lines> <Bytes>
+    StringInBody - String that will be searching in the body of the letter.
+                   Format of this string is described in more details in
+                   chapter 5, in paragraph where FromName and ToName masks
+                   are described.
+                   Please be careful! For example, mask "Hi" will designate
+                   exactly what you wrote. That is to say- that the letter
+                   must be consisted only from one string "Hi" (even without
+                   carriage return) to be coincided with the mask. That's
+                   why "*Hi*" will be a correct mask in this case.
+    [!]Lines     - Amount of lines in the body of the letter is compared
+                   with the shown.
+                   Without '!' +omparison is "equal or more"
+                   With '!' comparison is "less"
+    [!]Bytes     - Amount of bytes in the body of the letter is compares
+                   with the shown.
+                   Without '!' +omparison is "equal or more"
+                   With '!' comparison is "less"
+
+
+CreateMissingBase
+-----------------
+ If shown base is absent then this keyword allows creation of a new one.
+By default creation is prohibited.
+
+Domain: "fidonet" 2:*/*.*
+-------
+
+Defines domain for address(es). Used in The Brake!-style fileboxes. Default: "fidonet".
+
+FileBox: "h:\fbox\alex" 2:5030/9999
+--------
+
+Defines bersonal filebox for specified address.
+
+FileBoxDir: "h:\out\fboxes"
+-----------
+
+ Indicates a directory in which will be created fileboxes.
+
+Filebox format:
+
+z.n.f.p
+
+z - zone
+n - net
+f - node
+p - point
+
+For example:
+
+2.5030.1157.0
+
+is filebox of 2:5030/1157
+ 
+FileBoxType: <Type>
+------------
+ Type of the fileboxes
+ 
+   <Type> : Long   - z.n.f.p (default)
+          : Tmlong - z.n.f.p; z.n.f.p.h if hold (T-Mail long box)
+          : Tmshort  znf.p; znf.ph if hold (T-mail short box, 32-base representation)
+      : Brake - domain.z.n.f.p.flavour (The Brake! long box, flavour = hold, normal,
+                direct, crash, immediate)
+
+z - zone
+n - net
+f - node
+p - point
+
+FileInbound: "h:\inb\prot"
+------------
+ Indicates a directory in which attached files will be searched if full path
+isn't shown in the attach letter. Can be shown globally for all config or
+locally for one ScanDir.
+ If this keyword is omited these files will be searched in current directory.
+
+ForceINTL
+---------
+ If kludge INTL is absent in the letter then, first, look UseOwnZone and,
+second, add this kludge with all movings and changes of this letter.
+
+Origin: "My best origin"
+-------
+ Shows origin that will be used in @Origin macros
+
+IgnoreAttachPath
+----------------
+ Ignore path in all attaches.
+
+IgnoreBSY
+---------
+ Ignore .bsy flags.
+
+IndexFile: "o:\nodelist\rntrack.ndl"
+----------
+ Indicates filename where compiled nodelist will be placed. If omited then
+filename will be rntrack.ndl and it will be created in the current directory.
+
+Include: "SomeFile"
+--------
+ Incude additional configuration file. Any insertion is allowed.
+ RNtrack begins to parse this keyword at the moment it encoutered it in
+configuration file, and, having it parsed, continues parsing of main
+configuration-file
+
+KillRoutedMessage: <Mode>
+------------------
+ Shows to RNtrack what to do with the message after execution of Action: Route
+(or Action: RouteFilebox) command.
+   <Mode> : Always  - after the command the message is always deleted
+          : Never   - after the command the message is never deleted
+          : Flag    - the message will be deleted only if it has KillSent 
+                      flag (k).
+ By default the mode 'Always' is used. If the message should be deleted, it is
+deleted from the message base named by the 'ScanDir:' command to which the 
+'Action: Route' belongs. Meanwhile the message stays in memory and its further
+handling is possible.
+
+KludgeMask: * * *
+-----------
+ Mask, with which kludges of every message from base, shown by Scandir,
+are compared. All kludges are compared (and these that are Kludges, and
+these that are Vias).
+ Order of parameters is the next:
+KludgeMask: "KludgeName" "KludgeBody" <Times>
+     KludgeName   - String, with which name of kludges will be compared.
+                    Format of the string is described in more details in
+                    chapter 5, at the point, where FromName and ToName
+                    masks are described.
+     KludgeBody   - String, with which bodies of kludges will be compared.
+     [!]Times     - Amount of coincidents with KludgeName and KludgeBody
+                    in the letter.
+                    Without '!' +omparison is "equal or more"
+                    With '!' comparison is "less"
+ To understand how RNtrack parses a kludge I recomment to run it in Debug
+mode and to look the result in logs. I think that if you're experienced
+enought in FTN-technologies to understand how this mask works and what
+it is for, then it won't be difficult for you to understand everything in
+debug-log of RNtrack.
+
+LogFile: "c:\log\rntrack.log"
+--------
+Log filename. Pay attention that using of a log file begins just at the
+moment when RNtrack encounters this keyword. That's why I recommend
+to put it at the beginning of the configuration file.
+
+You may omit the log file declaration.
+
+LogLevel: 1
+---------
+ Level of log detalization. Possible values are from 0 to 5.
+ Level 0:  - Errors. Only serious error messages and information from
+             'Action: Display' are reported.
+ Level 1:  - Warnings. Warnings on oddities in the messages and files are 
+             reported besides the errors from level 0.
+ Level 2:  - Information. Besides errors and warnings, all activity producing 
+             changes in messages and files is reported.
+ Level 3:  - Notice. Besides errors, warnings and information, all actions 
+             are reported, for example, that message base scanning has been 
+             started.
+ Level 5:  - Debug mode. I wouldn't recommend using this level in regular
+             work, because the log file grows terribly quickly, and the work
+             speed slows down.
+
+LoopStr: " 2:5030/9999 RNtrack"
+--------
+ Indicate a string that will be used for loop-detection. Can be indicated
+both globally for all config file and locally for one Scandir:
+This string is searched in Via. Since RNtrack places Via only when
+Action: Route (or Action: RouteFilebox) is used we have to detect
+loops also by Via of other systems.
+There is no standart for this kludge, and everyone use what they want.
+That's why it's impossible to use string "2:5030/9999" for system with address
+2:5030/9999, because this string is included, for example, in address
+2:5030/9999. Thus, I use "2:5030/9999 @", because I route netmail by RNtrack
+and use new format of VIA line. For those who use Unimail for this puprose
+I'd recomment to use string like "2:5030/9999,", because Unimail writes
+in Via something like UniMail/W32 0.43b 2:5030/9999, 02 Jun 1998 15:39:32
+UTC +0400
+
+Mask: * * * * * *
+-----
+ Mask, with which every message from directory, described by ScanDir, is
+compared. Order of parameters is the next:
+Mask: FromName FromAddr ToName ToAddr Subject Flags
+Possible meanings of mask are described in more details in chapter 5.
+
+MaxAge: 2
+-------
+ Maximum age of the letter. Uses together with flag 'g' in Mask:
+This parameter can be shown both globally for all config-file and
+locally for selected ScanDir.
+ This parameter is described in more details in chapter 5 in the descrip-
+tion of flags.
+
+MaxAttachSize: 2048
+--------------
+ Maximum size of files attached to letter. Shown in bytes. Used together
+with 'A' flag in Mask:. This parameter can be shown both globally and
+locally for one ScanDir.
+
+MaxNodelistAge: 14
+---------------
+ Maximum age of nodelist. When the age is exceeded, RNtrack stops checking
+existence of an address in nodelist (every address'll be considered to
+be valid)
+ Usage of this parameter is described in more details in chapter 11.
+
+MaxMsgSize: 2048
+-----------
+ Maximum size of incoming messages. Shown in bytes.
+Messages in Squish and Jam bases not checking.
+
+MaxPktSize: 2048
+-----------
+ Maximum size of incoming pkt file. Shown in bytes. 
+
+UseFileBoxes
+------------
+ Use fileboxes instead of *.?lo for attached files. You must define FileBoxDir
+before this directive. Message (which contains attach) also placed to filebox.
+
+
+UseNewVIA
+---------
+ It indicates to RNtrack whether or not use new format of VIA line. Their
+difference is the following:
+ Without 'UseNewVIA' :
+ "Via 2:5030/9999 RNtrack 2.06/W32 08 Oct 1999 03:03:59 UTC+0400"
+ With 'UseNewVia' :
+ "Via 2:5030/9999 @19991007.230359.UTC RNtrack 2.06/W32"
+
+  You should decide what to use, but the second variant seems to be more
+"standart" (there is not official standart for VIA on the 8th of October,
+1999, and if you look carefully in your base with incoming netmail you'll
+be surprised by variety of formats).
+
+  Attention! If you used old version of RNtrack that didn't recognize this
+keyword and if you've decided to select new format of VIA please check the
+validity of "LoopStr:" (of course if you use it)
+
+Nodelist: "o:\nodelist\nodelist.*" [Zone]
+---------
+  Nodelist name. This keyword can be used several times. If symbol '*' is
+used in the extention then RNtrack will take a file with the largest number.
+If you want to use "cutted" versions of nodelist then you should indicate
+you zone (by Zone), that will be used by default. Compiled nodelists (RNtrack
+will automatically compile nodelist if necessary) are placed in current
+directory or in directory indicated by IndexFile: keyword.
+  Work with nodelists is described in more details in chapter 10.
+
+NodelistPath: "o:\nodelist"
+-------------
+ After this keyword every following Nodelist: keyword will use shown
+directory as root except for situation when full path (with disk name)
+is shown in the Nodelist: keyword. For example:
+NodelistPath: "o:\nodelist"
+Nodelist: "nodelist.*"           \ EQU "o:\nodelist\nodelist.*"
+Nodelist: "z7\z7-list.*"         \ EQU "o:\nodelist\z7\z7-list.*"
+Nodelist: "c:\addlist.*"         \ EQU "c:\addlist.*"
+
+NoLogIgnore
+-----------
+ Disables information output to screen and in log file when keyword
+Action: Ignore is processed. By default output to screen and in log file
+is enabled.
+
+Outbound: "h:\tst\outb"
+---------
+ Shows a directory where Binkley Style Outbound is situated. This keyword
+can be omited if you don't use Action: Route (or Action: RouteFilebox) and
+route netmail by another program.
+
+Password: "Pwd" 2:5020/*.*
+---------
+ Shows password that will be used while packets packing. Can be used several
+times. Command Action: Route (or Action: RouteFilebox) checks packet recepients' address and, if
+coincided with mask, shown password is added to packet.
+
+ScanDir: "o:\netmail" [Renumber] [Unpack] [Time] [Flag "[!]File"] [ScriptBefore "Func1"] [ScriptAfter "Func2"]
+ScanDir: @BeforeRoute|@AfterRoute [Flag "[!|#]File"]
+--------
+ Shows the message base that will be processed. Several bases can be indicated.
+The messages are read in succession into memory. After that every message may be
+compared with a mask by a 'Mask:' command and if the comparison is successful,
+some actions may be done by 'Action:' commands. All commands below the 'ScanDir:'
+command refer to this 'ScanDir:' command until another 'ScanDir:' command is 
+encountered or the configuration file ends.
+
+ If additional keyword Renumber is used (of course, without square brackets)
+then after all operations with this base are done RNtrack will renumber
+messages in this base. Renumbering can be used only for *.MSG format!
+
+ If keyword Unpack is shown then RNtrack will unpack all outbound to
+the base _before_ doing anything with this base.
+
+ If Flag "File" is shown then RNtrack will scan the base only if the indicated
+flag exists. If symbol "!" is used before filename then the scanning will
+be done only if the shown file is _absent_.
+ If '#' sign is put before flag-file name then this file will be deleted
+after scanning of the base.
+
+Format of Time is the following:
+   Daily [StartTime[-EndTime]|[P.PeriodTime] [...]
+   Weekly [StartDay[-EndDay] [...]
+
+Number of days are: 0 - sunday, 1 - monday... 6 - saturday.
+Time must be shown in HH:MM format. These modifiers work only if
+TimeStampFile is shown.
+
+How does it work:
+ Daily
+   - If any other parameter is omited then RNtrack will scan shown base
+     _one_ time every day (after 00:00)
+ Daily 17:00
+   - RNtrack will scan the base once a day after 17:00
+ Daily 17:00-18:00
+   - RNtrack will scan the base each run in shown time period.
+ Daily 08:00 12:00 14:00 20:00-22:00
+   - RNtrack will scan the base _once_ after 8 o'clock, _once_ after 12
+     o'clock, _once_ after 14 o'clock and every run in 20:00-22:00 time
+     period.
+ Daily p.00:15
+   - RNtrack will scan the base _once_ in every 15 minutes. This is a
+     shortened variant of keyword Daily 00:00 00:15 00:30 00:45 01:00 etc.
+     The first event in this type of record always begins at 00:00. The last
+     event is always within 00:00-23:59. For example if you show P.00:54 the
+     first event will be at 00:00, the second - at 00:54 and the last - at
+     23:24.
+ Weekly
+   - If any other parameter is omited then scan shown base _once_ a week
+     (after 00:00 on Sunday)
+ Weekly 1
+   - RNtrack will scan the base once on Monday
+ Weekly 2-3
+   - RNtrack will scan the base every run from Tuesday to Wednesday included.
+ Weekly 1 3 5
+   - RNtrack will scan the base _once_ on Monday, _once_ on Wednesday and
+     once on Friday.
+
+ Pay attention to situations when base is scanned _once_ (if shown only the
+beginning of event) and when _every_ run (if range of time is shown).
+
+ If @BeforeRoute or @AfterRoute is shown as basename then this ScanDir
+will be scanned before or after execution of Action: Route (or Action: RouteFilebox)
+ in the following ScanDirs. You mustn't use such modifiers as Renumber, Unpack and Time
+for ScanDir of this type. Also it's prohibited to use Action: Route (or Action: RouteFilebox)
+here.
+
+Semaphore: Time "File"
+----------
+ Shown a semaphore of RNtrack's activity. If the file "File" exists, it means
+that another copy of RNtrack is active. 'Time' parameter shows time period
+during which RNtrack will wait for this flag's disappearance. Time must be
+shown in minutes. If 0 is shown as a time parameter then RNtrack will wait
+for this flag's disappearance for an unlimited period of time. Otherwise, if
+the time has passed, RNtrack will continue it's work. For example,
+Semaphore: 60 "c:\temp\RNtrack.bsy"
+
+
+SetViaAlways
+------------
+  By default RNtrack adds it's VIA only during execution of Action: Route
+(or Action: RouteFilebox).
+If you indicate this keyword RNtrack will add via during actions "Copy"
+(Via will be added to the copied letter), "Move", "AddNote", "Rewrite" and
+other commands that change letters (for example, action: Ignore doesn't
+change anything, that's why VIA won't be added).
+  If you've copied a letter several times from one base to another then
+VIA will be added only once, and a time of the last copying/moving/changing
+will be indicated.
+
+ScriptFile: "File"
+-----------
+ Path to script file.
+
+ScriptMask: "smask"
+-----------
+
+ There "smask" is a function name from script whis would call when compare message with this mask.
+Match/Unmatch message with this mask depends of return code of this function.
+
+SkipHiddenFiles
+---------------
+ While checking existence of fileattaches consider that files with Hidden
+attributes are absent. By default these files are visible.
+
+SoftCheckInNodelists
+--------------------
+ This keyword sets "soft" checking of existence of a node in nodelist.
+In more details you can read about it in chapters 10.1 and 10.2
+
+SysopName: "Vladimir Lenin"
+----------
+ Your name. Used in templates like @Sysop. Quotation marks are necessary.
+And in general everywhere, where quotation marks are used, they are
+necessary.
+
+Tearline: "Your tear line"
+---------
+ Tearline, used in @Tearline macros. If it is omited then
+--- RNtrack/XXX X.XX[.bX] will be used.
+
+TempMail: "h:\tst\temp"
+---------
+ Shows directory where all packets will be unpacked by function Unpack
+(key -u in command line). This keyword can be omited if you don't use
+outbound repacking.
+
+TimeStampFile: "c:\ftrstamp.bin"
+--------------
+ Shown a file which will be used for correct work of functions that are
+executed depending of time. If this file is absent then it is created. The
+content of the file isn't changed and isn't used. RNtrack changes only
+time of "last change" of current file.
+
+TrafficLog: "h:\log\RNtrack.trf"
+-----------
+ Shows a file which will be used as a log-file about all letters, processed
+by Action: Route (or Action: RouteFilebox) command. This keyword can be omited.
+In this case this log-file won't be used.
+
+TrafficLogTemplate: "File"
+-------------------
+ Shows a template for traffic log. If this keyword is omitted then default
+internal template will be used (it is equal to template that can be found
+in examples with name 'traflog.tpl')
+
+UseASO
+------
+
+ Enable Amiga-style Outbound (ASO)
+
+UseBrake
+--------
+ Enable The Brake!-style Outbound
+
+UseOwnZone
+----------
+ If kludge INTL is omited in the letter then to consider that the letter is
+written in the same zone with us. Choosing the correct zone, RNtrack takes
+that our address mask of which first coincided with the address of the
+sender.
+
+UTC: +3
+----
+ Keyword UTC indicates difference (in hours) between UTC and local time
+of computer. For Moscow time this difference is +3 in winter and +4 in
+summer. Keyword is used in kludges while executing Action: Route 
+(or Action: RouteFilebox) command.
+ In most cases RNtrack can define the difference, but if time isn't set
+correctly in your system (one of signs is that your computer doesn't
+adjust summer/winter time) or for some reasons your want to use another
+time shift then you can use this command.
+ If this keyword is omited and system time isn't set properly then only
+local time will be written to kludges.
+
+
+ +------+----------------------------------------------------------------+
+ |5.    | Parameters of Mask: keyword                                    |
+ +------+----------------------------------------------------------------+
+
+ Keyword Mask: indicated a mask, with which a letter will be compared. Let's
+take to pieces this keyword...
+
+ So, it's syntax is the next:
+
+Mask: FromName FromAddr ToName ToAddr Subject Flags
+
+   FromName, ToName    - corresponding fields from letter. Comparison is
+                         case-insencitive. The followind additional symbols
+                         can be used:
+                         '*' - any amount of any symbols
+                         '?' - any symbol
+                         '#' - any number
+                         '$' - any character (that is all symbols "more"
+                               that space)
+                         '[' and ']' - only shown symbols
+                         '[!' and ']' - only _not_ shown symbols
+                         If the first symbol is '!' then incoincidence
+                         is checked.
+                         For example:
+                         "*Fix*" - to check existance of current string.
+                         For example "AreaFix", "FixIt" and "Somefixaction"
+                         are suitable for this mask.
+                         "*@*.[rs]u" - "eddie@ironmaiden.com" & "some@where.su"
+                         are suitable for this mask, but "some@where.net" is
+                         not.
+                         "!*.*" - accordingly "aaa.bbb" and "c.c.c.c" are
+                         _not_ suitable, but "Lalala" is suitable.
+                         To use symbols '*', '?', '[', ']', '!' like
+                         symbols, not like parts of mask you should
+                         forestall them with '\' symbol.
+                         For example:
+                         "\*.\*" - only string "*.*" is suitable for this
+                         mask.
+
+   FromAddr, ToAddr    - corresponding fields from the letter. Can contain
+                         like mask (for example, 2:*/* or simply *), and
+                         also symbols
+                         '#' - to check existance in nodelist
+                         '@' - our(s) address(es)
+                         After dot symbol '&' can also be used. For example
+                         "2:5030/9999.&". This means "Node, it's points,
+                         links that are under this hub in nodelist (for Hubs),
+                         links that are under this host in nodelist (for
+                         Hosts) or entire region (if it's really a region).
+                         Remember that nodes that absent in nodelist don't
+                         coincide with regional mask.
+                         More details of work with '#' and '&' can become
+                         known from chapters 10.1 and 10.2
+
+                         Symbol '!' can be used before address, and it means
+                         'NOT'. For example !2:5030/9999 - address must _not_
+                         be 2:5030/9999
+
+   Subject             - Subject of a letter. Format of masks from fields
+                         FromName and ToName is suitable for this field.
+
+
+   Flags               - Flags of the letter. Possible values are:
+     a                 - Attach
+     A                 - To check size of attaches.
+                         +A - more than shown in MaxAttachSize
+                         -A - less or equal than shown in MaxAttachSize
+     b                 - ARQ
+     c                 - Crash
+     d                 - Direct
+     e                 - Empty (empty body of the letter. Kludges are not
+                         taken into account)
+     E                 - Echomail (letter is an echomail)
+     f                 - File Request
+     g                 - Check age of the letter
+                         +g - More than shown in MaxAge:
+                         -g - Equal of less than shown in MaxAge:
+     h                 - Hold
+     i                 - Forward/intransit
+     j                 - Kill File Send
+     k                 - Kill
+     l                 - Local
+     L                 - Lock
+     m                 - iMmediate
+     M                 - To check size of messages.
+                         +M - more than shown in MaxMsgSize
+                         -M - less or equal than shown in MaxMsgSize     
+     n                 - CFM
+     o                 - Orphan
+     p                 - Private
+     q                 - return receipt reQuest
+     r                 - Received
+     s                 - Send
+     S                 - Archive/Sent
+     t                 - Truncate file send
+     u                 - Update Request
+     v                 - Scanned (only for echobases in Squish format).
+     x                 - Attach Exist.
+                         +x - if the letter has 'a' flag and all files
+                              from this attach exist.
+                         -x - if the letter has 'a' flag but one of
+                              several attached files are absent.
+     y                 - return receipt
+     0 - 9             - Loop Count
+
+                         If sign + is placed before flag then it means that
+                         this flag must be set in order for letter to be
+                         coincided with the mask; if sign - is placed then
+                         the flag must be shed.
+                         Especial situation is with Loops. Flag +0 shows
+                         that the situation when a letter hasn't yet passed
+                         our syatem is caught. Flag -0 catches a situation
+                         when a letter at least once passed our station.
+                         Flag +1...+9 catches a situation when a letter
+                         passed our station according number of times
+                         _OR_MORE_ . Flag -1...-9 catches a situation when
+                         a letter passed our station _LESS_ number of times.
+                         Thus +0 == -1 -0 == +1
+
+
+ Examples of some masks:
+
+ Mask: * * * * * *
+ Any letter coincides with this mask.
+
+ Mask: * * "*Lenin*" * * *
+ Letters that have Lenin in To: field coincide with this mask.
+
+ Mask: * !# * !# * *
+ Letters, sender and recipient of which are absent in current nodelist
+coincided.
+
+ Mask: * * * * * +s
+ Letters that have Send flag set coincide with this mask.
+
+ Several masks can be used at once. For example:
+  Mask: * 2:5020/0 * * * *
+  Mask: * 2:5020/381 * * * *
+  Mask: * 2:5020/1381 * * * *
+  Letters from addresses 2:5020/0, 2:5020/381 or 2:5020/1381 coincide with
+this mask.
+
+ Modifier '@' can be used in the situation when it's necessary to indicate
+all out addresses in mask. For example:
+  Address: 2:5030/9999
+  Aka: 7:1130/79 7:*/*.*
+  Aka: 8:888/888 8:*/*.*
+  [...]
+  Mask * * * !@ * *
+  Letters _NOT_ for 2:5030/9999, 7:1130/79 or 8:888/888 coincide.
+
+
+ +------+----------------------------------------------------------------+
+ |5.1   | Parameters of ScriptMask: keyword                              |
+ +------+----------------------------------------------------------------+
+
+  Syntax:
+
+   ScriptMask: "smask"
+   
+ There "smask" is a function name from script whis would call when compare message with this mask.
+Match/Unmatch message with this mask depends of return code of this function.
+
+return | result
+---------------
+0      | message not match with mask
+1      | message match with mask
+
+
+ +------+----------------------------------------------------------------+
+ |6.    | Parameters of Action: keyword                                  |
+ +------+----------------------------------------------------------------+
+
+ Keyword Action: shows what to do with a letter, coincided with mask.
+Possible variants for this keyword are:
+
+   Action: AddNote "tpl"           - Add a shown template to the beginning
+                                     of the body of the letter.
+   Action: AddKludge "name" "value" - Add kludge to message.
+
+   Action: Delete                  - Delete the message. It is deleted from the
+                                     message base named by the 'ScanDir:'
+                                     command to which this command refers. At 
+                                     the same time the message stays in memory
+                                     and its further processing by other commands
+                                     refering to the same 'ScanDir:' is possible.
+
+   Action: Move "o:\new\dir"       - Move the message to another base. After that
+                                     its further processing by other commands
+                                     refering to the same 'ScanDir:' is possible.
+
+   Action: Copy "o:\new\dir"       - Copy the message to another base.
+
+   Action: Rewrite * * * * * *     - Rewrite the message. Symbol '*' shows
+                                     that the current field must be left
+                                     unchanged. RNtrack writes the message from
+                                     the memory to the message base named by the
+                                     'ScanDir:' command. You can use any macros
+                                     permitted in templates for the Subject 
+                                     field.                                     
+
+   Action: Ignore                  - Ignore the letter.
+
+   Action: Display "Text"          - Show the text on screen and write it
+                                     into log.
+                                     In the "Text" field you can use macros
+                                     that are used in templates.
+
+   Action: Flag "File"             - Create a file of zero-length. If the
+                                     directory, where this flag must be
+                                     created, is absent, RNtrack will
+                                     create this directory.
+
+   Action: DelFile "File"          - To delete the shown file. If the file
+                                     is already absent then error-message
+                                     is not printed.
+
+   Action: NewMsg "tpl" "dir" * * * * * *
+                                   - Create a new message using template.
+                                     In the Subject field you can use macros
+                                     that are used in templates.
+
+   Action: WriteFile "tpl" "File"  - Create a file using template.
+
+   Action: AppendToFile "tpl" "File"
+                                   - Similar to WriteFile. But if file
+                                     already exists then the message is
+                                     added to the end of the file.
+
+   Action: Call "tpl" "File" "Prg" - Create file using template. Call the
+                                     "Prg" programm. After it exits, delete
+                                     created file. Values "tpl" and "File"
+                                     can be omited.
+
+   Action: Route <Mode> Address    - Route this letter through shown address.
+                                     Mode can be Hold, Crash, Direct, Normal or Immediate.
+                                     The following symbols can be used
+                                     instead of address:
+                                     %   - send this letter through the
+                                           recipient of the letter.
+                                     %.0 - send the letter through boss of
+                                           the recipient.
+                                     Your address, that coincide with
+                                     according mask, is used as the address
+                                     of the sender of the packet.
+
+   Action: RouteFilebox <Mode> Address - Route this letter through shown address.
+                                     Mode can be Hold, Crash, Direct, Normal or Immediate.
+                                     The following symbols can be used
+                                     instead of address:
+                                     %   - send this letter through the
+                                           recipient of the letter.
+                                     %.0 - send the letter through boss of
+                                           the recipient.
+                                     Your address, that coincide with
+                                     according mask, is used as the address
+                                     of the sender of the packet. Message placed as
+                     individual packet to filebox.
+
+   Action: RouteHub <Mode>        -  Route this letter through hub of destination
+                                     address. Mode can be Hold, Crash, Direct, Normal or Immediate.
+                     Routes to host of recipient if hub not found.
+                     
+   Action: Poll <Mode> Address    -  To create Poll to the shown address.
+                                     Arguments Mode and Address are the
+                                     same to these arguments in Action:Route
+                                     command. An according ?LO-file of
+                                     zero size is created as the Poll. If
+                                     the ?LO already exists then this command
+                                     doesn't execute any action.
+
+   Action: DeleteAttach           -  Delete attaches. The message leaves
+                                     unchanged. If FileAttach flag is not set
+                                     on the message this command ignores.
+
+   Action: ChangePath "Dir"       -  Changes path into subject. Files
+                                     itselves are left in the same place.
+                                     Existence of the shown directory is not
+                                     checked. If to show "" like a path then
+                                     path will simply be deleted. If summary
+                                     length of the path exceedes 71 symbol
+                                     then warning is given out but letter
+                                     is left unchanged.
+                                     If FileAttach flag is omited then the
+                                     command is ignored.
+
+   Action: MoveAttach "Dir"       -  Moves attached file(s) into shown
+                                     directory. Path in subject changes
+                                     accordingly.If FileAttach flag is
+                                     omited then the command is ignored.
+                     
+   Action: MoveAttachFilebox <Mode> Address       -  Moves attached file(s) into filebox
+                     for specified address. Arguments Mode and 
+                     Address are the same to these arguments in 
+                     Action: Route (or Action: RouteFilebox, etc.).
+                                     command. Path in subject changes
+                                     accordingly. If FileAttach flag is omited
+                                     then the command is ignored.
+
+   Action: CopyAttach "Dir"       -  Copies attached file(s) into shown
+                                     directory. Path in subject doesn't
+                                     change. If FileAttach flag is omited
+                                     then the command is ignored.
+
+   Action: CopyAttachFilebox <Mode> Address       -  Copies attached file(s) into filebox
+                     for specified address. Address are the same to these 
+                     arguments in Action: Route (or Action: RouteFilebox, 
+                     etc.). Path in subject doesn't
+                                     change. If FileAttach flag is omited
+                                     then the command is ignored.
+
+   Action: Script "Func"          -  Calls function "Func" from file, defined
+                     in ScriptFile variable.
+
+   Action: Split <Lines>          -  Split the coincided message to
+                                     several messages, with amount of lines
+                                     in the body not exceeded Lines. The
+                                     message itself is destroyed after the
+                                     operation. In the beginning of every
+                                     new message kludge
+                                     ^aSPLITTED: By RNtrack. Part N of N
+                                     is placed. N is a number of current
+                                     part and total amount of parts.
+
+   Action: ToLowerPath            -  Convert path of attached files and filename to lower case.
+   
+   Action: ToUpperPath            -  Convert path of attached files and filename to lower case.
+   
+   Action: Recode "Recode.tbl"    -  Recodes the message in accordance with
+                                     the shown recoding table. Format of
+                                     the recoding table is compatible with
+                                     hpt. Examples of these files you can
+                                     find in the 'samples' directory.
+
+   Examples:
+
+   Action: Copy "o:\new\dir"
+   Action: Delete
+   Executes the same operation that Action: Move "o:\new\dir"
+
+   Action: Rewrite * * * * * -cdm
+   Unset addributes Crash, Direct and Immediate.
+
+   Action: Route Direct 2:5020/1
+   Routes the letter through 2:5020/1 with Direct flavour.
+
+   Now let's examine Action: NewMsg in more details.
+
+ "tpl" in this keyword shows template that will be used while creation
+of a new letter. "Dir" shows a directory where this letter will be created.
+Other fields are almost the same like in Mask: keyword, with the exception
+that it's impossible to use symbols '&', '!' and '#', but there are 3 other
+symbols- '$', '%' and '@'.
+         '%' means that in From or To field RNtrack will place name or
+             address of recepient, shown in the source message.
+         '$' means that RNtrack will place name or address of the sender.
+         '@' means that RNtrack will use out address (or AKAs)
+
+Example:
+
+   Action: NewMsg "tpl\badfrom.tpl" "o:\netmail\bout"
+                  "Vladimir Lenin" @ "%%" % "Bad source address" +l
+(In the configuration file this should be written in one line, here the
+command is divided into 2 lines just for commodity of reading)
+  This command creates new letter in the directory "c:\netmail\bout", using
+template from file "tpm\badfrom.tpl", written from name "Vladimir Lenin",
+from address 2:5030/9999, to name and address of recepient from original
+letter, with subject "Bad source address" and with Local flag set.
+
+ The next macros can be used in templates:
+
+     @ToName            - Name of the recepient of the original letter.
+     @ToAddr            - Address of the recepient of the original letter.
+     @InetToAddr        - Address of the recepient of the original letter (internet style).
+     @FromName          - Name of the sender of the original letter.
+     @FromAddr          - Address of the sender of the original letter.
+     @InetFromAddr  - Address of the sender of the original letter (internet style).
+     @Subject           - Subject of the original letter.
+     @MsgDate           - Date of the original letter.
+     @MsgAge            - Age of the letter.
+     @MsgHeader         - Header of the original letter.
+     @MsgKludges        - Kludges of the original letter.
+     @MsgBody           - Body of the original letter.
+     @MsgVias           - Via and other technical strings of the original
+                          letter.
+     @MsgAttr           - Attributes of the letter.
+     @MsgAreaName       - If the message is echomail then name of the echo
+                          from what the message came.
+     @MsgAttachSize     - Size of all attached files.
+     @MsgSize           - Size of the message in bytes (without kludges).
+     @MsgID             - MSGID of the letter.
+     @MsgLines          - Number of lines in the message (without kludges).
+     @MsgLoops          - Loop Counter (not implemented yet).
+
+     @MsgTearline       - Tearline of the letter. Added invalidated.
+     @MsgOrigin         - Origin of the letter. Added invalidated.
+     @MsgNTearline      - Tearline of the letter. Added _non_-invalidated.
+                          If there is no tearline in the source message
+                          then empty tearline is created.
+     @MsgNOrigin        - Origin of the letter. Added _non_-invalidated.
+                          If there is no origin in the source message
+                          then empty origin is created.
+     @MsgRoutedVia      - If this macros is used in a template, that is
+                          called from ScanDir: @AfterRoute|@BeforeRoute
+                          then the address where current letter is routed
+                          to will be indicated instead of the macros.
+     @MsgReply          - Content of the 'Reply' kludge of the letter
+     @Sysop             - Your name, shown in the configuration.
+     @MyAddr            - Your address, shown in the configuration.
+     @MaxAge            - MaxAge: value (not implemented yet).
+     @MsgAreaName       - if the letter is an echomail message then
+                          name of the source area.
+     @MaxAttachSize     - MaxAttachSize: value (not implemented yet).
+     @Date              - Current date.
+     @NodeLists         - List of used nodelists.
+     @Origin            - Origin, shown in configuration. Added
+                          _non_-invalidated.
+     @Tearline          - Tearline, shown in configuration. Added
+                          _non_-invalidated. If it isn't shown in
+                          configuration files, then "--- RNtrack"Version
+                          is added.
+     @Version       - RNtrack version.
+     @Pid       - Current RNtrack PID (only under UNIX).
+
+
+ +------+----------------------------------------------------------------+
+ |7.    | Prefixes "+" and "*" for masks                                 |
+ +------+----------------------------------------------------------------+
+
+ Masks 'Mask:', 'BodyMask:', 'KludgeMask:' and 'ScriptMask:' can be used with
+ prefixes '*' or '+'. For example, '*Mask:' or '+BodyMask:'. How to use them?
+
+ Prefix '+' is used for masks combining. For example, the next construction:
+
+    Mask: "a" * * * * *
+   +Mask: * * "b" * * *
+   +Mask: * * * 2:5030/9999.0 * *
+
+is equal to mask:
+
+    Mask: "a" * "b" 2:5030/9999.0 * *
+
+ This example is fictious and can hardly be used in real configuration file,
+but it clearly explains principle of work of this mask. Now let's look at more
+actual example:
+
+   Mask: * * "*@*" 2:5020/400.0 * *
+   +BodyMask: * * 4096
+
+ Letters that have '@' in the 'To:' field, addressed to 2:5020/400 _and_
+of the size more than 4 KBytes are coincided with this mask.
+
+ Prefix '*' is used to show RNtrack to continue comparison of a message with
+the following masks even if it is coincided with current mask.
+ To make it more clear, let's look at the next example:
+
+   Mask: * * * * * *
+   Action: Display "Mask one"
+   Mask: * * * * * *
+   Action: Display "Mask two"
+
+ With this config we won't ever see string "Mask two" on our screen, because
+the previous mask will "intercept" all the messages. But if we change the
+configuration the next way:
+
+   *Mask: * * * * * *
+   Action: Display "Mask one"
+   Mask: * * * * * *
+   Action: Display "Mask two"
+
+we'll see both lines.
+
+ And the last. If the construction like this is shown in the config:
+
+   *Mask: ...
+   +Mask: ...
+   +Mask: ...
+
+then the message, coincided with all these masks will also be compared
+to the following masks. More complicated examples of work with these
+prefixes you can find in the next chapter.
+
+
+ +------+----------------------------------------------------------------+
+ |8.    | Examples of using Mask: and Action:                            |
+ +------+----------------------------------------------------------------+
+
+ To make a copy of all messages, disable 'Direct' flag, and to readdress
+messages adressed to gate on 2:5020/400 and exceeding 4 KBytes to gate
+on 2:5020/204
+
+   *Mask: * * * * * *
+   Action: Copy "c:\netmail\archive"
+   *Mask: * * * * * +d
+   Action: Rewrite * * * * * -d
+   Mask: * * "*@*" 2:5020/400.0 * *
+   +BodyMask: * * 4096
+   Action: Rewrite * * * 2:5020/204.0 * *
+
+
+ To delete all the letter, addressed neither to me nor to my points:
+
+   Mask: * * * 2:5030/9999.0 * *
+   Mask: * * * 2:5030/9999.1 * *
+   Mask: * * * 2:5030/9999.3 * *
+   Mask: * * * 2:5030/9999.5 * *
+   Action: Ignore
+   Mask: * * * * * *
+   Action: Delete
+
+ To route messages for 2:5030/9999.* from 00:00 till 11:59 to 2:5020/238, and
+from 12:00 till 23:59 - directly to 2:5030/9999.0
+   Mask: * * * 2:5030/9999.* * *
+   Action: Route Crash 2:5020/238 [Daily 00:00-11:59]
+   Action: Route Crash 2:5030/9999  [Daily 12:00-23:59]
+
+
+ To delete all the letters, recepient and sender of which are absent in
+nodelist:
+   Mask: * !# * !# * *
+   Action: Delete
+
+ All the letters, written to address 2:5030/9999.1, or to 2:5030/9999.0 and
+having "Lenin", "Eddie" or "Moderator" in the To field readdress to 2:5030/9999
+to name of "Vladimir Lenin", discard flags Crash, Direct, Immediate and put
+them to directory h:\netmail
+   Mask: * * * 2:5030/9999.1 * *
+   Mask: * * "*Lenin*" 2:5030/9999 * *
+   Mask: * * "*Eddie*" 2:5030/9999 * *
+   Mask: * * "*Moderator*" 2:5030/9999 * *
+   Action: Rewrite * * "Vladimir Lenin" 2:5030/9999 * -cdi
+   Action: Move "h:\netmail"
+
+ Send all letters for net 2:5030 through 2:5030/251
+   Mask: * * * 2:5030/*.* * *
+   Action: Route Crash 2:5030/251
+
+ To discard from all letters "direct" flag and to send all letters from node
+2:5020/1 to 2:5020/0
+   *Mask: * * * * * +d
+   Action: Rewrite * * * * * -d
+   Mask: * 2:5020/1 * * * *
+   Action: Route Direct 2:5020/0
+
+ Send letters to all points of node 2:5030/9999 directly. But don't send
+mail to this node itself. This is an example of distribution of letters
+on this node.
+   Mask  * * * 2:5030/9999.0 * *
+   Action: Ignore
+   Mask: * * * 2:5030/9999.* * *
+   Action: Route Direct %
+
+ Send all letters for 2:5020/50.*, /79.*, /204.* and /1301.* to
+corresponding _nodes_ (so called "Boss routing").
+   Mask * * * 2:5020/50.* * *
+   Mask * * * 2:5020/78.* * *
+   Mask * * * 2:5020/204.* * *
+   Mask * * * 2:5020/1301.* * *
+   Action: Route Direct %.0
+
+ Send mail for all hub-links of 2:5020/50 to 2:5020/50, mail for host-links
+of 2:5020/0 to 2:5020/1381, ignore mail to 2:5030/9999.0, send mail for points
+of 2:5030/9999 and it's hub-links directly.
+   Mask * * * 2:5020/50.& * *
+   Action: Route Direct 2:5020/50
+   Mask * * * 2:5020/0.& * *
+   Action: Route Direct 2:5020/1381
+   Mask * * * 2:5030/9999.0 * *
+   Action: Ignore
+   Mask * * * 2:5030/9999.& * *
+   Action: Route Direct %
+
+ Send mail for all the region 2:50 to 2:5020/204, all the region 2:46 ti
+2:46/0, and all other mail- to 2:5020/278.
+   Mask * * * 2:50/0.& * *
+   Action: Route Direct 2:5020/204
+   Mask * * * 2:46/0.& * *
+   Action: Route Direct 2:46/0
+   Mask * * * * * *
+   Action: Route Direct 2:5020/278
+
+ This is an example of work with loops. RNtrack will catch all netmail that
+has already passed through out station and put it to loop-storehouse.
+Once a day all letters from storehouse go outside. If the letter has already
+passed through out station 7 times (that means that routing has't been fixed
+for 7 days) we return it to sender.
+   ScanDir: "o:\netmail\loops" Daily 01:00
+   Mask: * * * * * *
+   Action: Move "O:\netmail\out"
+   ...
+   ScanDir: "o:\netmail"
+   Mask: * * * * * +7
+   Action: NewMsg "tpl\Loop.tpl" "o:\netmail\out" "Vladimir Lenin" @ "$" $
+"Loop detected" +l
+   Action: Delete
+   Mask: * * * * * +1
+   Action: Move "o:\netmail\loops"
+   ...
+   Mask: * * * * * *
+   Action: Move "o:\netmail\out"
+
+ An example of using +b (ARQ) flag
+   ScanDir: @AfterRoute
+   Mask: * * * * * +b
+   Action: NewMsg "Audit.tpl" "o:\netmail" "RNtrack" 2:5030/9999 $ $ "Audit
+request receipt" +l
+   ScanDir: "o:\netmail"
+   Mask: * * * * * *
+   Action: Route Crash 2:5030/9999
+
+
+ +------+----------------------------------------------------------------+
+ |9.    | Peculiarities of work                                          |
+ +------+----------------------------------------------------------------+
+
+ When commands Move, Copy, ReWrite, ChangePath, MovaAttach are executed,
+final letter can have another length. It's joined with the fact that when
+these commands are executed a letter is created anew, and carriage returns,
+lacking kludges and so on can be added.
+
+When RNtrack handles a message with attachments, it takes a space in the
+Subject field as a delimiter between file names. If an attacment filename
+contains a space, such a filename is considered as two filenames: one before 
+the space and one after it. As a result the file is not handled.
+
+ Another peculiarity. During execution of Action: Delete a message is
+deleted at once, but it continues to exist in memory. That's why commands
+Copy-Delete or Delete-Copy will done the same- Move. But in the first case
+a new message will be created first, and only after this the old letter'll be
+deleted, and in the second case the old letter will be deleted first and
+after that a new one'll be created.
+
+ By the way, remember that Frack won't delete or put any flag on a letter
+itself. It won't delete a message or a file without special request. That's
+why if you want RNtrack to put +s flag on messages after sending, or to
+delete messages with KillSent attribute you should order it to RNtrack
+directly.
+
+
+ +------+----------------------------------------------------------------+
+ |10    | Supported types of bases                                       |
+ +------+----------------------------------------------------------------+
+
+ At the moment RNtrack can work with the next types of bases:
+ 1. Squish
+ 2. *.PKT
+ 3. *.MSG
+ 4. JAM
+
+
+ +------+----------------------------------------------------------------+
+ |10.1  | Squish                                                         |
+ +------+----------------------------------------------------------------+
+                         Name format: "$BaseName"
+
+ There should be '$' symbol before the first symbol of the name. Only
+name of base should be shown, without extention.
+
+Examples:
+ScanDir: "$p:\mymail"
+Action: Move "$p:\outmail"
+
+Limitations:
+ * Can't be used as a base for BadMail.
+ * Operation Renumber doesn't function.
+
+
+ +------+----------------------------------------------------------------+
+ |10.2  | *.PKT                                                          |
+ +------+----------------------------------------------------------------+
+           Format of name: "#[#]Directory[\File][!FtnAddressMask]"
+
+ First symbol in the name should be '#'. Name of base can be shown like
+a directory (then all files, coincided with *.pkt mask will be parsed), or
+like a specified file name. If the second '#' is used in the name of the
+base then passwords won't be checked. Otherwise RNtrack will compare
+coincidence of password of each opened *.PKT with passwords, specified by
+Password: keywords. Additionally you can show FTN-mask (after '!' symbol).
+In this case coincidence of the address of the packet's sender will be
+checked with shown mask. If password or address doesn't coincide with
+shown then this packet will be skipped. If a packets becomes empty as the
+result of operations, specified in Scandir, then it is deleted.
+
+Examples:
+ScanDir: "##o:\inbound"
+ScanDir: "#o:\inbound!2:5030/9999"
+ScanDir: "#o:\inbound\139c004f.pkt!2:5030/9999"
+
+Limitations:
+ * Can't be used as a base for Badmail.
+ * Operation Renumber doesn't function.
+ * This type of base supports only operations of reading and deleting.
+   Thus _any_ operation that changes message content is prohibited.
+
+
+ +------+----------------------------------------------------------------+
+ |10.3  | *.MSG                                                          |
+ +------+----------------------------------------------------------------+
+                       Format of name: "Directory"
+
+ Shows a directory where letters are situated. Directory name should be
+shown without ending '\' with the exception of situations when root
+directory is shown.
+
+Examples:
+ScanDir: "o:\netmail"
+Action: Move "o:\netmail\out"
+
+Limitations:
+ *  If new messages appeared in base, that is scanning at the moment, RNtrack
+won't see them until the next run. This also concernes letters created by
+RNtrack.
+
+
+ +------+----------------------------------------------------------------+
+ |10.4  | JAM                                                            |
+ +------+----------------------------------------------------------------+
+                       Format of name: "@BaseName"
+
+ '@' should be the first symbol in the name. Only filename _without_ any
+extention should be shown as a basename.
+
+Examples:
+ScanDir: "@p:\mymail"
+Action: Move "@p:\outmail"
+
+Limitations:
+ * Can't be used as a base for BadMail.
+ * Operation Renumber doesn't function.
+
+
+ +------+----------------------------------------------------------------+
+ |11    | Work with nodelists                                            |
+ +------+----------------------------------------------------------------+
+
+ RNtrack use nodelists and pointlists during comparing a letter with
+masks '#' and '&'. Comparison works in a slightly different ways if
+keywords "SoftCheckInNodelists" or "CheckPoints" are indicated. Chapters
+10.1 and 10.2 describe how these keywords work.
+ RNtrack understands "full" versions of nodelist (with all zones and
+regions) and "cutted" versions (regional and network). The only requirement
+while using "cutted" nodelist is to clearly indicate your zone in
+"Nodelist:" keyword. Otherwise RNtrack won't compile the nodelist.
+
+ Pointlist is also considered to be a nodelist, and RNtrack also knows how
+to work with it. The pointlist must be the following format:
+--------------------------------
+Boss,2:5030/9999
+Point,1,PointOne,Moscow,Sysop,-Unpublished-,9600,XA,MO,ZYX,V34
+Point,2,PointTwo,Moscow,Sysop2,-Unpublished-,2400,MO
+...
+---------------------------------
+ Pointlists must be defined after nodelists. So, first you should
+define all nodelist, and only after this pointlists.
+
+ If keyword "MaxNodelistAge:" is used then age of all used nodelists if
+checked (age is checked by time of file creation). If at least one nodelist
+is elder than it's shown in the keyword then all checks of existence of a
+node in nodelist are disabled, and it is considered that every node and
+every point are in nodelist/pointlist.
+
+ If two or more "merged" nodelist are used (for example, full nodelist
+and network segment), then the next algorythm is used:
+  * A node is considered to be valid if it's situated in at least one
+    nodelist
+  * If in one nodelist a node is hub, but in another it is not, then RNtrack
+    considers the node to be a hub.
+
+
+ +------+----------------------------------------------------------------+
+ |11.1  | Address mask "#  "                                             |
+ +------+----------------------------------------------------------------+
+ Address mask "#" is used in "Mask:" keyword and it defines checking of
+existence (or absence) of a sending or receiving node in nodelist.
+
+ Mask "#" itself means "hard" checking. A node is considered to be in
+nodelist only if it's really listed there.
+ "#" + "SoftCheckInNodelist" means "soft" checking. A node is considered to
+be in nodelist if it's really listed (surprised? :) or when net or region
+or zone of this node is absent in nodelist. For example if you use network
+segment, mask "#" and "SoftCheckInNodelist" then existence of a node in
+your net will be checked "hardly", but nodes in other nets won't be checked
+and they'll considered to be listed.
+
+  "CheckPoints:" enables different modes of point checking:
+  "CheckPoints: Never" - Not to check points existence. Point is considered
+                         to be listed if his boss is is nodelist.
+  "CheckPoints: Hard"  - To check points existence in pointlist. If a point
+                         is absent in pointlist or if his boss is absent
+                         then point is considered to be unlisted.
+  "CheckPoints: Soft"  - To check point in pointlist, but in a different
+                         way: if segment of a boss is absent in the
+                         pointlist then point is considered to be valid.
+                         Existence of boss in nodelist is still necessary.
+
+
+ +------+----------------------------------------------------------------+
+ |11.2  | Address mask "&"                                               |
+ +------+----------------------------------------------------------------+
+
+ Address mask "&" is used in "Mask:" keyword and indicates checking
+of existence of sender/receiver in pointlist as a point of this node
+(if an ordinary node is used in mask), checking of it's existence under
+this hub in nodelist (if the node is hub), checking of it's existence under
+this host in nodelist (if the node is host of net) or in region (if the node
+is a regional entry).
+ Please attract your attention to difference of masks "2:5020/0.*", "2:5020/*"
+and "2:5020/0.&". The first mask means "all points of 2:5020/0". The second
+means "all nodes of net 5020". The third- "all host-links". If we talk about
+region 2:50 and masks "2:50/0.*", "2:50/*", "2:50/0.&" then the first mask
+is "all points of 2:50/0", the second- "all independent nodes of 2:50" and
+the third- "all nodes in R50". Please remember that nodes absent in nodelist
+doesn't coincide with mask "&". E.g. if node "2:5020/1079" is absent in
+nodelist that it won't coincide with mask "2:50/0.&".
+
+ Keyword "SoftCheckInNodelist" doesn't affect this mask.
+
+ Keyword "CheckPoint" does the next affection:
+ "CheckPoints: Never" - Do not check point existence in pointlist. All
+                        point addresses will coincide with mask "2:5030/9999.&"
+ "CheckPoints: Hard"  - To check point existence in pointlist. Only
+                        listed points will coincide with mask "2:5030/9999.&"
+ "CheckPoints: Soft"  - To check point existence in pointlist. Only listed
+                        points of 2:5030/9999 or all points (if segment of
+                        2:5030/9999 is absent in pointlist) will coincide.
+
+
+ +------+----------------------------------------------------------------+
+ |12.   | Work with scripts                                              |
+ +------+----------------------------------------------------------------+
+
+To enable scripts run make with ENABLE_SCRIPTS=1 option. RNtrack use Perl as
+scripting language.
+
+Variables and functions defined in scripts
+------------------------------------------ 
+
+Constants:
+
+$ConfigFile - Config file path
+$LogFile    - Log file path
+$LogLevel   - Log detalization level
+$SysopName  - Sysop name
+$TrafficLog - Traffic log path
+$Version    - RNtrack version
+
+%FMSG - current message
+
+Keys:
+
+$FMSG{"FromName"}   - Name of the sender of the original letter.
+$FMSG{"FromAddr"}   - Address of the sender of the original letter.
+$FMSG{"InetFromAddr"}   - Address of the sender of the original letter (internet style).
+$FMSG{"ToName"}     - Name of the recepient of the original letter.
+$FMSG{"ToAddr"}     - Address of the recepient of the original letter.
+$FMSG{"InetToAddr"} - Address of the recepient of the original letter (internet style).
+$FMSG{"Subject"}    - Subject of the original letter.
+$FMSG{"Date"}       - Date of the original letter.
+$FMSG{"Age"}        - Age of the letter.
+$FMSG{"Attr"}       - Attributes of the letter
+$FMSG{"Lines"}      - Number of lines in the message (without kludges)
+$FMSG{"Cost"}       - Cost
+$FMSG{"TimesRead"}  - TimesRead
+$FMSG{"ReplyTo"}    - ReplyTo
+$FMSG{"NextReply"}  - NextReply
+$FMSG{"AreaName"}   - If the message is echomail then name of the echo
+                          from what the message came.
+$FMSG{"Body"}       - Message body (without kludges)
+
+
+%FKludges - Current message kludges
+
+Value of any hash key is array link. To take value of non-repeated kludge
+(all exclude Via and SEEN-BY) use this code:
+
+$kludgevalue=$FKludges{"KludgeName"}[0];
+
+Attention! You must use all special symbols in kludge name (0x01, ":", etc.).
+
+Functions:
+
+Log("text");        - Text output to log and screen.
+Update();       - Update current message after script-made changes.
+              You can change following keys of %FMSG hash:
+              
+              FromName, FromAddr, ToName, ToAddr, Subject, Body,
+              AreaName, Cost, TimesRead, ReplyTo, NextReply.
+              
+              Lines, InetFromAddr, InetToAddr not require modify
+              because its values automatically redefines ob
+              Body, FromAddr and ToAddr changes.
+              
+              Warning! Changes take effect only only for next Action 
+              directives. In that reason for file change after 
+              Action: Script add Action: Rewrite.
+              
+              Example:
+              
+              --- test.pl ---
+              sub maskfunc
+              {
+               $FMSG{"Subject"}="My new subject!";
+               Update();
+              }
+              --- test.pl ---
+              
+              
+              Mask: * * * * * *
+              Action: Script "maskfunc"
+              \ After that message file left unchanged
+              Action: Rewrite * * * * * *
+              \ Now subject in message file replaced to "My new subject!"
+              
+              
+ExistsInNodelist("99:99/999");  - Check existing in nodelist(s).
+FindHub("99:99/999");           - Return hub number for 99:99/999. It returns 0 if hub not found.
+
+NewMsg($MsgBase,$FromName,$FromAddr,$ToName,$ToAddr,$Subject,$Flags,$Kludges,$Body) - create message and put it to base
+
+Example:
+
+Following command
+
+ NewMsg("msgs","Alex","2:5030/1666","User","2:5030/1157.1","msg test","","","It is My test");
+
+will create message (msg) in 'msgs' directory from Alex@2:5030/1666 to User@2:5030/1157.1
+with subject 'msg test' and body 'It is My test'. Set of any flags and kludges currently 
+unsupported so values of $Flags and $Kludges arguments will be ignored.
+
+Some examples you can find in test.pl file.
+
+
+ +------+----------------------------------------------------------------+
+ |13.   | Guarantees                                                     |
+ +------+----------------------------------------------------------------+
+
+ This product is Freeware. It is distributed in accordance to principle
+As Is, and I can't provide any guarantee. The only thing I promise is
+to correct founded mistakes more or less regulary and to produce new
+versions.
+
+
+ +------+----------------------------------------------------------------+
+ |14.   | Thanks                                                         |
+ +------+----------------------------------------------------------------+
+
+ Thanks to Fyodor Ustinov for FTrack creation.
+
+ Thanks to people who translated this file to English in different times,
+to wit: Kirill Arushanov and Dennis Sulimov
+
+ Thanks to all my alphatesters:
+    Alex Bagmanov     2:5014/4
+    Boris Gordon      2:5020/701
+    Kirill Arushanov  1:2810/13
+    Sergey Korowkin   2:5033/27
+    Serge Sapozhnikov 2:4635/34
+    Matt Bedynek
+    Eugene Palenock   2:5020/2065
+
+ Thanks to authors of patches:
+    Serguei Revtov    2:5021/19.1
+    Andrey Slusar     2:467/126
+    Michael Kostylev  2:5030/1530
+ 
+ Thanks to Scott Dudley for his Squish MSGAPI. By the way, Squish - is a
+ trademark of SCI Communications.
+
+ This product uses the JAM(mbp) API - Copyright 1993 Joaquim Homrighausen,
+ Andrew Milner, Mats Birch, Mats Wallin. ALL RIGHTS RESERVED.
+
+
+ +------+----------------------------------------------------------------+
+ |15.   | How to find me                                                 |
+ +------+----------------------------------------------------------------+
+
+ If you have any notes and wishes, please
+* publish them in echoconference RU.FTRACK 
+  (though the echo is mainly in Russian you are welcome to write in English)
+* make a ticket in the bug tracker http://sourceforge.net/projects/ftrack-as
+* send them to developers via personal mail.
+
+Developers:
+* 2003-2006 Alex Soukhotine
+  2:5030/1157@fidonet (ph0enix@users.sourceforge.net)
+* 2007-... Stas Degteff (the project maintainer after Alex)
+  2:5080/102@fidonet (stas_degteff@users.sourceforge.net)
+* 2009-... Michael Dukelsky
+  2:5020/1042@fidonet
+
+Project site:
+
+http://sourceforge.net/projects/ftrack-as
+
+-------------------------------------------------------------------------------
