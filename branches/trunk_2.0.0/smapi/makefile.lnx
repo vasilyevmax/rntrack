@@ -3,7 +3,7 @@
 # No support for the Husky build environment
 
 CC=	gcc
-CFLAGS=	-Wall -funsigned-char
+CFLAGS=	-Wall -funsigned-char -Ih
 CDEFS=	-DUNIX
 COPT=	-O3
 OBJ=	.o
@@ -23,7 +23,8 @@ include makefile.inc
 
 # Thunderbirds are go!
 
-.c.o:
+#.c.o:
+%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
 $(TARGET): $(OBJS)

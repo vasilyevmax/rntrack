@@ -12,11 +12,12 @@
 
 PREFIX=/usr
 CC	= g++
-CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -O3
+CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -I../../smapi/h -I../../smapi/src -O3
 CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
           -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
-	  -DHAVE_LOCALE_H
-LFLAGS	= -s -L$(SRCDIR)smapi -lsmapilnx
+          -DHAVE_LOCALE_H
+SMAPIDIR= ../../smapi
+LFLAGS	= -s -L$(SMAPIDIR) -lsmapilnx
 SRCDIR	= ../../src/
 DOCDIR	= ../../doc/
 #CONFIG	= /etc/ftn/rntrack.cfg
@@ -88,7 +89,7 @@ OBJS=	fidoaddr.o \
 #	bison -l -d $< -o $(SRCDIR)cfg.cpp
 
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.lnx
+	make -C $(SMAPIDIR) -f makefile.lnx
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
@@ -110,8 +111,8 @@ uninstall:
 
 .PHONY: clean
 clean:
-	-rm -f $(SRCDIR)smapi/*.o
-	-rm -f $(SRCDIR)smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f $(DOCDIR)rntrack.1.gz
 	-rm -f *~
