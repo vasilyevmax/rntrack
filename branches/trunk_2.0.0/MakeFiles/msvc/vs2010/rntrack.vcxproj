@@ -77,7 +77,7 @@
       <Optimization>Disabled</Optimization>
       <BrowseInformation>true</BrowseInformation>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;..\..\..\smapi\h;..\..\..\smapi\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
