@@ -44,8 +44,8 @@
 #include "outbound.hpp"
 #include "filebox.hpp"
 #include "mytypes.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+#include "msgapi.h"
+#include "progprot.h"
 #include "tpkt.hpp"
 
 #ifdef _AIX_CONV

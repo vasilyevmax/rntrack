@@ -19,7 +19,7 @@
 #ifdef HAVE_CONFIG_H
     #include "constant.hpp"
 #else
-    #include <smapi/compiler.h>
+    #include "compiler.h"
 #endif
 
 #include <stdlib.h>
@@ -30,7 +30,7 @@
 #endif
 
 // #if defined(__WATCOMC__) && (defined(__OS2__) || defined(MSDOS))
-/* Why it's not implemented in smapi/compiler.h? */
+/* Why it's not implemented in smapi/h/compiler.h? */
 // #define strcasecmp stricmp
 // #define strncasecmp strnicmp
 // #endif

@@ -46,7 +46,7 @@
 #include "constant.hpp"
 #include "utils.hpp"
 #include "vars.hpp"
-#include <smapi/compiler.h>
+#include "compiler.h"
 #include "wildmat.hpp"
 
 #ifdef __WATCOMC__

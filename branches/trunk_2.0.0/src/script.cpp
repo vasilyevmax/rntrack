@@ -40,7 +40,7 @@
     #include "string.hpp"
     #include <XSUB.h>
 #endif
-#include "smapi/unused.h"
+#include "unused.h"
 
 #define MSGVARNAME "main::FMSG"
 #define KLUVARNAME "main::FKludges"

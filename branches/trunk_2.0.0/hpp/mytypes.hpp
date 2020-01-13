@@ -25,7 +25,7 @@
     #include <sys/stat.h>
 #endif
 
-#include "smapi/typedefs.h"
+#include "typedefs.h"
 
 typedef unsigned int uint;
 typedef unsigned char uchar;

@@ -34,13 +34,13 @@
 #include "age.hpp"
 #include "attach.hpp"
 #include "msg.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
-#include <smapi/prog.h>
-#include "smapi/unused.h"
+#include "msgapi.h"
+#include "progprot.h"
+#include "prog.h"
+#include "unused.h"
 
 #ifdef __WATCOMC__
-  #include <smapi/months.c>
+  #include "months.c"
 #endif
 
 #if defined (__sun__) || defined (__OSX__)

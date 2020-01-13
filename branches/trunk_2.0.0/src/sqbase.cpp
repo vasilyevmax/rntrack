@@ -19,7 +19,7 @@
 #include <assert.h>
 #include <errno.h>
 
-#include <smapi/msgapi.h>
+#include "msgapi.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -29,7 +29,7 @@
 #include "msgbase.hpp"
 #include "sqbase.hpp"
 #include "aka.hpp"
-#include "smapi/unused.h"
+#include "unused.h"
 
 
 static time_t dosftime(struct _stamp & time)

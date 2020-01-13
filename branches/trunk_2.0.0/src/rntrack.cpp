@@ -28,7 +28,7 @@
 #include "parsetpl.hpp"
 #include "tmstamp.hpp"
 #include "script.hpp"
-#include "smapi/msgapi.h"
+#include "msgapi.h"
 
 #ifdef HAVE_CONFIG_H
     #include "aconfig.h"

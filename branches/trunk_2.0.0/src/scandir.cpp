@@ -43,8 +43,8 @@
 #include "aka.hpp"
 #include "wildmat.hpp"
 #include "script.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+#include "msgapi.h"
+#include "progprot.h"
 
 // ---------------------------------------------------------
 // ---------------------------------------------------------

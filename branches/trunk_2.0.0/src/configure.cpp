@@ -56,7 +56,7 @@
 #if defined (__PERL_VERSION__)
     #include "script.hpp"
 #endif
-#include "smapi/unused.h"
+#include "unused.h"
 
 /*--------------------------------------------------------------------*/
 /*                         Global definitions                         */

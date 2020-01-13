@@ -29,7 +29,7 @@
 #include "string.hpp"
 #include <assert.h>
 #include <errno.h>
-#include "smapi/unused.h"
+#include "unused.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -42,8 +42,8 @@
 #include "passwd.hpp"
 #include "aka.hpp"
 #include "configure.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+#include "msgapi.h"
+#include "progprot.h"
 #include "tpkt.hpp"
 #ifdef _AIX_CONV
     #include "aix_conv.hpp"

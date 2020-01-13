@@ -38,8 +38,8 @@
 #include "sqbase.hpp"
 #include "pktbase.hpp"
 #include "aka.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+#include "msgapi.h"
+#include "progprot.h"
 
 #ifdef _AIX_CONV
   #include "aix_conv.hpp"
