@@ -86,6 +86,9 @@
       <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Bscmake>
+      <PreserveSBR>true</PreserveSBR>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -96,7 +99,7 @@
       <Optimization>Disabled</Optimization>
       <BrowseInformation>true</BrowseInformation>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;..\..\..\smapi\h;..\..\..\smapi\src</AdditionalIncludeDirectories>
       <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
     <Link>
@@ -112,7 +115,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;..\..\..\smapi\h;..\..\..\smapi\src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -131,7 +134,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\hpp;..\..\..\smapi\h;..\..\..\smapi\src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -144,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\smapi\src\months.c" />
     <ClCompile Include="..\..\..\src\age.cpp" />
     <ClCompile Include="..\..\..\src\aix_conv.cpp" />
     <ClCompile Include="..\..\..\src\aka.cpp" />
@@ -215,31 +219,15 @@
     <ClInclude Include="..\..\..\hpp\utils.hpp" />
     <ClInclude Include="..\..\..\hpp\vars.hpp" />
     <ClInclude Include="..\..\..\hpp\wildmat.hpp" />
+    <ClInclude Include="..\..\..\smapi\h\api_brow.h" />
+    <ClInclude Include="..\..\..\smapi\h\compiler.h" />
+    <ClInclude Include="..\..\..\smapi\h\msgapi.h" />
+    <ClInclude Include="..\..\..\smapi\h\prog.h" />
+    <ClInclude Include="..\..\..\smapi\h\progprot.h" />
+    <ClInclude Include="..\..\..\smapi\h\stamp.h" />
+    <ClInclude Include="..\..\..\smapi\h\typedefs.h" />
+    <ClInclude Include="..\..\..\smapi\h\unused.h" />
     <ClInclude Include="..\..\..\src\cfg.hpp" />
-    <ClInclude Include="..\..\..\src\smapi\apidebug.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_brow.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_jam.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_jamp.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_sdm.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_sdmp.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_sq.h" />
-    <ClInclude Include="..\..\..\src\smapi\api_sqp.h" />
-    <ClInclude Include="..\..\..\src\smapi\compiler.h" />
-    <ClInclude Include="..\..\..\src\smapi\cvsdate.h" />
-    <ClInclude Include="..\..\..\src\smapi\dr.h" />
-    <ClInclude Include="..\..\..\src\smapi\ffind.h" />
-    <ClInclude Include="..\..\..\src\smapi\msgapi.h" />
-    <ClInclude Include="..\..\..\src\smapi\old_msg.h" />
-    <ClInclude Include="..\..\..\src\smapi\patmat.h" />
-    <ClInclude Include="..\..\..\src\smapi\prog.h" />
-    <ClInclude Include="..\..\..\src\smapi\progprot.h" />
-    <ClInclude Include="..\..\..\src\smapi\stamp.h" />
-    <ClInclude Include="..\..\..\src\smapi\strextra.h" />
-    <ClInclude Include="..\..\..\src\smapi\typedefs.h" />
-    <ClInclude Include="..\..\..\src\smapi\unused.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\src\smapi\makefile.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
