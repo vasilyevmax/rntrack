@@ -1,9 +1,10 @@
 # $Id$
 # this file not tested
 CC	= g++
-CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -DUNIX -D_AIX -D_AIX_CONV
-LFLAGS	= -s -L$(SRCDIR)smapi -lsmapiaix
+LFLAGS	= -s -L$(SMAPIDIR) -lsmapiaix
 SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
@@ -72,15 +73,15 @@ OBJS=	fidoaddr.o \
 # Thunderbirds are go!
 
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.aix
+	make -C $(SMAPIDIR) -f makefile.aix
 
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
 
 clean:
-	-rm -f $(SRCDIR)smapi/*.o
-	-rm -f $(SRCDIR)smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f *~
 	-rm -f core

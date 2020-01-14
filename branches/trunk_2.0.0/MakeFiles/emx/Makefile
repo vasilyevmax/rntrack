@@ -13,9 +13,10 @@ DEBUG=-s -g
 
 CFLAGS=	-Wall -funsigned-char -Wno-char-subscripts -O3 $(DEBUG)
 CDEFS=	-DOS2 -DDOSISH -DEMBED -DHAVE_UNISTD_H -DHAVE_IO_H 
-COPT=	-I../../hpp -I../../.. -I$(PERL)/CORE -O3 -Zomf
+COPT=	-I../../hpp -I../../.. -I../../smapi/h -I../../smapi/src -I$(PERL)/CORE -O3 -Zomf
+SMAPIDIR= ../../smapi
 SRCDIR= ../../src/
-LFLAGS=	-Zomf -Zcrtdll -Zlinker /PM:VIO $(DEBUG) -L../../../smapi
+LFLAGS=	-Zomf -Zcrtdll -Zlinker /PM:VIO $(DEBUG) -L$(SMAPIDIR)
 EXEEND= _os2.exe
 
 ALL: rntrack$(EXEEND)

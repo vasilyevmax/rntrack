@@ -12,11 +12,11 @@
 
 PREFIX=/usr
 CC	= g++
-CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -I../../smapi/h -I../../smapi/src -O3
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
           -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
           -DHAVE_LOCALE_H
-SMAPIDIR= ../../smapi
 LFLAGS	= -s -L$(SMAPIDIR) -lsmapilnx
 SRCDIR	= ../../src/
 DOCDIR	= ../../doc/

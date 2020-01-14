@@ -1,9 +1,10 @@
 # $Id$
 # This makefile should be used with GNU make program
 CC	= g++
-CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
 CDEFS	= -DUNIX -D__SUN__ -D_AIX_CONV -O3 
-LFLAGS	= -s -L$(SRCDIR)smapi -lsmapisun
+LFLAGS	= -s -L$(SMAPIDIR) -lsmapisun
 SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
@@ -74,14 +75,14 @@ OBJS=	fidoaddr.o \
 
 # Thunderbirds are go!
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.sun
+	make -C $(SMAPIDIR) -f makefile.sun
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
 
 clean:
-	-rm -f $(SRCDIR)smapi/*.o
-	-rm -f $(SRCDIR)smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f *~
 	-rm -f core

@@ -2,9 +2,10 @@
 # This makefile should be used with GNU make program
 
 CC	= c++
-CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -O3
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -DUNIX -D__OSX__ -D_AIX_CONV
-LFLAGS	= -L$(SRCDIR)smapi -lsmapiosx
+LFLAGS	= -L$(SMAPIDIR) -lsmapiosx
 SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
@@ -75,14 +76,14 @@ $(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
 
 # Thunderbirds are go!
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.osx
+	make -C $(SMAPIDIR) -f makefile.osx
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
 
 clean:
-	-rm -f $(SRCDIR)smapi/*.o
-	-rm -f $(SRCDIR)smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f *~
 	-rm -f core

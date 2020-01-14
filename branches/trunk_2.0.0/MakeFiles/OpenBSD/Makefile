@@ -1,10 +1,11 @@
 # $Id$
 CC	= g++
-CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -DUNIX -Dunix -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_LOCALE_H \
           -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
 
-LFLAGS	= -s -L${SRCDIR}smapi -lsmapibsd
+LFLAGS	= -s -L$(SMAPIDIR) -lsmapibsd
 SRCDIR	= ../../src/
 
 # Best solution: specify in command line your favorite config place, like:
@@ -82,14 +83,14 @@ ${SRCDIR}cfg.cpp: ${SRCDIR}cfg.y
 
 # Thunderbirds are go!
 smapi:
-	cd  ${SRCDIR}smapi && make -f makefile.bsd
+	cd  $(SMAPIDIR) && make -f makefile.bsd
 
 rntrack: smapi ${OBJS}
 	${CC} -o rntrack ${OBJS} ${LFLAGS}
 
 clean:
-	-rm -f ${SRCDIR}smapi/*.o 
-	-rm -f ${SRCDIR}smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o 
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f *~
 	-rm -f core

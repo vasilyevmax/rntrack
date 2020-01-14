@@ -9,6 +9,7 @@ CFLAGS	= -I$(INCLUDE) -bt=nt /oilmrt /s $(CDEFS)
 TOS	= NT
 TNAME	= rntrack_w32
 SRCDIR	= ..\..\..\src
+SMAPIDIR= ..\..\..\smapi
 WORKDIR	= $+ $(%cdrive):$(%cwd) $-
 DEBUG	= 0
 #CONFIG	= C:\\ftn\\rntrack.cfg
@@ -26,8 +27,8 @@ OBJS+= passwd.obj wildmat.obj tmstamp.obj badpkt.obj
 OBJS+= sqbase.obj mask.obj getopt.obj cfg.obj utils.obj nodelist.obj
 OBJS+= pktbase.obj script.obj domain.obj filebox.obj string.obj
 
-INCLUDE=..\..\..\hpp;$(SRCDIR)
-LIB=$(SRCDIR)\smapi\smapiwcw.lib
+INCLUDE=..\..\..\hpp;$(SRCDIR);$(SMAPIDIR)\h;$(SMAPIDIR)\src
+LIB=$(SMAPIDIR)\smapiwcw.lib
 
 
 !ifdef ENABLE_SCRIPTS
@@ -110,7 +111,7 @@ $(TNAME).exe : smapi $(OBJS) tmp.lnk
     wlink.exe @tmp.lnk
 
 smapi: .symbolic
-    cd  $(SRCDIR)\smapi
+    cd  $(SMAPIDIR)
     wmake -f makefile.wcw
     cd $(WORKDIR)
 
@@ -127,7 +128,7 @@ tmp.lnk : $(__MAKEFILES__)
     @%append $^@ library $(LIB)
 clean: .symbolic
 	del *.obj
-	del $(SRCDIR)\smapi\*.obj
-	del $(SRCDIR)\smapi\*.lib
+	del $(SMAPIDIR)\*.obj
+	del $(SMAPIDIR)\*.lib
 	del tmp.lnk
 	del $(TNAME).exe
