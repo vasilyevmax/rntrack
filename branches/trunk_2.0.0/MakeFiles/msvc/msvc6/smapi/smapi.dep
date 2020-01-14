@@ -1,393 +1,382 @@
 # Microsoft Developer Studio Generated Dependency File, included by smapi.mak
 
-..\..\..\..\src\smapi\1stchar.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\1stchar.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\api_jam.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_jam.h"\
-	"..\..\..\..\src\smapi\api_jamp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\dr.h"\
-	"..\..\..\..\src\smapi\ffind.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\api_jam.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_jam.h"\
+	"..\..\..\..\smapi\h\api_jamp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\dr.h"\
+	"..\..\..\..\smapi\h\ffind.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\api_sdm.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sdm.h"\
-	"..\..\..\..\src\smapi\api_sdmp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\dr.h"\
-	"..\..\..\..\src\smapi\ffind.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\api_sdm.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sdm.h"\
+	"..\..\..\..\smapi\h\api_sdmp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\dr.h"\
+	"..\..\..\..\smapi\h\ffind.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\cvtdate.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\cvtdate.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\date2bin.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\date2bin.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\dosdate.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\dosdate.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\fexist.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\ffind.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\fexist.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\ffind.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\ffind.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\ffind.h"\
-	"..\..\..\..\src\smapi\patmat.h"\
+..\..\..\..\smapi\src\ffind.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\ffind.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\flush.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\flush.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\genmsgid.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\ffind.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\genmsgid.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\ffind.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\gnmsgid.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\gnmsgid.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\cvsdate.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\locking.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\locking.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\msgapi.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\msgapi.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\cvsdate.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\parsenn.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\parsenn.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\patmat.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\patmat.h"\
+..\..\..\..\smapi\src\patmat.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\patmat.h"\
 	
 
-..\..\..\..\src\smapi\qksort.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\qksort.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\setfsize.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\setfsize.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"c:\program files\microsoft visual studio\vc98\include\basetsd.h"\
 	
 
-..\..\..\..\src\smapi\sq_area.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_area.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_hash.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_hash.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_help.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_help.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_idx.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_idx.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_kill.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_kill.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_lock.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_lock.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_misc.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_misc.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_msg.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_msg.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_read.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_read.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_uid.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_uid.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\sq_write.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\api_sqp.h"\
-	"..\..\..\..\src\smapi\apidebug.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
-	"..\..\..\..\src\smapi\unused.h"\
+..\..\..\..\smapi\src\sq_write.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\api_sqp.h"\
+	"..\..\..\..\smapi\h\apidebug.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
+	"..\..\..\..\smapi\h\unused.h"\
 	
 
-..\..\..\..\src\smapi\strextra.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\strextra.h"\
+..\..\..\..\smapi\src\strextra.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\strextra.h"\
 	
 
-..\..\..\..\src\smapi\strftim.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\strftim.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\strocpy.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\strocpy.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\structrw.c : \
-	"..\..\..\..\src\smapi\api_brow.h"\
-	"..\..\..\..\src\smapi\api_jam.h"\
-	"..\..\..\..\src\smapi\api_sq.h"\
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\cvsdate.h"\
-	"..\..\..\..\src\smapi\msgapi.h"\
-	"..\..\..\..\src\smapi\old_msg.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\structrw.c : \
+	"..\..\..\..\smapi\h\api_brow.h"\
+	"..\..\..\..\smapi\h\api_jam.h"\
+	"..\..\..\..\smapi\h\api_sq.h"\
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\msgapi.h"\
+	"..\..\..\..\smapi\h\old_msg.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\tdelay.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\tdelay.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	
 
-..\..\..\..\src\smapi\trail.c : \
-	"..\..\..\..\src\smapi\compiler.h"\
-	"..\..\..\..\src\smapi\prog.h"\
-	"..\..\..\..\src\smapi\progprot.h"\
-	"..\..\..\..\src\smapi\stamp.h"\
-	"..\..\..\..\src\smapi\typedefs.h"\
+..\..\..\..\smapi\src\trail.c : \
+	"..\..\..\..\smapi\h\compiler.h"\
+	"..\..\..\..\smapi\h\prog.h"\
+	"..\..\..\..\smapi\h\progprot.h"\
+	"..\..\..\..\smapi\h\stamp.h"\
+	"..\..\..\..\smapi\h\typedefs.h"\
 	

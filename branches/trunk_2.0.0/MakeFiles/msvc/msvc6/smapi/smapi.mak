@@ -25,9 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
 OUTDIR=.\Release
@@ -82,7 +79,40 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /ML /W3 /GX /O2 /D "NDEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP=cl.exe
+CPP_PROJ=/nologo /ML /W3 /GX /O2 /I "..\..\..\..\smapi\h" /I "..\..\..\..\smapi\src" /D "NDEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\smapi.bsc" 
 BSC32_SBRS= \
@@ -224,7 +254,40 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MLd /W3 /Gm /ZI /Od /D "_DEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP=cl.exe
+CPP_PROJ=/nologo /MLd /W3 /Gm /ZI /Od /I "..\..\..\..\smapi\h" /I "..\..\..\..\smapi\src" /D "_DEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\smapi.bsc" 
 BSC32_SBRS= \
@@ -317,36 +380,6 @@ LIB32_OBJS= \
 
 !ENDIF 
 
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
 !IF EXISTS("smapi.dep")
@@ -358,7 +391,7 @@ LIB32_OBJS= \
 
 
 !IF "$(CFG)" == "smapi - Win32 Release" || "$(CFG)" == "smapi - Win32 Debug"
-SOURCE=..\..\..\..\src\smapi\1stchar.c
+SOURCE=..\..\..\..\smapi\src\1stchar.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -376,7 +409,7 @@ SOURCE=..\..\..\..\src\smapi\1stchar.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\api_jam.c
+SOURCE=..\..\..\..\smapi\src\api_jam.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -394,7 +427,7 @@ SOURCE=..\..\..\..\src\smapi\api_jam.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\api_sdm.c
+SOURCE=..\..\..\..\smapi\src\api_sdm.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -412,7 +445,7 @@ SOURCE=..\..\..\..\src\smapi\api_sdm.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\cvtdate.c
+SOURCE=..\..\..\..\smapi\src\cvtdate.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -430,7 +463,7 @@ SOURCE=..\..\..\..\src\smapi\cvtdate.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\date2bin.c
+SOURCE=..\..\..\..\smapi\src\date2bin.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -448,7 +481,7 @@ SOURCE=..\..\..\..\src\smapi\date2bin.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\dosdate.c
+SOURCE=..\..\..\..\smapi\src\dosdate.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -466,7 +499,7 @@ SOURCE=..\..\..\..\src\smapi\dosdate.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\fexist.c
+SOURCE=..\..\..\..\smapi\src\fexist.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -484,7 +517,7 @@ SOURCE=..\..\..\..\src\smapi\fexist.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\ffind.c
+SOURCE=..\..\..\..\smapi\src\ffind.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -502,7 +535,7 @@ SOURCE=..\..\..\..\src\smapi\ffind.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\flush.c
+SOURCE=..\..\..\..\smapi\src\flush.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -520,7 +553,7 @@ SOURCE=..\..\..\..\src\smapi\flush.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\genmsgid.c
+SOURCE=..\..\..\..\smapi\src\genmsgid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -538,7 +571,7 @@ SOURCE=..\..\..\..\src\smapi\genmsgid.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\gnmsgid.c
+SOURCE=..\..\..\..\smapi\src\gnmsgid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -556,7 +589,7 @@ SOURCE=..\..\..\..\src\smapi\gnmsgid.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\locking.c
+SOURCE=..\..\..\..\smapi\src\locking.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -574,7 +607,7 @@ SOURCE=..\..\..\..\src\smapi\locking.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\months.c
+SOURCE=..\..\..\..\smapi\src\months.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -592,7 +625,7 @@ SOURCE=..\..\..\..\src\smapi\months.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\msgapi.c
+SOURCE=..\..\..\..\smapi\src\msgapi.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -610,7 +643,7 @@ SOURCE=..\..\..\..\src\smapi\msgapi.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\parsenn.c
+SOURCE=..\..\..\..\smapi\src\parsenn.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -628,7 +661,7 @@ SOURCE=..\..\..\..\src\smapi\parsenn.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\patmat.c
+SOURCE=..\..\..\..\smapi\src\patmat.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -646,7 +679,7 @@ SOURCE=..\..\..\..\src\smapi\patmat.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\qksort.c
+SOURCE=..\..\..\..\smapi\src\qksort.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -664,7 +697,7 @@ SOURCE=..\..\..\..\src\smapi\qksort.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\setfsize.c
+SOURCE=..\..\..\..\smapi\src\setfsize.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -682,7 +715,7 @@ SOURCE=..\..\..\..\src\smapi\setfsize.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_area.c
+SOURCE=..\..\..\..\smapi\src\sq_area.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -700,7 +733,7 @@ SOURCE=..\..\..\..\src\smapi\sq_area.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_hash.c
+SOURCE=..\..\..\..\smapi\src\sq_hash.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -718,7 +751,7 @@ SOURCE=..\..\..\..\src\smapi\sq_hash.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_help.c
+SOURCE=..\..\..\..\smapi\src\sq_help.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -736,7 +769,7 @@ SOURCE=..\..\..\..\src\smapi\sq_help.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_idx.c
+SOURCE=..\..\..\..\smapi\src\sq_idx.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -754,7 +787,7 @@ SOURCE=..\..\..\..\src\smapi\sq_idx.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_kill.c
+SOURCE=..\..\..\..\smapi\src\sq_kill.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -772,7 +805,7 @@ SOURCE=..\..\..\..\src\smapi\sq_kill.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_lock.c
+SOURCE=..\..\..\..\smapi\src\sq_lock.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -790,7 +823,7 @@ SOURCE=..\..\..\..\src\smapi\sq_lock.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_misc.c
+SOURCE=..\..\..\..\smapi\src\sq_misc.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -808,7 +841,7 @@ SOURCE=..\..\..\..\src\smapi\sq_misc.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_msg.c
+SOURCE=..\..\..\..\smapi\src\sq_msg.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -826,7 +859,7 @@ SOURCE=..\..\..\..\src\smapi\sq_msg.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_read.c
+SOURCE=..\..\..\..\smapi\src\sq_read.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -844,7 +877,7 @@ SOURCE=..\..\..\..\src\smapi\sq_read.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_uid.c
+SOURCE=..\..\..\..\smapi\src\sq_uid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -862,7 +895,7 @@ SOURCE=..\..\..\..\src\smapi\sq_uid.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_write.c
+SOURCE=..\..\..\..\smapi\src\sq_write.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -880,7 +913,7 @@ SOURCE=..\..\..\..\src\smapi\sq_write.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\strextra.c
+SOURCE=..\..\..\..\smapi\src\strextra.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -898,7 +931,7 @@ SOURCE=..\..\..\..\src\smapi\strextra.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\strftim.c
+SOURCE=..\..\..\..\smapi\src\strftim.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -916,7 +949,7 @@ SOURCE=..\..\..\..\src\smapi\strftim.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\strocpy.c
+SOURCE=..\..\..\..\smapi\src\strocpy.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -934,7 +967,7 @@ SOURCE=..\..\..\..\src\smapi\strocpy.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\structrw.c
+SOURCE=..\..\..\..\smapi\src\structrw.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -952,7 +985,7 @@ SOURCE=..\..\..\..\src\smapi\structrw.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\tdelay.c
+SOURCE=..\..\..\..\smapi\src\tdelay.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -970,7 +1003,7 @@ SOURCE=..\..\..\..\src\smapi\tdelay.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\trail.c
+SOURCE=..\..\..\..\smapi\src\trail.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -988,7 +1021,7 @@ SOURCE=..\..\..\..\src\smapi\trail.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\weekday.c
+SOURCE=..\..\..\..\smapi\src\weekday.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
