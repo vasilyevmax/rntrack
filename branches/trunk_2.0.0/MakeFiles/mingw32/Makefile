@@ -1,9 +1,10 @@
 # $Id$
 CC		= g++
-CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
+CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -I../../smapi/h -I../../smapi/src -O1
 CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H -DHAVE_IO_H \
 		  -DHAVE_TIME_H -DHAVE_UTIME_H -DHAVE_LOCALE_H
-LFLAGS	= -s -L$(SRCDIR)smapi -lsmapimgw
+SMAPIDIR= ../../smapi
+LFLAGS	= -s -L$(SMAPIDIR)smapi -lsmapimgw
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
 EXEEND	= _w32.exe
@@ -82,7 +83,7 @@ OBJS=	fidoaddr.o \
 # Thunderbirds are go!
 
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.mgw
+	make -C $(SMAPIDIR) -f makefile.mgw
 
 rntrack: rntrack$(EXEEND)
 
@@ -90,8 +91,8 @@ rntrack$(EXEEND): $(OBJS) smapi
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS)
 
 clean:
-	-$(RM) $(SRCDIR)smapi/*.o
-	-$(RM) $(SRCDIR)smapi/*.a
+	-$(RM) $(SMAPIDIR)/*.o
+	-$(RM) $(SMAPIDIR)/*.a
 	-$(RM) *.o
 	-$(RM) *~
 	-$(RM) core
