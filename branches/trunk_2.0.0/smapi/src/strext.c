@@ -395,56 +395,6 @@ int copyStringUntilSep(char *str, char *seps, char **dest)
   return strlen(str);
 }
 
-/* Parse strings like "token1, token2,token3 token4" into s_str_array */
-/* s_str_array *makeStrArray(char *token)
-{
-	s_str_array *ss;
-	char **tokens;
-	int size = 15, ii = 0;
-	int len = 0;
-	int offset, token_len;
-
-	assert(token != NULL);
-
-	tokens = (char**)smalloc(size * sizeof(char*));
-
-	// go through string, save pointers, count tokens 
-	tokens[ii] = strtok(token, " \t,");
-	while(tokens[ii])
-	{
-		len += strlen(tokens[ii]) + 1;
-		if(ii >= size)
-		{
-			size = (size + 1 ) * 2;
-			tokens = srealloc(tokens, size * sizeof(char*));
-		}
-		++ii;
-		tokens[ii] = strtok(NULL, " \t,");
-	}
-
-	if( ii == 0 )
-	{
-		nfree(tokens);
-		return NULL;
-	}
-
-	// alloc structure, exact size 
-	offset = offsetof(s_str_array, data.offsets[ii]);
-	ss = smalloc(offset + len);
-	ss->count = ii;
-	offset -= offsetof(s_str_array, data);
-	// fill structuare with offsets and strings' content 
-	for(ii = 0; ii < ss->count; ++ii)
-	{
-		ss->data.offsets[ii] = offset;
-		token_len = strlen(tokens[ii]);
-		memcpy(STR_N(ss, ii), tokens[ii], token_len + 1);
-		offset += token_len + 1;
-	}
-	nfree(tokens);
-	return ss;
-} */
-
 /* helper function for s_str_array */
 int findInStrArray(s_str_array const *ss, char const *find)
 {
@@ -457,17 +407,6 @@ int findInStrArray(s_str_array const *ss, char const *find)
 
 	return -1;
 }
-
-/* s_str_array *copyStrArray(s_str_array *ss)
-{
-	int size;
-	s_str_array *nss;
-	assert(ss != NULL);
-	size = STR_A_SIZE(ss);
-	nss = (s_str_array *)smalloc(size);
-	memcpy(nss, ss, size);
-	return nss;
-} */
 
 char *StrArray2String(s_str_array *ss)
 {
