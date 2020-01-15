@@ -36,6 +36,7 @@ static char rcs_id[]="$Id$";
 #include <string.h>
 #include <limits.h>
 
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_UNISTD_H
@@ -51,24 +52,30 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+#include "progprot.h"
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 #define HixSqd            ((struct _sqdata *)(hix)->ha->apidata)
 
 
 #ifdef __FLAT__
   #define MORE_SPACE       256      /* Allow for up to 256 additions */
-  #define SEGMENT_SIZE    (LONG_MAX/(long)SQIDX_SIZE)
+  #define SEGMENT_SIZE    (MAX_hSINT32/(hSINT32)SQIDX_SIZE)
   #define SHIFT_SIZE      32768
 #else
   #define MORE_SPACE        16      /* Allow for up to 16 additions */
-  #define SEGMENT_SIZE    (32767L/(long)SQIDX_SIZE)
+  #define SEGMENT_SIZE    (32767L/(hSINT32)SQIDX_SIZE)
   #define SHIFT_SIZE      8192
 #endif
 
@@ -80,7 +87,8 @@ HIDX _SquishOpenIndex(HAREA ha)
 {
   HIDX hix;
 
-  if ((hix=palloc(sizeof(*hix)))==NULL)
+  hix=palloc(sizeof(*hix));
+  if (hix==NULL)
   {
     msgapierr=MERR_NOMEM;
     return NULL;
@@ -139,7 +147,8 @@ int _SquishBeginBuffer(HIDX hix)
 
   /* Allocate memory for the array of segments */
 
-  if ((hix->pss=palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg))==NULL)
+  hix->pss=palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
+  if (hix->pss==NULL)
   {
     msgapierr=MERR_NOMEM;
     hix->fBuffer=0;
@@ -148,7 +157,8 @@ int _SquishBeginBuffer(HIDX hix)
   dwMsgs=hix->ha->num_msg;                /* Read all messages into memory */
   /* Find out how many records are in the file */
 
-  if ((hix->lAllocatedRecords=lseek(HixSqd->ifd, 0L, SEEK_END)) < 0)
+  hix->lAllocatedRecords=lseek(HixSqd->ifd, 0L, SEEK_END);
+  if (hix->lAllocatedRecords < 0)
   {
     msgapierr=MERR_BADF;
     hix->fBuffer=0;
@@ -171,7 +181,8 @@ int _SquishBeginBuffer(HIDX hix)
 
     /* Try to allocate memory for this segment */
 
-    if ((hix->pss[i].psqi=farpalloc((size_t)dwSize * (size_t)sizeof(SQIDX)))==NULL)
+    hix->pss[i].psqi=farpalloc((size_t)dwSize * (size_t)sizeof(SQIDX));
+    if (hix->pss[i].psqi==NULL)
     {
       while (i--)
         farpfree(hix->pss[i].psqi);
@@ -336,7 +347,8 @@ static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
       /* Don't use realloc because we cannot afford to lose the info that we  *
        * already have!                                                        */
 
-      if ((psqiNew=farpalloc(((size_t)pss->dwMax + MORE_SPACE) * SQIDX_SIZE))==NULL)
+      psqiNew=farpalloc(((size_t)pss->dwMax + MORE_SPACE) * SQIDX_SIZE);
+      if (psqiNew==NULL)
       {
         msgapierr=MERR_NOMEM;
         return FALSE;
@@ -362,18 +374,21 @@ static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
    * existing segments are full.  To handle this, we need to reallocate     *
    * the array of pointers to segments and add a new one.                   */
 
-  if ((pss=palloc(sizeof(SQIDXSEG) * (size_t)(hix->cSeg+1)))==NULL)
+  pss=palloc(sizeof(SQIDXSEG) * (size_t)(hix->cSeg+1));
+  if (pss==NULL)
   {
     msgapierr=MERR_NOMEM;
     return FALSE;
   }
 
   (void)memmove(pss, hix->pss, (size_t)hix->cSeg * sizeof(SQIDXSEG));
+  pfree(hix->pss);
   hix->pss=pss;
 
   /* Allocate memory for the new segment */
 
-  if ((hix->pss[hix->cSeg].psqi=farpalloc(MORE_SPACE * SQIDX_SIZE))==NULL)
+  hix->pss[hix->cSeg].psqi=farpalloc(MORE_SPACE * SQIDX_SIZE);
+  if (hix->pss[hix->cSeg].psqi==NULL)
   {
     msgapierr=MERR_NOMEM;
     return FALSE;
@@ -418,7 +433,8 @@ int SidxPut(HIDX hix, dword dwMsg, SQIDX *psqi)
 
   /* If we can't find the appropriate index record */
 
-  if ((psqiFound=sidx(hix, dwMsg))==NULL)
+  psqiFound=sidx(hix, dwMsg);
+  if (psqiFound==NULL)
   {
     rc=FALSE;
 
@@ -520,8 +536,8 @@ unsigned _SquishRemoveIndexEntry(HIDX hix, dword dwMsg, SQIDX *psqiOut,
 
   (void)lseek(HixSqd->ifd, (long)dwMsg * (long)SQIDX_SIZE, SEEK_SET);
 
-
-  if ((pcBuf=palloc(SHIFT_SIZE))==NULL)
+  pcBuf=palloc(SHIFT_SIZE);
+  if (pcBuf==NULL)
   {
     msgapierr=MERR_NOMEM;
     return FALSE;

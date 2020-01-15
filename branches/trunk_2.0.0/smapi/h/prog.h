@@ -24,7 +24,6 @@
 #include <time.h>
 #include "compiler.h"
 #include "typedefs.h"
-#include "stamp.h"
 
 #ifdef HAS_MALLOC_H
 #include <malloc.h>

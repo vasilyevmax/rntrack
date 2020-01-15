@@ -20,6 +20,10 @@
 #ifndef __API_SDM_H__
 #define __API_SDM_H__
 
+#include "compiler.h"
+
+#include "msgapi.h"
+
 struct _msgh
 {
     MSGA *sq;

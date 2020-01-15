@@ -28,12 +28,14 @@
 
 #include "compiler.h"
 
+#include "msgapi.h"
+
 struct _sqhdr;
 struct _sqidx;
 
 typedef struct _sqidx SQIDX;
 typedef struct _sqhdr SQHDR;
-typedef long FOFS;
+typedef hSINT32 FOFS;
 
 
 /* Try to access a locked Squish base up to five times */
@@ -266,14 +268,14 @@ struct _msgh
 #define SQBASE_SIZE 256
 
 
-SMAPI_EXT int read_xmsg(int handle, XMSG *pxmsg);
-SMAPI_EXT int write_xmsg(int handle, XMSG *pxmsg);
-SMAPI_EXT int read_sqhdr(int, SQHDR *);
-SMAPI_EXT int write_sqhdr(int, SQHDR *);
-SMAPI_EXT int read_sqidx(int, SQIDX *, dword);
-SMAPI_EXT int write_sqidx(int, SQIDX *, dword);
-SMAPI_EXT int read_sqbase(int handle, struct _sqbase *psqbase);
-SMAPI_EXT int write_sqbase(int handle, struct _sqbase *psqbase);
+int read_xmsg(int handle, XMSG *pxmsg);
+int write_xmsg(int handle, XMSG *pxmsg);
+int read_sqhdr(int, SQHDR *);
+int write_sqhdr(int, SQHDR *);
+int read_sqidx(int, SQIDX *, dword);
+int write_sqidx(int, SQIDX *, dword);
+int read_sqbase(int handle, struct _sqbase *psqbase);
+int write_sqbase(int handle, struct _sqbase *psqbase);
 
 #endif /* __API_SQ_H_DEFINED */
 

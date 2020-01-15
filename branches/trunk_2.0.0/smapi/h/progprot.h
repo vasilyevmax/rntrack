@@ -24,33 +24,29 @@
 #include <time.h>
 
 #include "compiler.h"
-#include "stamp.h"
 
 /*#if !( (defined(__WATCOMC__) && !defined(__DOS__)) || defined(__MSVC__) )*/
 #ifdef __DOS__
 void pascal far flush_handle2(int fd);  /* flushasm.asm for DOS, redefined for known implementations in flush.c */
 #endif
 
+int _fast gettz(void);
 void _fast flush_handle(FILE * fp);
-SMAPI_EXT int _fast fexist(const char *filename);
-SMAPI_EXT long _fast fsize(const char *filename);
-char *_fast firstchar(char *strng, char *delim, int findword);
+int _fast fexist(const char *filename);
+long _fast fsize(const char *filename);
 char *_fast stristr(char *string, char *search);
 void _fast qksort(int a[], size_t n);
-SMAPI_EXT int _fast direxist(const char *directory);
-SMAPI_EXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
+int _fast direxist(const char *directory);
+void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
 union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st);
-SMAPI_EXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
-SMAPI_EXT union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
-SMAPI_EXT char *_fast Strip_Trailing(char *str, char strip);
-SMAPI_EXT char *_fast Add_Trailing(char *str, char add);
+struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
+union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
 void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
 void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
-SMAPI_EXT char *_fast sc_time(union stamp_combo *sc, char *string);
-SMAPI_EXT char *_fast fts_time(char *string, struct tm *tmdate);
-char *_fast strocpy(char *d, char *s);
+char *_fast sc_time(union stamp_combo *sc, char *string);
+char *_fast fts_time(char *string, struct tm *tmdate);
 void _fast tdelay(int);
-SMAPI_EXT int _fast setfsize(int fd, long size);
+int _fast setfsize(int fd, long size);
 #ifdef __LITTLE_ENDIAN__
 
 #define put_dword(ptr, val)	(*(dword *)(ptr) = (val))
@@ -90,7 +86,7 @@ SMAPI_EXT void put_dword(byte *ptr, dword value);    /* structrw.c */
 
 #endif /* __LITTLE_ENDIAN__ */
 
-SMAPI_EXT int  _createDirectoryTree(const char *pathName);
+int  _createDirectoryTree(const char *pathName);
 /*DOC
   Input:  a pointer to a \0 terminated string
   Output: 0 if successfull, 1 else

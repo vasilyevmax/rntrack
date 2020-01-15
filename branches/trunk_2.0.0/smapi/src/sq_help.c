@@ -33,10 +33,12 @@ static char rcs_id[]="$Id$";
 #include <fcntl.h>
 #include <errno.h>
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-
+#define _SMAPI_EXT
 #include "compiler.h"
+#include "unused.h"
 
 #ifdef HAS_UNISTD_H
 #include <unistd.h>
@@ -51,13 +53,19 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 /* Read the base header from the beginning of the .sqd file */
 
@@ -391,8 +399,12 @@ unsigned _SquishFreeIndex(HAREA ha, dword dwMsg, SQIDX *psqi,
 {
   unsigned rc=TRUE;
   long ofs;
-
+  
   unused(dwIdxSize);
+  
+#ifdef __WATCOMC__
+dwIdxSize=dwIdxSize; /* To prevent warning */
+#endif
 
   if (fWrite)
   {

@@ -26,8 +26,12 @@
 #ifndef __API_SQP_H_DEFINED
 #define __API_SQP_H_DEFINED
 
+#include "compiler.h"
 
-sword _XPENTRY apiSquishCloseArea(HAREA sq);
+#include "msgapi.h"
+
+
+sword _XPENTRY apiSquishCloseArea(HAREA ha);
 HMSG  _XPENTRY apiSquishOpenMsg(HAREA sq,word mode,dword msgnum);
 sword _XPENTRY apiSquishCloseMsg(HMSG msgh);
 dword _XPENTRY apiSquishReadMsg(HMSG msgh, PXMSG msg, dword offset, dword bytes,

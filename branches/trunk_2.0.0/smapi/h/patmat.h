@@ -3,6 +3,6 @@
 
 #include "compiler.h"
 /* released to the public domain */
-SMAPI_EXT int patmat(char *raw, char *pat);
+int patmat(char *raw, char *pat);
 
 #endif

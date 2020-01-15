@@ -41,7 +41,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -49,7 +48,7 @@
 
 
 #define MSGAPI_HANDLERS
-
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_UNISTD_H
@@ -59,43 +58,19 @@
 #  include <io.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
 #include "msgapi.h"
 #include "api_sq.h"
 #include "old_msg.h"
 #include "api_jam.h"
 
 #define MAXHDRINCORE  (1024l*1024*10) /* Maximum jam hdr size for incore, 10M */
-
-#ifndef __LITTLE_ENDIAN__
-/*
- *  put_dword
- *
- *  Writes a 4 byte word in little endian notation, independent of the local
- *  system architecture.
- */
-
-void put_dword(byte *ptr, dword value)
-{
-    ptr[0] = (value & 0xFF);
-    ptr[1] = (value >> 8) & 0xFF;
-    ptr[2] = (value >> 16) & 0xFF;
-    ptr[3] = (value >> 24) & 0xFF;
-}
-
-/*
- *  put_word
- *
- *  Writes a 4 byte word in little endian notation, independent of the local
- *  system architecture.
- */
-
-void put_word(byte *ptr, word value)
-{
-    ptr[0] = (value & 0xFF);
-    ptr[1] = (value >> 8) & 0xFF;
-}
-#endif
 
 #ifdef NEED_trivial_farread
   #ifdef HAS_dos_read
@@ -478,7 +453,8 @@ int write_sqidx(int handle, SQIDX *psqidx, dword n)
 {
     byte buf[SQIDX_SIZE], *pbuf = NULL;
     byte *accel_buffer = NULL;
-    dword i, maxbuf = 0, wr;
+    dword i, maxbuf = 0;
+	int wr;
 
     if (n > 1)
     {
@@ -992,29 +968,68 @@ int copy_subfield(JAMSUBFIELD2LISTptr *to, JAMSUBFIELD2LISTptr from)
    return 0;
 }
 
+/* Define DEBUG to catch more weirdness in databases */
 static void decode_subfield(byte *buf, JAMSUBFIELD2LISTptr *subfield, dword *SubfieldLen)
 {
    JAMSUBFIELD2ptr subfieldNext;
    dword datlen;
-   int i, len;
-   byte *pbuf;
+   unsigned int count, len;
+   byte *pbuf, *limit;
 
    pbuf = buf;
-   i = 0;
-   while ((dword)(pbuf - buf + 8) < *SubfieldLen) {
-      i++;
-      pbuf += get_dword(pbuf+4) + sizeof(JAMBINSUBFIELD);
+   limit = buf + *SubfieldLen;
+   assert(limit >= buf); 
+
+   count = 0;
+   while (pbuf + JAM_SF_HEADER_SIZE <= limit) {
+      dword size;
+#ifdef DEBUG
+	  word loID, hiID;
+	  loID = get_word(pbuf);
+	  hiID = get_word(pbuf+2);
+	  if(!(loID <= JAMSFLD_ENCLINDFILE ||
+		  loID == JAMSFLD_EMBINDAT ||
+		  loID >= JAMSFLD_FTSKLUDGE && loID <= JAMSFLD_TZUTCINFO))
+	  { /* This subfield type is not supported and is most 
+		   probably sign of error in messagebase */
+         printf("SMAPI ERROR: weird subfield type! (%X)\n", (unsigned int)loID); 
+        /* Keep going, these fields won't hurt unless they have improper size too */
+	  }
+#endif
+	  size = get_dword(pbuf+4);
+#ifdef DEBUG
+	  if(size == 0 && loID != JAMSFLD_SUBJECT) /* While possible, it isn't normal value */
+	  {
+         printf("SMAPI ERROR: subfield of 0 size! (%X)\n", (unsigned int)loID); 
+	  }
+#endif
+      if(pbuf + JAM_SF_HEADER_SIZE + size > limit)
+		/* it means that subfield claims to be longer 
+		   than header says. can't be. */ 
+	  { /* just break, ideally there shall be a setting for lax treatment of messagebase */
+         printf("SMAPI ERROR: wrongly sized subfield occured!\n"); 
+		 break;
+	  }
+	  if(size >=0xFFFF) /* realistic check: single subfield 
+						   longer than 64k is not realistic */
+	  {
+         printf("SMAPI ERROR: subfield is suspiciously large! (%lu bytes)\n", (unsigned long)size); 
+		 break;
+	  }
+      ++count;
+      pbuf += JAM_SF_HEADER_SIZE + size;
    }
-   len = sizeof(JAMSUBFIELD2LIST)+i*(sizeof(JAMSUBFIELD2)-sizeof(JAMBINSUBFIELD)+1)+*SubfieldLen;
+   len = sizeof(JAMSUBFIELD2LIST)+count*(sizeof(JAMSUBFIELD2)-JAM_SF_HEADER_SIZE+1)+*SubfieldLen;
    *subfield = palloc(len);
    subfield[0]->arraySize = len;
    subfield[0]->subfieldCount = 0;
-   subfield[0]->subfield[0].Buffer = (byte *)&(subfield[0]->subfield[i+1]);
+   /* reserve memory for (real count + 1)*JAMSUBFIELD2 */
+   subfield[0]->subfield[0].Buffer = (byte *)&(subfield[0]->subfield[count+1]);
 
    subfieldNext = subfield[0]->subfield;
    pbuf = buf;
 
-   while ((dword)(pbuf - buf + 8) < *SubfieldLen) {
+   while ( subfield[0]->subfieldCount < count && pbuf + JAM_SF_HEADER_SIZE <= limit ) {
       /* 02 bytes LoID */
       subfieldNext->LoID = get_word(pbuf);
       pbuf += 2;
@@ -1031,19 +1046,17 @@ static void decode_subfield(byte *buf, JAMSUBFIELD2LISTptr *subfield, dword *Sub
 
       subfield[0]->subfieldCount++;
 
-      if (pbuf - buf + datlen > *SubfieldLen)
+      if (*SubfieldLen - (pbuf - buf) < datlen)
           break;
       /* DatLen bytes Buffer */
-      if ((long)datlen >= 0 && datlen < *SubfieldLen)
-      { subfieldNext->DatLen = datlen;
-        memmove(subfieldNext->Buffer, pbuf, datlen);
-        subfieldNext[1].Buffer = subfieldNext->Buffer+subfieldNext->DatLen+1;
-        subfieldNext++;
-        assert((byte *)(subfieldNext+1)<=subfield[0]->subfield[0].Buffer);
-        assert(subfieldNext->Buffer<=(byte *)*subfield+subfield[0]->arraySize);
-      }
-      else
-        break;
+      subfieldNext->DatLen = datlen;
+      memmove(subfieldNext->Buffer, pbuf, datlen);
+
+      /* Set up next element */
+      assert((byte *)(subfieldNext + 1) < subfield[0]->subfield[0].Buffer);
+      subfieldNext[1].Buffer = subfieldNext->Buffer + subfieldNext->DatLen + 1;
+      subfieldNext++;
+      assert(subfieldNext->Buffer <= (byte *)*subfield + subfield[0]->arraySize);
       pbuf += datlen;
 
    } /* endwhile */
@@ -1057,7 +1070,7 @@ int read_subfield(int handle, JAMSUBFIELD2LISTptr *subfield, dword *SubfieldLen)
 
    buf = (byte*)palloc(*SubfieldLen);
 
-   if (farread(handle, (byte far *)buf, *SubfieldLen) != *SubfieldLen) {
+   if ((dword)farread(handle, (byte far *)buf, *SubfieldLen) != *SubfieldLen) {
       pfree(buf);
       return 0;
    } /* endif */
@@ -1097,7 +1110,7 @@ int read_allidx(JAMBASEptr jmb)
       /* read all headers in core */
       hdrbuf = (byte *)palloc(hlen);
 
-      if (farread(jmb->HdrHandle, (byte far *)hdrbuf, hlen) != hlen) {
+      if ((dword)farread(jmb->HdrHandle, (byte far *)hdrbuf, hlen) != hlen) {
          pfree(hdrbuf);
          pfree(buf);
          return 0;
@@ -1106,7 +1119,7 @@ int read_allidx(JAMBASEptr jmb)
    } else
       jmb->actmsg_read = 2;
    allocated = jmb->HdrInfo.ActiveMsgs;
-   if (allocated > (dword)len/IDX_SIZE) allocated = len/IDX_SIZE;
+   if (allocated > (dword)len/IDX_SIZE) allocated = (dword)len/IDX_SIZE;
    if (allocated) {
       jmb->actmsg = (JAMACTMSGptr)farmalloc(allocated * sizeof(JAMACTMSG));
       if (jmb->actmsg == NULL) {
@@ -1347,7 +1360,7 @@ int write_subfield(int handle, JAMSUBFIELD2LISTptr *subfield, dword SubfieldLen)
       memmove(pbuf, subfieldNext->Buffer, datlen);
       pbuf += datlen;
    } /* endwhile */
-   rc =(farwrite(handle, (byte far *)buf, SubfieldLen) == SubfieldLen);
+   rc =((dword)farwrite(handle, (byte far *)buf, SubfieldLen) == SubfieldLen);
 
    pfree(buf);
 

@@ -34,7 +34,9 @@ static char rcs_id[]="$Id$";
 #include <fcntl.h>
 
 
+#define _SMAPI_EXT
 #include "compiler.h"
+
 #ifdef HAS_IO_H
 #  include <io.h>
 #endif
@@ -46,13 +48,19 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 dword _XPENTRY apiSquishGetHash(HAREA ha, dword dwMsg)
 {

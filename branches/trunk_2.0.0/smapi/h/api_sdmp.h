@@ -20,6 +20,10 @@
 #ifndef __API_SDMP_H__
 #define __API_SDMP_H__
 
+#include "compiler.h"
+
+#include "msgapi.h"
+
 static sword _XPENTRY SdmCloseArea(MSGA * mh);
 static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum);
 static sword _XPENTRY SdmCloseMsg(MSGH * msgh);
@@ -33,7 +37,7 @@ static dword _XPENTRY SdmGetCurPos(MSGH * msgh);
 static UMSGID _XPENTRY SdmMsgnToUid(MSGA * mh, dword msgnum);
 static dword _XPENTRY SdmUidToMsgn(MSGA * mh, UMSGID umsgid, word type);
 static dword _XPENTRY SdmGetHighWater(MSGA * mh);
-static sword _XPENTRY SdmSetHighWater(MSGA * sq, dword hwm);
+static sword _XPENTRY SdmSetHighWater(MSGA * mh, dword hwm);
 static dword _XPENTRY SdmGetTextLen(MSGH * msgh);
 static dword _XPENTRY SdmGetCtrlLen(MSGH * msgh);
 static UMSGID _XPENTRY SdmGetNextUid(HAREA ha);
@@ -49,14 +53,9 @@ static void _stdc WriteToFd(byte * str);
 static void near Get_Binary_Date(struct _stamp *todate, struct _stamp *fromdate, byte * asciidate);
 
 static int statfd;  /* file handle for WriteToFd */
-static byte *sd_msg = (byte *) "%s%u.msg";
 
-/*
- *  Pointer to 'struct _sdmdata' so we can get Turbo Debugger to use
- *  the _sdmdata structure...
- */
-
-static struct _sdmdata *_junksqd;
+static byte *sd_msg = (byte *) "%s%u.msg";  /* format string for sprintf() */
+typedef unsigned sdm_msgnum_type;           /* type modificator for 4th parameter in sprintf(&s,sd_msg,path,number) */
 
 static struct _apifuncs sdm_funcs =
 {

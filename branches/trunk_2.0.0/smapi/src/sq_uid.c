@@ -34,6 +34,7 @@ static char rcs_id[]="$Id$";
 #include <string.h>
 #include <fcntl.h>
 
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_IO_H
@@ -46,13 +47,19 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 
 
@@ -126,9 +133,10 @@ dword _XPENTRY apiSquishUidToMsgn(HAREA ha, UMSGID uid, word wType)
 
   /* Read the index into memory */
 
-  if (! _SquishBeginBuffer(Sqd->hix))
+  if (apiSquishLock(ha) == -1)
   {
-    return (dword)0;
+      apiSquishUnlock(ha);
+      return (dword)0;
   }
 
   /* Set up intial bounds (inclusive) */
@@ -197,7 +205,7 @@ dword _XPENTRY apiSquishUidToMsgn(HAREA ha, UMSGID uid, word wType)
   _SquishExclusiveEnd(ha);
 */
 
-  if (! _SquishFreeBuffer(Sqd->hix))
+  if (apiSquishUnlock(ha) == -1)
     rc=(dword)0;
 
   return rc;

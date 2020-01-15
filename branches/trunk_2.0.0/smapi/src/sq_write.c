@@ -33,7 +33,9 @@ static char rcs_id[]="$Id$";
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <assert.h>
+#include <stdio.h>
 
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_UNISTD_H
@@ -49,13 +51,19 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 
 /* This function searches the list of free frames to find one which is      *

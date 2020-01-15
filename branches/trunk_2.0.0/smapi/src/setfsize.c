@@ -1,36 +1,32 @@
-/***************************************************************************
- *                                                                         *
- *  Squish Developers Kit Source, Version 2.00                             *
- *  Copyright 1989-1994 by SCI Communications.  All rights reserved.       *
- *                                                                         *
- *  USE OF THIS FILE IS SUBJECT TO THE RESTRICTIONS CONTAINED IN THE       *
- *  SQUISH DEVELOPERS KIT LICENSING AGREEMENT IN SQDEV.PRN.  IF YOU DO NOT *
- *  FIND THE TEXT OF THIS AGREEMENT IN THE AFOREMENTIONED FILE, OR IF YOU  *
- *  DO NOT HAVE THIS FILE, YOU SHOULD IMMEDIATELY CONTACT THE AUTHOR AT    *
- *  ONE OF THE ADDRESSES LISTED BELOW.  IN NO EVENT SHOULD YOU PROCEED TO  *
- *  USE THIS FILE WITHOUT HAVING ACCEPTED THE TERMS OF THE SQUISH          *
- *  DEVELOPERS KIT LICENSING AGREEMENT, OR SUCH OTHER AGREEMENT AS YOU ARE *
- *  ABLE TO REACH WITH THE AUTHOR.                                         *
- *                                                                         *
- *  You can contact the author at one of the address listed below:         *
- *                                                                         *
- *  Scott Dudley       FidoNet     1:249/106                               *
- *  777 Downing St.    Internet    sjd@f106.n249.z1.fidonet.org            *
- *  Kingston, Ont.     CompuServe  >INTERNET:sjd@f106.n249.z1.fidonet.org  *
- *  Canada  K7M 5N3    BBS         1-613-634-3058, V.32bis                 *
- *                                                                         *
- ***************************************************************************/
+/* $Id$
+ *  Provides function to dynamically change the size of a file
 
-/* name=Function to dynamically change the size of a file
-*/
+ *  Written by Scott Dudley
+ *  777 Downing St.    FidoNet     1:249/106
+ *  Kingston, Ont.     Internet    sjd@f106.n249.z1.fidonet.org
+ *  Canada  K7M 5N3    BBS         1-613-634-3058, V.32bis
+ *
+ *  Copyright 1989-1994 by SCI Communications.
+ *  Copyright 1997-2003 Husky Developers Team.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
+ */
 
+/* standard headers */
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 
+
 #include "compiler.h"
 
+
+/* compiler-dependent headers */
 #ifdef HAS_DOS_H
 #include <dos.h>
 #endif
@@ -40,12 +36,16 @@
 #endif
 
 #ifdef HAS_UNISTD_H
-  #include <unistd.h>
+#include <unistd.h>
 #endif
 
-#include "prog.h"
+/***  Declarations & defines  ***********************************************/
 
-#if defined(__DOS__) || defined(__DOS4G__)
+int _fast setfsize(int fd, long size);
+
+/***  Implementation  *******************************************************/
+
+#ifdef __DOS__
 
   /* Call DOS Fn 40H: Write to File via Handle
    * AH    0x40
@@ -53,7 +53,7 @@
    * CX    number of bytes to write (Note: 0 means truncate the file)
    * DS:DX address of a buffer containing the data to write
    * Returns: AX    error code if CF is set to CY
-   *                number of bytes actually written ออออ use for error test
+   *                number of bytes actually written  use for error test
    *
    * DOS 3.0+ If CX is 0000H on entry, the file is truncated at the
    * current file position -- or the file is padded to that position.
@@ -90,10 +90,10 @@
 
   int _fast setfsize(int fd, long size)
   {
-    return ((int)DosSetFileSize((HFILE)fd, (ULONG)size));
+    return ((int)DosSetFileSize((HFILE)fd, (ULONG)size)); /*ULONG & HFILE defined in os2.h*/
   }
 
-#elif defined(__unix__)
+#elif defined(__UNIX__)
 
   int _fast setfsize(int fd, long size)
   {

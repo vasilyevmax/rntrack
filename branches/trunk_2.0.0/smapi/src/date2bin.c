@@ -20,10 +20,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "stamp.h"
 #include "prog.h"
 
 
 static void near StandardDate(union stamp_combo *d_written);
+
+char *_fast fts_time(char *string, struct tm *tmdate)
+{
+    union stamp_combo dosdate;
+    dosdate.ldate = 0;
+    return sc_time(TmDate_to_DosDate(tmdate, &dosdate), string);
+}
 
 
 void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)

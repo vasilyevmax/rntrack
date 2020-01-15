@@ -20,6 +20,13 @@
 #ifndef __OLD_MSG_H__
 #define __OLD_MSG_H__
 
+#include "compiler.h"
+//#include "cvtdate.h"
+#include "progprot.h"
+#include "stamp.h"
+
+#include "msgapi.h"
+
 /* OPUS message header structure */
 struct _omsg
 {

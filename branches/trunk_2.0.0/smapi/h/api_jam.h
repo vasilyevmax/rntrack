@@ -25,6 +25,8 @@ extern "C" {
 #ifndef __API_JAM_H__
 #define __API_JAM_H__
 
+#include "compiler.h"
+
 /*
 **  File extensions
 */
@@ -151,17 +153,17 @@ typedef struct
 
 typedef struct JAMSUBFIELD2struct
 {
-	word  LoID;
-	word  HiID;
-	dword DatLen;
-	byte *Buffer;
+    word  LoID;
+    word  HiID;
+    dword DatLen;
+    byte *Buffer;
 } JAMSUBFIELD2, *JAMSUBFIELD2ptr;
 
 typedef struct JAMSUBFIELD2LISTstruct
 {
-	dword subfieldCount;
-	dword arraySize;
-	JAMSUBFIELD2 subfield[1];
+    dword subfieldCount;
+    dword arraySize;
+    JAMSUBFIELD2 subfield[1];
 } JAMSUBFIELD2LIST, *JAMSUBFIELD2LISTptr;
 
 typedef struct
@@ -180,7 +182,7 @@ typedef struct
     dword DatLen;                    /* Length of buffer that follows */
     }
     JAMBINSUBFIELD, *JAMBINSUBFIELDptr;
-
+#define JAM_SF_HEADER_SIZE 8
 /*
 **  Message index record
 */
@@ -224,13 +226,26 @@ typedef struct {
    JAMHDRINFO      HdrInfo;        /* Message header info */
    JAMACTMSGptr    actmsg;
    word            msgs_open;
-   word            actmsg_read;
+   word            actmsg_read;    /* ??? 0, 1 or 2; 0 of not read, 1 if header fit in core, 2 otherwise*/
    mode_t          permissions;
    word            mode;
    word            modified;
    MSGA            *jm;
    void            *jbNext;
    } JAMBASE, *JAMBASEptr;
+
+int read_hdrinfo(int handle, JAMHDRINFO *HdrInfo);
+int read_idx(int handle, JAMIDXREC *Idx);
+int read_hdr(int handle, JAMHDR *Hdr);
+int read_subfield(int handle, JAMSUBFIELD2LISTptr *subfield, dword *SubfieldLen);
+int copy_subfield(JAMSUBFIELD2LISTptr *to, JAMSUBFIELD2LISTptr from);
+
+int read_allidx(JAMBASEptr jmb);
+
+int write_hdrinfo(int handle, JAMHDRINFO *HdrInfo);
+int write_idx(int handle, JAMIDXREC *Idx);
+int write_hdr(int handle, JAMHDR *Hdr);
+int write_subfield(int handle, JAMSUBFIELD2LISTptr *subfield, dword SubfieldLen);
 
 #endif /* __JAM_H__ */
 

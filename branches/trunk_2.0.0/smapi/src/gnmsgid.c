@@ -1,19 +1,15 @@
-/* 
-   gnmsgid - standalone msgid generator using husky smapi library
+/* $Id$
+   gnmsgid - standalone msgid generator using smapi library
    Copyright 2003 by Alexander Reznikov, 2:4600/220@fidonet,
                                          homebrewer@yadex.ru
    and HUSKY team.
 
-   This file is part of HUSKY project
-
    This is free software, you can FREE redistribute or modify it.
 
 */
-/* $Id$ */
 
-/* $Id$
- * standalone msgid generator: print new msgid to stdout
-
+/* standalone msgid generator: print new msgid to stdout
+ * 
  *  SMAPI; Modified Squish MSGAPI
  *
  */
@@ -24,7 +20,8 @@
 
 #include "compiler.h"
 #include "msgapi.h"
-/*#include "prog.h"*/
+#include "genmsgid.h"
+#include "strext.h"
 #include "cvsdate.h"
 
 #define check_stricmp(a, b) (stricmp(a, b) == 0)
@@ -69,7 +66,7 @@ int outrunparse(char *line, unsigned long *seqoutrun)
 
 void printusage(void)
 {
-    printf("gnmsgid - standalone msgid generator using husky smapi library\n");
+    printf("gnmsgid - standalone msgid generator using smapi library\n");
     printf("\nUsage:\n");
     printf("gnmsgid [-h] [-v] [-seqdir <path>] [-seqoutrun <outrun>] [<num>]\n");
     printf("where\n");
@@ -78,31 +75,6 @@ void printusage(void)
     printf("  -seqdir    - specify msgid sequencer directory (see husky docs)\n");
     printf("  -seqoutrun - specify msgid outrun value (see husky docs)\n");
     printf("  <num>      - number msgid to generate\n");
-}
-
-char *extract_CVS_keyword(char *str)
-{
-    int l;
-    char *tmp, *r;
-
-    if(!str)
-        return NULL;
-
-    tmp = strchr(str, 0x20);
-
-    if ((!tmp)||(!*(++tmp)))
-        return NULL;
-
-    l = strlen(tmp);
-
-    if (l<3)
-        return NULL;
-
-    r = malloc(l-1);
-    strncpy(r, tmp, l-2);
-    r[l-2] = 0;
-
-    return r;
 }
 
 void printversion(void)
@@ -114,7 +86,7 @@ void printversion(void)
     gen_rev = extract_CVS_keyword(genmsgid_rev);
     gen_date = extract_CVS_keyword(genmsgid_date);
    
-    printf("gnmsgid - standalone msgid generator using husky smapi library\n");
+    printf("gnmsgid - standalone msgid generator using smapi library\n");
     printf("\nCopyright (c) Alexander Reznikov, 2:4600/220@fidonet\n");
     printf("Copyright (c) HUSKY development team.\n\n"); 
     printf("gnmsgid.c revision:  %s\n", str_or_unknown(rev));

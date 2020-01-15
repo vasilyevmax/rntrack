@@ -18,9 +18,11 @@
  */
 
 #include <string.h>
+
+#define _SMAPI_EXT
 #include "prog.h"
 
-char *_fast Strip_Trailing(char *str, char strip)
+SMAPI_EXT char *_fast Strip_Trailing(char *str, char strip)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] == strip)
@@ -30,7 +32,7 @@ char *_fast Strip_Trailing(char *str, char strip)
     return str;
 }
 
-char *_fast Add_Trailing(char *str, char add)
+SMAPI_EXT char *_fast Add_Trailing(char *str, char add)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] != add)

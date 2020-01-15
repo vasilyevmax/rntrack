@@ -16,6 +16,7 @@
  *  agreement, or such other agreement as you are able to reach with the
  *  author.
  */
+#include "months.h"
 
 char months[][10] =
 {

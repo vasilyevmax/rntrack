@@ -24,9 +24,13 @@ extern "C" {
 #ifndef MSGAPI
 #define MSGAPI
 
-#include "compiler.h"
-#include "typedefs.h"
+//#include "cvtdate.h"
+#include "progprot.h"
 #include "stamp.h"
+#include "typedefs.h"
+#include "memory.h"
+#include "ftnaddr.h"
+
 
 #ifdef __BEOS__
 #include <OS.h>
@@ -62,7 +66,7 @@ extern "C" {
 #define MOPEN_WRITE     2
 #define MOPEN_RW        3
 
-#ifdef __unix__
+#ifdef __UNIX__
 #define FILEMODE_NETMAIL (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP)
 #define FILEMODE_ECHOMAIL (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 #else
@@ -74,7 +78,7 @@ extern "C" {
 struct _msgapi;
 struct _msgh;
 struct _xmsg;
-struct _netaddr;
+//struct _netaddr;
 
 typedef struct _msgapi MSGA;
 typedef struct _msgapi *HAREA;
@@ -86,8 +90,8 @@ typedef NETADDR *PNETADDR;
 typedef dword UMSGID;
 
 #define MSGAPI_VERSION    2
-#define MSGAPI_SUBVERSION 0x241
-#define SMAPI_VERSION   "2.4.1"
+#define MSGAPI_SUBVERSION 0x251
+#define SMAPI_VERSION   "2.5.1"
 
 struct _minf
 {
@@ -98,23 +102,6 @@ struct _minf
     /* Version 2 Information */
     word smapi_version;
     word smapi_subversion;
-};
-
-/*
- *  The network address structure.  The zone/net/node/point fields are
- *  always maintained in parallel to the 'ascii' field, which is simply
- *  an ASCII representation of the address.  In addition, the 'ascii' field
- *  can be used for other purposes (such as Internet addresses), so the
- *  contents of this field are implementation-defined, but for most cases,
- *  should be in the format "1:123/456.7" for Fido addresses.
- */
-
-struct _netaddr
-{
-    word zone;
-    word net;
-    word node;
-    word point;
 };
 
 /*
@@ -148,10 +135,10 @@ typedef struct _xmsg
 #define MSGIMM     0x00040000L /* Use only if msgtype == MSGTYPE_JAM !
                                   Used to map the Jam "immediate" attribute. */
 #define MSGLOCKED  0x40000000L /* this seems to be a feature of golded  */
+#define MSGREADTMR 0x80000000L /* Taimyr */
 
 
     dword attr;
-
 #define XMSG_FROM_SIZE  36
 #define XMSG_TO_SIZE    36
 #define XMSG_SUBJ_SIZE  72
@@ -186,6 +173,7 @@ typedef struct _xmsg
                                  * use this field, except possibly for tossers
                                  * and scanners.  All others should use one
                                  * of the two binary datestamps, above. */
+
 }
 XMSG;
 
@@ -198,6 +186,7 @@ XMSG;
 #define xmreplynext replies[MAX_REPLY-1]
 #define xmtimesread replies[MAX_REPLY-2]
 #define xmcost replies[MAX_REPLY-3]
+#define getHAREA(x) ((HAREA) x)
 
 /*
  *  This is a 'message area handle', as returned by MsgOpenArea(), and
@@ -276,7 +265,7 @@ struct _msgapi
 
 #define MSGH_ID  0x0302484DL
 
-#if !defined(MSGAPI_HANDLERS) /*&& !defined(NO_MSGH_DEF) *//* NO_MSGH_DEF unused */
+#if !defined(MSGAPI_HANDLERS) /*&& !defined(NO_MSGH_DEF) */ /* NO_MSGH_DEF unused */
 struct _msgh
 {
     MSGA *sq;
@@ -287,7 +276,7 @@ struct _msgh
 };
 #endif
 
-#include "api_brow.h"
+/* #include "api_brow.h" */
 
 /*
  *  This variable is modified whenever an error occurs with the MsgXxx()
@@ -324,6 +313,7 @@ extern struct _minf _stdc mi;
 #define MERR_BADMSG 11    /* Bad message frame (Squish)                     */
 #define MERR_TOOBIG 12    /* Too much text/ctrlinfo to fit in frame (Squish)*/
 #define MERR_BADNAME 13   /* Bad area name or file name */
+#define MERR_LIMIT  14    /* Messagebase limit is reached */
 
 /*
  *  Now, a set of macros, which call the specified API function.  These
@@ -376,20 +366,21 @@ extern struct _minf _stdc mi;
 
 #define MsgCvtFTSCDateToBinary(a, b) ASCII_Date_To_Binary(a,b)
 
-SMAPI_EXT sword _XPENTRY MsgOpenApi(struct _minf *minf);
-SMAPI_EXT sword _XPENTRY MsgCloseApi(void);
+const char *  _XPENTRY smapi_cvs_date();
+sword _XPENTRY MsgOpenApi(struct _minf *minf);
+sword _XPENTRY MsgCloseApi(void);
 
-SMAPI_EXT MSGA *_XPENTRY MsgOpenArea(byte * name, word mode, word type);
-SMAPI_EXT int MsgDeleteBase(char * name, word type);
+MSGA *_XPENTRY MsgOpenArea(byte * name, word mode, word type);
+int MsgDeleteBase(char * name, word type);
 sword _XPENTRY MsgValidate(word type, byte * name);
-sword _XPENTRY MsgBrowseArea(BROWSE * b);
+/* sword _XPENTRY MsgBrowseArea(BROWSE * b);  // used nowhere */
 
 sword MSGAPI InvalidMsgh(MSGH * msgh);
 sword MSGAPI InvalidMh(MSGA * mh);
 sword MSGAPI InvalidMsg(XMSG * msg);
 
 void _XPENTRY SquishSetMaxMsg(MSGA * sq, dword max_msgs, dword skip_msgs, dword age);
-SMAPI_EXT dword _XPENTRY SquishHash(byte * f);
+dword _XPENTRY SquishHash(byte * f);
 
 MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type);
 sword MSGAPI SdmValidate(byte * name);
@@ -402,36 +393,34 @@ int SquishDeleteBase(char * name);
 MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type);
 sword MSGAPI JamValidate(byte * name);
 int JamDeleteBase(char * name);
-void JamCloseOpenAreas();
+int JamCloseOpenAreas();
 
-SMAPI_EXT byte *_XPENTRY CvtCtrlToKludge(byte * ctrl);
-SMAPI_EXT byte *_XPENTRY GetCtrlToken(byte * where, byte * what);
-SMAPI_EXT byte *_XPENTRY CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length);
+byte *_XPENTRY CvtCtrlToKludge(byte * ctrl);
+byte *_XPENTRY GetCtrlToken(byte * where, byte * what);
+byte *_XPENTRY CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length);
 void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest);
 word _XPENTRY NumKludges(char *txt);
-SMAPI_EXT void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what);
-SMAPI_EXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);
-SMAPI_EXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGenMsgId)(void), char **errstr);
+void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what);
 
-/* Check version of smapi library
+/* Check version of fidoconfig library
  * return zero if test passed
  * test cvs need for DLL version only, using #include <smapi/cvsdate.h>
   const char *smapidate(){
   static const
-  #include "../smapi/cvsdate.h"
+  #include "cvsdate.h"
   return cvs_date;
   }
   CheckSmapiVersion( ..., smapidate());
  */
-SMAPI_EXT int _XPENTRY CheckSmapiVersion( int need_major, int need_minor,
-                	    int need_patch, const char *cvs_date_string );
+int _XPENTRY CheckSmapiVersion( int need_major, int need_minor,
+                        int need_patch, const char *cvs_date_string );
 
 /*  Return MSGAPI error text (string constant).
  */
-SMAPI_EXT char * _XPENTRY  strmerr(int msgapierr);
+char * _XPENTRY  strmerr(int msgapierr);
 
 
-#if !defined(__FLAT__)
+#if !defined(__OS2__) && !defined(__FLAT__) && !defined(__UNIX__) && !defined(__NT__)
 #ifndef farread
 sword far pascal farread(sword handle, byte far * buf, word len);
 #endif
@@ -445,7 +434,7 @@ byte *StripNasties(byte * str);
 
 #if defined(__DOS__)
 sword far pascal shareloaded(void);
-#elif defined(__OS2__) || defined(__NT__) || defined(__unix__)
+#elif defined(__OS2__) || defined(__NT__) || defined(__UNIX__)
 #define shareloaded() TRUE
 #else
 #define shareloaded() FALSE

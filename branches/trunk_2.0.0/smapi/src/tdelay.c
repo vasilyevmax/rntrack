@@ -65,7 +65,7 @@
 /* win32/nt not mingw or `cygwin -mno-cygwin`  (MS VC, Borland C/win32, Watcom C)*/
 
 # if defined(_MSC_VER) || defined(__TURBOC__)
-   extern void __stdcall Sleep(dword ms);
+   __declspec(dllimport) void __stdcall Sleep(dword ms);
 # else
    extern void Sleep(dword ms);
 # endif

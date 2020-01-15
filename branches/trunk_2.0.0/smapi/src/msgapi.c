@@ -20,16 +20,19 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_SIGNAL_H
 #include <signal.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
 #include "msgapi.h"
 #include "apidebug.h"
-#include "unused.h"
+#include "strext.h"
 
 unsigned _SquishCloseOpenAreas(void);
 void _SquishInit();
@@ -41,7 +44,7 @@ static byte *fmpt = (byte *) "FMPT";
 static byte *topt = (byte *) "TOPT";
 static byte *area_colon = (byte *) "AREA:";
 
-/* static char *copyright = "MSGAPI - Copyright 1991 by Scott J. Dudley.  All rights reserved."; */
+/*static char *copyright = "MSGAPI - Copyright 1991 by Scott J. Dudley.  All rights reserved.";*/
 
 /* Global error value for message API routines */
 
@@ -49,29 +52,38 @@ word _stdc msgapierr = 0;
 
 struct _minf _stdc mi;
 
-void _MsgCloseApi(void)
+const char *  _XPENTRY smapi_cvs_date(){
+  static
+#include "cvsdate.h"
+  return cvs_date;
+}
+
+int _MsgCloseApi(void)
 {
+int result = 0;
 /*
   TODO: DeInit (close open areas etc.) for all msgbase types
 */
 
     _SquishDeInit();
-    JamCloseOpenAreas();
+    result = JamCloseOpenAreas();
+
+return result;
 }
 
 #ifdef HAS_SIGNAL_H /* old: #ifdef __UNIX__ */
 /* Just a dummy alarm-fnct */
 static void alrm(int x)
-{unused(x);}
+{ unused(x); }
 #endif
 
 sword _XPENTRY MsgOpenApi(struct _minf *minf)
 {
-#ifdef __unix__
+#ifdef HAS_SIGNAL_H /* old: #ifdef __UNIX__ */
     struct sigaction alrmact;
 #endif
 
-    /* unused(copyright); */
+/*    unused(copyright);*/
     mi.req_version = minf->req_version;
     mi.def_zone    = minf->def_zone;
     mi.haveshare   = minf->haveshare = shareloaded();
@@ -85,12 +97,12 @@ sword _XPENTRY MsgOpenApi(struct _minf *minf)
 
     _SquishInit();
 
-    atexit(_MsgCloseApi);
+    atexit((void (*)(void))_MsgCloseApi);
 
     /*
      * Set the dummy alarm-fcnt to supress stupid messages.
      */
-#ifdef __unix__
+#ifdef HAS_SIGNAL_H /* old: #ifdef __UNIX__ */
     memset(&alrmact, 0, sizeof(alrmact));
     alrmact.sa_handler = alrm;
     sigaction(SIGALRM, &alrmact, 0);
@@ -101,8 +113,7 @@ sword _XPENTRY MsgOpenApi(struct _minf *minf)
 
 sword _XPENTRY MsgCloseApi(void)
 {
-    _MsgCloseApi();
-    return 0;
+    return (sword) _MsgCloseApi();
 }
 
 MSGA *_XPENTRY MsgOpenArea(byte * name, word mode, word type)
@@ -205,9 +216,10 @@ byte *StripNasties(byte * str)
 
 /* Copy the text itself to a buffer, or count its length if out==NULL */
 
-static word near _CopyToBuf(byte * p, byte * out, byte ** end)
+static dword near _CopyToBuf(byte * p, byte * out, byte ** end)
 {
-    word len = 0;
+    dword len = 0;
+    byte *p_text = p;
 
     if (out)
     {
@@ -248,6 +260,13 @@ static word near _CopyToBuf(byte * p, byte * out, byte ** end)
 
         len++;
 
+        /* preserve empty lines between kludges and text */
+        if (*p == '\015' || *p == '\012'){
+            if ((p[0] == '\015' && p[1] == '\012')||(p[0] == '\012' && p[1] == '\015'))
+                p_text = p+=2;
+            else
+                p_text = ++p;
+        }
         while (*p == '\015' || *p == '\012')
         {
             p++;
@@ -274,7 +293,7 @@ static word near _CopyToBuf(byte * p, byte * out, byte ** end)
 
     if (end)
     {
-        *end = p;
+        *end = p_text;
     }
 
     return len;
@@ -284,7 +303,7 @@ byte *_XPENTRY CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length)
 {
     byte *cbuf, *end;
 
-    word clen;
+    dword clen;
 
     /* Figure out how long the control info is */
 
@@ -347,9 +366,13 @@ byte *_XPENTRY GetCtrlToken(byte *where, byte *what)
     return out;
 }
 
+/* NETADDR content is rewritten with discovered information */
+/* If some address pieces aren't discovered then they stay intact */
+/* Be sure these structures don't contain junk before this call */
 void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
 {
-    byte *p, *s;
+    byte *s;
+    const char *p;
 
     s = GetCtrlToken(ctrl, intl);
 
@@ -357,7 +380,7 @@ void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
     {
         NETADDR norig, ndest;
 
-        p = s;
+        p = (char*)s;
 
         /* Copy the defaults from the original address */
 
@@ -366,22 +389,16 @@ void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
 
         /* Parse the destination part of the kludge */
 
-        s += 5;
-        Parse_NetNode((char *) s, &ndest.zone, &ndest.net, &ndest.node, &ndest.point);
+        parseFtnAddrZ(p + 5, &ndest, FTNADDR_GOOD, &p);
 
-        while (*s != ' ' && *s)
+        while (*p != ' ' && *p) /* TODO: Should'n be the case! Maybe remove it and skip intl processing. */
         {
-            s++;
+            p++;
         }
 
-        if (*s)
-        {
-            s++;
-        }
+        parseFtnAddrZS(p, &norig);
 
-        Parse_NetNode((char *) s, &norig.zone, &norig.net, &norig.node, &norig.point);
-
-        pfree(p);
+        pfree(s);
 
         /*
          *  Only use this as the "real" zonegate address if the net/node
@@ -450,7 +467,7 @@ byte *_XPENTRY CvtCtrlToKludge(byte * ctrl)
     {
         /* Only copy out the ^a if it's NOT the area: line */
 
-        if (!eqstrn((char *) from + 1, (char *) area_colon, 5))
+        if (strncmp((char *) from + 1, (char *) area_colon, 5)!=0)
         {
             *to++ = *from;
         }
@@ -475,7 +492,8 @@ void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what)
     byte *p;
     unsigned int len = strlen((char *)what);
 
-    while (1) {
+    for (;;)
+    {
 	ctrl = (unsigned char *)strchr((char *)ctrl, '\001');
 	if (ctrl == NULL) return;
 	if (strncmp((char *)ctrl+1, (char *)what, len)) {
@@ -522,6 +540,8 @@ char * _XPENTRY strmerr(int msgapierr)
 	case MERR_BADMSG: return "Bad message frame (Squish)";
 	case MERR_TOOBIG: return "Too much text/ctrlinfo to fit in frame (Squish)";
 	case MERR_BADNAME:return "Bad area name or file name";
+	case MERR_LIMIT:  return "Messagebase limit is reached";
+	default: break;
     }
     return "Unknown error";
 }
@@ -532,7 +552,7 @@ char * _XPENTRY strmerr(int msgapierr)
  * test cvs need for DLL version only, using #include <smapi/cvsdate.h>
   const char *smapidate(){
   static const
-  #include "../smapi/cvsdate.h"
+  #include "smapi/cvsdate.h"
   return cvs_date;
   }
   CheckSmapiVersion( ..., smapidate());

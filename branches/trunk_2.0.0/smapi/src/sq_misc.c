@@ -33,6 +33,7 @@ static char rcs_id[]="$Id$";
 #include <fcntl.h>
 #include <ctype.h>
 
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_IO_H
@@ -45,13 +46,19 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 /* Set the "current position" pointer in a message handle */
 
@@ -195,7 +202,7 @@ void _XPENTRY apiSquishGetMaxMsg(HAREA ha, dword *dwMaxMsgs, dword *dwSkipMsgs, 
 
 /* Hash function used for calculating the hashes in the .sqi file */
 
-dword _XPENTRY SquishHash(byte  *f)
+dword SquishHash(byte  *f)
 {
   dword hash=0, g;
 
@@ -203,7 +210,8 @@ dword _XPENTRY SquishHash(byte  *f)
   {
     hash=(hash << 4) + (dword)tolower(*f);
 
-    if ((g=(hash & 0xf0000000L)) != 0L)
+    g = hash & 0xf0000000L;
+    if (g != 0L)
     {
       hash |= g >> 24;
       hash |= g;

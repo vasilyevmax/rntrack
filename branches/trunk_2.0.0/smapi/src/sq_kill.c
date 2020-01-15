@@ -28,11 +28,13 @@ static char rcs_id[]="$Id$";
 #define MSGAPI_HANDLERS
 #define MSGAPI_NO_OLD_TYPES
 
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <assert.h>
 
+#define _SMAPI_EXT
 #include "compiler.h"
 
 #ifdef HAS_IO_H
@@ -46,13 +48,19 @@ static char rcs_id[]="$Id$";
 #include <malloc.h>
 #endif
 
-#include "prog.h"
+#include "memory.h"
+#include "ftnaddr.h"
+#include "locking.h"
+
+/* Swith for build DLL */
+#define DLLEXPORT
+
+
 #include "old_msg.h"
 #include "msgapi.h"
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-#include "unused.h"
 
 
 /* Kill the specified message number.                                       *
@@ -112,7 +120,8 @@ sword _XPENTRY apiSquishKillMsg(HAREA ha, dword dwMsg)
 
   /* Get the offset of the frame to delete */
 
-  if ((fo=_SquishGetFrameOfs(ha, dwMsg))==NULL_FRAME)
+  fo=_SquishGetFrameOfs(ha, dwMsg);
+  if (fo==NULL_FRAME)
   {
     return -1;
   }
