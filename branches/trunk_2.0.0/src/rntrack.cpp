@@ -13,6 +13,7 @@
  *  $Id$
  */
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "help.hpp"

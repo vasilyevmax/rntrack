@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <ctype.h>
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "nodelist.hpp"

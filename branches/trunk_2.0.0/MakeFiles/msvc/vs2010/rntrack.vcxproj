@@ -63,10 +63,10 @@
     <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,7 +92,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32;_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN64;__x86_64__;_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -106,7 +106,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateMapFile>false</GenerateMapFile>
+      <ImportLibrary>smapi.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,7 +122,7 @@
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
@@ -130,7 +132,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_WIN64;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;HAVE_TIME_H;__NT__;_WIN64;__x86_64__;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -138,11 +140,11 @@
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>smapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -220,13 +222,37 @@
     <ClInclude Include="..\..\..\hpp\vars.hpp" />
     <ClInclude Include="..\..\..\hpp\wildmat.hpp" />
     <ClInclude Include="..\..\..\smapi\h\api_brow.h" />
+    <ClInclude Include="..\..\..\smapi\h\bcd.h" />
+    <ClInclude Include="..\..\..\smapi\h\bco.h" />
+    <ClInclude Include="..\..\..\smapi\h\bcw.h" />
+    <ClInclude Include="..\..\..\smapi\h\beos5.h" />
+    <ClInclude Include="..\..\..\smapi\h\borlandc.h" />
     <ClInclude Include="..\..\..\smapi\h\compiler.h" />
+    <ClInclude Include="..\..\..\smapi\h\djgpp.h" />
+    <ClInclude Include="..\..\..\smapi\h\emx.h" />
+    <ClInclude Include="..\..\..\smapi\h\ftnaddr.h" />
+    <ClInclude Include="..\..\..\smapi\h\highc.h" />
+    <ClInclude Include="..\..\..\smapi\h\ibmc_os2.h" />
+    <ClInclude Include="..\..\..\smapi\h\memory.h" />
+    <ClInclude Include="..\..\..\smapi\h\mingw32.h" />
+    <ClInclude Include="..\..\..\smapi\h\months.h" />
+    <ClInclude Include="..\..\..\smapi\h\msc.h" />
     <ClInclude Include="..\..\..\smapi\h\msgapi.h" />
+    <ClInclude Include="..\..\..\smapi\h\msvc.h" />
     <ClInclude Include="..\..\..\smapi\h\prog.h" />
     <ClInclude Include="..\..\..\smapi\h\progprot.h" />
+    <ClInclude Include="..\..\..\smapi\h\pstdint.h" />
+    <ClInclude Include="..\..\..\smapi\h\sasc.h" />
     <ClInclude Include="..\..\..\smapi\h\stamp.h" />
     <ClInclude Include="..\..\..\smapi\h\typedefs.h" />
+    <ClInclude Include="..\..\..\smapi\h\typesize.h" />
+    <ClInclude Include="..\..\..\smapi\h\unix.h" />
     <ClInclude Include="..\..\..\smapi\h\unused.h" />
+    <ClInclude Include="..\..\..\smapi\h\watcomc.h" />
+    <ClInclude Include="..\..\..\smapi\h\wcd.h" />
+    <ClInclude Include="..\..\..\smapi\h\wco.h" />
+    <ClInclude Include="..\..\..\smapi\h\wcw.h" />
+    <ClInclude Include="..\..\..\smapi\h\wcx.h" />
     <ClInclude Include="..\..\..\src\cfg.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

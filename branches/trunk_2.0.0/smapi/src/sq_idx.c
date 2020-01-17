@@ -655,7 +655,7 @@ int _SquishEndBuffer(HIDX hix)
 
         if (rc)
         {
-          if (write_sqidx(HixSqd->ifd, (hix->pss[i].psqi+j), size)
+          if (write_sqidx(HixSqd->ifd, (hix->pss[i].psqi+j), (dword)size)
                  != 1)
 
           {

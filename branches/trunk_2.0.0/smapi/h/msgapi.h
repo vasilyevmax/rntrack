@@ -367,12 +367,12 @@ extern struct _minf _stdc mi;
 #define MsgCvtFTSCDateToBinary(a, b) ASCII_Date_To_Binary(a,b)
 
 const char *  _XPENTRY smapi_cvs_date();
-sword _XPENTRY MsgOpenApi(struct _minf *minf);
-sword _XPENTRY MsgCloseApi(void);
+SMAPI_EXT sword _XPENTRY MsgOpenApi(struct _minf *minf);
+SMAPI_EXT sword _XPENTRY MsgCloseApi(void);
 
-MSGA *_XPENTRY MsgOpenArea(byte * name, word mode, word type);
+SMAPI_EXT MSGA *_XPENTRY MsgOpenArea(byte * name, word mode, word type);
 int MsgDeleteBase(char * name, word type);
-sword _XPENTRY MsgValidate(word type, byte * name);
+SMAPI_EXT sword _XPENTRY MsgValidate(word type, byte * name);
 /* sword _XPENTRY MsgBrowseArea(BROWSE * b);  // used nowhere */
 
 sword MSGAPI InvalidMsgh(MSGH * msgh);
@@ -398,7 +398,7 @@ int JamCloseOpenAreas();
 byte *_XPENTRY CvtCtrlToKludge(byte * ctrl);
 byte *_XPENTRY GetCtrlToken(byte * where, byte * what);
 byte *_XPENTRY CopyToControlBuf(byte * txt, byte ** newtext, unsigned *length);
-void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest);
+SMAPI_EXT void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest);
 word _XPENTRY NumKludges(char *txt);
 void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what);
 

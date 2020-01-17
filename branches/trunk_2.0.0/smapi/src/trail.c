@@ -24,8 +24,8 @@
 
 SMAPI_EXT char *_fast Strip_Trailing(char *str, char strip)
 {
-    int x;
-    if (str && *str && str[x = strlen(str) - 1] == strip)
+    dword x;
+    if (str && *str && str[x = (dword)strlen(str) - 1] == strip)
     {
         str[x] = '\0';
     }
@@ -34,8 +34,8 @@ SMAPI_EXT char *_fast Strip_Trailing(char *str, char strip)
 
 SMAPI_EXT char *_fast Add_Trailing(char *str, char add)
 {
-    int x;
-    if (str && *str && str[x = strlen(str) - 1] != add)
+    dword x;
+    if (str && *str && str[x = (dword)strlen(str) - 1] != add)
     {
         str[x + 1] = add;
         str[x + 2] = '\0';

@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <ctype.h>
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -1242,7 +1243,7 @@ unsigned int cMSG::Bytes(void)
         return 0;
     }
 
-    return strlen(_Body);
+    return (unsigned int)strlen(_Body);
 }
 
 // ---------------------------

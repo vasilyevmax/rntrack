@@ -28,6 +28,7 @@
 #include <assert.h>
 #include <errno.h>
 
+#include "compiler.h"
 #include "vars.hpp"
 #include "log.hpp"
 #include "configure.hpp"
@@ -270,7 +271,7 @@ void AddKluToChain(char * & cl, const char * Kn, const char * Kb)
 
     if(cl != NULL)
     {
-        olen = strlen(cl);
+        olen = (int)strlen(cl);
         cl   = (char *)realloc(cl, olen + strlen(buff) + 1);
         CheckMem(cl);
         strcat(cl, buff);
@@ -371,7 +372,7 @@ bool WriteMsgBody(cMSG & m, FILE * fh)
 
     if(!m.fEmpty)
     {
-        FSize = strlen(m.Body());
+        FSize = (unsigned int)strlen(m.Body());
 
         if(fwrite(m.Body(), FSize, 1, fh) != 1)
         {

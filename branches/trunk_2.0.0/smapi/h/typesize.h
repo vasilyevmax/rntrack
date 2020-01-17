@@ -104,7 +104,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif
 #endif                                          /*  #if defined(__EMX__) */
 
@@ -117,7 +116,6 @@ typedef   signed int          INT;              /*  4 byte */
 typedef unsigned int         UINT;              /*  4 byte */
 typedef   signed long        LONG;              /*  4 byte */
 typedef unsigned long       ULONG;              /*  4 byte */
-typedef          void        VOID;
 typedef   signed short      INT16;              /*  2 byte */
 typedef unsigned short     UINT16;              /*  2 byte */
 /*  -------------------------------------------------------------------------- */
@@ -126,7 +124,6 @@ typedef unsigned short     UINT16;              /*  2 byte */
 /* Alpha AXP running Digital Unix (and possibly also Linux/Alpha?)
    This is a 64 bit architecture (AMD64, EM64T) */
 #if defined(__alpha) || defined(__X86_64__)
-typedef   signed char       CHAR;               /*  1 byte */
 typedef unsigned char      UCHAR;               /*  1 byte */
 typedef   signed short      INT16;              /*  2 byte */
 typedef unsigned short     UINT16;              /*  2 byte */
@@ -137,7 +134,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  8 byte */
 typedef unsigned long      ULONG;               /*  8 byte */
-typedef          void       VOID;
 #endif
 
 
@@ -158,7 +154,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif
 
 #if defined(__sun__)
@@ -173,7 +168,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif
 
 #if defined(__hpux)
@@ -188,7 +182,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif
 
 /*  the Borland compiler family - valid for DOS, OS/2 and Win32 versions */
@@ -209,7 +202,6 @@ typedef unsigned int       UINT;                /*  2/4 byte */
 typedef signed   long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
 #if !defined(__NT__)
-typedef          void       VOID;
 #endif
 #endif
 #endif                                          /*  #if defined(__BORLANDC__) */
@@ -232,7 +224,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif
 #endif                                          /*  #if defined(__IBMC(PP)__) */
 
@@ -250,7 +241,6 @@ typedef   signed int         INT;               /*  2 byte */
 typedef unsigned int        UINT;               /*  2 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif                                          /*  #if defined(_MSC_VER) */
 
 /*   the Watcom 16/32bit compilers */
@@ -274,7 +264,6 @@ typedef signed   int          INT;              /*  2/4 byte */
 typedef unsigned int         UINT;              /*  2/4 byte */
 typedef signed   long        LONG;              /*  4 byte */
 typedef unsigned long       ULONG;              /*  4 byte */
-typedef          void        VOID;
 #endif
 
 #if __WATCOMC__ >1000
@@ -297,7 +286,6 @@ typedef   signed int          INT;              /*  4 byte */
 typedef unsigned int         UINT;              /*  4 byte */
 typedef   signed long        LONG;              /*  4 byte */
 typedef unsigned long       ULONG;              /*  4 byte */
-typedef void                 VOID;
 #endif
 
 #else /* pstdint.h/stdint.h work for this platform */
@@ -317,7 +305,6 @@ typedef   signed int         INT;               /*  4 byte */
 typedef unsigned int        UINT;               /*  4 byte */
 typedef   signed long       LONG;               /*  4 byte */
 typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
 #endif
 #endif
 

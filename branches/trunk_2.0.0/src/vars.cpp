@@ -13,6 +13,7 @@
  *  $Id$
  */
 
+#include "compiler.h"
 #include "vars.hpp"
 
 char * ConfigFile  = NULL;

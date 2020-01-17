@@ -30,6 +30,7 @@
 #include <string.h>
 #include <assert.h>
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "configure.hpp"
@@ -223,7 +224,7 @@ int ReadNdlLine(char * Buff, int Count)
             Buff[0] = ';';
         }
     }
-    return strlen(Buff);
+    return (int)strlen(Buff);
 } // ReadNdlLine
 
 Ntr * ExistByNumber(Ntr * Addr, unsigned int Number)

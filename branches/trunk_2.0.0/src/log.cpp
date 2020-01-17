@@ -40,6 +40,7 @@
 /*--------------------------------------------------------------------*/
 /*                         Local include files                        */
 /*--------------------------------------------------------------------*/
+#include "compiler.h"
 #include "mytypes.hpp"
 #include "log.hpp"
 
@@ -299,15 +300,22 @@ LogStream & LogStream::operator <<(int i)
     return *this;
 }
 
-LogStream & LogStream::operator <<(time_t t)
+#ifdef HAS_INT64
+LogStream & LogStream::operator <<(long long t)
 {
-    ShowLine("%lld", (long long)t);
+    ShowLine("%lld", t);
     return *this;
 }
 
-LogStream & LogStream::operator <<(unsigned int i)
+LogStream & LogStream::operator <<(unsigned long long t)
 {
-    ShowLine("%u", (unsigned int)i);
+    ShowLine("%lld", t);
+    return *this;
+}
+#else
+LogStream & LogStream::operator <<(time_t t)
+{
+    ShowLine("%ld", (long)t);
     return *this;
 }
 
@@ -320,5 +328,12 @@ LogStream & LogStream::operator <<(word i)
 LogStream & LogStream::operator <<(dword i)
 {
     ShowLine("%lu", (unsigned long)i);
+    return *this;
+}
+#endif
+
+LogStream & LogStream::operator <<(unsigned int i)
+{
+    ShowLine("%u", (unsigned int)i);
     return *this;
 }

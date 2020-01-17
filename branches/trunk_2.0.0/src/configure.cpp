@@ -47,6 +47,7 @@
 /*                        Program include files                       */
 /*--------------------------------------------------------------------*/
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -1086,7 +1087,7 @@ int SearchToken(char * s)
     int l;
     char * Buff;
 
-    l = strlen(s);
+    l = (int)strlen(s);
 
     if(l == 0)
     {
@@ -1124,7 +1125,7 @@ int SearchToken(char * s)
 //    {
     if(kwtable[i].kw != NULL)
     {
-        Pos += strlen(Buff);
+        Pos += (int)strlen(Buff);
 //          Log.Level(LOGD) << "Found token: '" << kwtable[i].kw << "'." << EOL;
     }
     else
@@ -1463,9 +1464,9 @@ int yylex(void)
                 else if(nxtch == '"')
                 {
                     chpool[avail] = '\0';
-                    avail -= strlen(p);
+                    avail -= (int)strlen(p);
                     strcpy(p, PrepareString(p));
-                    avail += (strlen(p) + 1);
+                    avail += (int)(strlen(p) + 1);
                     yylval.ch = p;
                     LexStat   = LEX_START;
                     return _STRING;

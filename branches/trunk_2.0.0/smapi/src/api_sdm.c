@@ -21,6 +21,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <direct.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -248,8 +249,8 @@ static sword _XPENTRY SdmCloseArea(MSGA * mh)
             msg.replyto = mh->high_water;
             msg.attr = MSGPRIVATE | MSGREAD | MSGLOCAL | MSGSENT;
 
-            SdmWriteMsg(msgh, FALSE, &msg, msgbody, strlen((char *) msgbody) + 1,
-              strlen((char *) msgbody) + 1, 0L, NULL);
+            SdmWriteMsg(msgh, FALSE, &msg, msgbody, (dword)strlen((char *) msgbody) + 1,
+              (dword)strlen((char *) msgbody) + 1, 0L, NULL);
 
             SdmCloseMsg(msgh);
         }
@@ -657,7 +658,7 @@ static dword _XPENTRY SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
         if (msgh->ctrl != NULL)
         {
             msgh->clen = (dword) strlen((char *) msgh->ctrl) + 1;
-            msgh->msgtxt_start = newtext - text;
+            msgh->msgtxt_start = (sdword)(newtext - text);
 
             /* Shift back the text buffer to counter absence of ^a strings */
 
@@ -1334,21 +1335,21 @@ int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * k
           msg->dest.node, msg->orig.zone, msg->orig.net, msg->orig.node);
 
         (*wfunc) (temp);
-        bytes += strlen((char *) temp);
+        bytes += (int)strlen((char *) temp);
     }
 
     if (msg->orig.point && !strstr((char *) kludges, "\001" "FMPT"))
     {
         sprintf((char *) temp, "\001" "FMPT %hu\r", msg->orig.point);
         (*wfunc) (temp);
-        bytes += strlen((char *) temp);
+        bytes += (int)strlen((char *) temp);
     }
 
     if (msg->dest.point && !strstr((char *) kludges, "\001" "TOPT"))
     {
         sprintf((char *) temp, "\001" "TOPT %hu\r", msg->dest.point);
         (*wfunc) (temp);
-        bytes += strlen((char *) temp);
+        bytes += (int)strlen((char *) temp);
     }
 
     return bytes;
@@ -1358,7 +1359,7 @@ static void _stdc WriteToFd(byte * str)
 {
   if(str && *str)
   {
-    if( 0 > farwrite(statfd, str, strlen((char *) str)) )
+    if( 0 > farwrite(statfd, str, (unsigned int)strlen((char *) str)) )
       msgapierr = MERR_BADF;
   }
   else msgapierr = MERR_BADH;

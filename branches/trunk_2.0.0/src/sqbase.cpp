@@ -628,7 +628,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
             tmt2++;
         }
         while(*(tmt - 1) != '\0');
-        CtrlLen = strlen(Ctrl);
+        CtrlLen = (int)strlen(Ctrl);
     }
     else
     {
@@ -665,7 +665,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
     if(Body != NULL)
     {
         CHP = 578;
-        BodyLen = strlen(Body);
+        BodyLen = (int)strlen(Body);
     }
     else
     {

@@ -47,7 +47,7 @@ char *_fast sc_time(union stamp_combo *sc, char *string);
 char *_fast fts_time(char *string, struct tm *tmdate);
 void _fast tdelay(int);
 int _fast setfsize(int fd, long size);
-#ifdef __LITTLE_ENDIAN__
+/* #ifdef __LITTLE_ENDIAN__
 
 #define put_dword(ptr, val)	(*(dword *)(ptr) = (val))
 #define put_word(ptr, val)	(*(word *)(ptr) = (val))
@@ -56,8 +56,8 @@ int _fast setfsize(int fd, long size);
 
 #else
 
-SMAPI_EXT void put_word(byte *ptr, word value);      /* structrw.c */
-SMAPI_EXT void put_dword(byte *ptr, dword value);    /* structrw.c */
+SMAPI_EXT void put_word(byte *ptr, word value);*/      /* structrw.c */
+/*SMAPI_EXT void put_dword(byte *ptr, dword value);*/    /* structrw.c */
 /*
  *  get_dword
  *
@@ -65,13 +65,13 @@ SMAPI_EXT void put_dword(byte *ptr, dword value);    /* structrw.c */
  *  and converts it to the local representation n an architecture-
  *  independent manner
  */
-
+/*
 #define get_dword(ptr)            \
    ((dword)((unsigned char)(ptr)[0]) |           \
     (((dword)((unsigned char)(ptr)[1])) << 8)  | \
     (((dword)((unsigned char)(ptr)[2])) << 16) | \
     (((dword)((unsigned char)(ptr)[3])) << 24))  \
-
+*/
 /*
  *  get_word
  *
@@ -79,12 +79,12 @@ SMAPI_EXT void put_dword(byte *ptr, dword value);    /* structrw.c */
  *  and converts it to the local representation in an architecture-
  *  independent manner
  */
-
+/*
 #define get_word(ptr)         \
     ((word)((unsigned char)(ptr)[0]) |         \
      (((word)((unsigned char)(ptr)[1])) << 8 ))
 
-#endif /* __LITTLE_ENDIAN__ */
+#endif*/ /* __LITTLE_ENDIAN__ */
 
 int  _createDirectoryTree(const char *pathName);
 /*DOC

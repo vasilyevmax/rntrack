@@ -65,14 +65,18 @@
 /* win32/nt not mingw or `cygwin -mno-cygwin`  (MS VC, Borland C/win32, Watcom C)*/
 
 # if defined(_MSC_VER) || defined(__TURBOC__)
-   __declspec(dllimport) void __stdcall Sleep(dword ms);
+#   if defined(HAS_INT64)
+        __declspec(dllimport) void __stdcall Sleep(unsigned long ms);
+#   else
+        __declspec(dllimport) void __stdcall Sleep(dword ms);
+#   endif
 # else
    extern void Sleep(dword ms);
 # endif
-   void _fast tdelay(int msecs)
-   {
-    Sleep((dword)msecs);
-   }
+    void _fast tdelay(int msecs)
+    {
+        Sleep((dword)msecs);
+    }
 
 #elif defined(__BEOS__)
 

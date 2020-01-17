@@ -25,9 +25,10 @@
 #  error We can't build RNtrack on your MS Visual C version, sorry.
 #endif
 
+#    define rmdir        _rmdir
+
 #  ifdef _MAKE_DLL
 #    define _MAKE_DLL_MVC_
-#  endif /* ifdef _MAKE_DLL */
 #    ifndef _SMAPI_EXT
 #      define SMAPI_EXT __declspec(dllimport)
 #    else
@@ -51,7 +52,6 @@
 #    define tzset        _tzset
 #    define stricmp      _stricmp
 #    define strnicmp     _strnicmp
-#    define rmdir        _rmdir
 #    define fstat        _fstat
 #    define strdup       _strdup
 #    define strupr       _strupr
@@ -69,6 +69,10 @@
 #    define chdir        _chdir
 #    define getcwd       _getcwd
 #    define isatty       _isatty
+
+#  else  /* ifdef _MAKE_DLL */
+#    define SMAPI_EXT    extern
+#  endif /* ifdef _MAKE_DLL */
 
 #   include <limits.h>
 #   ifndef MAXPATHLEN
@@ -184,7 +188,7 @@ typedef signed char sbyte;
 typedef unsigned short word;
 typedef signed short sword;
 
-#ifdef _M_ALPHA    /* 64 bit system */
+#if defined(__ALPHA__) || defined(__X86_64__)    /* 64 bit system */
 typedef unsigned int dword;
 typedef signed   int sdword;
 #else             /* 32 and 16 bit machines */
@@ -215,9 +219,10 @@ typedef   signed __int32    hINT32;              /*  4 bytes */
 typedef   signed __int32   hSINT32;              /*  4 bytes */
 typedef unsigned __int32   hUINT32;              /*  4 bytes */
 
+#if defined(__ALPHA__) || defined(__X86_64__)    /* 64 bit system */
 typedef   signed __int64    hINT64;              /*  8 bytes */
 typedef   signed __int64   hSINT64;              /*  8 bytes */
 typedef unsigned __int64   hUINT64;              /*  8 bytes */
 #define HAS_INT64
-
+#endif /* 64 bit system */
 #endif

@@ -50,11 +50,16 @@ public:
     LogStream & operator <<(const char * p);
     LogStream & operator <<(char p);
     LogStream & operator <<(int i);
-    LogStream & operator <<(time_t t);
     LogStream & operator <<(unsigned int i);
-    LogStream & operator <<(word i);     // word/sword is always a 16 bit int,
     LogStream & operator <<(sword i);    // smapi takes care for this, and
+#ifdef HAS_INT64
+    LogStream & operator <<(long long t);
+    LogStream & operator <<(unsigned long long t);
+#else
+    LogStream & operator <<(time_t t);
+    LogStream & operator <<(word i);     // word/sword is always a 16 bit int,
     LogStream & operator <<(dword i);    // dword is always 32 bit, even on a 64 bit host
+#endif
 };
 
 char * Date(void);

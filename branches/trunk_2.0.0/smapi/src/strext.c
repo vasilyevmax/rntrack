@@ -61,7 +61,7 @@ char *_fast firstchar(const char *strng, const char *delim, int findword)
         return NULL;
     }
 
-    sl_d = strlen(delim);
+    sl_d = (int)strlen(delim);
 
     for (string = strng; *string; string++)
     {
@@ -80,7 +80,7 @@ char *_fast firstchar(const char *strng, const char *delim, int findword)
         }
     }
 
-    sl_s = strlen(string);
+    sl_s = (int)strlen(string);
 
     for (wordno = 0; string - oldstring < sl_s; string++)
     {
@@ -176,7 +176,7 @@ char *fc_stristr(const char *str, const char *find)
 char *stripLeadingChars(char *str, const char *chr)
 {
     if (str && chr && *chr) {
-        int i = strspn(str, chr);
+        int i = (int)strspn(str, chr);
         memmove(str, str + i, strlen(str) - i+1);
     }
     return str;
@@ -193,7 +193,7 @@ char *stripTrailingChars(char *str, const char *chr)
    char *i;
    register int l;
 
-   if( str && chr && (l=strlen(str))>0 ) {
+   if( str && chr && (l=(int)strlen(str))>0 ) {
       i = str+l-1;
       while( (NULL != strchr(chr, *i)) && (i>=str) )
          *i-- = '\0';
@@ -346,7 +346,7 @@ char *extract_CVS_keyword(char *str)
     if ((!tmp)||(!*(++tmp)))
         return NULL;
 
-    l = strlen(tmp);
+    l = (int)strlen(tmp);
 
     if (l<3)
         return NULL;
@@ -388,11 +388,11 @@ int copyStringUntilSep(char *str, char *seps, char **dest)
     *dest = malloc(sepPos - str + 1);
     strnzcpy(*dest, str, sepPos - str);
 
-    return (sepPos - str);
+    return (int)(sepPos - str);
   }
 
   *dest = (char *) sstrdup(str);
-  return strlen(str);
+  return (int)strlen(str);
 }
 
 /* helper function for s_str_array */
@@ -418,8 +418,8 @@ char *StrArray2String(s_str_array *ss)
 	if(ss->count == 0)
 		return NULL;
 
-	size = STR_A_SSIZE(ss);
-	string = smalloc(size);
+	size = (int)STR_A_SSIZE(ss);
+	string = (char *)smalloc(size);
 	memcpy(string, STR_N(ss, 0), size);
 	/* \0 -> ' ' */
 	for(ii = 1; ii < ss->count; ++ii)

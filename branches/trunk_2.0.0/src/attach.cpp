@@ -33,6 +33,7 @@
   #include <fcntl.h>
 #endif
 #include <errno.h>
+#include "compiler.h"
 #include "constant.hpp"
 #include "help.hpp"
 #include "utils.hpp"
@@ -326,7 +327,7 @@ int _AttachExists(char * Buff)
     if(SkipHiddenFiles)
     {
         struct _finddata_t fd;
-        int h = _findfirst(tmt, &fd);
+        int h = (int)_findfirst(tmt, &fd);
 
         if(h != -1)
         {
