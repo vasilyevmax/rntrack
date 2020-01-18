@@ -35,7 +35,11 @@ int unlock(int handle, long ofs, long length);
 int waitlock(int handle, long ofs, long length);
 int waitlock2(int handle, long ofs, long length, long t);
 
+#ifndef HAS_sopen
+int sopen(const char *name, int oflag, int ishared, int mode);
 #endif
+
+#endif /* __LOCKING_H__ */
 
 
 
