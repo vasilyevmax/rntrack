@@ -15,6 +15,7 @@
 
 #define _SMAPI_EXT
 #include "compiler.h"
+#include "stamp.h"
 #include "locking.h"
 #include "unused.h"
 #include "strext.h"
@@ -52,6 +53,7 @@
 #include "api_jamp.h"
 #include "apidebug.h"
 #include "progprot.h"
+#include "locking.h"
 
 #define Jmd ((JAMBASE *)(jm->apidata))
 #define MsghJm ((JAMBASE *)(((struct _msgh *)msgh)->sq->apidata))
@@ -533,7 +535,7 @@ static dword _XPENTRY JamReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
    dword SubPos, bytesread;
    struct tm *s_time;
    SCOMBO *scombo;
-   unsigned char *ftsdate;
+   /* unsigned char *ftsdate; */
 
    if (InvalidMsgh(msgh))
    {
@@ -607,7 +609,7 @@ static dword _XPENTRY JamReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
       scombo = (SCOMBO*)(&(msg->date_written));
       scombo = TmDate_to_DosDate(s_time, scombo);
       /* ftsdate = msg->__ftsc_date; */
-      ftsdate = (unsigned char *)sc_time(scombo, (char *)(msg->__ftsc_date));
+      /* ftsdate = (unsigned char *)sc_time(scombo, (char *)(msg->__ftsc_date)); */
 
       if (msgh->Hdr.DateProcessed) {
          const time_t c_time = msgh->Hdr.DateProcessed;
