@@ -35,14 +35,6 @@ typedef signed char sbyte;
 typedef unsigned short word;
 typedef signed short sword;
 
-/*#if defined(__ALPHA__) || defined(__X86_64__)*/    /* add other 64 bit systems here */
-/*typedef unsigned int dword;
-typedef signed   int sdword;
-#else*/             /* 32 and 16 bit machines */
-/*typedef unsigned long dword;
-typedef signed long sdword;
-#endif*/
-
 #if !defined(__unix__) && !defined(SASC) && !defined(__MINGW32__)
 typedef unsigned short ushort;
 #endif
