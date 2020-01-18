@@ -218,8 +218,8 @@ int main(int argc, char *argv[])
         {
             msgid = GenMsgIdEx(seqdir, seqoutrun, NULL, &msgiderr);
             if (msgiderr)
-            fprintf(stderr, "warning (id #%i): %s, fall to ugly old algorythm\n", i, msgiderr);
-            printf("%08lx\n", msgid);
+            fprintf(stderr, "warning (id #%i): %s, fall to ugly old algorithm\n", i, msgiderr);
+            printf("%08x\n", msgid);
         }
     }
     return -1;
