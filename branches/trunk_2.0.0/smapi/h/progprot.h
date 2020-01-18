@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include "compiler.h"
+#include "stamp.h"
 
 /*#if !( (defined(__WATCOMC__) && !defined(__DOS__)) || defined(__MSVC__) )*/
 #ifdef __DOS__
