@@ -33,6 +33,7 @@
 #include "msgapi.h"
 #include "apidebug.h"
 #include "strext.h"
+#include "unused.h"
 
 unsigned _SquishCloseOpenAreas(void);
 void _SquishInit();
