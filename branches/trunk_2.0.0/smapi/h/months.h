@@ -20,7 +20,7 @@
 #ifndef __MONTHS_H__
 #define __MONTHS_H__
 
-char months[][10];
-char months_ab[][4];
+char months[12][10];
+char months_ab[12][4];
 
 #endif

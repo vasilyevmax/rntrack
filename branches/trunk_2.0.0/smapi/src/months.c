@@ -18,7 +18,7 @@
  */
 #include "months.h"
 
-char months[][10] =
+char months[12][10] =
 {
     "January",
     "February",
@@ -34,7 +34,7 @@ char months[][10] =
     "December"
 };
 
-char months_ab[][4] =
+char months_ab[12][4] =
 {
     "Jan",
     "Feb",
