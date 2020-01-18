@@ -13,6 +13,7 @@
  *  $Id$
  */
 
+#include "compiler.h"
 #ifdef HAVE_CONFIG_H
   # include "aconfig.h"
 #endif
@@ -33,7 +34,6 @@
   #include <fcntl.h>
 #endif
 #include <errno.h>
-#include "compiler.h"
 #include "constant.hpp"
 #include "help.hpp"
 #include "utils.hpp"
