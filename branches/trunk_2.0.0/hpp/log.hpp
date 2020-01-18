@@ -53,6 +53,8 @@ public:
     LogStream & operator <<(unsigned int i);
     LogStream & operator <<(sword i);    // smapi takes care for this, and
 #ifdef HAS_INT64
+    LogStream & operator <<(long t);
+    LogStream & operator <<(unsigned long t);
     LogStream & operator <<(long long t);
     LogStream & operator <<(unsigned long long t);
 #else

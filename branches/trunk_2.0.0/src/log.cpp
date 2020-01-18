@@ -301,6 +301,18 @@ LogStream & LogStream::operator <<(int i)
 }
 
 #ifdef HAS_INT64
+LogStream & LogStream::operator <<(long t)
+{
+    ShowLine("%ld", t);
+    return *this;
+}
+
+LogStream & LogStream::operator <<(unsigned long t)
+{
+    ShowLine("%ld", t);
+    return *this;
+}
+
 LogStream & LogStream::operator <<(long long t)
 {
     ShowLine("%lld", t);
