@@ -17,18 +17,17 @@
  *  author.
  */
 
+#include "compiler.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <direct.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
 #define _SMAPI_EXT
-#include "compiler.h"
 
 #ifdef HAS_IO_H
 #include <io.h>
@@ -60,6 +59,7 @@
 #define DLLEXPORT
 
 
+#include "stamp.h"
 #include "msgapi.h"
 #include "old_msg.h"
 #include "api_sdm.h"
@@ -69,6 +69,7 @@
 #include "ffind.h"
 #include "unused.h"
 #include "strext.h"
+#include "locking.h"
 
 #define SDM_BLOCK 256     /* Should be exp2(x) */
 #define Mhd ((struct _sdmdata *)(mh->apidata))
@@ -1372,9 +1373,10 @@ static void near Get_Binary_Date(struct _stamp *todate, struct _stamp *fromdate,
     return;
   }
 
-    if (fromdate->date.da == 0 || fromdate->date.da > 31 || fromdate->date.yr > 50 ||
-      fromdate->time.hh > 23 || fromdate->time.mm > 59 || fromdate->time.ss > 59 ||
-      ((union stamp_combo *)(void *)&fromdate)->ldate == 0)
+    if(fromdate->date.da == 0 || fromdate->date.da > 31 || fromdate->date.yr > 50 ||
+       fromdate->time.hh > 23 || fromdate->time.mm > 59 || fromdate->time.ss > 59 ||
+       (fromdate->date.da == 0 && fromdate->date.mo == 0 && fromdate->date.yr == 0 &&
+       fromdate->time.ss == 0 && fromdate->time.mm == 0 && fromdate->time.hh == 0))
     {
         ASCII_Date_To_Binary((char *) asciidate, (union stamp_combo *)todate);
     }
