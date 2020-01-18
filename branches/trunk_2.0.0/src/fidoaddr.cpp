@@ -13,7 +13,6 @@
  *  $Id$
  */
 
-#include        <string.h>
 #include        <time.h>
 #include        "compiler.h"
 #include        "fidoaddr.hpp"
