@@ -800,7 +800,7 @@ int qq(void)
 
 /***** Platforms *************************************************************/
 
-#if defined(arm) || defined(_arm) || defined(__arm) || defined(__arm__) || defined(__ARMEL__) || defined(
+#if defined(arm) || defined(_arm) || defined(__arm) || defined(__arm__) || defined(__ARMEL__) || defined(__ARM_EABI__)
 #  if !defined(__ARM__)
 #    define __ARM__
 #  endif
