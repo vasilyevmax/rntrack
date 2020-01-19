@@ -37,36 +37,39 @@ ENABLE_SYSLOG_LOG_FORMAT?=1
 
 all: rntrack
 
-OBJS=	fidoaddr.o \
-	log.o \
+OBJS= \
 	age.o \
+	aix_conv.o \
 	aka.o \
 	attach.o \
 	badmsg.o \
+	badpkt.o \
 	cfg.o \
 	configure.o \
-	rntrack.o \
+	dirent.o \
+	domain.o \
+	fidoaddr.o \
+	filebox.o \
 	getopt.o \
 	help.o \
+	log.o \
+	mask.o \
 	msg.o \
 	msgbase.o \
 	nodelist.o \
-	vars.o \
 	outbound.o \
 	parsetpl.o \
 	passwd.o \
 	pktbase.o \
+	rntrack.o \
 	scandir.o \
+	script.o \
 	sqbase.o \
+	string.o \
 	tmstamp.o \
 	utils.o \
-	mask.o \
-	script.o \
-	wildmat.o \
-	badpkt.o \
-	domain.o \
-	string.o \
-	filebox.o
+	vars.o \
+	wildmat.o
 
 .SUFFIXES: .cpp .o
 

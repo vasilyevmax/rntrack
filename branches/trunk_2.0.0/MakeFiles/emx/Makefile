@@ -23,36 +23,39 @@ ALL: rntrack$(EXEEND)
 
 TARGET= f
 
-OBJS=	fidoaddr.obj \
-	log.obj \
-	age.obj \
-	aka.obj \
-	attach.obj \
-	badmsg.obj \
-	cfg.obj \
-	configure.obj \
-	rntrack.obj \
-	getopt.obj \
-	help.obj \
-	msg.obj \
-	msgbase.obj \
-	nodelist.obj \
-	vars.obj \
-	outbound.obj \
-	parsetpl.obj \
-	passwd.obj \
-	pktbase.obj \
-	scandir.obj \
-	sqbase.obj \
-	tmstamp.obj \
-	utils.obj \
-	mask.obj \
-	wildmat.obj \
-	badpkt.obj \
-	script.obj \
-	domain.obj \
-	filebox.obj \
-	string.o
+OBJS= \
+	age.o \
+	aix_conv.o \
+	aka.o \
+	attach.o \
+	badmsg.o \
+	badpkt.o \
+	cfg.o \
+	configure.o \
+	dirent.o \
+	domain.o \
+	fidoaddr.o \
+	filebox.o \
+	getopt.o \
+	help.o \
+	log.o \
+	mask.o \
+	msg.o \
+	msgbase.o \
+	nodelist.o \
+	outbound.o \
+	parsetpl.o \
+	passwd.o \
+	pktbase.o \
+	rntrack.o \
+	scandir.o \
+	script.o \
+	sqbase.o \
+	string.o \
+	tmstamp.o \
+	utils.o \
+	vars.o \
+	wildmat.o
 
 PERLLIBS?=\
         $(PERL)/auto/DB_File/DB_File.lib \

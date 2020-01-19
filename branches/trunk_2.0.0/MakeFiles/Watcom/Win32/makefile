@@ -19,13 +19,11 @@ DEBUG	= 0
 #ENABLE_LOG_PID=1
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
-
-OBJS= cfg.obj configure.obj rntrack.obj log.obj help.obj
-OBJS+= fidoaddr.obj msg.obj msgbase.obj scandir.obj vars.obj age.obj
-OBJS+= badmsg.obj aka.obj parsetpl.obj attach.obj outbound.obj
-OBJS+= passwd.obj wildmat.obj tmstamp.obj badpkt.obj
-OBJS+= sqbase.obj mask.obj getopt.obj cfg.obj utils.obj nodelist.obj
-OBJS+= pktbase.obj script.obj domain.obj filebox.obj string.obj
+OBJS= age.o aix_conv.o aka.o attach.o badmsg.o badpkt.o cfg.o configure.o
+OBJS+= dirent.o domain.o fidoaddr.o filebox.o getopt.o help.o log.o
+OBJS+= mask.o msg.o msgbase.o nodelist.o outbound.o parsetpl.o passwd.o
+OBJS+= pktbase.o rntrack.o scandir.o script.o sqbase.o string.o
+OBJS+= tmstamp.o utils.o vars.o wildmat.o
 
 INCLUDE=..\..\..\hpp;$(SRCDIR);$(SMAPIDIR)\h;$(SMAPIDIR)\src
 LIB=$(SMAPIDIR)\smapiwcw.lib

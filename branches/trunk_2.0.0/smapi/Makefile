@@ -103,7 +103,7 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libsmapi_a_AR = $(AR) $(ARFLAGS)
 libsmapi_a_LIBADD =
-am_libsmapi_a_OBJECTS = 1stchar.$(OBJEXT) api_jam.$(OBJEXT) \
+am_libsmapi_a_OBJECTS = api_jam.$(OBJEXT) \
 	api_sdm.$(OBJEXT) cvtdate.$(OBJEXT) date2bin.$(OBJEXT) \
 	dosdate.$(OBJEXT) fexist.$(OBJEXT) ffind.$(OBJEXT) \
 	flush.$(OBJEXT) genmsgid.$(OBJEXT) gnmsgid.$(OBJEXT) \

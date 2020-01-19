@@ -6742,7 +6742,7 @@ fi
 # EOF Optional arguments
 
 
-ac_config_files="$ac_config_files Makefile src/smapi/Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile smapi/Makefile src/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
