@@ -86,7 +86,7 @@ char * Date(void)
 #ifdef SYSLOG_LOG_FORMAT
     strftime(Buff, 60, "%b %d %H:%M:%S", ts);
 #else
-    strftime(Buff, 60, "%d.%m.%Y %H:%M:%S", ts);
+    strftime(Buff, 60, "%Y-%m-%d %H:%M:%S", ts);
 #endif
     return Buff;
 }
