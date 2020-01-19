@@ -14,11 +14,11 @@
 #define SMAPI_WCD_H
 
 #ifndef __WATCOMC__
-  #error This file may be used only with Watcom C !
+    #error This file may be used only with Watcom C !
 #endif
 
 #ifndef __DOS__
-  #error This file may be used only with Watcom C 16 bit DOS target !
+    #error This file may be used only with Watcom C 16 bit DOS target !
 #endif
 
 
@@ -28,17 +28,17 @@
 #  define _veccast   _intcast
 #  define _fast      pascal
 
-#  ifdef __FAR_DATA__
-#    define farread    read
-#    define farwrite   write
-#  else
-#    define farread    trivial_farread
-#    define farwrite   trivial_farwrite
-#    define NEED_trivial_farread   1
-#    define NEED_trivial_farwrite  1
-     int trivial_farread( int handle, void far *buffer, unsigned len );
-     int trivial_farwrite( int handle, void far *buffer, unsigned len );
-#  endif
+#ifdef __FAR_DATA__
+    #define farread    read
+    #define farwrite   write
+#else
+    #define farread    trivial_farread
+    #define farwrite   trivial_farwrite
+    #define NEED_trivial_farread   1
+    #define NEED_trivial_farwrite  1
+    int trivial_farread( int handle, void far *buffer, unsigned len );
+    int trivial_farwrite( int handle, void far *buffer, unsigned len );
+#endif
 
 #  define HAS_dos_read 1      /* dos_read() */
 #  define dos_read _dos_read  /* _dos_read() in dos.h */

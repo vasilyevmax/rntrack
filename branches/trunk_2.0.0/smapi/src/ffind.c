@@ -25,27 +25,27 @@
 #include "compiler.h"
 
 #if defined(HAS_DIR_H)
-#  include <dir.h>
+    #include <dir.h>
 #endif
 
 #if defined(HAS_DOS_H)
-#  include <dos.h>
+    #include <dos.h>
 #endif
 
 #include "ffind.h"
 
 #ifdef __OS2__
-#  define INCL_NOPM
-#  define INCL_DOS
-#  include <os2.h>
-#  if defined(__FLAT__)
-#    undef DosQPathInfo
-#    define DosQPathInfo(a,b,c,d,e)  DosQueryPathInfo(a,b,c,d)
-#  endif
+    #define INCL_NOPM
+    #define INCL_DOS
+    #include <os2.h>
+    #if defined(__FLAT__)
+        #undef DosQPathInfo
+        #define DosQPathInfo(a,b,c,d,e)  DosQueryPathInfo(a,b,c,d)
+    #endif
 #endif
 
 #ifdef __unix__
-#  include "patmat.h"
+    #include "patmat.h"
 #endif
 
 /*
@@ -144,11 +144,11 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
             strcpy(ff->lastbit, filespec);
         }
         else if (p == filespec)
-	{
-	    strcpy(ff->firstbit, "/");
-	    strcpy(ff->lastbit, filespec+1);
-	}
-	else
+        {
+            strcpy(ff->firstbit, "/");
+            strcpy(ff->lastbit, filespec+1);
+        }
+        else
         {
             memcpy(ff->firstbit, filespec, p - filespec);
             ff->firstbit[p - filespec] = '\0';
@@ -172,7 +172,7 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
                     if (patmat(de->d_name, ff->lastbit))
                     {
                         strncpy(ff->ff_name, de->d_name, sizeof ff->ff_name);
-			 ff->ff_fsize = -1L; /* All who wants to know it's size
+                        ff->ff_fsize = -1L; /* All who wants to know it's size
 					      * must read it by himself
 					      */
                         fin = 1;
@@ -230,8 +230,8 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
             if (strlen(ff->InfoBuf.cFileName) < sizeof(ff->ff_name))
             {
                 if ((!(ff->InfoBuf.dwFileAttributes &
-                       FILE_ATTRIBUTE_DIRECTORY)) ||
-                    (ff->attrib_srch & MSDOS_SUBDIR))
+                        FILE_ATTRIBUTE_DIRECTORY)) ||
+                        (ff->attrib_srch & MSDOS_SUBDIR))
                 {
                     break;
                 }
@@ -318,7 +318,7 @@ int _fast FFindNext(FFIND * ff)
 #endif
 
         if (ff->hdir && !DosFindNext(ff->hdir, &findbuf, sizeof(findbuf),
-          &SearchCount))
+                                     &SearchCount))
         {
             ff->ff_attrib = (char)findbuf.attrFile;
             ff->ff_ftime = *((USHORT *) & findbuf.ftimeLastWrite);
@@ -338,19 +338,19 @@ int _fast FFindNext(FFIND * ff)
             de = readdir(ff->dir);
             if (de == NULL)
             {
-               closedir(ff->dir);
-               ff->dir = NULL;
-               fin = 1;
+                closedir(ff->dir);
+                ff->dir = NULL;
+                fin = 1;
             }
             else
             {
                 if (patmat(de->d_name, ff->lastbit))
                 {
                     strncpy(ff->ff_name, de->d_name, sizeof ff->ff_name);
-		    ff->ff_fsize = -1L; /* All who wants to know it's size
+                    ff->ff_fsize = -1L; /* All who wants to know it's size
 					 * must read it by himself
 					 */
-		    fin = 1;
+                    fin = 1;
                     rc = 0;
                 }
             }
@@ -384,14 +384,15 @@ int _fast FFindNext(FFIND * ff)
                 if (strlen(ff->InfoBuf.cFileName) < sizeof(ff->ff_name))
                 {
                     if ((!(ff->InfoBuf.dwFileAttributes &
-                          FILE_ATTRIBUTE_DIRECTORY)) ||
-                        (ff->attrib_srch & MSDOS_SUBDIR))
+                            FILE_ATTRIBUTE_DIRECTORY)) ||
+                            (ff->attrib_srch & MSDOS_SUBDIR))
                     {
                         break;
                     }
                 }
             }
-        } while (ff->hDirA != INVALID_HANDLE_VALUE);
+        }
+        while (ff->hDirA != INVALID_HANDLE_VALUE);
 
         if (ff->hDirA != INVALID_HANDLE_VALUE)
         {
@@ -507,11 +508,11 @@ FFIND *_fast FindInfo(const char *filespec)
 #ifdef TEST
 
 #ifndef TRUE
-#define TRUE 1
+    #define TRUE 1
 #endif
 
 #ifndef FALSE
-#define FALSE 0
+    #define FALSE 0
 #endif
 
 /* this simple function assumes the path ALWAYS has an ending backslash */

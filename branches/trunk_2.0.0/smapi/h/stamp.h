@@ -24,9 +24,9 @@
 #include "typedefs.h"
 
 #if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
-typedef unsigned short bits;
+    typedef unsigned short bits;
 #else
-typedef unsigned bits;  /* AIX does not allow any modifier after unsigned */
+    typedef unsigned bits;  /* AIX does not allow any modifier after unsigned */
 #endif
 
 /* DOS-style datestamp */

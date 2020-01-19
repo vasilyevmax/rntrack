@@ -14,11 +14,11 @@
 #define SMAPI_BEOS5_H
 
 #ifndef __GNUC__
-  #error This file may be used only with GNU C !
+    #error This file may be used only with GNU C !
 #endif
 
 #ifndef __BEOS__
-  #error This file may be used only with GNU C on BeOS
+    #error This file may be used only with GNU C on BeOS
 #endif
 
 
@@ -29,12 +29,12 @@
 #  define _veccast
 #  define _fast
 #  define _loadds
-#  ifndef _stdc
-#    define _stdc     /*__stdcall*/ /* produce compiler warnings */
-#  endif
-#  ifndef cdecl
-#    define cdecl     __cdecl
-#  endif
+#ifndef _stdc
+    #define _stdc     /*__stdcall*/ /* produce compiler warnings */
+#endif
+#ifndef cdecl
+    #define cdecl     __cdecl
+#endif
 
 #  define pascal
 #  define near
@@ -50,15 +50,15 @@
 
 #  include <fcntl.h>
 
-#  ifndef SH_DENYNONE
-#    define SH_DENYNONE 0
-#  endif
-#  ifndef SH_DENYNO
-#    define SH_DENYNO 0
-#  endif
-#  ifndef SH_DENYALL
-#    define SH_DENYALL 1
-#  endif
+#ifndef SH_DENYNONE
+    #define SH_DENYNONE 0
+#endif
+#ifndef SH_DENYNO
+    #define SH_DENYNO 0
+#endif
+#ifndef SH_DENYALL
+    #define SH_DENYALL 1
+#endif
 
 #  define mysleep(x) sleep(x)
 /*#  define sleep(x) snooze(x*1000000l)   use sleep() from unistd.h */

@@ -38,7 +38,7 @@
     #define PATHDELIMC     '\\'
 #elif defined (__unix__)
     #if defined (__linux__)
-        #define OsType "/LNX"
+        #define OsType "/Lnx"
     #elif defined (__FreeBSD__)
         #define OsType "/FBSD"
     #elif defined (__OpenBSD__)
@@ -66,7 +66,7 @@
 #ifdef VERSION
     #undef VERSION
 #endif
-#define VERSION               "1.41"
+#define VERSION               "2.0.0"
 #ifdef __PERL_VERSION__
     #define Perl              "/Perl"
 #else
@@ -76,11 +76,11 @@
 #define ProductLO             0xff
 #define ProductHI             0x16
 #define Copyright \
-    "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007-2011 Stas Degteff (2:5080/102)\n    2009-2013 Michael Dukelsky (2:5020/1042)\n"
+    "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007-2011 Stas Degteff (2:5080/102)\n    2009-2020 Michael Dukelsky (2:5020/1042)\n"
 
 #ifndef DefaultConfig
     #ifdef __unix__
-        #define DefaultConfig "/etc/ftn/rntrack.cfg"
+        #define DefaultConfig "~/fido/etc/rntrack.conf"
     #else
         #define DefaultConfig "rntrack.cfg"
     #endif

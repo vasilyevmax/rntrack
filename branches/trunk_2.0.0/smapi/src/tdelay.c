@@ -22,7 +22,7 @@
  ***************************************************************************/
 
 #if defined(__DOS__) || defined(__DPMI__)
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 #include "compiler.h"
@@ -35,72 +35,72 @@
 #include <os2.h>
 #include <time.h>
 
-  void _fast tdelay(int msecs)
-  {
-      DosSleep((ULONG)msecs);
-  }
+void _fast tdelay(int msecs)
+{
+    DosSleep((ULONG)msecs);
+}
 
 #elif defined(__DOS__)
 #include <time.h>
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     clock_t ctEnd;
 
     ctEnd = clock() + (long)msecs * (long)CLK_TCK / 1000L;
 
     while (clock() < ctEnd)
-      ;
-  }
+        ;
+}
 
 #elif defined(__MINGW32__)
 
 #include <stdlib.h>
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     _sleep((dword)msecs);
-  }
+}
 
 #elif defined(__WIN32__) && !defined(__WATCOMC__)
 /* win32/nt not mingw or `cygwin -mno-cygwin`  (MS VC, Borland C/win32, Watcom C)*/
 
-# if defined(_MSC_VER) || defined(__TURBOC__)
-#   if defined(HAS_INT64)
+#if defined(_MSC_VER) || defined(__TURBOC__)
+    #if defined(HAS_INT64)
         __declspec(dllimport) void __stdcall Sleep(unsigned long ms);
-#   else
+    #else
         __declspec(dllimport) void __stdcall Sleep(dword ms);
-#   endif
-# else
-   extern void Sleep(dword ms);
-# endif
-    void _fast tdelay(int msecs)
-    {
-        Sleep((dword)msecs);
-    }
+    #endif
+#else
+    extern void Sleep(dword ms);
+#endif
+void _fast tdelay(int msecs)
+{
+    Sleep((dword)msecs);
+}
 
 #elif defined(__BEOS__)
 
 #include <be/kernel/scheduler.h>
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     snooze(msecs*1000l);
-  }
+}
 
 #elif defined(__unix__)
 
 #include <unistd.h>
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     usleep(msecs*1000l);
-  }
+}
 
 #elif defined(__WATCOMC__)
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     sleep(msecs);
-  }
+}
 #else
 #error Unknown OS
 #endif

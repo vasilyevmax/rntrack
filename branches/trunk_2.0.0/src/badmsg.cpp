@@ -87,44 +87,44 @@ void DoBadMsg(MSGBASE & b)
 
     switch(BadMsgMode)
     {
-        case REMOVE:
-            Log.Level(LOGE) << "Delete bad message " << b.MessageName() << EOL;
-            b.DeleteMsg();
+    case REMOVE:
+        Log.Level(LOGE) << "Delete bad message " << b.MessageName() << EOL;
+        b.DeleteMsg();
+        break;
+
+    case EXIT:
+        Log.Level(LOGE) << "Message " << b.MessageName() <<
+                        " is bad. Exit." << EOL;
+        exit(-1);
+
+    case SKIP:
+        Log.Level(LOGE) << "Skip bad message " << b.MessageName() << EOL;
+        break;
+
+    case MOVE:
+        Buff = b.ReadToMem();
+
+        if(Buff == NULL)
+        {
+            Log.Level(LOGE) << "Skip bad message " << b.MessageName() <<
+                            EOL;
             break;
+        }
+        else
+        {
+            Log.Level(LOGE) << "Move bad message " << b.MessageName() <<
+                            " to " << BadMsgBase->BaseName() << EOL;
+        }
 
-        case EXIT:
-            Log.Level(LOGE) << "Message " << b.MessageName() <<
-                               " is bad. Exit." << EOL;
-            exit(-1);
-
-        case SKIP:
-            Log.Level(LOGE) << "Skip bad message " << b.MessageName() << EOL;
-            break;
-
-        case MOVE:
-            Buff = b.ReadToMem();
-
-            if(Buff == NULL)
-            {
-                Log.Level(LOGE) << "Skip bad message " << b.MessageName() <<
-                                   EOL;
-                break;
-            }
-            else
-            {
-                Log.Level(LOGE) << "Move bad message " << b.MessageName() <<
-                                   " to " << BadMsgBase->BaseName() << EOL;
-            }
-
-            if(!BadMsgBase->WriteFromMem(Buff))
-            {
-                free(Buff);
-                break;
-            }
-
+        if(!BadMsgBase->WriteFromMem(Buff))
+        {
             free(Buff);
-            b.DeleteMsg();
             break;
+        }
+
+        free(Buff);
+        b.DeleteMsg();
+        break;
     } // switch
 } // DoBadMsg
 

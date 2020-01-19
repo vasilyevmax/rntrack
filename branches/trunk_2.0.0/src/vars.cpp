@@ -56,8 +56,8 @@ ScanDir * BeforeRoute      = NULL;
 ScanDir * AfterRoute = NULL;
 bool NewVIAType      = FALSE;
 int SetViaAlways = 0; // type 'bool' and constants 'FALSE' and 'TRUE' can not
-                      // be used in embedded perl. We use type int and values 0
-                      // and any positive number
+// be used in embedded perl. We use type int and values 0
+// and any positive number
 bool SoftCheckInNodelists  = FALSE;
 CheckPointsT CheckPoints   = CHECKPNT_NEVER;
 fileboxType FileBoxType    = FILEBOXLONG;

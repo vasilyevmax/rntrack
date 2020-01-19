@@ -118,17 +118,17 @@ void Action::Print(void)
 
     switch(_Act)
     {
-        case ACT_ERROR:
-            tmt2 = "Error!";
-            break;
+    case ACT_ERROR:
+        tmt2 = "Error!";
+        break;
 
-        case ACT_IGNORE:
-            tmt2 = "Ignore";
-            break;
+    case ACT_IGNORE:
+        tmt2 = "Ignore";
+        break;
 
-        default:
-            tmt2 = "Unknown";
-            break;
+    default:
+        tmt2 = "Unknown";
+        break;
     }
     sprintf(Buff, "Action: %s", tmt2);
     Log.Level(LOGD) << Buff << EOL;
@@ -197,10 +197,10 @@ int DoList::Do(MSGBASE & b, cMSG & m)
         if(InTime(tmt->_Times.GetFirst()))
         {
             tmt->Do(b, m);
-/*			if(!tmt->Do(b, m))
-			{
-				return FALSE;
-			} */
+            /*			if(!tmt->Do(b, m))
+            			{
+            				return FALSE;
+            			} */
         }
     }
     return TRUE;
@@ -388,11 +388,11 @@ bool ScanDir::Execute(MSGBASE & b, cMSG & m)
         {
             CHP = 69;
             tmt->Do(b, m);
-/*			if(!tmt->Do(b, m))
-			{
-				CHP = 70;
-				return FALSE;
-			} */
+            /*			if(!tmt->Do(b, m))
+            			{
+            				CHP = 70;
+            				return FALSE;
+            			} */
             CHP = 71;
 
             if(tmtm != MASK_SKIP)
@@ -428,7 +428,7 @@ int ScanDir::Do(void)
     if(!Flagged())
     {
         Log.Level(LOGN) << "Skip base '" << _Base->BaseName() <<
-                           "' by Flag." << EOL;
+                        "' by Flag." << EOL;
         _Base->Close();
         return TRUE;
     }
@@ -436,7 +436,7 @@ int ScanDir::Do(void)
     if(!InTime(_Times.GetFirst()))
     {
         Log.Level(LOGN) << "Skip base '" << _Base->BaseName() <<
-                           "' by Time." << EOL;
+                        "' by Time." << EOL;
         _Base->Close();
         return TRUE;
     }
@@ -449,24 +449,24 @@ int ScanDir::Do(void)
     {
         switch(DoSomeWordRc(_ScriptBefore))
         {
-            case SS_OK: // do nothing, all is OK
-            case SS_NOTDEF:
-                break;          // the same
+        case SS_OK: // do nothing, all is OK
+        case SS_NOTDEF:
+            break;          // the same
 
-            case SS_ERROR:
-                _Base->Close();
-                Log.Level(LOGE) << "Stop ScanDir: by script '" <<
-                                   _ScriptBefore << "' error." << EOL;
-                return FALSE;
+        case SS_ERROR:
+            _Base->Close();
+            Log.Level(LOGE) << "Stop ScanDir: by script '" <<
+                            _ScriptBefore << "' error." << EOL;
+            return FALSE;
 
-            case SS_FALSE:
-                _Base->Close();
-                Log.Level(LOGI) << "Leave RNtrack: by script '" <<
-                                   _ScriptBefore << "' return." << EOL;
-                return TRUE;
+        case SS_FALSE:
+            _Base->Close();
+            Log.Level(LOGI) << "Leave RNtrack: by script '" <<
+                            _ScriptBefore << "' return." << EOL;
+            return TRUE;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -502,14 +502,14 @@ int ScanDir::Do(void)
         {
             Log.Level(LOGD) << EOL;
             Log.Level(LOGD) << "Current message: " << _Base->MessageName() <<
-                               EOL;
+                            EOL;
 
             if(!_Base->ReadMsg(m))
             {
                 if(errno == EACCES)
                 {
                     Log.Level(LOGE) << "Message " << _Base->MessageName() <<
-                                       " Locked by another process." << EOL;
+                                    " Locked by another process." << EOL;
                     errno = 0;
                 }
                 else
@@ -556,7 +556,7 @@ int ScanDir::Do(void)
     if(_Renumber)
     {
         Log.Level(LOGI) << "Renumber message base " << _Base->BaseName() <<
-                           EOL;
+                        EOL;
 
         if(!_Base->Renumber())
         {
@@ -580,24 +580,24 @@ DoneOK:
     {
         switch(DoSomeWordRc(_ScriptAfter))
         {
-            case SS_OK: // do nothing, all is OK
-            case SS_NOTDEF:
-                break;          // the same
+        case SS_OK: // do nothing, all is OK
+        case SS_NOTDEF:
+            break;          // the same
 
-            case SS_ERROR:
-                _Base->Close();
-                Log.Level(LOGE) << "Stop ScanDir: by script '" <<
-                                   _ScriptAfter << "' error." << EOL;
-                return FALSE;
+        case SS_ERROR:
+            _Base->Close();
+            Log.Level(LOGE) << "Stop ScanDir: by script '" <<
+                            _ScriptAfter << "' error." << EOL;
+            return FALSE;
 
-            case SS_FALSE:
-                _Base->Close();
-                Log.Level(LOGI) << "Leave ScanDir: by script '" <<
-                                   _ScriptAfter << "' return." << EOL;
-                return TRUE;
+        case SS_FALSE:
+            _Base->Close();
+            Log.Level(LOGI) << "Leave ScanDir: by script '" <<
+                            _ScriptAfter << "' return." << EOL;
+            return TRUE;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -615,7 +615,7 @@ int ScanDir::DoWithRoute(MSGBASE & b, cMSG & m)
     if(_Base != NULL)
     {
         Log.Level(LOGE) <<
-        "Internal error. ScanDir::DoWithRoute _Base != NULL" << EOL;
+                        "Internal error. ScanDir::DoWithRoute _Base != NULL" << EOL;
         return FALSE;
     }
 
@@ -681,8 +681,8 @@ void ScanDir::Print(void)
     Log.Level(LOGD) << "------------------------------------" << EOL;
     Log.Level(LOGD) << "ScanDir.Print()" << EOL;
     Log.Level(LOGD) << "Base: '" <<
-                       ((_Base != NULL) ? _Base->BaseName() : "--NONE--") << 
-                       "'" << EOL;
+                    ((_Base != NULL) ? _Base->BaseName() : "--NONE--") <<
+                    "'" << EOL;
     Log.Level(LOGD) << "Renumber: " << ((_Renumber) ? "YES" : "NO") << EOL;
     Log.Level(LOGD) << "Unpack: " << ((_Unpack) ? "YES" : "NO") << EOL;
     Log.Level(LOGD) << "Fresh: " << ((_Fresh) ? "YES" : "NO") << EOL;
@@ -691,20 +691,20 @@ void ScanDir::Print(void)
     Log.Level(LOGD) << "MaxPktSize: " << _MaxPktSize << EOL;
     Log.Level(LOGD) << "MaxMsgSize: " << _MaxMsgSize << EOL;
     Log.Level(LOGD) << "LoopStr: '" <<
-                       ((LoopStr() != NULL) ? LoopStr() : "--NONE--") << 
-                       "'" << EOL;
+                    ((LoopStr() != NULL) ? LoopStr() : "--NONE--") <<
+                    "'" << EOL;
     Log.Level(LOGD) << "FileInbound: '" <<
-                       ((_FileInbound != NULL) ? _FileInbound : "--NONE--") << 
-                       "'" << EOL;
+                    ((_FileInbound != NULL) ? _FileInbound : "--NONE--") <<
+                    "'" << EOL;
     Log.Level(LOGD) << "FlagFile: '" <<
-                       ((_FlagFile != NULL) ? _FlagFile : "--NONE--") << 
-                       "'" << EOL;
+                    ((_FlagFile != NULL) ? _FlagFile : "--NONE--") <<
+                    "'" << EOL;
     Log.Level(LOGD) << "ScriptBefore: '" <<
-                       ((_ScriptBefore != NULL) ? _ScriptBefore : "--NONE--") << 
-                       "'" << EOL;
+                    ((_ScriptBefore != NULL) ? _ScriptBefore : "--NONE--") <<
+                    "'" << EOL;
     Log.Level(LOGD) << "ScriptAfter: '" <<
-                       ((_ScriptAfter != NULL) ? _ScriptAfter : "--NONE--") << 
-                       "'" << EOL;
+                    ((_ScriptAfter != NULL) ? _ScriptAfter : "--NONE--") <<
+                    "'" << EOL;
     Log.Level(LOGD) << "Times: ";
 
     if(_Times.IsEmpty())

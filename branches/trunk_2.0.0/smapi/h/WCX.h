@@ -14,10 +14,10 @@
 #define SMAPI_WCX_H
 
 #ifndef __WATCOMC__
-  #error This file may be used only with Watcom C !
+    #error This file may be used only with Watcom C !
 #endif
 #if defined(__DOS4G__)
-  #error This file may be used only with Watcom C DOS4G target !
+    #error This file may be used only with Watcom C DOS4G target !
 #endif
 
 

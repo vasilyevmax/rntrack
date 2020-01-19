@@ -118,22 +118,22 @@ int InitSystem(void)
     signal(SIGILL, &AbrtHndl);
 #endif
 
-/*  if(sizeof(int) != 4 || sizeof(long) != 4)
-    {
-        fprintf(stderr,
-        "RNtrack was compiled for a wrong platform.\nPlease, inform the packager.\n"                                                                    );
-    
-        if(sizeof(long) == 8 && sizeof(void *) == 8 && sizeof(int) == 4)
+    /*  if(sizeof(int) != 4 || sizeof(long) != 4)
         {
             fprintf(stderr,
-                "Continue at your own risk! This software is not 64-bit ready yet!\n"                                                                    );
-        }
-        else
-        {
-            return FALSE;
-        }
-    } */
-    
+            "RNtrack was compiled for a wrong platform.\nPlease, inform the packager.\n"                                                                    );
+
+            if(sizeof(long) == 8 && sizeof(void *) == 8 && sizeof(int) == 4)
+            {
+                fprintf(stderr,
+                    "Continue at your own risk! This software is not 64-bit ready yet!\n"                                                                    );
+            }
+            else
+            {
+                return FALSE;
+            }
+        } */
+
     CHP = 99101;
     tzset();
     CHP = 99102;
@@ -197,11 +197,11 @@ int InitSystem(void)
     char * tmp = (char *)"BeforeWork";
     switch(DoSomeWordRc(tmp))
     {
-        case SS_ERROR:
-            return FALSE;
+    case SS_ERROR:
+        return FALSE;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     {
@@ -240,7 +240,7 @@ void DoneSystem(void)
         {
             CHP = 99203;
             Log.Level(LOGE) <<
-            "Error at deinitialisation scripts subsystem." << EOL;
+                            "Error at deinitialisation scripts subsystem." << EOL;
         }
     }
 
@@ -262,7 +262,7 @@ void DoneSystem(void)
             CHP = 99207;
             i   = errno;
             Log.Level(LOGE) << "Unable to set modification time for file '" <<
-                               TimeStampFile << "'. Errno: " << i << EOL;
+                            TimeStampFile << "'. Errno: " << i << EOL;
             CHP = 99208;
         }
 
@@ -301,30 +301,30 @@ int main(int argc, char * argv[])
     {
         switch(Option)
         {
-            case 'u':
-                UnpackNeed = TRUE;
-                break;
+        case 'u':
+            UnpackNeed = TRUE;
+            break;
 
-            case 'c': /* Kill all mail */
-                ConfigFile = strdup(optionArg);
-                break;
+        case 'c': /* Kill all mail */
+            ConfigFile = strdup(optionArg);
+            break;
 
-            case 't':
-                DoScan = TRUE;
-                break;
+        case 't':
+            DoScan = TRUE;
+            break;
 
-            case '?':
-                Help();
-                exit(1);
+        case '?':
+            Help();
+            exit(1);
 
-            case 'h':
-                Hello();
-                Help();
-                exit(0);
+        case 'h':
+            Hello();
+            Help();
+            exit(0);
 
-            case 'v':
-                Hello();
-                exit(0);
+        case 'v':
+            Hello();
+            exit(0);
         } /* switch */
     } /* while */
 

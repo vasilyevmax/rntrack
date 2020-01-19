@@ -30,24 +30,24 @@
 #define _SMAPI_EXT
 
 #ifdef HAS_IO_H
-#include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 
 #ifdef HAS_DOS_H
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #ifdef __BEOS__
-#include <be/kernel/fs_attr.h>
-#include <be/support/TypeConstants.h>
+    #include <be/kernel/fs_attr.h>
+    #include <be/support/TypeConstants.h>
 #endif
 
 #define MSGAPI_HANDLERS
@@ -83,8 +83,8 @@ MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type)
 
     if( !name || !*name )
     {
-       msgapierr = MERR_BADNAME;
-       return NULL;
+        msgapierr = MERR_BADNAME;
+        return NULL;
     }
 
     mh = palloc(sizeof(MSGA));
@@ -131,7 +131,7 @@ MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type)
     mh->high_water = (dword) - 1L;
 
     if (!direxist((char *) name) && (mode == MSGAREA_NORMAL
-       || _createDirectoryTree((char *) name) != 0))
+                                     || _createDirectoryTree((char *) name) != 0))
     {
         msgapierr = MERR_NOENT;
         goto ErrOpen;
@@ -175,11 +175,15 @@ int SdmDeleteBase(char *name)
     FFIND *ff;
     char *temp;
 
-    if(!name || !*name){ msgapierr=MERR_BADNAME; return FALSE; }
+    if(!name || !*name)
+    {
+        msgapierr=MERR_BADNAME;
+        return FALSE;
+    }
 
     temp = malloc(strlen(name)+6);
     if (temp == NULL)
-      return FALSE;
+        return FALSE;
     sprintf(temp, "%s*.msg", name);
 
     ff = FFindOpen(temp, 0);
@@ -188,21 +192,21 @@ int SdmDeleteBase(char *name)
 
     if (ff != 0)
     {
-      do
-	  {
-	    temp = malloc(strlen(name) + strlen(ff->ff_name) + 1);
-	    if (temp == NULL)
-	    {
-	        FFindClose(ff);
-	        return FALSE;
-	    }
-	    sprintf(temp, "%s%s", name, ff->ff_name);
-	    unlink(temp);
-	    free(temp);
-	  }
-      while (FFindNext(ff) == 0);
+        do
+        {
+            temp = malloc(strlen(name) + strlen(ff->ff_name) + 1);
+            if (temp == NULL)
+            {
+                FFindClose(ff);
+                return FALSE;
+            }
+            sprintf(temp, "%s%s", name, ff->ff_name);
+            unlink(temp);
+            free(temp);
+        }
+        while (FFindNext(ff) == 0);
 
-      FFindClose(ff);
+        FFindClose(ff);
     }
     sprintf(temp, "%slastread", name);
     unlink(temp);
@@ -216,9 +220,9 @@ static sword _XPENTRY SdmCloseArea(MSGA * mh)
     XMSG msg;
     MSGH *msgh;
     static byte *msgbody = (byte *)
-    "NOECHO\r\rPlease ignore.  This message is only used by the SquishMail "
-    "system to store\rthe high water mark for each conference area.\r\r\r\r"
-    "\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r(Elvis was here!)\r\r\r";
+                           "NOECHO\r\rPlease ignore.  This message is only used by the SquishMail "
+                           "system to store\rthe high water mark for each conference area.\r\r\r\r"
+                           "\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r(Elvis was here!)\r\r\r";
 
     if (InvalidMh(mh))
     {
@@ -251,7 +255,7 @@ static sword _XPENTRY SdmCloseArea(MSGA * mh)
             msg.attr = MSGPRIVATE | MSGREAD | MSGLOCAL | MSGSENT;
 
             SdmWriteMsg(msgh, FALSE, &msg, msgbody, (dword)strlen((char *) msgbody) + 1,
-              (dword)strlen((char *) msgbody) + 1, 0L, NULL);
+                        (dword)strlen((char *) msgbody) + 1, 0L, NULL);
 
             SdmCloseMsg(msgh);
         }
@@ -298,21 +302,21 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
     }
     else if (msgnum == MSGNUM_PREV)
     {
-	msgnum = mh->cur_msg - 1;
-	if (msgnum == 0)
-	{
-	    msgapierr = MERR_NOENT;
-	    return NULL;
-	}
+        msgnum = mh->cur_msg - 1;
+        if (msgnum == 0)
+        {
+            msgapierr = MERR_NOENT;
+            return NULL;
+        }
     }
     else if (msgnum == MSGNUM_NEXT)
     {
-	msgnum = mh->num_msg + 1;
-	if (msgnum > mh->num_msg)
-	{
-	    msgapierr = MERR_NOENT;
-	    return NULL;
-	}
+        msgnum = mh->num_msg + 1;
+        if (msgnum > mh->num_msg)
+        {
+            msgapierr = MERR_NOENT;
+            return NULL;
+        }
     }
     else if (mode != MOPEN_CREATE)
     {
@@ -320,14 +324,14 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
          *  If we're not creating, make sure that the specified msg# can
          *  be found.
          */
-	if (msgnum <= 0 || msgnum > mh->num_msg)
-	{
-	    msgapierr = MERR_NOENT;
-	    return NULL;
-	}
+        if (msgnum <= 0 || msgnum > mh->num_msg)
+        {
+            msgapierr = MERR_NOENT;
+            return NULL;
+        }
     }
     if (msgnum <= mh->num_msg && msgnum > 0)
-	msguid = SdmMsgnToUid(mh, msgnum);
+        msguid = SdmMsgnToUid(mh, msgnum);
 
     if (mode == MOPEN_CREATE)
     {
@@ -363,7 +367,7 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
             }
 
             msgnum = ++mh->num_msg;
-	    msguid = ++mh->high_msg;
+            msguid = ++mh->high_msg;
 
             /*
              *  Make sure that we don't overwrite the high-water mark,
@@ -428,7 +432,8 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
     if (mode == MOPEN_CREATE)
     {
         if (mh->num_msg == (dword)(1 << (sizeof(mh->num_msg) * 8 - 1)))
-        {   /* Messagebase implementaion (size) limit (messages counter is full)*/
+        {
+            /* Messagebase implementaion (size) limit (messages counter is full)*/
             pfree(msgh);
             close(handle);
             msgapierr = MERR_LIMIT;
@@ -444,7 +449,7 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
                 pfree(msgh);
                 close(handle);
                 msgapierr = MERR_NOMEM;
-		return NULL;
+                return NULL;
             }
             Mhd->msgnum_len = msgnum_len_new;
         }
@@ -456,8 +461,8 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
 
         if (!owrite)
         {
-	    Mhd->msgnum[(size_t) (mh->num_msg)] = (word) msguid;
-	    mh->num_msg++;
+            Mhd->msgnum[(size_t) (mh->num_msg)] = (word) msguid;
+            mh->num_msg++;
         }
         else
         {
@@ -472,7 +477,7 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
             if ((dword) Mhd->msgnum[msgnum-1] != msguid)
             {
                 memmove(Mhd->msgnum + msgnum, Mhd->msgnum + msgnum - 1,
-                  ((size_t) mh->num_msg - msgnum) * sizeof(Mhd->msgnum[0]));
+                        ((size_t) mh->num_msg - msgnum) * sizeof(Mhd->msgnum[0]));
                 Mhd->msgnum[msgnum-1] = (word) msguid;
                 mh->num_msg++;
             }
@@ -584,7 +589,7 @@ static dword _XPENTRY SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
      */
 
     if (msgh->ctrl == NULL && ((msg || ctxt || text) ||
-      (msg || ctxt || text) == 0))
+                               (msg || ctxt || text) == 0))
     {
         need_ctrl = TRUE;
     }
@@ -603,8 +608,8 @@ static dword _XPENTRY SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
 
     if (need_ctrl && text == NULL)
     {
-	struct stat st;
-	fstat(msgh->fd, &st);
+        struct stat st;
+        fstat(msgh->fd, &st);
         text = fake_msgbuf = palloc(st.st_size - OMSG_SIZE + 1);
         if (text == NULL)
         {
@@ -625,7 +630,7 @@ static dword _XPENTRY SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
         if (!msg || msgh->msgtxt_start != 0)
         {
             lseek(msgh->fd, (dword) OMSG_SIZE +
-              msgh->msgtxt_start + offset, SEEK_SET);
+                  msgh->msgtxt_start + offset, SEEK_SET);
 
             msgh->cur_pos = offset;
         }
@@ -736,18 +741,18 @@ static sword _XPENTRY SdmWriteMsg(MSGH * msgh, word append, XMSG * msg, byte * t
         /* Use Attributes und BeOS */
 #ifdef __BEOS__
         {
-        struct tm tmdate;
-        time_t ttime;
+            struct tm tmdate;
+            time_t ttime;
 
-        fs_write_attr(msgh->fd, "BEOS:TYPE", B_MIME_TYPE, 0l, "message/fmsg", 13);
-        fs_write_attr(msgh->fd, "XMSG:FROM", B_STRING_TYPE, 0l, msg->from, strlen((char*)msg->from));
-        fs_write_attr(msgh->fd, "XMSG:TO"  , B_STRING_TYPE, 0l, msg->to, strlen((char*)msg->to));
-        fs_write_attr(msgh->fd, "XMSG:SUBJ", B_STRING_TYPE, 0l, msg->subj, strlen((char*)msg->subj));
-        ttime = mktime(DosDate_to_TmDate((union stamp_combo *)&msg->date_written, &tmdate));
-        fs_write_attr(msgh->fd, "XMSG:DATE", B_TIME_TYPE, 0l, &ttime, 4l);
-        ttime = mktime(DosDate_to_TmDate((union stamp_combo *)&msg->date_arrived, &tmdate));
-        fs_write_attr(msgh->fd, "XMSG:DTAR", B_TIME_TYPE, 0l, &ttime, 4l);
-        /* ... and so on ... not fully implemented ! (Yet) */
+            fs_write_attr(msgh->fd, "BEOS:TYPE", B_MIME_TYPE, 0l, "message/fmsg", 13);
+            fs_write_attr(msgh->fd, "XMSG:FROM", B_STRING_TYPE, 0l, msg->from, strlen((char*)msg->from));
+            fs_write_attr(msgh->fd, "XMSG:TO", B_STRING_TYPE, 0l, msg->to, strlen((char*)msg->to));
+            fs_write_attr(msgh->fd, "XMSG:SUBJ", B_STRING_TYPE, 0l, msg->subj, strlen((char*)msg->subj));
+            ttime = mktime(DosDate_to_TmDate((union stamp_combo *)&msg->date_written, &tmdate));
+            fs_write_attr(msgh->fd, "XMSG:DATE", B_TIME_TYPE, 0l, &ttime, 4l);
+            ttime = mktime(DosDate_to_TmDate((union stamp_combo *)&msg->date_arrived, &tmdate));
+            fs_write_attr(msgh->fd, "XMSG:DTAR", B_TIME_TYPE, 0l, &ttime, 4l);
+            /* ... and so on ... not fully implemented ! (Yet) */
         }
 #endif
     }
@@ -755,7 +760,7 @@ static sword _XPENTRY SdmWriteMsg(MSGH * msgh, word append, XMSG * msg, byte * t
     {
         /* Skip over old message header */
         lseek(msgh->fd, (dword) OMSG_SIZE +
-          (dword) msgh->zplen, SEEK_SET);
+              (dword) msgh->zplen, SEEK_SET);
     }
 
     /* Now write the control info / kludges */
@@ -765,7 +770,7 @@ static sword _XPENTRY SdmWriteMsg(MSGH * msgh, word append, XMSG * msg, byte * t
         if (!msg)
         {
             lseek(msgh->fd, (dword) OMSG_SIZE +
-              (dword) msgh->zplen, SEEK_SET);
+                  (dword) msgh->zplen, SEEK_SET);
         }
 
         s = CvtCtrlToKludge(ctxt);
@@ -822,8 +827,8 @@ static sword _XPENTRY SdmKillMsg(MSGA * mh, dword msgnum)
 
     if (msgnum > mh->num_msg || msgnum <= 0)
     {
-	msgapierr = MERR_NOENT;
-	return -1;
+        msgapierr = MERR_NOENT;
+        return -1;
     }
 
     msguid = SdmMsgnToUid(mh, msgnum);
@@ -869,7 +874,7 @@ static sword _XPENTRY SdmKillMsg(MSGA * mh, dword msgnum)
     }
 
     if (mh->cur_msg >= msgnum)
-	mh->cur_msg--;
+        mh->cur_msg--;
 
     msgapierr = MERR_NONE;
     return 0;
@@ -947,26 +952,28 @@ static dword _XPENTRY SdmUidToMsgn(MSGA * mh, UMSGID umsgid, word type)
     if (InvalidMh(mh))
         return (dword)-1L;
     if (umsgid <= 0)
-	return 0;
+        return 0;
     left = 1;
     right = mh->num_msg;
     while (left <= right)
     {
-	nnew = (right + left) / 2;
-	umsg = SdmMsgnToUid(mh, nnew);
-	if (umsg == (UMSGID)-1)
-	    return 0;
-	if (umsg < umsgid)
-	    left = nnew + 1;
-	else if (umsg > umsgid){
-	    if(nnew>0) right = nnew - 1;
-	    else right=0;
-	}else
-	    return nnew;
+        nnew = (right + left) / 2;
+        umsg = SdmMsgnToUid(mh, nnew);
+        if (umsg == (UMSGID)-1)
+            return 0;
+        if (umsg < umsgid)
+            left = nnew + 1;
+        else if (umsg > umsgid)
+        {
+            if(nnew>0) right = nnew - 1;
+            else right=0;
+        }
+        else
+            return nnew;
     }
     if (type == UID_EXACT) return 0;
     if (type == UID_PREV)
-	return right;
+        return right;
     return (left > mh->num_msg) ? mh->num_msg : left;
 }
 
@@ -994,7 +1001,7 @@ static dword _XPENTRY SdmGetHighWater(MSGA * mh)
     }
 
     if (SdmReadMsg(msgh, &msg, 0L, 0L, NULL, 0L, NULL) == (dword) - 1 ||
-      (strcmp((char *) msg.from, (char *) hwm_from)!=0) )
+            (strcmp((char *) msg.from, (char *) hwm_from)!=0) )
     {
         mh->high_water = 0L;
     }
@@ -1126,7 +1133,7 @@ static sword near _SdmRescanArea(MSGA * mh)
 
     temp = malloc(strlen((char *)Mhd->base)+6);
     if (temp == NULL)
-      return -1;
+        return -1;
     sprintf((char *) temp, "%s*.msg", Mhd->base);
 
     ff = FFindOpen((char *) temp, 0);
@@ -1144,12 +1151,13 @@ static sword near _SdmRescanArea(MSGA * mh)
 #ifndef __UNIX__
             if (ff->ff_fsize < OMSG_SIZE)
             {
-                 continue;
+                continue;
             }
 #endif
 
             if (mh->num_msg == (dword)(1 << (sizeof(mh->num_msg) * 8 - 1)))
-            {   /* Messagebase implementaion (size) limit (messages counter is full)*/
+            {
+                /* Messagebase implementaion (size) limit (messages counter is full)*/
                 msgapierr = MERR_LIMIT;
                 return FALSE;
             }
@@ -1205,11 +1213,12 @@ static void MSGAPI Init_Xmsg(XMSG * msg)
 }
 
 static void MSGAPI Convert_Fmsg_To_Xmsg(struct _omsg *fmsg, XMSG * msg,
-  word def_zone)
+                                        word def_zone)
 {
     NETADDR *orig, *dest;
 
-    if(!fmsg){
+    if(!fmsg)
+    {
         msgapierr = MERR_BADH;
         return;
     }
@@ -1259,7 +1268,8 @@ static void MSGAPI Convert_Xmsg_To_Fmsg(XMSG * msg, struct _omsg *fmsg)
 {
     NETADDR *orig, *dest;
 
-    if(!fmsg){
+    if(!fmsg)
+    {
         msgapierr = MERR_BADH;
         return;
     }
@@ -1294,10 +1304,10 @@ static void MSGAPI Convert_Xmsg_To_Fmsg(XMSG * msg, struct _omsg *fmsg)
     else
     {
         sprintf((char *) fmsg->date, "%02d %s %02d  %02d:%02d:%02d",
-          msg->date_written.date.da ? msg->date_written.date.da : 1,
-          months_ab[msg->date_written.date.mo ? msg->date_written.date.mo - 1 : 0],
-          (msg->date_written.date.yr + 80) % 100, msg->date_written.time.hh,
-          msg->date_written.time.mm, msg->date_written.time.ss << 1);
+                msg->date_written.date.da ? msg->date_written.date.da : 1,
+                months_ab[msg->date_written.date.mo ? msg->date_written.date.mo - 1 : 0],
+                (msg->date_written.date.yr + 80) % 100, msg->date_written.time.hh,
+                msg->date_written.time.mm, msg->date_written.time.ss << 1);
     }
 
     fmsg->date_written = msg->date_written;
@@ -1315,7 +1325,8 @@ int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * k
     byte temp[PATHLEN], *null = (byte *) "";
     int bytes = 0;
 
-    if(!wfunc){
+    if(!wfunc)
+    {
         msgapierr = MERR_BADH;
         return -1;
     }
@@ -1330,10 +1341,10 @@ int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * k
     }
 
     if ((msg->dest.zone != mi.def_zone || msg->orig.zone != mi.def_zone) &&
-      !strstr((char *) kludges, "\001INTL"))
+            !strstr((char *) kludges, "\001INTL"))
     {
         sprintf((char *) temp, "\001INTL %hu:%hu/%hu %hu:%hu/%hu\r", msg->dest.zone, msg->dest.net,
-          msg->dest.node, msg->orig.zone, msg->orig.net, msg->orig.node);
+                msg->dest.node, msg->orig.zone, msg->orig.net, msg->orig.node);
 
         (*wfunc) (temp);
         bytes += (int)strlen((char *) temp);
@@ -1358,25 +1369,26 @@ int _XPENTRY WriteZPInfo(XMSG * msg, void (_stdc * wfunc) (byte * str), byte * k
 
 static void _stdc WriteToFd(byte * str)
 {
-  if(str && *str)
-  {
-    if( 0 > farwrite(statfd, str, (unsigned int)strlen((char *) str)) )
-      msgapierr = MERR_BADF;
-  }
-  else msgapierr = MERR_BADH;
+    if(str && *str)
+    {
+        if( 0 > farwrite(statfd, str, (unsigned int)strlen((char *) str)) )
+            msgapierr = MERR_BADF;
+    }
+    else msgapierr = MERR_BADH;
 }
 
 static void near Get_Binary_Date(struct _stamp *todate, struct _stamp *fromdate, byte * asciidate)
 {
-  if(!todate || !fromdate || !asciidate){
-    msgapierr = MERR_BADH;
-    return;
-  }
+    if(!todate || !fromdate || !asciidate)
+    {
+        msgapierr = MERR_BADH;
+        return;
+    }
 
     if(fromdate->date.da == 0 || fromdate->date.da > 31 || fromdate->date.yr > 50 ||
-       fromdate->time.hh > 23 || fromdate->time.mm > 59 || fromdate->time.ss > 59 ||
-       (fromdate->date.da == 0 && fromdate->date.mo == 0 && fromdate->date.yr == 0 &&
-       fromdate->time.ss == 0 && fromdate->time.mm == 0 && fromdate->time.hh == 0))
+            fromdate->time.hh > 23 || fromdate->time.mm > 59 || fromdate->time.ss > 59 ||
+            (fromdate->date.da == 0 && fromdate->date.mo == 0 && fromdate->date.yr == 0 &&
+             fromdate->time.ss == 0 && fromdate->time.mm == 0 && fromdate->time.hh == 0))
     {
         ASCII_Date_To_Binary((char *) asciidate, (union stamp_combo *)todate);
     }
@@ -1388,36 +1400,36 @@ static void near Get_Binary_Date(struct _stamp *todate, struct _stamp *fromdate,
 
 static dword _XPENTRY SdmGetHash(HAREA mh, dword msgnum)
 {
-  XMSG xmsg;
-  HMSG msgh;
-  dword rc = 0l;
+    XMSG xmsg;
+    HMSG msgh;
+    dword rc = 0l;
 
-  msgh=SdmOpenMsg(mh, MOPEN_READ, msgnum);
-  if (msgh==NULL)
-    return (dword) 0l;
+    msgh=SdmOpenMsg(mh, MOPEN_READ, msgnum);
+    if (msgh==NULL)
+        return (dword) 0l;
 
-  if (SdmReadMsg(msgh, &xmsg, 0L, 0L, NULL, 0L, NULL)!=(dword)-1)
-  {
-    rc = SquishHash(xmsg.to) | (xmsg.attr & MSGREAD) ? 0x80000000l : 0;
-  }
+    if (SdmReadMsg(msgh, &xmsg, 0L, 0L, NULL, 0L, NULL)!=(dword)-1)
+    {
+        rc = SquishHash(xmsg.to) | (xmsg.attr & MSGREAD) ? 0x80000000l : 0;
+    }
 
-  SdmCloseMsg(msgh);
+    SdmCloseMsg(msgh);
 
-  msgapierr=MERR_NONE;
-  return rc;
+    msgapierr=MERR_NONE;
+    return rc;
 }
 
 static UMSGID _XPENTRY SdmGetNextUid(HAREA ha)
 {
-  if (InvalidMh(ha))
-    return 0L;
+    if (InvalidMh(ha))
+        return 0L;
 
-  if (!ha->locked)
-  {
-    msgapierr=MERR_NOLOCK;
-    return 0L;
-  }
+    if (!ha->locked)
+    {
+        msgapierr=MERR_NOLOCK;
+        return 0L;
+    }
 
-  msgapierr=MERR_NONE;
-  return ha->high_msg+1;
+    msgapierr=MERR_NONE;
+    return ha->high_msg+1;
 }

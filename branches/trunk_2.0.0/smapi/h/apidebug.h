@@ -24,18 +24,18 @@
 
 #if 0
 
-#ifdef palloc
-#undef palloc
-#endif
+    #ifdef palloc
+        #undef palloc
+    #endif
 
-#ifdef pfree
-#undef pfree
-#endif
+    #ifdef pfree
+        #undef pfree
+    #endif
 
-#define palloc(p) dmalloc(p)
-#define pfree(p) dfree(p)
+    #define palloc(p) dmalloc(p)
+    #define pfree(p) dfree(p)
 
-#include "dmalloc.h"
+    #include "dmalloc.h"
 
 #endif
 

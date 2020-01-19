@@ -160,8 +160,8 @@ typedef struct _xmsg
     UMSGID replyto;
     UMSGID replies[MAX_REPLY];
     dword umsgid;               /* UMSGID of this message, if (attr&MSGUID) */
-                                /* This field is only stored on disk -- it  *
-                                 * is not read into memory.                 */
+    /* This field is only stored on disk -- it  *
+     * is not read into memory.                 */
 
     byte __ftsc_date[20];       /* Obsolete date information.  If it weren't
                                  * for the fact that FTSC standards say that
@@ -413,7 +413,7 @@ void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what);
   CheckSmapiVersion( ..., smapidate());
  */
 int _XPENTRY CheckSmapiVersion( int need_major, int need_minor,
-                        int need_patch, const char *cvs_date_string );
+                                int need_patch, const char *cvs_date_string );
 
 /*  Return MSGAPI error text (string constant).
  */

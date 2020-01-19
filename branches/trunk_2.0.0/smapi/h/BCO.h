@@ -15,11 +15,11 @@
 
 
 #ifndef __TURBOC__
-  #error This file may be used only with Turbo C and Borland C !
+    #error This file may be used only with Turbo C and Borland C !
 #endif
 
 #ifndef __OS2__
-  #error This file may be used only with OS/2 version of Turbo C or Borland C !
+    #error This file may be used only with OS/2 version of Turbo C or Borland C !
 #endif
 
 
@@ -36,9 +36,9 @@
 #  define farread read
 #  define farwrite write
 
-#  ifndef _XPENTRY
-#    define _XPENTRY __syscall
-#  endif
+#ifndef _XPENTRY
+    #define _XPENTRY __syscall
+#endif
 #  define mysleep(x) sleep(x);
 #  define HAS_sleep     1
 

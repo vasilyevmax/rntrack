@@ -14,46 +14,46 @@
 #define SMAPI_MSC_H
 
 #ifndef _MSC_VER
-#  error This file used only with Microsoft C or Microsoft QuickC for MS-DOS or OS/2 !
+    #  error This file used only with Microsoft C or Microsoft QuickC for MS-DOS or OS/2 !
 #endif
 
-#  ifndef __LITTLE_ENDIAN__
-#    define __LITTLE_ENDIAN__
-#  endif
+#ifndef __LITTLE_ENDIAN__
+    #define __LITTLE_ENDIAN__
+#endif
 
 #  define _stdc cdecl
 #  define _intr cdecl interrupt far
 #  define _intcast void (_intr *)()
 #  define _veccast _intcast
 
-#  if _MSC_VER >= 600
-#    define _fast _fastcall
-#  else
-#    define _fast pascal
-#  endif
+#if _MSC_VER >= 600
+    #define _fast _fastcall
+#else
+    #define _fast pascal
+#endif
 
 #  define farmalloc(n)    _fmalloc(n)
 #  define farfree(p)      _ffree(p)
 #  define farrealloc(p,n) _frealloc(p,n)
 
-#  if _MSC_VER >= 600
-#    define farcalloc(a,b) _fcalloc(a,b)
-#  else
-     void far *farcalloc(int n, int m);
-#  endif
+#if _MSC_VER >= 600
+    #define farcalloc(a,b) _fcalloc(a,b)
+#else
+    void far *farcalloc(int n, int m);
+#endif
 
-#  ifdef __OS2__
+#ifdef __OS2__
     /* just don't use 16 bit OS/2, we doubt that it still works */
-#    define farread read
-#    define farwrite write
-#    define _XPENTRY pascal far
-#    define mysleep(x) DosSleep(1000L*(x))
-#    define sleep(x) DosSleep(1000L*(x))
-#    define HAS_sleep     1
-#  else
-#    define _XPENTRY
-#    define mymkdir(x) _mkdir(x)
-#  endif
+    #define farread read
+    #define farwrite write
+    #define _XPENTRY pascal far
+    #define mysleep(x) DosSleep(1000L*(x))
+    #define sleep(x) DosSleep(1000L*(x))
+    #define HAS_sleep     1
+#else
+    #define _XPENTRY
+    #define mymkdir(x) _mkdir(x)
+#endif
 
 #  define HAS_MALLOC_H  1  /* use "#include <malloc.h>" for malloc() etc. */
 #  define HAS_IO_H      1  /* may use "#include <io.h> */

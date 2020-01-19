@@ -26,7 +26,7 @@
 #include "typedefs.h"
 
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 /***** moved to compiler.h ? *****
@@ -64,20 +64,20 @@ void far *farcalloc(int n, int m);
 */
 
 #ifndef TRUE
-#define FALSE 0
-#define TRUE 1
+    #define FALSE 0
+    #define TRUE 1
 #endif
 
 #ifdef PATHLEN
-#undef PATHLEN
+    #undef PATHLEN
 #endif
 
 /* Default separator for path specification */
 
 #if defined(__unix__) || defined(__AMIGA__)
-#define PATH_DELIM  '/'
+    #define PATH_DELIM  '/'
 #else
-#define PATH_DELIM  '\\'
+    #define PATH_DELIM  '\\'
 #endif
 
 #define PATHLEN           120   /* Max. length of a path */

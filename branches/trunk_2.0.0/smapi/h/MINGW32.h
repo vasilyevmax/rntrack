@@ -20,16 +20,16 @@
 #define SMAPI_MINGW32_H
 
 #ifndef __GNUC__
-  #error This file may be used only with GNU C !
+    #error This file may be used only with GNU C !
 #endif
 
 #ifndef __MINGW32__
-  #error This file may be used only with MSys/MinGW (GNU C) on unix-like OS or Cygwin (GNU C) on Win32 !
+    #error This file may be used only with MSys/MinGW (GNU C) on unix-like OS or Cygwin (GNU C) on Win32 !
 #endif
 
 
 #ifndef __LITTLE_ENDIAN__
-#  define __LITTLE_ENDIAN__
+    #define __LITTLE_ENDIAN__
 #endif
 
 #  define _stdc
@@ -65,25 +65,25 @@
 /*#  define strcasecmp  stricmp*/
 /*#  define strncasecmp strnicmp*/
 
-#  ifndef LONG_MAX
-#    include <limits.h>
-#  endif
+#ifndef LONG_MAX
+    #include <limits.h>
+#endif
 
 /* older mingw headers are too lazy ... */
 #  include <share.h>
 #  define sopen _sopen
-#  ifndef SH_DENYRW
-#    define SH_DENYRW 0x10
-#  endif
-#  ifndef SH_DENYWR
-#    define SH_DENYWR 0x20
-#  endif
-#  ifndef SH_DENYRD
-#    define SH_DENYRD 0x30
-#  endif
-#  ifndef SH_DENYNO
-#    define SH_DENYNO 0x40
-#  endif
+#ifndef SH_DENYRW
+    #define SH_DENYRW 0x10
+#endif
+#ifndef SH_DENYWR
+    #define SH_DENYWR 0x20
+#endif
+#ifndef SH_DENYRD
+    #define SH_DENYRD 0x30
+#endif
+#ifndef SH_DENYNO
+    #define SH_DENYNO 0x40
+#endif
 
 #  define HAS_spawnvp    /* spawnvp() present */
 #  define HAS_mktime     /* time.h */
@@ -98,7 +98,7 @@
 #  define HAS_SYS_UTIME_H  /* #include <sys/utime.h> in alternate to <utime.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
 
-/* Latest version has sys/param.h for sure, though its equivalence 
+/* Latest version has sys/param.h for sure, though its equivalence
  * with unix sys/param.h is questionable. Added for MAXPATHLEN definition */
 #  define HAS_SYS_PARAM_H /* may use "#include <sys/param.h> */
 

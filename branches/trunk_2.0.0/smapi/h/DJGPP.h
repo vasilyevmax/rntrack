@@ -10,31 +10,31 @@
 #define SMAPI_DJGPP_H
 
 #ifndef __GNUC__
-  #error This file may be used only with GNU C !
+    #error This file may be used only with GNU C !
 #endif
 
 #ifndef __DJGPP__
-  #error This file may be used only with DJGPP version of GNU C on DOS !
+    #error This file may be used only with DJGPP version of GNU C on DOS !
 #endif
 
 
 #ifndef __LITTLE_ENDIAN__
-#  define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */
+    #define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */
 #endif
 
-#  ifndef __FLAT__
-#    define __FLAT__  /* DOS flat memory */
-#  endif
+#ifndef __FLAT__
+    #define __FLAT__  /* DOS flat memory */
+#endif
 
-#  if defined(__UNIX__) || defined(__unix__) || defined(unix)
-     /* GCC predefined - buggi */
-#    undef __unix__
-#    undef unix
-#    undef _unix
-#    undef __UNIX__
-#    undef UNIX
-#    undef _UNIX
-#  endif
+#if defined(__UNIX__) || defined(__unix__) || defined(unix)
+    /* GCC predefined - buggi */
+    #undef __unix__
+    #undef unix
+    #undef _unix
+    #undef __UNIX__
+    #undef UNIX
+    #undef _UNIX
+#endif
 
 #  define _stdc
 #  define _intr
@@ -56,13 +56,13 @@
 
 #  define mymkdir(a) mkdir((a), 0)
 
-#  if defined(__dj_include_fcntl_h_) && !defined( SH_DENYNONE)
-#    ifdef  SH_DENYNO
-#      define SH_DENYNONE SH_DENYNO
-#    else
-#      define SH_DENYNONE 0
-#    endif
-#  endif
+#if defined(__dj_include_fcntl_h_) && !defined( SH_DENYNONE)
+    #ifdef  SH_DENYNO
+        #define SH_DENYNONE SH_DENYNO
+    #else
+        #define SH_DENYNONE 0
+    #endif
+#endif
 
 #  include <unistd.h>
 #  include <io.h>
@@ -91,9 +91,9 @@
 
 #  define HAS_SYS_PARAM_H /* may use "#include <sys/param.h> */
 
-#  ifndef LONG_MAX
-#    include <limits.h>
-#  endif
+#ifndef LONG_MAX
+    #include <limits.h>
+#endif
 
 typedef unsigned bit;
 

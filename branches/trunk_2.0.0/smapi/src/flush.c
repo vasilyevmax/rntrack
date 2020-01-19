@@ -25,119 +25,119 @@
 
 
 #if defined(HAS_IO_H)
-#include <io.h>
+    #include <io.h>
 #endif
 
 #if defined(HAS_UNISTD_H)
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #if defined(HAS_DOS_H)
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 #ifdef __OS2__
 
-#  define INCL_NOPM
-#  include <os2.h>
+    #define INCL_NOPM
+    #include <os2.h>
 
-#  if defined(__WATCOMC__)
-#    ifndef DosBufReset
-#      define DosBufReset DosResetBuffer
-#    endif
-#  elif defined(__EMX__) || defined(__FLAT__)
-#    undef DosBufReset
-#    define DosBufReset DosResetBuffer
-#  endif
+    #if defined(__WATCOMC__)
+        #ifndef DosBufReset
+            #define DosBufReset DosResetBuffer
+        #endif
+    #elif defined(__EMX__) || defined(__FLAT__)
+        #undef DosBufReset
+        #define DosBufReset DosResetBuffer
+    #endif
 #endif
 
 #if defined(__NT__) || defined(__MINGW32__)
-#  define WIN32_LEAN_AND_MEAN
-#  define NOGDI
-#  define NOUSER
-#  define NOMSG
-#  if defined(__MINGW32__)
-#    define _WINUSER_H
-#  endif
-#  include <windows.h>
+    #define WIN32_LEAN_AND_MEAN
+    #define NOGDI
+    #define NOUSER
+    #define NOMSG
+    #if defined(__MINGW32__)
+        #define _WINUSER_H
+    #endif
+    #include <windows.h>
 #endif
 
 #if defined(__DJGPP__)
-/*
-void pascal far flush_handle2(int fh)
-{
+    /*
+    void pascal far flush_handle2(int fh)
+    {
     fsync(fh);
-}
-*/
-#define flush_handle2(f)  fsync(f)
+    }
+    */
+    #define flush_handle2(f)  fsync(f)
 
 #elif defined(__unix__) || defined(SASC)
-/*
-void pascal far flush_handle2(int fh)
-{
+    /*
+    void pascal far flush_handle2(int fh)
+    {
     unused(fh);
-}
-*/
-#define flush_handle2(f)  unused(f)
+    }
+    */
+    #define flush_handle2(f)  unused(f)
 
 
 #elif defined(__OS2__)
-/*
-void pascal far flush_handle2(int fh)
-{
+    /*
+    void pascal far flush_handle2(int fh)
+    {
     DosBufReset((HFILE) fh);
-}
-*/
-#define flush_handle2(f)  DosBufReset((HFILE) f)
+    }
+    */
+    #define flush_handle2(f)  DosBufReset((HFILE) f)
 
 #elif defined(__NT__) || defined(__MINGW32__)
 
-#ifdef __RSXNT__
-#  include <emx/syscalls.h>
+    #ifdef __RSXNT__
+        #include <emx/syscalls.h>
 
-#  ifndef F_GETOSFD
-#    define F_GETOSFD 6
-#  endif
+        #ifndef F_GETOSFD
+            #define F_GETOSFD 6
+        #endif
 
-#  define flush_handle2(fh)  FlushFileBuffers((HANDLE) __fcntl((fh), F_GETOSFD, 0))
+        #define flush_handle2(fh)  FlushFileBuffers((HANDLE) __fcntl((fh), F_GETOSFD, 0))
 
-#else
+    #else
 
-#  define flush_handle2(fh)  FlushFileBuffers((HANDLE) (fh))
+        #define flush_handle2(fh)  FlushFileBuffers((HANDLE) (fh))
 
-#endif
+    #endif
 
-/*
-void pascal far flush_handle2(int fh)
-{
-#ifdef __RSXNT__
-    int nt_handle = __fcntl(fh, F_GETOSFD, 0);
-#else
-    int nt_handle = fh;
-#endif
+    /*
+    void pascal far flush_handle2(int fh)
+    {
+    #ifdef __RSXNT__
+        int nt_handle = __fcntl(fh, F_GETOSFD, 0);
+    #else
+        int nt_handle = fh;
+    #endif
     FlushFileBuffers((HANDLE) nt_handle);
-}
-*/
+    }
+    */
 
 #elif defined(__WATCOMC__DOS__) || defined(__WATCOMC__DOS4G__)
 
-#include <dos.h>
-/*
-void pascal far flush_handle2(int fh)
-{
+    #include <dos.h>
+    /*
+    void pascal far flush_handle2(int fh)
+    {
     _dos_commit(fh);
-}
-*/
-#  define flush_handle2(fh)  _dos_commit(fh)
+    }
+    */
+    #define flush_handle2(fh)  _dos_commit(fh)
 
 #elif defined (__DOS__)
 
-/* refer to MS-DOS flush_handle2 code in FLUSHASM.ASM */
-void pascal far flush_handle2(int fd);
+    /* refer to MS-DOS flush_handle2 code in FLUSHASM.ASM */
+    void pascal far flush_handle2(int fd);
 
 #else
 
-#error unknown compiler
+    #error unknown compiler
 
 #endif
 

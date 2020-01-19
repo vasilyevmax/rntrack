@@ -24,7 +24,7 @@
 #include "compiler.h"
 
 #ifdef HAS_SIGNAL_H
-#include <signal.h>
+    #include <signal.h>
 #endif
 
 #include "memory.h"
@@ -53,29 +53,32 @@ word _stdc msgapierr = 0;
 
 struct _minf _stdc mi;
 
-const char *  _XPENTRY smapi_cvs_date(){
-  static
+const char *  _XPENTRY smapi_cvs_date()
+{
+    static
 #include "cvsdate.h"
-  return cvs_date;
+    return cvs_date;
 }
 
 int _MsgCloseApi(void)
 {
-int result = 0;
-/*
-  TODO: DeInit (close open areas etc.) for all msgbase types
-*/
+    int result = 0;
+    /*
+      TODO: DeInit (close open areas etc.) for all msgbase types
+    */
 
     _SquishDeInit();
     result = JamCloseOpenAreas();
 
-return result;
+    return result;
 }
 
 #ifdef HAS_SIGNAL_H /* old: #ifdef __UNIX__ */
 /* Just a dummy alarm-fnct */
 static void alrm(int x)
-{ unused(x); }
+{
+    unused(x);
+}
 #endif
 
 sword _XPENTRY MsgOpenApi(struct _minf *minf)
@@ -84,7 +87,7 @@ sword _XPENTRY MsgOpenApi(struct _minf *minf)
     struct sigaction alrmact;
 #endif
 
-/*    unused(copyright);*/
+    /*    unused(copyright);*/
     mi.req_version = minf->req_version;
     mi.def_zone    = minf->def_zone;
     mi.haveshare   = minf->haveshare = shareloaded();
@@ -92,8 +95,8 @@ sword _XPENTRY MsgOpenApi(struct _minf *minf)
     /* Version 2 Requested */
     if (mi.req_version > 1 && mi.req_version < 50)
     {
-       mi.smapi_version    = minf->smapi_version    = MSGAPI_VERSION;
-       mi.smapi_subversion = minf->smapi_subversion = MSGAPI_SUBVERSION;
+        mi.smapi_version    = minf->smapi_version    = MSGAPI_VERSION;
+        mi.smapi_subversion = minf->smapi_subversion = MSGAPI_SUBVERSION;
     }
 
     _SquishInit();
@@ -119,35 +122,51 @@ sword _XPENTRY MsgCloseApi(void)
 
 MSGA *_XPENTRY MsgOpenArea(byte * name, word mode, word type)
 {
-    switch( type & MSGTYPE_STORAGES ){
-    case MSGTYPE_SQUISH:        return SquishOpenArea(name, mode, type);
-    case MSGTYPE_JAM:           return JamOpenArea(name, mode, type);
-    case MSGTYPE_SDM:           return SdmOpenArea(name, mode, type);
-    case MSGTYPE_PASSTHROUGH:   msgapierr=MERR_NONE; /* Try to open pssthrough area */
-                                return NULL;
-    default:                    msgapierr=MERR_BADA; /* illegal msgbase type */
-                                return NULL;
+    switch( type & MSGTYPE_STORAGES )
+    {
+    case MSGTYPE_SQUISH:
+        return SquishOpenArea(name, mode, type);
+    case MSGTYPE_JAM:
+        return JamOpenArea(name, mode, type);
+    case MSGTYPE_SDM:
+        return SdmOpenArea(name, mode, type);
+    case MSGTYPE_PASSTHROUGH:
+        msgapierr=MERR_NONE; /* Try to open pssthrough area */
+        return NULL;
+    default:
+        msgapierr=MERR_BADA; /* illegal msgbase type */
+        return NULL;
     }
 }
 
 int MsgDeleteBase(char * name, word type)
 {
     if(!name) return FALSE;
-    switch( type & MSGTYPE_STORAGES ){
-    case MSGTYPE_SQUISH: return SquishDeleteBase(name);
-    case MSGTYPE_JAM:    return JamDeleteBase(name);
-    case MSGTYPE_SDM:    return SdmDeleteBase(name);
-    default:             return TRUE;
+    switch( type & MSGTYPE_STORAGES )
+    {
+    case MSGTYPE_SQUISH:
+        return SquishDeleteBase(name);
+    case MSGTYPE_JAM:
+        return JamDeleteBase(name);
+    case MSGTYPE_SDM:
+        return SdmDeleteBase(name);
+    default:
+        return TRUE;
     }
 }
 
 sword _XPENTRY MsgValidate(word type, byte * name)
 {
-    switch( type & MSGTYPE_STORAGES ){
-    case MSGTYPE_SQUISH: return SquishValidate(name);
-    case MSGTYPE_JAM:    return JamValidate(name);
-    case MSGTYPE_SDM:    return SdmValidate(name);
-    default:             return TRUE;
+    switch( type & MSGTYPE_STORAGES )
+    {
+    case MSGTYPE_SQUISH:
+        return SquishValidate(name);
+    case MSGTYPE_JAM:
+        return JamValidate(name);
+    case MSGTYPE_SDM:
+        return SdmValidate(name);
+    default:
+        return TRUE;
     }
 }
 
@@ -198,21 +217,21 @@ sword MSGAPI InvalidMsg(XMSG * msg)
 
 byte *StripNasties(byte * str)
 {
-  byte *p;
+    byte *p;
 
-  if(str)
-  {
-    p = str;
-    while (*p != '\0')
+    if(str)
     {
-        if (*p < ' ')
+        p = str;
+        while (*p != '\0')
         {
-            *p = ' ';
+            if (*p < ' ')
+            {
+                *p = ' ';
+            }
+            p++;
         }
-        p++;
     }
-  }
-  return str;
+    return str;
 }
 
 /* Copy the text itself to a buffer, or count its length if out==NULL */
@@ -262,7 +281,8 @@ static dword near _CopyToBuf(byte * p, byte * out, byte ** end)
         len++;
 
         /* preserve empty lines between kludges and text */
-        if (*p == '\015' || *p == '\012'){
+        if (*p == '\015' || *p == '\012')
+        {
             if ((p[0] == '\015' && p[1] == '\012')||(p[0] == '\012' && p[1] == '\015'))
                 p_text = p+=2;
             else
@@ -347,11 +367,13 @@ byte *_XPENTRY GetCtrlToken(byte *where, byte *what)
     if (where == NULL || what == NULL) return NULL;
     len = (unsigned int)strlen((char *)what);
 
-    do {
-	where = (byte *)strchr((char *)where, '\001');
-	if (where == NULL) break;
-	where++;
-    } while (strncmp((char *)where, (char *)what, len));
+    do
+    {
+        where = (byte *)strchr((char *)where, '\001');
+        if (where == NULL) break;
+        where++;
+    }
+    while (strncmp((char *)where, (char *)what, len));
 
     if (where == NULL || strlen((char *)where)<len) return NULL;
 
@@ -408,7 +430,7 @@ void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
          */
 
         if (ndest.net == dest->net && ndest.node == dest->node &&
-          norig.net == orig->net && norig.node == orig->node)
+                norig.net == orig->net && norig.node == orig->node)
         {
             *dest = ndest;
             *orig = norig;
@@ -418,8 +440,8 @@ void _XPENTRY ConvertControlInfo(byte * ctrl, NETADDR * orig, NETADDR * dest)
              *  why we do it here.
              */
 
-/* mtt: DO NOT CHANGE THE MSGTEXT!!!      */
-/*            RemoveFromCtrl(ctrl, intl); */
+            /* mtt: DO NOT CHANGE THE MSGTEXT!!!      */
+            /*            RemoveFromCtrl(ctrl, intl); */
         }
     }
 
@@ -495,20 +517,22 @@ void _XPENTRY RemoveFromCtrl(byte * ctrl, byte * what)
 
     for (;;)
     {
-	ctrl = (unsigned char *)strchr((char *)ctrl, '\001');
-	if (ctrl == NULL) return;
-	if (strncmp((char *)ctrl+1, (char *)what, len)) {
-	    ctrl++;
-	    continue;
-	}
-	if (strlen((char *)ctrl + 1) < len) return;
-	/* found */
-	p = (unsigned char *)strchr((char *)ctrl + 1, '\001');
-	if (p == NULL) {
-	    *ctrl = '\0';
-	    return;
-	}
-	strocpy((char *)ctrl, (char *)p);
+        ctrl = (unsigned char *)strchr((char *)ctrl, '\001');
+        if (ctrl == NULL) return;
+        if (strncmp((char *)ctrl+1, (char *)what, len))
+        {
+            ctrl++;
+            continue;
+        }
+        if (strlen((char *)ctrl + 1) < len) return;
+        /* found */
+        p = (unsigned char *)strchr((char *)ctrl + 1, '\001');
+        if (p == NULL)
+        {
+            *ctrl = '\0';
+            return;
+        }
+        strocpy((char *)ctrl, (char *)p);
     }
 }
 
@@ -526,23 +550,40 @@ word _XPENTRY NumKludges(char *txt)
  */
 char * _XPENTRY strmerr(int msgapierr)
 {
-    switch (msgapierr) {
-	case MERR_NONE:   return "No error";
-	case MERR_BADH:   return "Invalid handle passed to function";
-	case MERR_BADF:   return "Invalid or corrupted file";
-	case MERR_NOMEM:  return "Not enough memory for specified operation";
-	case MERR_NODS:   return "Maybe not enough disk space for operation";
-	case MERR_NOENT:  return "File/message does not exist";
-	case MERR_BADA:   return "Bad argument passed to msgapi function";
-	case MERR_EOPEN:  return "Couldn't close - messages still open";
-	case MERR_NOLOCK: return "Base needs to be locked to perform operation";
-	case MERR_SHARE:  return "Resource in use by other process";
-	case MERR_EACCES: return "Access denied (can't write to read-only, etc)";
-	case MERR_BADMSG: return "Bad message frame (Squish)";
-	case MERR_TOOBIG: return "Too much text/ctrlinfo to fit in frame (Squish)";
-	case MERR_BADNAME:return "Bad area name or file name";
-	case MERR_LIMIT:  return "Messagebase limit is reached";
-	default: break;
+    switch (msgapierr)
+    {
+    case MERR_NONE:
+        return "No error";
+    case MERR_BADH:
+        return "Invalid handle passed to function";
+    case MERR_BADF:
+        return "Invalid or corrupted file";
+    case MERR_NOMEM:
+        return "Not enough memory for specified operation";
+    case MERR_NODS:
+        return "Maybe not enough disk space for operation";
+    case MERR_NOENT:
+        return "File/message does not exist";
+    case MERR_BADA:
+        return "Bad argument passed to msgapi function";
+    case MERR_EOPEN:
+        return "Couldn't close - messages still open";
+    case MERR_NOLOCK:
+        return "Base needs to be locked to perform operation";
+    case MERR_SHARE:
+        return "Resource in use by other process";
+    case MERR_EACCES:
+        return "Access denied (can't write to read-only, etc)";
+    case MERR_BADMSG:
+        return "Bad message frame (Squish)";
+    case MERR_TOOBIG:
+        return "Too much text/ctrlinfo to fit in frame (Squish)";
+    case MERR_BADNAME:
+        return "Bad area name or file name";
+    case MERR_LIMIT:
+        return "Messagebase limit is reached";
+    default:
+        break;
     }
     return "Unknown error";
 }
@@ -559,16 +600,16 @@ char * _XPENTRY strmerr(int msgapierr)
   CheckSmapiVersion( ..., smapidate());
  */
 int _XPENTRY CheckSmapiVersion( int need_major, int need_minor,
-                      int need_patch, const char *cvs_date_string )
+                                int need_patch, const char *cvs_date_string )
 {
-  static
-  #include "cvsdate.h"   /* char cvs_date[]=datestring; */
+    static
+#include "cvsdate.h"   /* char cvs_date[]=datestring; */
 
-  if( need_major==MSGAPI_VERSION &&
-      need_minor==((MSGAPI_SUBVERSION & 0x0F0)>>4) &&
-      need_patch==(MSGAPI_SUBVERSION & 0x00F)
-    )
-    return  !(cvs_date_string && strcmp(cvs_date_string,cvs_date));
+    if( need_major==MSGAPI_VERSION &&
+            need_minor==((MSGAPI_SUBVERSION & 0x0F0)>>4) &&
+            need_patch==(MSGAPI_SUBVERSION & 0x00F)
+      )
+        return  !(cvs_date_string && strcmp(cvs_date_string,cvs_date));
 
-  return 0;
+    return 0;
 }

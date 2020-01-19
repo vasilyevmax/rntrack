@@ -14,10 +14,10 @@
  */
 
 #ifndef __unix__
-  #include <io.h>
+    #include <io.h>
 #endif
 #ifndef __GNUC__
-  #include <direct.h>
+    #include <direct.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,11 +41,11 @@
 #include "unused.h"
 
 #ifdef __WATCOMC__
-  #include "months.c"
+    #include "months.c"
 #endif
 
 #if defined (__sun__) || defined (__OSX__)
-  #define strftim strftime
+    #define strftim strftime
 #endif
 
 #ifdef _MSC_VER
@@ -116,19 +116,19 @@ time_t ToTime(char * txt)
 
 static int _mdays[13] =
 {
-/* Jan */ 0,
-/* Feb */ 31,
-/* Mar */ 31 + 28,
-/* Apr */ 31 + 28 + 31,
-/* May */ 31 + 28 + 31 + 30,
-/* Jun */ 31 + 28 + 31 + 30 + 31,
-/* Jul */ 31 + 28 + 31 + 30 + 31 + 30,
-/* Aug */ 31 + 28 + 31 + 30 + 31 + 30 + 31,
-/* Sep */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
-/* Oct */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
-/* Nov */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
-/* Dec */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
-/* Jan */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31
+    /* Jan */ 0,
+    /* Feb */ 31,
+    /* Mar */ 31 + 28,
+    /* Apr */ 31 + 28 + 31,
+    /* May */ 31 + 28 + 31 + 30,
+    /* Jun */ 31 + 28 + 31 + 30 + 31,
+    /* Jul */ 31 + 28 + 31 + 30 + 31 + 30,
+    /* Aug */ 31 + 28 + 31 + 30 + 31 + 30 + 31,
+    /* Sep */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
+    /* Oct */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
+    /* Nov */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+    /* Dec */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
+    /* Jan */ 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31
 };
 
 #define WOFC(a, b) ((uint)a | (((uint)b) << 8))
@@ -560,11 +560,11 @@ void cMSG::Clear(void)
     _ReplyTo   = 0;
     _NextReply = 0;
     fChanged   = fPrivate    = fCrash   = fReceived    = fSend     =
-                 fFileAttach = fTransit = fOrphan      = fKillSend =
-                 fLocal      = fHold    = fFileRequest = fRRQ      =
-                 fIRR        = fARQ     = fFURQ        = fDIR      =
-                 fIMM        = fCFM     = fTFS         = fKFS      =
-                 fEchomail   = fScanned = fLok         = fAS       = 0;
+            fFileAttach = fTransit = fOrphan      = fKillSend =
+                                         fLocal      = fHold    = fFileRequest = fRRQ      =
+                                                 fIRR        = fARQ     = fFURQ        = fDIR      =
+                                                         fIMM        = fCFM     = fTFS         = fKFS      =
+                                                                 fEchomail   = fScanned = fLok         = fAS       = 0;
     CHP = 315026;
     _Klu.Clear();
     CHP = 315028;
@@ -631,7 +631,7 @@ void cMSG::Normalise(void)
             if(stricmp(Klu->Name(), "\1INTL") == 0)
             {
                 if((_FromAddr.Zone() & FA_NOTDEF) ||
-                   (_ToAddr.Zone() & FA_NOTDEF))
+                        (_ToAddr.Zone() & FA_NOTDEF))
                 {
                     Klu->Set(NULL, NULL);
                 }
@@ -864,7 +864,7 @@ void cMSG::AddKludge(const char * & Txt)
     if(Txt[0] != '\0')
     {
         if((Txt[0] == '\n' && Txt[1] == '\r') ||
-           (Txt[0] == '\r' && Txt[1] == '\n'))
+                (Txt[0] == '\r' && Txt[1] == '\n'))
         {
             Txt += 2;
         }
@@ -920,7 +920,7 @@ void cMSG::AddKludge(const char * & Txt)
     }
 
     Log.Level(LOGD) << "Split kludge. p == '" << p << "', p2 == '" << p2 <<
-                       "'" << EOL;
+                    "'" << EOL;
 
     CHP = 307;
 
@@ -956,7 +956,7 @@ void cMSG::AddKludge(const char * & Txt)
         if(tAddr.Valid())
         {
             Log.Level(LOGD) << "Parse Origin: FromAddr == '" << tAddr <<
-                               "'" << EOL;
+                            "'" << EOL;
             _FromAddr.Zone(tAddr.Zone());
             _FromAddr.Net(tAddr.Net());
             _FromAddr.Node(tAddr.Node());
@@ -1077,7 +1077,7 @@ void cMSG::AddKludge(const char * & Txt)
         if(tAddr.Valid())
         {
             Log.Level(LOGD) << "MSGID is valid. FTN addr == '" << tAddr <<
-                               "'" << EOL;
+                            "'" << EOL;
 
             if(_ToAddr.Zone() & FA_NOTDEF)
             {
@@ -1177,8 +1177,8 @@ unsigned int cMSG::LoopCount(char * LS)
     while(Klu != NULL)
     {
         if(LS != NULL && Klu->Name() != NULL &&
-           stricmp(Klu->Name(), "\1VIA") == 0 &&
-           Klu->Body() != NULL && strstr(Klu->Body(), LS) != NULL)
+                stricmp(Klu->Name(), "\1VIA") == 0 &&
+                Klu->Body() != NULL && strstr(Klu->Body(), LS) != NULL)
         {
             lc++;
         }
@@ -1460,7 +1460,7 @@ void cMSG::ParseMem(char * Buff)
 
 // Check echomail.
     if(tmt1[0] == 'A' && tmt1[1] == 'R' && tmt1[2] == 'E' &&
-       tmt1[3] == 'A' && tmt1[4] == ':')
+            tmt1[3] == 'A' && tmt1[4] == ':')
     {
         strncpy(_AreaName, &tmt1[5], 127);
         _AreaName[127] = '\0';
@@ -1523,10 +1523,10 @@ void cMSG::ParseMem(char * Buff)
             nls_strupr(BuffForSearch);
 
             if((strstr(BuffForSearch, "SEEN-BY:") == BuffForSearch) ||
-               (strstr(BuffForSearch, " * ORIGIN:") == BuffForSearch) ||
-               (strstr(BuffForSearch, "--- ") == BuffForSearch) ||
-               (strstr(BuffForSearch, "---\n") == BuffForSearch) ||
-               (strstr(BuffForSearch, "---\r") == BuffForSearch))
+                    (strstr(BuffForSearch, " * ORIGIN:") == BuffForSearch) ||
+                    (strstr(BuffForSearch, "--- ") == BuffForSearch) ||
+                    (strstr(BuffForSearch, "---\n") == BuffForSearch) ||
+                    (strstr(BuffForSearch, "---\r") == BuffForSearch))
             {
                 AddKludge((const char * &)tmt1);
                 continue;
@@ -1637,15 +1637,15 @@ void cMSG::DelLastOurVia(void)
         if(Klu->Name() != NULL && Klu->Body() != NULL)
         {
             if(stricmp(Klu->Name(), "\1Via") == 0 &&
-               (strstr(Klu->Body(), Buff) == Klu->Body()) &&
-               (strstr(Klu->Body(), " RNtrack ") != NULL))
+                    (strstr(Klu->Body(), Buff) == Klu->Body()) &&
+                    (strstr(Klu->Body(), " RNtrack ") != NULL))
             {
                 if(LogLevel >= 5)
                 {
                     Log.Level(LOGD) << "Delete our via. Via is '" << Buff <<
-                                       "'" << EOL;
+                                    "'" << EOL;
                     Log.Level(LOGD) << " Via (or Klu) in msg: " <<
-                                       Klu->Name() << " '--' " << Klu->Body() << EOL;
+                                    Klu->Name() << " '--' " << Klu->Body() << EOL;
                 }
 
                 _Klu.Remove(Klu);
@@ -1712,11 +1712,11 @@ void cMSG::Print(void)
     char Buff[128];
 
     Log.Level(LOGD) <<
-    "------------------------------------------------------" << EOL;
+                    "------------------------------------------------------" << EOL;
     Log.Level(LOGD) << "Message is " << (fEmpty ? "Empty" : "not Empty") <<
-                       EOL;
+                    EOL;
     Log.Level(LOGD) << "Message is " <<
-                       (fEchomail ? "Echomail" : "Netmail") << EOL;
+                    (fEchomail ? "Echomail" : "Netmail") << EOL;
 
     if(fEchomail)
     {
@@ -1726,9 +1726,9 @@ void cMSG::Print(void)
     Log.Level(LOGD) << "Kludges:" << EOL;
     INDBILIST_FOREACH(Kludge, _Klu, Klu) Klu->Print();
     Log.Level(LOGD) <<
-    "------------------------------------------------------" << EOL;
+                    "------------------------------------------------------" << EOL;
     Log.Level(LOGD) << "From : " << _FromName << " (" << _FromAddr << ")" <<
-                       EOL;
+                    EOL;
     Log.Level(LOGD) << "To   : " << _ToName << " (" << _ToAddr << ")" << EOL;
     Log.Level(LOGD) << "Attr : " << FlagsToStr(Buff) << EOL;
     Log.Level(LOGD) << "Subj : " << _Subject << EOL;
@@ -1738,5 +1738,5 @@ void cMSG::Print(void)
     Log.Level(LOGD) << "Lines: " << Lines() << EOL;
 //   Log.Level(LOGD) << "Loop: " << _LoopCount << EOL;
     Log.Level(LOGD) <<
-    "------------------------------------------------------" << EOL;
+                    "------------------------------------------------------" << EOL;
 } // Print

@@ -38,14 +38,14 @@ static char rcs_id[]="$Id$";
 #include "compiler.h"
 
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #include "memory.h"
@@ -69,29 +69,29 @@ static char rcs_id[]="$Id$";
 
 static sword _SquishKill(HAREA ha, dword dwMsg, SQHDR *psqh, FOFS fo)
 {
-  assert(Sqd->fHaveExclusive);
+    assert(Sqd->fHaveExclusive);
 
 
-  /* Link the existing messages over this one */
+    /* Link the existing messages over this one */
 
-  if (psqh->prev_frame)
-    if (!_SquishSetFrameNext(ha, psqh->prev_frame, psqh->next_frame))
-      return FALSE;
+    if (psqh->prev_frame)
+        if (!_SquishSetFrameNext(ha, psqh->prev_frame, psqh->next_frame))
+            return FALSE;
 
-  if (psqh->next_frame)
-    if (!_SquishSetFramePrev(ha, psqh->next_frame, psqh->prev_frame))
-      return FALSE;
-
-
-  /* Delete this message from the index file */
-
-  if (!_SquishRemoveIndexEntry(Sqd->hix, dwMsg, NULL, psqh, TRUE))
-    return FALSE;
+    if (psqh->next_frame)
+        if (!_SquishSetFramePrev(ha, psqh->next_frame, psqh->prev_frame))
+            return FALSE;
 
 
-  /* Finally, add the freed message to the free frame list */
+    /* Delete this message from the index file */
 
-  return (sword)_SquishInsertFreeChain(ha, fo, psqh);
+    if (!_SquishRemoveIndexEntry(Sqd->hix, dwMsg, NULL, psqh, TRUE))
+        return FALSE;
+
+
+    /* Finally, add the freed message to the free frame list */
+
+    return (sword)_SquishInsertFreeChain(ha, fo, psqh);
 }
 
 
@@ -100,57 +100,57 @@ static sword _SquishKill(HAREA ha, dword dwMsg, SQHDR *psqh, FOFS fo)
 
 sword _XPENTRY apiSquishKillMsg(HAREA ha, dword dwMsg)
 {
-  SQHDR sqh;
-  sword rc;
-  FOFS fo;
+    SQHDR sqh;
+    sword rc;
+    FOFS fo;
 
-  /* Validate parameters */
+    /* Validate parameters */
 
-  if (MsgInvalidHarea(ha))
-    return -1;
-
-
-  /* Make sure that the message actually exists */
-
-  if (dwMsg==0 || dwMsg > ha->num_msg)
-  {
-    msgapierr=MERR_NOENT;
-    return -1;
-  }
-
-  /* Get the offset of the frame to delete */
-
-  fo=_SquishGetFrameOfs(ha, dwMsg);
-  if (fo==NULL_FRAME)
-  {
-    return -1;
-  }
+    if (MsgInvalidHarea(ha))
+        return -1;
 
 
-  /* Read that into memory */
+    /* Make sure that the message actually exists */
 
-  if (!_SquishReadHdr(ha, fo, &sqh))
-  {
-    return -1;
-  }
+    if (dwMsg==0 || dwMsg > ha->num_msg)
+    {
+        msgapierr=MERR_NOENT;
+        return -1;
+    }
+
+    /* Get the offset of the frame to delete */
+
+    fo=_SquishGetFrameOfs(ha, dwMsg);
+    if (fo==NULL_FRAME)
+    {
+        return -1;
+    }
 
 
-  /* Now get exclusive access for the delete operation */
+    /* Read that into memory */
 
-  if (!_SquishExclusiveBegin(ha))
-  {
-    return FALSE;
-  }
+    if (!_SquishReadHdr(ha, fo, &sqh))
+    {
+        return -1;
+    }
 
-  /* Let _SquishKill to the dirty work */
 
-  rc=_SquishKill(ha, dwMsg, &sqh, fo);
+    /* Now get exclusive access for the delete operation */
 
-  /* Let go of the base */
+    if (!_SquishExclusiveBegin(ha))
+    {
+        return FALSE;
+    }
 
-  if (!_SquishExclusiveEnd(ha))
-    rc=FALSE;
+    /* Let _SquishKill to the dirty work */
 
-  return rc ? 0 : -1;
+    rc=_SquishKill(ha, dwMsg, &sqh, fo);
+
+    /* Let go of the base */
+
+    if (!_SquishExclusiveEnd(ha))
+        rc=FALSE;
+
+    return rc ? 0 : -1;
 }
 

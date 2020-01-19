@@ -15,11 +15,11 @@
 
 
 #ifndef __TURBOC__
-  #error This file may be used only with Turbo C and Borland C !
+    #error This file may be used only with Turbo C and Borland C !
 #endif
 
 #ifndef __WIN32__
-  #error This file may be used only with Windows-32bit version of Turbo C or Borland C !
+    #error This file may be used only with Windows-32bit version of Turbo C or Borland C !
 #endif
 
 #  define _stdc cdecl

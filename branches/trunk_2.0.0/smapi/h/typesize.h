@@ -58,18 +58,18 @@
 #include "compiler.h"
 
 #ifdef __OS2__
-#define INCL_DOSPROCESS
-#define INCL_DOSERRORS
-#include <os2.h>
+    #define INCL_DOSPROCESS
+    #define INCL_DOSERRORS
+    #include <os2.h>
 #endif
 
 #if defined ( __NT__ )
-#define WIN32_LEAN_AND_MEAN
-#define NOMSG
-#define NOGDI
-#if !defined(__EMX__)
-#include <windows.h>
-#endif
+    #define WIN32_LEAN_AND_MEAN
+    #define NOMSG
+    #define NOGDI
+    #if !defined(__EMX__)
+        #include <windows.h>
+    #endif
 #endif
 
 #ifdef __cplusplus
@@ -289,7 +289,7 @@ typedef unsigned long       ULONG;              /*  4 byte */
 #endif
 
 #else /* pstdint.h/stdint.h work for this platform */
-/* Compile with --std=gnu99 if you can or 
+/* Compile with --std=gnu99 if you can or
  * define HAS_STDINT_H if you have one in your system or
  * define USE_PSTDINT_H if it works as replacement */
 #include "pstdint.h"

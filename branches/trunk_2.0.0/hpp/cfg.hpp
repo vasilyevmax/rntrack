@@ -34,17 +34,17 @@
 # define YY_YY_SRC_CFG_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+    #define YYDEBUG 0
 #endif
 #if YYDEBUG
-extern int yydebug;
+    extern int yydebug;
 #endif
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-  enum yytokentype
-  {
+enum yytokentype
+{
     _LOGFILE = 258,
     _LOGLEVEL = 259,
     _NODELIST = 260,
@@ -169,7 +169,7 @@ extern int yydebug;
     _NORMAL = 379,
     _IMMEDIATE = 380,
     LEXERR = 381
-  };
+};
 #endif
 
 /* Value type.  */
@@ -179,16 +179,16 @@ union YYSTYPE
 {
 
 
-   int          in;
-   char         *ch;
-   long         ln;
-   KillModeT    kmode;
-   CheckPointsT pmode;
-   tBadMsgMode  bmode;
-   tBadMsgMode  bpmode;
-   fileboxType	fbtype;
-   time_t       t;
-   PKTMode      pktmode;
+    int          in;
+    char         *ch;
+    long         ln;
+    KillModeT    kmode;
+    CheckPointsT pmode;
+    tBadMsgMode  bmode;
+    tBadMsgMode  bpmode;
+    fileboxType	fbtype;
+    time_t       t;
+    PKTMode      pktmode;
 
 
 };

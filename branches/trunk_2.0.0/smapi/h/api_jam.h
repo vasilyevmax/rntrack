@@ -45,7 +45,7 @@ extern "C" {
 **  Header file information block, stored first in all .JHR files
 */
 typedef struct
-    {
+{
     byte   Signature[4];              /* <J><A><M> followed by <NUL> */
     dword  DateCreated;               /* Creation date */
     dword  ModCounter;                /* Last processed counter */
@@ -54,8 +54,8 @@ typedef struct
     dword  BaseMsgNum;                /* Lowest message number in index file */
     dword  highwater;                 /* Number of the last msg scanned */
     byte   RSRVD[996];                /* Reserved space */
-    }
-    JAMHDRINFO,  *JAMHDRINFOptr;
+}
+JAMHDRINFO,  *JAMHDRINFOptr;
 
 #define HDRINFO_SIZE (1000 + (4 * 6))
 
@@ -96,7 +96,7 @@ typedef struct
 **  Message header
 */
 typedef struct
-    {
+{
     byte   Signature[4];              /* <J><A><M> followed by <NUL> */
     word   Revision;                  /* CURRENTREVLEV */
     word   ReservedWord;              /* Reserved */
@@ -117,8 +117,8 @@ typedef struct
     dword  TxtLen;                    /* Length of message text */
     dword  PasswordCRC;               /* CRC-32 of password to access msg */
     dword  Cost;                      /* Cost of message */
-    }
-    JAMHDR, *JAMHDRptr;
+}
+JAMHDR, *JAMHDRptr;
 
 #define HDR_SIZE (8 + (4 * 17))
 
@@ -167,31 +167,31 @@ typedef struct JAMSUBFIELD2LISTstruct
 } JAMSUBFIELD2LIST, *JAMSUBFIELD2LISTptr;
 
 typedef struct
-    {
+{
     word  LoID;                      /* Field ID, 0 - 0xffff */
     word  HiID;                      /* Reserved for future use */
     dword DatLen;                    /* Length of buffer that follows */
     byte  Buffer[1];                 /* DatLen bytes of data */
-    }
-    JAMSUBFIELD1, *JAMSUBFIELD1ptr;
+}
+JAMSUBFIELD1, *JAMSUBFIELD1ptr;
 
 typedef struct
-    {
+{
     word  LoID;                      /* Field ID, 0 - 0xffff */
     word  HiID;                      /* Reserved for future use */
     dword DatLen;                    /* Length of buffer that follows */
-    }
-    JAMBINSUBFIELD, *JAMBINSUBFIELDptr;
+}
+JAMBINSUBFIELD, *JAMBINSUBFIELDptr;
 #define JAM_SF_HEADER_SIZE 8
 /*
 **  Message index record
 */
 typedef struct
-    {
+{
     dword  UserCRC;                   /* CRC-32 of destination username */
     dword  HdrOffset;                 /* Offset of header in .JHR file */
-    }
-    JAMIDXREC, *JAMIDXRECptr;
+}
+JAMIDXREC, *JAMIDXRECptr;
 
 #define IDX_SIZE 8
 
@@ -199,40 +199,42 @@ typedef struct
 **  Lastread structure, one per user
 */
 typedef struct
-    {
+{
     dword  UserCRC;                   /* CRC-32 of user name (lowercase) */
     dword  UserID;                    /* Unique UserID */
     dword  LastReadMsg;               /* Last read message number */
     dword  HighReadMsg;               /* Highest read message number */
-    }
-    JAMLREAD, *JAMLREADptr;
+}
+JAMLREAD, *JAMLREADptr;
 
-typedef struct {
-   dword     IdxOffset;         /* Offset Idx file */
-   dword     TrueMsg;           /* JAMIDXREC.HdrOffset */
-   dword     UserCRC;           /* CRC-32 of user name (lowercase) */
-   JAMHDR    hdr;               /* Message header */
-   JAMSUBFIELD2LISTptr subfield;    /* Message subfields */
-   } JAMACTMSG, *JAMACTMSGptr;
+typedef struct
+{
+    dword     IdxOffset;         /* Offset Idx file */
+    dword     TrueMsg;           /* JAMIDXREC.HdrOffset */
+    dword     UserCRC;           /* CRC-32 of user name (lowercase) */
+    JAMHDR    hdr;               /* Message header */
+    JAMSUBFIELD2LISTptr subfield;    /* Message subfields */
+} JAMACTMSG, *JAMACTMSGptr;
 
 /* struct jam base */
 
-typedef struct {
-   byte            *BaseName;      /* Path for message base */
-   int             HdrHandle;      /* File handle for .JHR file */
-   int             TxtHandle;      /* File handle for .JDT file */
-   int             IdxHandle;      /* File handle for .JDX file */
-   int             LrdHandle;      /* File handle for .JLR file */
-   JAMHDRINFO      HdrInfo;        /* Message header info */
-   JAMACTMSGptr    actmsg;
-   word            msgs_open;
-   word            actmsg_read;    /* ??? 0, 1 or 2; 0 of not read, 1 if header fit in core, 2 otherwise*/
-   mode_t          permissions;
-   word            mode;
-   word            modified;
-   MSGA            *jm;
-   void            *jbNext;
-   } JAMBASE, *JAMBASEptr;
+typedef struct
+{
+    byte            *BaseName;      /* Path for message base */
+    int             HdrHandle;      /* File handle for .JHR file */
+    int             TxtHandle;      /* File handle for .JDT file */
+    int             IdxHandle;      /* File handle for .JDX file */
+    int             LrdHandle;      /* File handle for .JLR file */
+    JAMHDRINFO      HdrInfo;        /* Message header info */
+    JAMACTMSGptr    actmsg;
+    word            msgs_open;
+    word            actmsg_read;    /* ??? 0, 1 or 2; 0 of not read, 1 if header fit in core, 2 otherwise*/
+    mode_t          permissions;
+    word            mode;
+    word            modified;
+    MSGA            *jm;
+    void            *jbNext;
+} JAMBASE, *JAMBASEptr;
 
 int read_hdrinfo(int handle, JAMHDRINFO *HdrInfo);
 int read_idx(int handle, JAMIDXREC *Idx);

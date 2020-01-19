@@ -460,7 +460,11 @@ const char * dirslashbug(const char * dirname)
  */
 unsigned short & FirstWord(const unsigned int & Dword)
 {
-    struct SplitDWORD {unsigned short first; unsigned short second;};
+    struct SplitDWORD
+    {
+        unsigned short first;
+        unsigned short second;
+    };
     SplitDWORD * p = (SplitDWORD *)&Dword;
     return p->first;
 }
@@ -481,11 +485,11 @@ int fsCompareName(const char * Name, const char * Mask)
 }
 
 #if defined (__WATCOMC__) && defined (MSDOS)
-    extern "C" 
-    {
+extern "C"
+{
     // special function. Replaces located in SMAPI.
-        void pascal far flush_handle2_(int fh){}
-    }
+    void pascal far flush_handle2_(int fh) {}
+}
 #endif
 
 int SetSemaphore(void)
@@ -510,7 +514,7 @@ int SetSemaphore(void)
         if(SemTime == SemaphoreTime)
         {
             Log.Level(101) << "Detected semaphore file '" << Semaphore <<
-                              "'." << EOL;
+                           "'." << EOL;
         }
 
         sleep(1);
@@ -523,12 +527,12 @@ int SetSemaphore(void)
         if(access(Semaphore, F_OK) != 0)
         {
             Log.Level(101) << "Semaphore file '" << Semaphore <<
-                              "' now released." << EOL;
+                           "' now released." << EOL;
         }
         else
         {
             Log.Level(101) << "Semaphore file '" << Semaphore <<
-                              "' now ignored by time." << EOL;
+                           "' now ignored by time." << EOL;
         }
     }
 
@@ -538,7 +542,7 @@ int SetSemaphore(void)
     if(fh == NULL)
     {
         Log.Level(100) << "Unable to create semaphore file '" << Semaphore <<
-                          "'." << EOL;
+                       "'." << EOL;
         return FALSE;
     }
 
@@ -557,7 +561,7 @@ int ReleaseSemaphore(void)
     return TRUE;
 }
 
-extern "C" 
+extern "C"
 {
     void ShowLogLine(char * msg)
     {

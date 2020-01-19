@@ -745,17 +745,17 @@ static int AddInetFromAddr(Template * Tpl)
     if(Tpl->From != NULL)
     {
         if((0 < Tpl->From->_FromAddr.Point()) &&
-           (Tpl->From->_FromAddr.Point() <= 65535))
+                (Tpl->From->_FromAddr.Point() <= 65535))
         {
             sprintf(Buff + strlen(Buff), "p%u.",
                     (unsigned int)Tpl->From->_FromAddr.Point());
         }
 
-        sprintf(Buff + strlen(Buff), "f%u.", 
+        sprintf(Buff + strlen(Buff), "f%u.",
                 (unsigned int)Tpl->From->_FromAddr.Node());
-        sprintf(Buff + strlen(Buff), "n%u.", 
+        sprintf(Buff + strlen(Buff), "n%u.",
                 (unsigned int)Tpl->From->_FromAddr.Net());
-        sprintf(Buff + strlen(Buff), "z%u", 
+        sprintf(Buff + strlen(Buff), "z%u",
                 (unsigned int)Tpl->From->_FromAddr.Zone());
         Tpl->AddStr(Buff);
     }
@@ -776,18 +776,18 @@ static int AddInetToAddr(Template * Tpl)
     if(Tpl->From != NULL)
     {
         if((0 < Tpl->From->_ToAddr.Point()) &&
-           (Tpl->From->_ToAddr.Point() <= 65535))
+                (Tpl->From->_ToAddr.Point() <= 65535))
         {
             sprintf(Buff + strlen(
                         Buff), "p%u.",
                     (unsigned int)Tpl->From->_FromAddr.Point());
         }
 
-        sprintf(Buff + strlen(Buff), "f%u.", 
+        sprintf(Buff + strlen(Buff), "f%u.",
                 (unsigned int)Tpl->From->_ToAddr.Node());
-        sprintf(Buff + strlen(Buff), "n%u.", 
+        sprintf(Buff + strlen(Buff), "n%u.",
                 (unsigned int)Tpl->From->_ToAddr.Net());
-        sprintf(Buff + strlen(Buff), "z%u", 
+        sprintf(Buff + strlen(Buff), "z%u",
                 (unsigned int)Tpl->From->_ToAddr.Zone());
         Tpl->AddStr(Buff);
     }
@@ -1015,8 +1015,8 @@ static int AddMsgBody(Template * Tpl)
 
 //   Tpl->Normalise();
     if(Tpl->BodySize != 0 &&
-       (Tpl->Body[Tpl->BodySize - 1] == '\n' ||
-        Tpl->Body[Tpl->BodySize - 1] == '\r'))
+            (Tpl->Body[Tpl->BodySize - 1] == '\n' ||
+             Tpl->Body[Tpl->BodySize - 1] == '\r'))
     {
         (Tpl->BodySize)--;
     }
@@ -1072,17 +1072,17 @@ static int AddMsgKlu(Template * Tpl, IndBiList<Kludge>::ElemPtr Klu,
         if(Klu->Name() != NULL && strlen(Klu->Name()) != 0)
         {
             if((stricmp(Klu->Name(), "---")        == 0) ||
-               (stricmp(Klu->Name(), " * Origin:") == 0))
+                    (stricmp(Klu->Name(), " * Origin:") == 0))
             {
                 Klu++;
                 continue;
             }
 
             if((stricmp(Klu->Name(), "SEEN-BY:")    == 0) ||
-               (stricmp(Klu->Name(), "\1VIA")       == 0) ||
-               (stricmp(Klu->Name(), "\1Recd")      == 0) ||
-               (stricmp(Klu->Name(), "\1Forwarded") == 0) ||
-               (stricmp(Klu->Name(), "\1PATH:")     == 0))
+                    (stricmp(Klu->Name(), "\1VIA")       == 0) ||
+                    (stricmp(Klu->Name(), "\1Recd")      == 0) ||
+                    (stricmp(Klu->Name(), "\1Forwarded") == 0) ||
+                    (stricmp(Klu->Name(), "\1PATH:")     == 0))
             {
                 if(IsKludge != TRUE)
                 {
@@ -1273,7 +1273,7 @@ bool Template::Set(char * c)
     if(access(c, R_OK) != 0)
     {
         Log.Level(LOGD) << "Template.Set: File '" << c <<
-                           "' does not exist or is not readable." << EOL;
+                        "' does not exist or is not readable." << EOL;
         return FALSE;
     }
 
@@ -1285,7 +1285,7 @@ bool Template::Set(char * c)
 
 char * Template::GetName(void)
 {
-	return TplName;
+    return TplName;
 }
 
 // --------------------------------------------------------------------
@@ -1472,7 +1472,7 @@ int Template::Parse(void)
     if(access(TplName, R_OK) != 0)
     {
         Log.Level(LOGE) << "Template file '" << TplName <<
-                           "' does not exist." << EOL;
+                        "' does not exist." << EOL;
         return FALSE;
     }
 
@@ -1482,7 +1482,7 @@ int Template::Parse(void)
     if(fh == 0)
     {
         Log.Level(LOGE) << "Unable to open template file '" << TplName <<
-                           "'" << EOL;
+                        "'" << EOL;
         return FALSE;
     }
 
@@ -1504,7 +1504,7 @@ int Template::Parse(void)
     if(!feof(fh))
     {
         Log.Level(LOGE) << "Error reading template file '" << TplName <<
-                           "'" << EOL;
+                        "'" << EOL;
         fclose(fh);
         fh = NULL;
         return FALSE;
@@ -1543,7 +1543,7 @@ int Template::Save(char * Name, int Mode)
         if(fh == NULL)
         {
             Log.Level(LOGE) << "Unable to append to file '" << Name << "'" <<
-                               EOL;
+                            EOL;
             return FALSE;
         }
     }

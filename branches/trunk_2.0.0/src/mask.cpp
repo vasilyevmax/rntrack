@@ -229,26 +229,26 @@ int EquFA(FA const & m, FA const & f)
 /*                         Mask class                                 */
 /*--------------------------------------------------------------------*/
 
-Mask::~Mask(){}
+Mask::~Mask() {}
 
 void Mask::Print(void) const
 {
     switch(_Type)
     {
-        case MASK_ADD:
-            Log << "+";
-            break;
+    case MASK_ADD:
+        Log << "+";
+        break;
 
-        case MASK_SKIP:
-            Log << "*";
-            break;
+    case MASK_SKIP:
+        Log << "*";
+        break;
 
-        case MASK_NORMAL:
-            break;
+    case MASK_NORMAL:
+        break;
 
-        case MASK_ERROR:
-            Log << "--==(InternalError)==--";
-            break;
+    case MASK_ERROR:
+        Log << "--==(InternalError)==--";
+        break;
     }
 }
 
@@ -489,14 +489,14 @@ NormalMask::NormalMask()
     _ToName   = NULL;
     _Subject  = NULL;
     Loops     = (unsigned int)-1;
-    fPrivate  = fCrash      = fReceived    = fSend       = fFileAttach = 
-                fTransit    = fOrphan      = fKillSend   = fLocal      = 
-                fHold       = fFileRequest = fRRQ        = fIRR        = 
-                fARQ        = fFURQ        = fDIR        = fIMM        = 
-                fCFM        = fTFS         = fKFS        = fEmpty      = 
-                fMaxAge     = fLoop        = fAttExists  = fEchomail   = 
-                fScanned    = fMaxAttach   = fMaxMsg     = fLok        =
-                fAS         = 0;
+    fPrivate  = fCrash      = fReceived    = fSend       = fFileAttach =
+                                  fTransit    = fOrphan      = fKillSend   = fLocal      =
+                                          fHold       = fFileRequest = fRRQ        = fIRR        =
+                                                  fARQ        = fFURQ        = fDIR        = fIMM        =
+                                                          fCFM        = fTFS         = fKFS        = fEmpty      =
+                                                                  fMaxAge     = fLoop        = fAttExists  = fEchomail   =
+                                                                          fScanned    = fMaxAttach   = fMaxMsg     = fLok        =
+                                                                                  fAS         = 0;
     _Type = MASK_ERROR;
     sd    = NULL;
 }
@@ -538,8 +538,8 @@ void NormalMask::Print(void) const
     strcpy(fa1, _FromAddr.ToStr());
     strcpy(fa2, _ToAddr.ToStr());
     Log << "Mask: \"" << _FromName << "\" " << fa1 <<
-           " \"" << _ToName << "\" " << fa2 <<
-           " \"" << _Subject << '"';
+        " \"" << _ToName << "\" " << fa2 <<
+        " \"" << _Subject << '"';
     fa1[0] = '\0';
 
     if(fMaxAge == 1)
@@ -1157,15 +1157,15 @@ int ScriptMask::operator ==(cMSG & m) const
 
     switch(DoSomeWordRc(_ScriptName))
     {
-        case SS_OK:
-            Log.Level(LOGD) << "Message is equal to mask." << EOL;
-            return TRUE;
+    case SS_OK:
+        Log.Level(LOGD) << "Message is equal to mask." << EOL;
+        return TRUE;
 
-        case SS_NOTDEF:
-        case SS_FALSE:
-        case SS_ERROR:
-        default:
-            Log.Level(LOGD) << "Message is not equal to mask." << EOL;
-            return FALSE;
+    case SS_NOTDEF:
+    case SS_FALSE:
+    case SS_ERROR:
+    default:
+        Log.Level(LOGD) << "Message is not equal to mask." << EOL;
+        return FALSE;
     }
 } // ==

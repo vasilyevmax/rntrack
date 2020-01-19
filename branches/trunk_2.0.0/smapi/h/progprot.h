@@ -28,7 +28,7 @@
 
 /*#if !( (defined(__WATCOMC__) && !defined(__DOS__)) || defined(__MSVC__) )*/
 #ifdef __DOS__
-void pascal far flush_handle2(int fd);  /* flushasm.asm for DOS, redefined for known implementations in flush.c */
+    void pascal far flush_handle2(int fd);  /* flushasm.asm for DOS, redefined for known implementations in flush.c */
 #endif
 
 int _fast gettz(void);

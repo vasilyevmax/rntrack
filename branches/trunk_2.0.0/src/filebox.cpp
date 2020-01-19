@@ -195,10 +195,10 @@ char * MakeFileboxName(FA & f, PKTMode m)
         }
 
         if(FileBoxType == FILEBOXLONG || FileBoxType == FILEBOXTMLONG ||
-           FileBoxType == FILEBOXBRAKE)
+                FileBoxType == FILEBOXBRAKE)
         {
             if((Buff[strlen(Buff) - 1] !=
-                PATHDELIMC) && FileBoxType != FILEBOXBRAKE)
+                    PATHDELIMC) && FileBoxType != FILEBOXBRAKE)
             {
                 RSTRLCAT(Buff, PATHDELIMS, BUFF_SIZE);
             }
@@ -235,25 +235,25 @@ char * MakeFileboxName(FA & f, PKTMode m)
 
             switch(m)
             {
-                case F_HOLD:
-                    RSTRLCAT(Buff, "hold", BUFF_SIZE);
-                    break;
+            case F_HOLD:
+                RSTRLCAT(Buff, "hold", BUFF_SIZE);
+                break;
 
-                case F_DIRECT:
-                    RSTRLCAT(Buff, "direct", BUFF_SIZE);
-                    break;
+            case F_DIRECT:
+                RSTRLCAT(Buff, "direct", BUFF_SIZE);
+                break;
 
-                case F_CRASH:
-                    RSTRLCAT(Buff, "crash", BUFF_SIZE);
-                    break;
+            case F_CRASH:
+                RSTRLCAT(Buff, "crash", BUFF_SIZE);
+                break;
 
-                case F_IMMEDIATE:
-                    RSTRLCAT(Buff, "immediate", BUFF_SIZE);
-                    break;
+            case F_IMMEDIATE:
+                RSTRLCAT(Buff, "immediate", BUFF_SIZE);
+                break;
 
-                default:
-                    RSTRLCAT(Buff, "normal", BUFF_SIZE);
-                    break;
+            default:
+                RSTRLCAT(Buff, "normal", BUFF_SIZE);
+                break;
             }
         }
     }

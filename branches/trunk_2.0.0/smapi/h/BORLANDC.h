@@ -14,7 +14,7 @@
 #define SMAPI_BORLANDC_H
 
 #ifndef __TURBOC__
-  #error This file may be used only with Turbo C and Borland C !
+    #error This file may be used only with Turbo C and Borland C !
 #endif
 
 #  define HAS_MALLOC_H 1      /* use "#include <malloc.h>" for malloc() etc. */
@@ -24,20 +24,20 @@
 #  define HAS_SHARE_H  1  /* may use "#include <share.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
 
-#  if __TURBOC__ == 0x0295
-#    define HAS_strftime
-#    define HAS_mktime
-#  endif
+#if __TURBOC__ == 0x0295
+    #define HAS_strftime
+    #define HAS_mktime
+#endif
 
-#  if defined(__TURBOC__DOS__)     /* Turbo C/C++ & Borland C/C++ for MS-DOS */
-#    include "BCD.h"
+#if defined(__TURBOC__DOS__)     /* Turbo C/C++ & Borland C/C++ for MS-DOS */
+    #include "BCD.h"
 
-#  elif defined(__TURBOC__WIN32__) /* Borland C/C++ for Win32 */
-#    include "BCW.h"
+#elif defined(__TURBOC__WIN32__) /* Borland C/C++ for Win32 */
+    #include "BCW.h"
 
-#  elif defined(__TURBOC__OS2__)   /* Borland C/C++ for OS/2 */
-#    include "BCO.h"
-#  endif
+#elif defined(__TURBOC__OS2__)   /* Borland C/C++ for OS/2 */
+    #include "BCO.h"
+#endif
 
 typedef unsigned bit;
 
@@ -74,11 +74,11 @@ typedef   signed long      hSINT32;              /*  4 bytes */
 typedef unsigned long      hUINT32;              /*  4 bytes */
 
 #if !defined(__DOS__)
-  /* Not all compilers support this, test please (Stas Degteff) */
-  typedef   signed long long  hINT64;              /*  8 bytes */
-  typedef   signed long long hSINT64;              /*  8 bytes */
-  typedef unsigned long long hUINT64;              /*  8 bytes */
-  #define HAS_INT64
+    /* Not all compilers support this, test please (Stas Degteff) */
+    typedef   signed long long  hINT64;              /*  8 bytes */
+    typedef   signed long long hSINT64;              /*  8 bytes */
+    typedef unsigned long long hUINT64;              /*  8 bytes */
+    #define HAS_INT64
 #endif
 
 #endif

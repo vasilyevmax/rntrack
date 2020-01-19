@@ -35,7 +35,7 @@ sword _XPENTRY apiSquishCloseArea(HAREA ha);
 HMSG  _XPENTRY apiSquishOpenMsg(HAREA sq,word mode,dword msgnum);
 sword _XPENTRY apiSquishCloseMsg(HMSG msgh);
 dword _XPENTRY apiSquishReadMsg(HMSG msgh, PXMSG msg, dword offset, dword bytes,
-                              byte  *szText, dword clen, byte  *ctxt);
+                                byte  *szText, dword clen, byte  *ctxt);
 sword _XPENTRY apiSquishWriteMsg(HMSG msgh,word append,PXMSG msg,byte  *text,dword textlen,dword totlen,dword clen,byte  *ctxt);
 sword _XPENTRY apiSquishKillMsg(HAREA sq,dword msgnum);
 sword _XPENTRY apiSquishLock(HAREA sq);

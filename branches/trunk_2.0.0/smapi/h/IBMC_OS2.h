@@ -14,7 +14,7 @@
 #define SMAPI_IBMC_OS2_H
 
 #ifndef __IBMC__
-  #error This file may be used only with IBM C/Set++ and IBM VisualAge C/C++ for OS/2 !
+    #error This file may be used only with IBM C/Set++ and IBM VisualAge C/C++ for OS/2 !
 #endif
 
 #  define _stdc

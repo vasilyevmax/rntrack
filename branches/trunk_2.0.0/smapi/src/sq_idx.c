@@ -40,16 +40,16 @@ static char rcs_id[]="$Id$";
 #include "compiler.h"
 
 #ifdef HAS_UNISTD_H
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #include "memory.h"
@@ -70,13 +70,13 @@ static char rcs_id[]="$Id$";
 
 
 #ifdef __FLAT__
-  #define MORE_SPACE       256      /* Allow for up to 256 additions */
-  #define SEGMENT_SIZE    (MAX_hSINT32/(hSINT32)SQIDX_SIZE)
-  #define SHIFT_SIZE      32768
+    #define MORE_SPACE       256      /* Allow for up to 256 additions */
+    #define SEGMENT_SIZE    (MAX_hSINT32/(hSINT32)SQIDX_SIZE)
+    #define SHIFT_SIZE      32768
 #else
-  #define MORE_SPACE        16      /* Allow for up to 16 additions */
-  #define SEGMENT_SIZE    (32767L/(hSINT32)SQIDX_SIZE)
-  #define SHIFT_SIZE      8192
+    #define MORE_SPACE        16      /* Allow for up to 16 additions */
+    #define SEGMENT_SIZE    (32767L/(hSINT32)SQIDX_SIZE)
+    #define SHIFT_SIZE      8192
 #endif
 
 #define fmemmove memmove
@@ -85,25 +85,25 @@ static char rcs_id[]="$Id$";
 
 HIDX _SquishOpenIndex(HAREA ha)
 {
-  HIDX hix;
+    HIDX hix;
 
-  hix=palloc(sizeof(*hix));
-  if (hix==NULL)
-  {
-    msgapierr=MERR_NOMEM;
-    return NULL;
-  }
+    hix=palloc(sizeof(*hix));
+    if (hix==NULL)
+    {
+        msgapierr=MERR_NOMEM;
+        return NULL;
+    }
 
-  /* Store the current area handle */
+    /* Store the current area handle */
 
-  hix->id=ID_HIDX;
-  hix->ha=ha;
-  hix->lDeltaLo=-1;
-  hix->lDeltaHi=-1;
-  hix->cSeg=0;
-  hix->fBuffer=0;
+    hix->id=ID_HIDX;
+    hix->ha=ha;
+    hix->lDeltaLo=-1;
+    hix->lDeltaHi=-1;
+    hix->cSeg=0;
+    hix->fBuffer=0;
 
-  return hix;
+    return hix;
 }
 
 
@@ -111,20 +111,20 @@ HIDX _SquishOpenIndex(HAREA ha)
 
 dword _SquishIndexSize(HIDX hix)
 {
-  dword lSize;
-  int i;
+    dword lSize;
+    int i;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  if (!hix->fBuffer)
-    lSize=(dword)lseek(HixSqd->ifd, 0L, SEEK_END);
-  else
-  {
-    for (i=0, lSize=0; i < hix->cSeg; i++)
-      lSize += hix->pss[i].dwUsed * (dword)SQIDX_SIZE;
-  }
+    if (!hix->fBuffer)
+        lSize=(dword)lseek(HixSqd->ifd, 0L, SEEK_END);
+    else
+    {
+        for (i=0, lSize=0; i < hix->cSeg; i++)
+            lSize += hix->pss[i].dwUsed * (dword)SQIDX_SIZE;
+    }
 
-  return lSize;
+    return lSize;
 }
 
 
@@ -133,103 +133,103 @@ dword _SquishIndexSize(HIDX hix)
 
 int _SquishBeginBuffer(HIDX hix)
 {
-  dword dwMsgs;
-  int i;
+    dword dwMsgs;
+    int i;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  /* Multiple buffers are ok, but we only need to do it once */
+    /* Multiple buffers are ok, but we only need to do it once */
 
-  if (hix->fBuffer++ != 0)
+    if (hix->fBuffer++ != 0)
+        return TRUE;
+
+    hix->cSeg=(int)(hix->ha->num_msg / SEGMENT_SIZE) + 1;
+
+    /* Allocate memory for the array of segments */
+
+    hix->pss=palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
+    if (hix->pss==NULL)
+    {
+        msgapierr=MERR_NOMEM;
+        hix->fBuffer=0;
+        return FALSE;
+    }
+    dwMsgs=hix->ha->num_msg;                /* Read all messages into memory */
+    /* Find out how many records are in the file */
+
+    hix->lAllocatedRecords=lseek(HixSqd->ifd, 0L, SEEK_END);
+    if (hix->lAllocatedRecords < 0)
+    {
+        msgapierr=MERR_BADF;
+        hix->fBuffer=0;
+        return FALSE;
+    }
+    /* Find out the number of records, not the number of bytes */
+
+    hix->lAllocatedRecords /= SQIDX_SIZE;
+
+
+    /* Read from head of index file */
+
+    (void)lseek(HixSqd->ifd, 0L, SEEK_SET);
+
+    /* Repeat for each segment in the index file */
+
+    for (i=0; i < hix->cSeg; i++)
+    {
+        dword dwSize=min(dwMsgs+MORE_SPACE, (long)SEGMENT_SIZE);
+
+        /* Try to allocate memory for this segment */
+
+        hix->pss[i].psqi=farpalloc((size_t)dwSize * (size_t)sizeof(SQIDX));
+        if (hix->pss[i].psqi==NULL)
+        {
+            while (i--)
+                farpfree(hix->pss[i].psqi);
+
+            pfree(hix->pss);
+
+            msgapierr=MERR_NOMEM;
+            hix->fBuffer=0;
+            return FALSE;
+        }
+
+        hix->pss[i].dwMax=dwSize;
+
+        /* Now read in the messages for this segment */
+
+        dwSize=min(dwMsgs, SEGMENT_SIZE);
+
+        if (read_sqidx(HixSqd->ifd, hix->pss[i].psqi, dwSize) != 1)
+        {
+
+            do
+            {
+                farpfree(hix->pss[i].psqi);
+            }
+            while (i--);
+
+            pfree(hix->pss);
+
+            msgapierr=MERR_BADF;
+            hix->fBuffer=0;
+            return FALSE;
+        }
+
+        /* Decrement the count for msgs in the next segment, if necessary */
+
+        if (dwSize != SEGMENT_SIZE)
+            dwMsgs=0;
+        else
+            dwMsgs -= SEGMENT_SIZE;
+
+
+        hix->pss[i].dwUsed=dwSize;
+    }
+
+    /* Now we have the whole file in memory */
+
     return TRUE;
-
-  hix->cSeg=(int)(hix->ha->num_msg / SEGMENT_SIZE) + 1;
-
-  /* Allocate memory for the array of segments */
-
-  hix->pss=palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
-  if (hix->pss==NULL)
-  {
-    msgapierr=MERR_NOMEM;
-    hix->fBuffer=0;
-    return FALSE;
-  }
-  dwMsgs=hix->ha->num_msg;                /* Read all messages into memory */
-  /* Find out how many records are in the file */
-
-  hix->lAllocatedRecords=lseek(HixSqd->ifd, 0L, SEEK_END);
-  if (hix->lAllocatedRecords < 0)
-  {
-    msgapierr=MERR_BADF;
-    hix->fBuffer=0;
-    return FALSE;
-  }
-  /* Find out the number of records, not the number of bytes */
-
-  hix->lAllocatedRecords /= SQIDX_SIZE;
-
-
-  /* Read from head of index file */
-
-  (void)lseek(HixSqd->ifd, 0L, SEEK_SET);
-
-  /* Repeat for each segment in the index file */
-
-  for (i=0; i < hix->cSeg; i++)
-  {
-    dword dwSize=min(dwMsgs+MORE_SPACE, (long)SEGMENT_SIZE);
-
-    /* Try to allocate memory for this segment */
-
-    hix->pss[i].psqi=farpalloc((size_t)dwSize * (size_t)sizeof(SQIDX));
-    if (hix->pss[i].psqi==NULL)
-    {
-      while (i--)
-        farpfree(hix->pss[i].psqi);
-
-      pfree(hix->pss);
-
-      msgapierr=MERR_NOMEM;
-      hix->fBuffer=0;
-      return FALSE;
-    }
-
-    hix->pss[i].dwMax=dwSize;
-
-    /* Now read in the messages for this segment */
-
-    dwSize=min(dwMsgs, SEGMENT_SIZE);
-
-    if (read_sqidx(HixSqd->ifd, hix->pss[i].psqi, dwSize) != 1)
-    {
-
-      do
-      {
-        farpfree(hix->pss[i].psqi);
-      }
-      while (i--);
-
-      pfree(hix->pss);
-
-      msgapierr=MERR_BADF;
-      hix->fBuffer=0;
-      return FALSE;
-    }
-
-    /* Decrement the count for msgs in the next segment, if necessary */
-
-    if (dwSize != SEGMENT_SIZE)
-      dwMsgs=0;
-    else
-      dwMsgs -= SEGMENT_SIZE;
-
-
-    hix->pss[i].dwUsed=dwSize;
-  }
-
-  /* Now we have the whole file in memory */
-
-  return TRUE;
 }
 
 
@@ -237,18 +237,18 @@ int _SquishBeginBuffer(HIDX hix)
 
 static SQIDX far *sidx(HIDX hix, dword dwMsg)
 {
-  dword dwStart=1L;
-  int i;
+    dword dwStart=1L;
+    int i;
 
-  for (i=0; i < hix->cSeg; i++)
-  {
-    if (dwMsg >= dwStart && dwMsg < dwStart + hix->pss[i].dwUsed)
-      return hix->pss[i].psqi + (size_t)(dwMsg - dwStart);
+    for (i=0; i < hix->cSeg; i++)
+    {
+        if (dwMsg >= dwStart && dwMsg < dwStart + hix->pss[i].dwUsed)
+            return hix->pss[i].psqi + (size_t)(dwMsg - dwStart);
 
-    dwStart += hix->pss[i].dwUsed;
-  }
+        dwStart += hix->pss[i].dwUsed;
+    }
 
-  return NULL;
+    return NULL;
 }
 
 
@@ -256,30 +256,30 @@ static SQIDX far *sidx(HIDX hix, dword dwMsg)
 
 int SidxGet(HIDX hix, dword dwMsg, SQIDX *psqi)
 {
-  SQIDX far *psqiFound;
+    SQIDX far *psqiFound;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  if (!hix->fBuffer)
-  {
-    (void)lseek(HixSqd->ifd, (long)(dwMsg-1) * (long)SQIDX_SIZE, SEEK_SET);
-
-    if (read_sqidx(HixSqd->ifd, psqi, 1) != 1)
+    if (!hix->fBuffer)
     {
-      msgapierr=MERR_BADF;
-      return FALSE;
+        (void)lseek(HixSqd->ifd, (long)(dwMsg-1) * (long)SQIDX_SIZE, SEEK_SET);
+
+        if (read_sqidx(HixSqd->ifd, psqi, 1) != 1)
+        {
+            msgapierr=MERR_BADF;
+            return FALSE;
+        }
+
+        return TRUE;
     }
 
+    psqiFound=sidx(hix, dwMsg);
+
+    if (!psqiFound)
+        return FALSE;
+
+    *psqi=*psqiFound;
     return TRUE;
-  }
-
-  psqiFound=sidx(hix, dwMsg);
-
-  if (!psqiFound)
-    return FALSE;
-
-  *psqi=*psqiFound;
-  return TRUE;
 }
 
 
@@ -289,123 +289,123 @@ int SidxGet(HIDX hix, dword dwMsg, SQIDX *psqi)
 
 static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
 {
-  SQIDXSEG *pss;
+    SQIDXSEG *pss;
 
 
-  /* If we need to expand the index file on disk, do so now */
+    /* If we need to expand the index file on disk, do so now */
 
-  if ((long)hix->ha->num_msg > hix->lAllocatedRecords)
-  {
-    long lSize;
-    SQIDX sqi;
-
-    /* Make room for up to 64 new records */
-
-    hix->lAllocatedRecords=hix->ha->num_msg+64;
-    lSize=(hix->lAllocatedRecords-1) * (long)SQIDX_SIZE;
-
-    sqi.ofs=0L;
-    sqi.umsgid=(UMSGID)-1L;
-    sqi.hash=(UMSGID)-1L;
-
-    /* Write a blank index entry at the appropriate location to fill        *
-     * up the file.                                                         */
-
-    if (lseek(HixSqd->ifd, lSize, SEEK_SET) != lSize ||
-        write_sqidx(HixSqd->ifd, &sqi, 1) != 1)
+    if ((long)hix->ha->num_msg > hix->lAllocatedRecords)
     {
-      msgapierr=MERR_NODS;
-      return FALSE;
-    }
-  }
+        long lSize;
+        SQIDX sqi;
 
-  /* If we already have some segments... */
+        /* Make room for up to 64 new records */
 
-  if (hix->cSeg)
-  {
-    /* Add to an existing segment */
+        hix->lAllocatedRecords=hix->ha->num_msg+64;
+        lSize=(hix->lAllocatedRecords-1) * (long)SQIDX_SIZE;
 
-    pss=hix->pss + hix->cSeg-1;
+        sqi.ofs=0L;
+        sqi.umsgid=(UMSGID)-1L;
+        sqi.hash=(UMSGID)-1L;
 
-    /* If the record fits within this segment, just append it. */
+        /* Write a blank index entry at the appropriate location to fill        *
+         * up the file.                                                         */
 
-    if (pss->dwUsed < pss->dwMax)
-    {
-      pss->psqi[(size_t)pss->dwUsed]=*psqi;
-      pss->dwUsed++;
-      return TRUE;
+        if (lseek(HixSqd->ifd, lSize, SEEK_SET) != lSize ||
+                write_sqidx(HixSqd->ifd, &sqi, 1) != 1)
+        {
+            msgapierr=MERR_NODS;
+            return FALSE;
+        }
     }
 
-    /* If we can expand this segment by reallocating memory... */
+    /* If we already have some segments... */
 
-    if (pss->dwMax < SEGMENT_SIZE)
+    if (hix->cSeg)
     {
-      SQIDX far *psqiNew;
+        /* Add to an existing segment */
 
-      assert(pss->dwMax >= pss->dwUsed);
+        pss=hix->pss + hix->cSeg-1;
 
-      /* Don't use realloc because we cannot afford to lose the info that we  *
-       * already have!                                                        */
+        /* If the record fits within this segment, just append it. */
 
-      psqiNew=farpalloc(((size_t)pss->dwMax + MORE_SPACE) * SQIDX_SIZE);
-      if (psqiNew==NULL)
-      {
+        if (pss->dwUsed < pss->dwMax)
+        {
+            pss->psqi[(size_t)pss->dwUsed]=*psqi;
+            pss->dwUsed++;
+            return TRUE;
+        }
+
+        /* If we can expand this segment by reallocating memory... */
+
+        if (pss->dwMax < SEGMENT_SIZE)
+        {
+            SQIDX far *psqiNew;
+
+            assert(pss->dwMax >= pss->dwUsed);
+
+            /* Don't use realloc because we cannot afford to lose the info that we  *
+             * already have!                                                        */
+
+            psqiNew=farpalloc(((size_t)pss->dwMax + MORE_SPACE) * SQIDX_SIZE);
+            if (psqiNew==NULL)
+            {
+                msgapierr=MERR_NOMEM;
+                return FALSE;
+            }
+
+            (void) fmemmove(psqiNew,
+                            pss->psqi,
+                            (size_t)pss->dwUsed * (size_t)SQIDX_SIZE);
+
+            psqiNew[(size_t)pss->dwUsed]=*psqi;
+
+            pss->dwUsed++;
+            pss->dwMax += MORE_SPACE;
+
+            farpfree(pss->psqi);
+            pss->psqi=psqiNew;
+            return TRUE;
+        }
+    }
+
+
+    /* If we arrived here, we either have no segments, or all of our          *
+     * existing segments are full.  To handle this, we need to reallocate     *
+     * the array of pointers to segments and add a new one.                   */
+
+    pss=palloc(sizeof(SQIDXSEG) * (size_t)(hix->cSeg+1));
+    if (pss==NULL)
+    {
         msgapierr=MERR_NOMEM;
         return FALSE;
-      }
-
-      (void) fmemmove(psqiNew,
-                      pss->psqi,
-                      (size_t)pss->dwUsed * (size_t)SQIDX_SIZE);
-
-      psqiNew[(size_t)pss->dwUsed]=*psqi;
-
-      pss->dwUsed++;
-      pss->dwMax += MORE_SPACE;
-
-      farpfree(pss->psqi);
-      pss->psqi=psqiNew;
-      return TRUE;
     }
-  }
 
+    (void)memmove(pss, hix->pss, (size_t)hix->cSeg * sizeof(SQIDXSEG));
+    pfree(hix->pss);
+    hix->pss=pss;
 
-  /* If we arrived here, we either have no segments, or all of our          *
-   * existing segments are full.  To handle this, we need to reallocate     *
-   * the array of pointers to segments and add a new one.                   */
+    /* Allocate memory for the new segment */
 
-  pss=palloc(sizeof(SQIDXSEG) * (size_t)(hix->cSeg+1));
-  if (pss==NULL)
-  {
-    msgapierr=MERR_NOMEM;
-    return FALSE;
-  }
+    hix->pss[hix->cSeg].psqi=farpalloc(MORE_SPACE * SQIDX_SIZE);
+    if (hix->pss[hix->cSeg].psqi==NULL)
+    {
+        msgapierr=MERR_NOMEM;
+        return FALSE;
+    }
 
-  (void)memmove(pss, hix->pss, (size_t)hix->cSeg * sizeof(SQIDXSEG));
-  pfree(hix->pss);
-  hix->pss=pss;
+    pss=hix->pss + hix->cSeg;
 
-  /* Allocate memory for the new segment */
+    /* Add the specified record to our indices */
 
-  hix->pss[hix->cSeg].psqi=farpalloc(MORE_SPACE * SQIDX_SIZE);
-  if (hix->pss[hix->cSeg].psqi==NULL)
-  {
-    msgapierr=MERR_NOMEM;
-    return FALSE;
-  }
+    pss->dwUsed=1;
+    pss->dwMax=MORE_SPACE;
+    *pss->psqi=*psqi;
 
-  pss=hix->pss + hix->cSeg;
+    /* Increment the segment count */
 
-  /* Add the specified record to our indices */
-
-  pss->dwUsed=1;
-  pss->dwMax=MORE_SPACE;
-  *pss->psqi=*psqi;
-
-  /* Increment the segment count */
-
-  hix->cSeg++;
-  return TRUE;
+    hix->cSeg++;
+    return TRUE;
 }
 
 
@@ -413,53 +413,53 @@ static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
 
 int SidxPut(HIDX hix, dword dwMsg, SQIDX *psqi)
 {
-  SQIDX far *psqiFound;
-  int rc;
+    SQIDX far *psqiFound;
+    int rc;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  if (!hix->fBuffer)
-  {
-    (void)lseek(HixSqd->ifd, (long)(dwMsg-1) * (long)SQIDX_SIZE, SEEK_SET);
-
-    if (write_sqidx(HixSqd->ifd, psqi, 1) != 1)
+    if (!hix->fBuffer)
     {
-      msgapierr=MERR_NODS;
-      return FALSE;
+        (void)lseek(HixSqd->ifd, (long)(dwMsg-1) * (long)SQIDX_SIZE, SEEK_SET);
+
+        if (write_sqidx(HixSqd->ifd, psqi, 1) != 1)
+        {
+            msgapierr=MERR_NODS;
+            return FALSE;
+        }
+
+        return TRUE;
     }
 
-    return TRUE;
-  }
+    /* If we can't find the appropriate index record */
 
-  /* If we can't find the appropriate index record */
+    psqiFound=sidx(hix, dwMsg);
+    if (psqiFound==NULL)
+    {
+        rc=FALSE;
 
-  psqiFound=sidx(hix, dwMsg);
-  if (psqiFound==NULL)
-  {
-    rc=FALSE;
+        /* If the index is out of range, only create a new record if it's       *
+         * to be placed at EOF.                                                 */
 
-    /* If the index is out of range, only create a new record if it's       *
-     * to be placed at EOF.                                                 */
+        if (dwMsg==hix->ha->num_msg+1)
+            rc=_SquishAppendIndexRecord(hix, psqi);
+    }
+    else
+    {
+        *psqiFound=*psqi;
+        rc=TRUE;
+    }
 
-    if (dwMsg==hix->ha->num_msg+1)
-      rc=_SquishAppendIndexRecord(hix, psqi);
-  }
-  else
-  {
-    *psqiFound=*psqi;
-    rc=TRUE;
-  }
+    if (rc)
+    {
+        if (hix->lDeltaLo==-1 || hix->lDeltaLo > (long)dwMsg)
+            hix->lDeltaLo=(long)dwMsg;
 
-  if (rc)
-  {
-    if (hix->lDeltaLo==-1 || hix->lDeltaLo > (long)dwMsg)
-      hix->lDeltaLo=(long)dwMsg;
+        if (hix->lDeltaHi==-1 || hix->lDeltaHi < (long)dwMsg)
+            hix->lDeltaHi=(long)dwMsg;
+    }
 
-    if (hix->lDeltaHi==-1 || hix->lDeltaHi < (long)dwMsg)
-      hix->lDeltaHi=(long)dwMsg;
-  }
-
-  return rc;
+    return rc;
 }
 
 
@@ -468,114 +468,114 @@ int SidxPut(HIDX hix, dword dwMsg, SQIDX *psqi)
 unsigned _SquishRemoveIndexEntry(HIDX hix, dword dwMsg, SQIDX *psqiOut,
                                  SQHDR *psqh, int fFixPointers)
 {
-  SQIDX sqi;
-  char *pcBuf;
-  int got, i;
+    SQIDX sqi;
+    char *pcBuf;
+    int got, i;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  /* Create a blank record for writing at the end */
+    /* Create a blank record for writing at the end */
 
-  sqi.ofs=NULL_FRAME;
-  sqi.umsgid=(UMSGID)-1L;
-  sqi.hash=(dword)-1L;
+    sqi.ofs=NULL_FRAME;
+    sqi.umsgid=(UMSGID)-1L;
+    sqi.hash=(dword)-1L;
 
-  if (hix->fBuffer)
-  {
-    dword dwStart=1L;
-
-    /* Find the segment containing the deleted message */
-
-    for (i=0; i < hix->cSeg; i++)
+    if (hix->fBuffer)
     {
-      /* If it's in this segment */
+        dword dwStart=1L;
 
-      if (dwMsg >= dwStart && dwMsg < dwStart + hix->pss[i].dwUsed)
-      {
-        int j=(int)(dwMsg-dwStart);
-        unsigned rc=TRUE;
+        /* Find the segment containing the deleted message */
 
-        /* If caller wants copy of deleted record */
+        for (i=0; i < hix->cSeg; i++)
+        {
+            /* If it's in this segment */
 
-        if (psqiOut)
-          *psqiOut=hix->pss[i].psqi[j];
+            if (dwMsg >= dwStart && dwMsg < dwStart + hix->pss[i].dwUsed)
+            {
+                int j=(int)(dwMsg-dwStart);
+                unsigned rc=TRUE;
 
-        /* Shift the rest of the text over this segment */
+                /* If caller wants copy of deleted record */
 
-        (void)fmemmove(hix->pss[i].psqi+j, hix->pss[i].psqi+j+1,
-                       (size_t)(hix->pss[i].dwUsed - (dword)j - (dword)1)
-                          * (size_t)SQIDX_SIZE);
+                if (psqiOut)
+                    *psqiOut=hix->pss[i].psqi[j];
 
-        hix->pss[i].dwUsed--;
+                /* Shift the rest of the text over this segment */
 
-        if (!_SquishAppendIndexRecord(hix, &sqi))
-          rc=FALSE;
+                (void)fmemmove(hix->pss[i].psqi+j, hix->pss[i].psqi+j+1,
+                               (size_t)(hix->pss[i].dwUsed - (dword)j - (dword)1)
+                               * (size_t)SQIDX_SIZE);
 
-        if (hix->lDeltaLo==-1 || hix->lDeltaLo > (long)dwMsg)
-          hix->lDeltaLo=(long)dwMsg;
+                hix->pss[i].dwUsed--;
 
-        hix->lDeltaHi=(long)_SquishIndexSize(hix) / (long)SQIDX_SIZE;
+                if (!_SquishAppendIndexRecord(hix, &sqi))
+                    rc=FALSE;
 
-        if (fFixPointers && rc)
-          return _SquishFixMemoryPointers(hix->ha, dwMsg, psqh);
-        else
-          return rc;
-      }
+                if (hix->lDeltaLo==-1 || hix->lDeltaLo > (long)dwMsg)
+                    hix->lDeltaLo=(long)dwMsg;
 
-      dwStart += hix->pss[i].dwUsed;
+                hix->lDeltaHi=(long)_SquishIndexSize(hix) / (long)SQIDX_SIZE;
+
+                if (fFixPointers && rc)
+                    return _SquishFixMemoryPointers(hix->ha, dwMsg, psqh);
+                else
+                    return rc;
+            }
+
+            dwStart += hix->pss[i].dwUsed;
+        }
+
+        /* Huh?  Message not in index! */
+
+        return FALSE;
     }
 
-    /* Huh?  Message not in index! */
 
-    return FALSE;
-  }
+    /* Else if it's not buffered: */
 
 
-  /* Else if it's not buffered: */
+    (void)lseek(HixSqd->ifd, (long)dwMsg * (long)SQIDX_SIZE, SEEK_SET);
 
-
-  (void)lseek(HixSqd->ifd, (long)dwMsg * (long)SQIDX_SIZE, SEEK_SET);
-
-  pcBuf=palloc(SHIFT_SIZE);
-  if (pcBuf==NULL)
-  {
-    msgapierr=MERR_NOMEM;
-    return FALSE;
-  }
-
-  /* Only shifting - read_sqidx() is not required */
-  while ((got=read(HixSqd->ifd, pcBuf, SHIFT_SIZE)) > 0)
-  {
-    /* Skip back to one position before this index entry */
-
-    (void)lseek(HixSqd->ifd, -(long)got - SQIDX_SIZE, SEEK_CUR);
-
-    if (write(HixSqd->ifd, pcBuf, (unsigned)got) != got)
+    pcBuf=palloc(SHIFT_SIZE);
+    if (pcBuf==NULL)
     {
-      msgapierr=MERR_BADF;
-      return FALSE;
+        msgapierr=MERR_NOMEM;
+        return FALSE;
     }
 
-    (void)lseek(HixSqd->ifd, (long)SQIDX_SIZE, SEEK_CUR);
-  }
+    /* Only shifting - read_sqidx() is not required */
+    while ((got=read(HixSqd->ifd, pcBuf, SHIFT_SIZE)) > 0)
+    {
+        /* Skip back to one position before this index entry */
 
-  pfree(pcBuf);
+        (void)lseek(HixSqd->ifd, -(long)got - SQIDX_SIZE, SEEK_CUR);
 
-  /* Now write the last entry to stomp over the index element that is at    *
-   * the end of the file.                                                   */
+        if (write(HixSqd->ifd, pcBuf, (unsigned)got) != got)
+        {
+            msgapierr=MERR_BADF;
+            return FALSE;
+        }
 
-  (void)lseek(HixSqd->ifd, -(long)SQIDX_SIZE, SEEK_CUR);
+        (void)lseek(HixSqd->ifd, (long)SQIDX_SIZE, SEEK_CUR);
+    }
 
-  if (write_sqidx(HixSqd->ifd, &sqi, 1) != 1)
-  {
-    msgapierr=MERR_BADF;
-    return FALSE;
-  }
+    pfree(pcBuf);
 
-  if (fFixPointers)
-    return _SquishFixMemoryPointers(hix->ha, dwMsg, psqh);
-  else
-    return TRUE;
+    /* Now write the last entry to stomp over the index element that is at    *
+     * the end of the file.                                                   */
+
+    (void)lseek(HixSqd->ifd, -(long)SQIDX_SIZE, SEEK_CUR);
+
+    if (write_sqidx(HixSqd->ifd, &sqi, 1) != 1)
+    {
+        msgapierr=MERR_BADF;
+        return FALSE;
+    }
+
+    if (fFixPointers)
+        return _SquishFixMemoryPointers(hix->ha, dwMsg, psqh);
+    else
+        return TRUE;
 }
 
 
@@ -584,17 +584,17 @@ unsigned _SquishRemoveIndexEntry(HIDX hix, dword dwMsg, SQIDX *psqiOut,
 
 unsigned _SquishCloseIndex(HIDX hix)
 {
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  while (hix->fBuffer)
-    if (!_SquishEndBuffer(hix))
-      return FALSE;
+    while (hix->fBuffer)
+        if (!_SquishEndBuffer(hix))
+            return FALSE;
 
-  hix->id=0;
+    hix->id=0;
 
-  pfree(hix);
+    pfree(hix);
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -603,108 +603,108 @@ unsigned _SquishCloseIndex(HIDX hix)
 
 int _SquishEndBuffer(HIDX hix)
 {
-  int i;
-  int rc=TRUE;
-  long lSize;
+    int i;
+    int rc=TRUE;
+    long lSize;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  if (hix->fBuffer==0)
-    return FALSE;
+    if (hix->fBuffer==0)
+        return FALSE;
 
-  if (--hix->fBuffer != 0)
-    return TRUE;
-
-
-  /* Reduce the index file to the size that it really should be */
-
-  lSize=(long)hix->ha->num_msg * (long)SQIDX_SIZE;
-  setfsize(HixSqd->ifd, lSize);
+    if (--hix->fBuffer != 0)
+        return TRUE;
 
 
-  /* If we need to rewrite the index */
+    /* Reduce the index file to the size that it really should be */
 
-  if (hix->lDeltaLo != -1 && hix->lDeltaHi != -1)
-  {
-    dword dwStart=1;
+    lSize=(long)hix->ha->num_msg * (long)SQIDX_SIZE;
+    setfsize(HixSqd->ifd, lSize);
 
-    (void) lseek(HixSqd->ifd,
-                 (hix->lDeltaLo - 1L) * (long)SQIDX_SIZE,
-                 SEEK_SET);
+
+    /* If we need to rewrite the index */
+
+    if (hix->lDeltaLo != -1 && hix->lDeltaHi != -1)
+    {
+        dword dwStart=1;
+
+        (void) lseek(HixSqd->ifd,
+                     (hix->lDeltaLo - 1L) * (long)SQIDX_SIZE,
+                     SEEK_SET);
+
+        for (i=0; i < hix->cSeg; i++)
+        {
+            /* If this buffer is within the "delta" range */
+
+            if ((long)dwStart + (long)hix->pss[i].dwUsed > hix->lDeltaLo &&
+                    (long)dwStart <= hix->lDeltaHi)
+            {
+                size_t j, size;
+
+                if ((long)dwStart > hix->lDeltaLo)
+                    j=0;
+                else
+                    j=(size_t)(hix->lDeltaLo-(long)dwStart);
+
+                if ((long)dwStart + (long)hix->pss[i].dwUsed > hix->lDeltaHi)
+                    size = (size_t)(hix->lDeltaHi - (long)dwStart + 1L);
+                else
+                    size = (size_t)(hix->pss[i].dwUsed);
+
+                size -= j;
+
+                if (rc)
+                {
+                    if (write_sqidx(HixSqd->ifd, (hix->pss[i].psqi+j), (dword)size)
+                            != 1)
+
+                    {
+                        msgapierr=MERR_NODS;
+                        rc=FALSE;
+                    }
+                }
+            }
+
+            dwStart += hix->pss[i].dwUsed;
+        }
+    }
+
+
+    /* Free the memory used by these segments */
 
     for (i=0; i < hix->cSeg; i++)
-    {
-      /* If this buffer is within the "delta" range */
+        farpfree(hix->pss[i].psqi);
 
-      if ((long)dwStart + (long)hix->pss[i].dwUsed > hix->lDeltaLo &&
-          (long)dwStart <= hix->lDeltaHi)
-      {
-        size_t j, size;
+    pfree(hix->pss);
+    hix->cSeg=0;
 
-        if ((long)dwStart > hix->lDeltaLo)
-          j=0;
-        else
-          j=(size_t)(hix->lDeltaLo-(long)dwStart);
-
-        if ((long)dwStart + (long)hix->pss[i].dwUsed > hix->lDeltaHi)
-          size = (size_t)(hix->lDeltaHi - (long)dwStart + 1L);
-        else
-          size = (size_t)(hix->pss[i].dwUsed);
-
-        size -= j;
-
-        if (rc)
-        {
-          if (write_sqidx(HixSqd->ifd, (hix->pss[i].psqi+j), (dword)size)
-                 != 1)
-
-          {
-            msgapierr=MERR_NODS;
-            rc=FALSE;
-          }
-        }
-      }
-
-      dwStart += hix->pss[i].dwUsed;
-    }
-  }
-
-
-  /* Free the memory used by these segments */
-
-  for (i=0; i < hix->cSeg; i++)
-    farpfree(hix->pss[i].psqi);
-
-  pfree(hix->pss);
-  hix->cSeg=0;
-
-  return rc;
+    return rc;
 }
 
 /* Free the index file buffer */
 
 int _SquishFreeBuffer(HIDX hix)
 {
-  int i;
-  int rc=TRUE;
+    int i;
+    int rc=TRUE;
 
-  assert(hix->id==ID_HIDX);
+    assert(hix->id==ID_HIDX);
 
-  if (hix->fBuffer==0)
-    return FALSE;
+    if (hix->fBuffer==0)
+        return FALSE;
 
-  if (--hix->fBuffer != 0)
-    return TRUE;
+    if (--hix->fBuffer != 0)
+        return TRUE;
 
 
-  /* Free the memory used by these segments */
+    /* Free the memory used by these segments */
 
-  for (i=0; i < hix->cSeg; i++)
-    farpfree(hix->pss[i].psqi);
+    for (i=0; i < hix->cSeg; i++)
+        farpfree(hix->pss[i].psqi);
 
-  pfree(hix->pss);
-  hix->cSeg=0;
+    pfree(hix->pss);
+    hix->cSeg=0;
 
-  return rc;
+    return rc;
 }
 

@@ -24,14 +24,14 @@
 
 #ifdef USEDIRFORTC
 
-#include <dir.h>
+    #include <dir.h>
 
 
 #elif defined(__EMX__)
 #elif defined(__unix__)
 #elif defined(SASC)
 #else
-#include <direct.h>
+    #include <direct.h>
 #endif
 
 #endif

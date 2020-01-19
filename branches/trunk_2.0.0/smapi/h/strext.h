@@ -163,19 +163,21 @@ int copyString(char *str, char **pmem);
 int copyStringUntilSep(char *str, char *seps, char **dest);
 
 /* Structures for compact storage of array of NUL-terminated strings of
- * various length. 
- * s_str_array is just one memory allocation and contains no pointers, 
+ * various length.
+ * s_str_array is just one memory allocation and contains no pointers,
  * so it can be freed by single free() and copied with memcpy()
  * Use for nonmutable collections of (short) strings.
  */
-typedef union str_mess {
-	int offsets[1];   /* offsets in bytes from start of union, used as index for strings[] */
-	char strings[1];  /* NUL-terminated strings */
+typedef union str_mess
+{
+    int offsets[1];   /* offsets in bytes from start of union, used as index for strings[] */
+    char strings[1];  /* NUL-terminated strings */
 } u_str_mess;
 
-typedef struct str_array {
-	int count;        /* Number of entries in data.offset array */
-	u_str_mess data;
+typedef struct str_array
+{
+    int count;        /* Number of entries in data.offset array */
+    u_str_mess data;
 } s_str_array;
 
 /* Get an address of n-th string in s_str_array *a */

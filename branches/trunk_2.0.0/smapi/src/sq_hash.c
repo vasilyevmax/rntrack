@@ -38,14 +38,14 @@ static char rcs_id[]="$Id$";
 #include "compiler.h"
 
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #include "memory.h"
@@ -64,14 +64,14 @@ static char rcs_id[]="$Id$";
 
 dword _XPENTRY apiSquishGetHash(HAREA ha, dword dwMsg)
 {
-  SQIDX sqi;
+    SQIDX sqi;
 
-  if (!SidxGet(Sqd->hix, dwMsg, &sqi))
-  {
-    return (dword)0L;
-  }
+    if (!SidxGet(Sqd->hix, dwMsg, &sqi))
+    {
+        return (dword)0L;
+    }
 
-  msgapierr=MERR_NONE;
-  return sqi.hash;
+    msgapierr=MERR_NONE;
+    return sqi.hash;
 }
 

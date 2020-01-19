@@ -15,12 +15,12 @@
 
 #include "constant.hpp"
 #ifndef __GNUC__
-  #include <io.h>
-  #include <direct.h>
+    #include <io.h>
+    #include <direct.h>
 #else
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <unistd.h>
+    #include <sys/types.h>
+    #include <dirent.h>
+    #include <unistd.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,7 +43,7 @@
 #include "progprot.h"
 
 #ifdef _AIX_CONV
-  #include "aix_conv.hpp"
+    #include "aix_conv.hpp"
 #endif
 
 // ---------------------------
@@ -299,12 +299,12 @@ void PrepKluChain(char * & Ctrl, cMSG & m, bool IsKludge)
         if(Klu->Name() != NULL && strlen(Klu->Name()) != 0)
         {
             if((stricmp(Klu->Name(), "SEEN-BY:")    == 0) ||
-               (strcmp(Klu->Name(), "---")          == 0) ||
-               (stricmp(Klu->Name(), "\1VIA")       == 0) ||
-               (stricmp(Klu->Name(), "\1Recd")      == 0) ||
-               (stricmp(Klu->Name(), "\1Forwarded") == 0) ||
-               (stricmp(Klu->Name(), " * Origin:")  == 0) ||
-               (stricmp(Klu->Name(), "\1PATH:")     == 0))
+                    (strcmp(Klu->Name(), "---")          == 0) ||
+                    (stricmp(Klu->Name(), "\1VIA")       == 0) ||
+                    (stricmp(Klu->Name(), "\1Recd")      == 0) ||
+                    (stricmp(Klu->Name(), "\1Forwarded") == 0) ||
+                    (stricmp(Klu->Name(), " * Origin:")  == 0) ||
+                    (stricmp(Klu->Name(), "\1PATH:")     == 0))
             {
                 if(IsKludge != TRUE)
                 {
@@ -430,7 +430,7 @@ bool WriteMsgBody(cMSG & m, FILE * fh)
 
 // ---------------------------
 
-MSGBASE::~MSGBASE(){}
+MSGBASE::~MSGBASE() {}
 
 MSGASMSG::MSGASMSG()
 {
@@ -501,7 +501,7 @@ bool MSGASMSG::Set(char * Dir, int BaseType)
     if(!CreateMissingBase && !DirExists(Dir))
     {
         Log.Level(LOGD) << "MSGASMSG.Set: Message base directory '" << Dir <<
-                           "' is not exist." << EOL;
+                        "' is not exist." << EOL;
         return FALSE;
     }
 
@@ -684,12 +684,12 @@ bool MSGASMSG::Renumber(void)
                         sprintf(Buff, "%s%u" MsgExtension, DirName, Num);
                         sprintf(Buff2, "%s%u" MsgExtension, DirName, NewNum);
                         Log.Level(LOGD) << "Rename '" << Buff << "' to '" <<
-                                           Buff2 << "'" << EOL;
+                                        Buff2 << "'" << EOL;
 
                         if(rename(Buff, Buff2) != 0)
                         {
                             Log.Level(LOGE) << "Unable to rename '" << Buff <<
-                                               "' to '" << Buff2 << "'" << EOL;
+                                            "' to '" << Buff2 << "'" << EOL;
                             return FALSE;
                         }
 
@@ -856,20 +856,20 @@ bool MSGASMSG::ReadMsg(cMSG & m)
     CheckMem(Buff);
     sprintf(Buff, "%s%u" MsgExtension, DirName, MsgNum);
 
-/*   if (MaxMsgSize != 0)
-   {
-    if (!stat(Buff,&tmp_stat))
-    {
-     if ((uint)tmp_stat.st_size > MaxMsgSize)
-     {
-      Log.Level(LOGE) << "   Error: size of MSG '" << Buff << "' is " <<
-                         (uint)tmp_stat.st_size << " (" << MaxMsgSize << "
-                            allowed)." << EOL;
-      free(Buff);
-      return FALSE;
-     }
-    }
-   }*/
+    /*   if (MaxMsgSize != 0)
+       {
+        if (!stat(Buff,&tmp_stat))
+        {
+         if ((uint)tmp_stat.st_size > MaxMsgSize)
+         {
+          Log.Level(LOGE) << "   Error: size of MSG '" << Buff << "' is " <<
+                             (uint)tmp_stat.st_size << " (" << MaxMsgSize << "
+                                allowed)." << EOL;
+          free(Buff);
+          return FALSE;
+         }
+        }
+       }*/
 
     fh = fopen(Buff, "rb");
     i  = errno;
@@ -879,7 +879,7 @@ bool MSGASMSG::ReadMsg(cMSG & m)
         if(i != EACCES)
         {
             Log.Level(LOGE) << "Unable to open message '" << Buff <<
-                               "', Errno: " << i << EOL;
+                            "', Errno: " << i << EOL;
         }
 
         free(Buff);
@@ -894,7 +894,7 @@ bool MSGASMSG::ReadMsg(cMSG & m)
     {
         i = errno;
         Log.Level(LOGE) << "Unable to read message header, Errno: " << i <<
-                           EOL;
+                        EOL;
         fclose(fh);
         return FALSE;
     }
@@ -940,7 +940,7 @@ bool MSGASMSG::ReadMsg(cMSG & m)
     {
         i = errno;
         Log.Level(LOGE) << "Unable to seek to end of message, Errno: " << i <<
-                           EOL;
+                        EOL;
         fclose(fh);
         return FALSE;
     }
@@ -967,7 +967,7 @@ bool MSGASMSG::ReadMsg(cMSG & m)
     {
         i = errno;
         Log.Level(LOGE) <<
-        "Unable to seek to beginning of message, Errno: " << i << EOL;
+                        "Unable to seek to beginning of message, Errno: " << i << EOL;
         fclose(fh);
         return FALSE;
     }
@@ -1110,7 +1110,7 @@ void MSGASMSG::Print(void)
     if(LogLevel >= 5)
     {
         Log.Level(LOGD) << "---------------- MSGASMSG -------------------" <<
-                           EOL;
+                        EOL;
 
         if(DirName != NULL)
         {

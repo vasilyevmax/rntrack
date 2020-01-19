@@ -4,7 +4,7 @@
  *  configure.hpp - Configuration routines
  *
  *  Copyright (c) 2003-2005 Alex Soukhotine, 2:5030/1157
- *	
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -12,12 +12,13 @@
  *
  *  $Id$
  */
-    
+
 #ifndef _CONFIGURE_HPP_
 #define _CONFIGURE_HPP_
 
 typedef enum {LEX_START, LEX_PARSE, LEX_DIGIT, LEX_COMMENT, LEX_STRING,
-              LEX_CRLF, LEX_END, LEX_TOKEN, LEX_ERROR, LEX_COMMLINE} tLexState;
+              LEX_CRLF, LEX_END, LEX_TOKEN, LEX_ERROR, LEX_COMMLINE
+             } tLexState;
 
 int ParseConfig(const char * CfgFile);
 #undef yyerror

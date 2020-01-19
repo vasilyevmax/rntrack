@@ -34,7 +34,9 @@
  * (If file do not content any code some compilers report about error.)
  */
 size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
-{ return strftime(string, maxsize, format, current_time); }
+{
+    return strftime(string, maxsize, format, current_time);
+}
 
 #else
 /* We own implementation instead strftime() */
@@ -82,9 +84,9 @@ size_t cdecl strftim(char *string, size_t maxsize, const char *format, const str
 
             case 'c':
                 sprintf(out, "%02d-%02d-%02d %02d:%02d:%02d",
-                  current_time->tm_mon + 1, current_time->tm_mday,
-                  current_time->tm_year, current_time->tm_hour,
-                  current_time->tm_min, current_time->tm_sec);
+                        current_time->tm_mon + 1, current_time->tm_mday,
+                        current_time->tm_year, current_time->tm_hour,
+                        current_time->tm_min, current_time->tm_sec);
                 break;
 
             case 'd':
@@ -97,8 +99,8 @@ size_t cdecl strftim(char *string, size_t maxsize, const char *format, const str
 
             case 'I':
                 sprintf(out, "%02d",
-                  current_time->tm_hour >= 0 && current_time->tm_hour <= 12 ?
-                  current_time->tm_hour : current_time->tm_hour - 12);
+                        current_time->tm_hour >= 0 && current_time->tm_hour <= 12 ?
+                        current_time->tm_hour : current_time->tm_hour - 12);
                 break;
 
             case 'j':
@@ -135,12 +137,12 @@ size_t cdecl strftim(char *string, size_t maxsize, const char *format, const str
 
             case 'x':
                 sprintf(out, "%02d-%02d-%02d", current_time->tm_mon + 1,
-                  current_time->tm_mday, current_time->tm_year);
+                        current_time->tm_mday, current_time->tm_year);
                 break;
 
             case 'X':
                 sprintf(out, "%02d:%02d:%02d", current_time->tm_hour,
-                  current_time->tm_min, current_time->tm_sec);
+                        current_time->tm_min, current_time->tm_sec);
                 break;
 
             case 'y':
@@ -165,8 +167,10 @@ size_t cdecl strftim(char *string, size_t maxsize, const char *format, const str
                 else
                 {
                     static char firstcall=1;
-                    if(firstcall){ firstcall=0;
-                      fprintf( stderr, "Please set the TZ enviroment variable!");
+                    if(firstcall)
+                    {
+                        firstcall=0;
+                        fprintf( stderr, "Please set the TZ enviroment variable!");
                     }
                     strcpy(out, "??T");
                 }

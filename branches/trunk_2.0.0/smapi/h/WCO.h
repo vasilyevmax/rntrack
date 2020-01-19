@@ -14,10 +14,10 @@
 #define SMAPI_WCO_H
 
 #ifndef __WATCOMC__
-  #error This file may be used only with Watcom C !
+    #error This file may be used only with Watcom C !
 #endif
 #if !defined(__OS2__) && !defined(__OS2V2__)
-  #error This file may be used only with Watcom C OS/2 target !
+    #error This file may be used only with Watcom C OS/2 target !
 #endif
 
 

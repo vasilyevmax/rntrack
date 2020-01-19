@@ -41,16 +41,16 @@ static char rcs_id[]="$Id$";
 #include "unused.h"
 
 #ifdef HAS_UNISTD_H
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #include "memory.h"
@@ -71,18 +71,18 @@ static char rcs_id[]="$Id$";
 
 unsigned _SquishReadBaseHeader(HAREA ha, SQBASE *psqb)
 {
-  if (lseek(Sqd->sfd, 0L, SEEK_SET) != 0 ||
-      read_sqbase(Sqd->sfd, psqb) != 1)
-  {
-    if (errno==EACCES || errno==-1)
-      msgapierr=MERR_SHARE;
-    else
-      msgapierr=MERR_BADF;
+    if (lseek(Sqd->sfd, 0L, SEEK_SET) != 0 ||
+            read_sqbase(Sqd->sfd, psqb) != 1)
+    {
+        if (errno==EACCES || errno==-1)
+            msgapierr=MERR_SHARE;
+        else
+            msgapierr=MERR_BADF;
 
-    return FALSE;
-  }
+        return FALSE;
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -92,14 +92,14 @@ unsigned _SquishReadBaseHeader(HAREA ha, SQBASE *psqb)
 
 unsigned _SquishWriteBaseHeader(HAREA ha, SQBASE *psqb)
 {
-  if (lseek(Sqd->sfd, 0L, SEEK_SET) != 0 ||
-      write_sqbase(Sqd->sfd, psqb) != 1)
-  {
-    msgapierr=MERR_NODS;
-    return FALSE;
-  }
+    if (lseek(Sqd->sfd, 0L, SEEK_SET) != 0 ||
+            write_sqbase(Sqd->sfd, psqb) != 1)
+    {
+        msgapierr=MERR_NODS;
+        return FALSE;
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -114,59 +114,59 @@ unsigned _SquishWriteBaseHeader(HAREA ha, SQBASE *psqb)
 
 unsigned _SquishInsertFreeChain(HAREA ha, FOFS fo, SQHDR *psqh)
 {
-  SQHDR sqh=*psqh;
+    SQHDR sqh=*psqh;
 
-  assert(Sqd->fHaveExclusive);
+    assert(Sqd->fHaveExclusive);
 
-  sqh.id=SQHDRID;
-  sqh.frame_type=FRAME_FREE;
-  sqh.msg_length=sqh.clen=0L;
+    sqh.id=SQHDRID;
+    sqh.frame_type=FRAME_FREE;
+    sqh.msg_length=sqh.clen=0L;
 
-  /* If we have no existing free frames, then this is easy */
+    /* If we have no existing free frames, then this is easy */
 
-  if (Sqd->foLastFree==NULL_FRAME)
-  {
-    sqh.prev_frame=NULL_FRAME;
+    if (Sqd->foLastFree==NULL_FRAME)
+    {
+        sqh.prev_frame=NULL_FRAME;
+        sqh.next_frame=NULL_FRAME;
+
+        /* Try to write this frame back to the file */
+
+        if (! _SquishWriteHdr(ha, fo, &sqh))
+            return FALSE;
+
+        Sqd->foFree=Sqd->foLastFree=fo;
+        return TRUE;
+    }
+
+
+    /* There is an existing frame, so we must append to the end of the        *
+     * chain.                                                                 */
+
+    sqh.prev_frame=Sqd->foLastFree;
     sqh.next_frame=NULL_FRAME;
 
-    /* Try to write this frame back to the file */
 
-    if (! _SquishWriteHdr(ha, fo, &sqh))
-      return FALSE;
+    /* Update the last chain in the free list, pointing it to us */
 
-    Sqd->foFree=Sqd->foLastFree=fo;
-    return TRUE;
-  }
+    if (!_SquishSetFrameNext(ha, sqh.prev_frame, fo))
+        return FALSE;
 
 
-  /* There is an existing frame, so we must append to the end of the        *
-   * chain.                                                                 */
+    /* Try to write the current frame to disk */
 
-  sqh.prev_frame=Sqd->foLastFree;
-  sqh.next_frame=NULL_FRAME;
+    if (_SquishWriteHdr(ha, fo, &sqh))
+    {
+        Sqd->foLastFree=fo;
+        return TRUE;
+    }
+    else
+    {
+        /* The write failed, so just hope that we can undo what we did        *
+         * earlier.                                                           */
 
-
-  /* Update the last chain in the free list, pointing it to us */
-
-  if (!_SquishSetFrameNext(ha, sqh.prev_frame, fo))
-    return FALSE;
-
-
-  /* Try to write the current frame to disk */
-
-  if (_SquishWriteHdr(ha, fo, &sqh))
-  {
-    Sqd->foLastFree=fo;
-    return TRUE;
-  }
-  else
-  {
-    /* The write failed, so just hope that we can undo what we did        *
-     * earlier.                                                           */
-
-    (void)_SquishSetFrameNext(ha, sqh.prev_frame, NULL_FRAME);
-    return FALSE;
-  }
+        (void)_SquishSetFrameNext(ha, sqh.prev_frame, NULL_FRAME);
+        return FALSE;
+    }
 }
 
 
@@ -175,14 +175,14 @@ unsigned _SquishInsertFreeChain(HAREA ha, FOFS fo, SQHDR *psqh)
 
 unsigned _SquishSetFrameNext(HAREA ha, FOFS foModify, FOFS foValue)
 {
-  SQHDR sqh;
+    SQHDR sqh;
 
-  if (!_SquishReadHdr(ha, foModify, &sqh))
-    return FALSE;
+    if (!_SquishReadHdr(ha, foModify, &sqh))
+        return FALSE;
 
-  sqh.next_frame=foValue;
+    sqh.next_frame=foValue;
 
-  return _SquishWriteHdr(ha, foModify, &sqh);
+    return _SquishWriteHdr(ha, foModify, &sqh);
 }
 
 
@@ -191,14 +191,14 @@ unsigned _SquishSetFrameNext(HAREA ha, FOFS foModify, FOFS foValue)
 
 unsigned _SquishSetFramePrev(HAREA ha, FOFS foModify, FOFS foValue)
 {
-  SQHDR sqh;
+    SQHDR sqh;
 
-  if (!_SquishReadHdr(ha, foModify, &sqh))
-    return FALSE;
+    if (!_SquishReadHdr(ha, foModify, &sqh))
+        return FALSE;
 
-  sqh.prev_frame=foValue;
+    sqh.prev_frame=foValue;
 
-  return _SquishWriteHdr(ha, foModify, &sqh);
+    return _SquishWriteHdr(ha, foModify, &sqh);
 }
 
 
@@ -207,13 +207,13 @@ unsigned _SquishSetFramePrev(HAREA ha, FOFS foModify, FOFS foValue)
 
 unsigned _SquishReadMode(HMSG hmsg)
 {
-  if (hmsg->wMode != MOPEN_READ && hmsg->wMode != MOPEN_RW)
-  {
-    msgapierr=MERR_EACCES;
-    return FALSE;
-  }
+    if (hmsg->wMode != MOPEN_READ && hmsg->wMode != MOPEN_RW)
+    {
+        msgapierr=MERR_EACCES;
+        return FALSE;
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -222,14 +222,14 @@ unsigned _SquishReadMode(HMSG hmsg)
 
 unsigned _SquishWriteMode(HMSG hmsg)
 {
-  if (hmsg->wMode != MOPEN_CREATE && hmsg->wMode != MOPEN_WRITE &&
-      hmsg->wMode != MOPEN_RW)
-  {
-    msgapierr=MERR_EACCES;
-    return FALSE;
-  }
+    if (hmsg->wMode != MOPEN_CREATE && hmsg->wMode != MOPEN_WRITE &&
+            hmsg->wMode != MOPEN_RW)
+    {
+        msgapierr=MERR_EACCES;
+        return FALSE;
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -238,28 +238,28 @@ unsigned _SquishWriteMode(HMSG hmsg)
 
 FOFS _SquishGetFrameOfs(HAREA ha, dword dwMsg)
 {
-  SQIDX sqi;
+    SQIDX sqi;
 
 
-  msgapierr=MERR_NOENT;
+    msgapierr=MERR_NOENT;
 
-  /* Check for simple stuff that we can handle by following our own         *
-   * linked list.                                                           */
+    /* Check for simple stuff that we can handle by following our own         *
+     * linked list.                                                           */
 
-  if (dwMsg==ha->cur_msg)
-    return Sqd->foCur;
-  else if (dwMsg==ha->cur_msg-1)
-    return Sqd->foPrev;
-  else if (dwMsg==ha->cur_msg+1)
-    return Sqd->foNext;
+    if (dwMsg==ha->cur_msg)
+        return Sqd->foCur;
+    else if (dwMsg==ha->cur_msg-1)
+        return Sqd->foPrev;
+    else if (dwMsg==ha->cur_msg+1)
+        return Sqd->foNext;
 
-  /* We couldn't just follow the linked list, so we will have to consult    *
-   * the Squish index file to find it.                                      */
+    /* We couldn't just follow the linked list, so we will have to consult    *
+     * the Squish index file to find it.                                      */
 
-  if (! SidxGet(Sqd->hix, dwMsg, &sqi))
-    return NULL_FRAME;
+    if (! SidxGet(Sqd->hix, dwMsg, &sqi))
+        return NULL_FRAME;
 
-  return sqi.ofs;
+    return sqi.ofs;
 }
 
 
@@ -267,26 +267,26 @@ FOFS _SquishGetFrameOfs(HAREA ha, dword dwMsg)
 
 unsigned _SquishReadHdr(HAREA ha, FOFS fo, SQHDR *psqh)
 {
-  /* Ensure that we are reading a valid frame header */
+    /* Ensure that we are reading a valid frame header */
 
-  if (fo < SQBASE_SIZE)
-  {
-    msgapierr=MERR_BADA;
-    return FALSE;
-  }
+    if (fo < SQBASE_SIZE)
+    {
+        msgapierr=MERR_BADA;
+        return FALSE;
+    }
 
-  /* Seek and read the header */
+    /* Seek and read the header */
 
-  if (fo >= Sqd->foEnd ||
-      lseek(Sqd->sfd, fo, SEEK_SET) != fo ||
-      read_sqhdr(Sqd->sfd, psqh) != 1 ||
-      psqh->id != SQHDRID)
-  {
-    msgapierr=MERR_BADF;
-    return FALSE;
-  }
+    if (fo >= Sqd->foEnd ||
+            lseek(Sqd->sfd, fo, SEEK_SET) != fo ||
+            read_sqhdr(Sqd->sfd, psqh) != 1 ||
+            psqh->id != SQHDRID)
+    {
+        msgapierr=MERR_BADF;
+        return FALSE;
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -295,22 +295,22 @@ unsigned _SquishReadHdr(HAREA ha, FOFS fo, SQHDR *psqh)
 
 unsigned _SquishWriteHdr(HAREA ha, FOFS fo, SQHDR *psqh)
 {
-  /* Make sure that we don't write over the file header */
+    /* Make sure that we don't write over the file header */
 
-  if (fo < SQBASE_SIZE)
-  {
-    msgapierr=MERR_BADA;
-    return FALSE;
-  }
+    if (fo < SQBASE_SIZE)
+    {
+        msgapierr=MERR_BADA;
+        return FALSE;
+    }
 
-  if (lseek(Sqd->sfd, fo, SEEK_SET) != fo ||
-      write_sqhdr(Sqd->sfd, psqh) != 1)
-  {
-    msgapierr=MERR_NODS;
-    return FALSE;
-  }
+    if (lseek(Sqd->sfd, fo, SEEK_SET) != fo ||
+            write_sqhdr(Sqd->sfd, psqh) != 1)
+    {
+        msgapierr=MERR_NODS;
+        return FALSE;
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -321,71 +321,71 @@ unsigned _SquishWriteHdr(HAREA ha, FOFS fo, SQHDR *psqh)
 
 unsigned _SquishFixMemoryPointers(HAREA ha, dword dwMsg, SQHDR *psqh)
 {
-  assert(Sqd->fHaveExclusive);
+    assert(Sqd->fHaveExclusive);
 
-  /* Adjust the first/last message pointers */
+    /* Adjust the first/last message pointers */
 
-  if (dwMsg==1)
-    Sqd->foFirst=psqh->next_frame;
+    if (dwMsg==1)
+        Sqd->foFirst=psqh->next_frame;
 
-  if (dwMsg==ha->num_msg)
-    Sqd->foLast=psqh->prev_frame;
-
-
-  /* Now fix up the in-memory version of the prior/next links */
-
-  if (dwMsg==ha->cur_msg+1)
-    Sqd->foNext=psqh->next_frame;
-
-  if (dwMsg==ha->cur_msg-1)
-    Sqd->foPrev=psqh->prev_frame;
+    if (dwMsg==ha->num_msg)
+        Sqd->foLast=psqh->prev_frame;
 
 
-  /* If we killed the message that we are on, it's a special case */
+    /* Now fix up the in-memory version of the prior/next links */
 
-  if (dwMsg==ha->cur_msg)
-  {
-    SQHDR sqh;
+    if (dwMsg==ha->cur_msg+1)
+        Sqd->foNext=psqh->next_frame;
 
-    /* Go to the header of the prior msg */
+    if (dwMsg==ha->cur_msg-1)
+        Sqd->foPrev=psqh->prev_frame;
 
-    if (!_SquishReadHdr(ha, psqh->prev_frame, &sqh))
+
+    /* If we killed the message that we are on, it's a special case */
+
+    if (dwMsg==ha->cur_msg)
     {
-      /* That does not exist, so go to msg 0 */
+        SQHDR sqh;
 
-      Sqd->foCur=Sqd->foPrev=NULL_FRAME;
-      Sqd->foNext=Sqd->foFirst;
-      ha->cur_msg=0;
+        /* Go to the header of the prior msg */
+
+        if (!_SquishReadHdr(ha, psqh->prev_frame, &sqh))
+        {
+            /* That does not exist, so go to msg 0 */
+
+            Sqd->foCur=Sqd->foPrev=NULL_FRAME;
+            Sqd->foNext=Sqd->foFirst;
+            ha->cur_msg=0;
+        }
+        else
+        {
+            /* Otherwise, adjust pointers appropriately */
+
+            Sqd->foCur=psqh->prev_frame;
+            Sqd->foPrev=sqh.prev_frame;
+            Sqd->foNext=sqh.next_frame;
+            ha->cur_msg--;
+        }
     }
     else
     {
-      /* Otherwise, adjust pointers appropriately */
+        /* We didn't kill the current msg, so just decrement cur_msg if         *
+         * we were higher than the deleted message.                             */
 
-      Sqd->foCur=psqh->prev_frame;
-      Sqd->foPrev=sqh.prev_frame;
-      Sqd->foNext=sqh.next_frame;
-      ha->cur_msg--;
+        if (ha->cur_msg >= dwMsg)
+            ha->cur_msg--;
     }
-  }
-  else
-  {
-    /* We didn't kill the current msg, so just decrement cur_msg if         *
-     * we were higher than the deleted message.                             */
-
-    if (ha->cur_msg >= dwMsg)
-      ha->cur_msg--;
-  }
 
 
-  /* Adjust the message numbers appropriately */
+    /* Adjust the message numbers appropriately */
 
-  ha->num_msg--;
-  ha->high_msg--;
+    ha->num_msg--;
+    ha->high_msg--;
 
-  if (ha->high_water >= dwMsg)
-    ha->high_water--;
+    if (ha->high_water >= dwMsg)
+        ha->high_water--;
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -397,30 +397,30 @@ unsigned _SquishFixMemoryPointers(HAREA ha, dword dwMsg, SQHDR *psqh)
 unsigned _SquishFreeIndex(HAREA ha, dword dwMsg, SQIDX *psqi,
                           dword dwIdxSize, unsigned fWrite)
 {
-  unsigned rc=TRUE;
-  long ofs;
-  
-  unused(dwIdxSize);
-  
+    unsigned rc=TRUE;
+    long ofs;
+
+    unused(dwIdxSize);
+
 #ifdef __WATCOMC__
-dwIdxSize=dwIdxSize; /* To prevent warning */
+    dwIdxSize=dwIdxSize; /* To prevent warning */
 #endif
 
-  if (fWrite)
-  {
-    /* Seek to the offset of the message that we want to delete */
+    if (fWrite)
+    {
+        /* Seek to the offset of the message that we want to delete */
 
-    ofs=((long)dwMsg-1L) * (long)SQIDX_SIZE;
+        ofs=((long)dwMsg-1L) * (long)SQIDX_SIZE;
 
-    /* Write it back out to disk at the same position */
+        /* Write it back out to disk at the same position */
 
-    rc=(lseek(Sqd->ifd, ofs, SEEK_SET)==ofs &&
-        write_sqidx(Sqd->ifd, psqi, ((long)dwMsg-1L)) == 1);
-  }
+        rc=(lseek(Sqd->ifd, ofs, SEEK_SET)==ofs &&
+            write_sqidx(Sqd->ifd, psqi, ((long)dwMsg-1L)) == 1);
+    }
 
-  pfree(psqi);
+    pfree(psqi);
 
-  return rc;
+    return rc;
 }
 
 
@@ -430,48 +430,48 @@ dwIdxSize=dwIdxSize; /* To prevent warning */
 
 SQIDX * _SquishAllocIndex(HAREA ha, dword dwMsg, dword *pdwIdxSize)
 {
-  SQIDX *psqi;
-  dword dwIdxSize;
-  long ofs;
+    SQIDX *psqi;
+    dword dwIdxSize;
+    long ofs;
 
-  /* We only need enough memory to read in the index file from the point    *
-   * that we are deleting a message.                                        */
+    /* We only need enough memory to read in the index file from the point    *
+     * that we are deleting a message.                                        */
 
-  dwIdxSize = ((long)ha->num_msg - (long)dwMsg + 1L) * (long)sizeof(SQIDX);
-
-
-  /* Handle problems that we may have when working on a 16-bit platform */
-
-  if (dwIdxSize > 65000L)
-  {
-  }
-
-  /* Allocate memory for handling the index */
-
-  if ((psqi=palloc((size_t)dwIdxSize))==NULL)
-  {
-    msgapierr=MERR_NOMEM;
-    return NULL;
-  }
+    dwIdxSize = ((long)ha->num_msg - (long)dwMsg + 1L) * (long)sizeof(SQIDX);
 
 
-  /* Seek to the offset of the message that we want to delete */
+    /* Handle problems that we may have when working on a 16-bit platform */
 
-  ofs=((long)dwMsg-1L) * (long)SQIDX_SIZE;
+    if (dwIdxSize > 65000L)
+    {
+    }
+
+    /* Allocate memory for handling the index */
+
+    if ((psqi=palloc((size_t)dwIdxSize))==NULL)
+    {
+        msgapierr=MERR_NOMEM;
+        return NULL;
+    }
 
 
-  /* Now read it from disk */
+    /* Seek to the offset of the message that we want to delete */
 
-  if (lseek(Sqd->ifd, ofs, SEEK_SET) != ofs ||
-      read_sqidx(Sqd->ifd, psqi, ((long)ha->num_msg - (long)dwMsg + 1L)) != 1)
-  {
-    msgapierr=MERR_BADF;
-    pfree(psqi);
-    return NULL;
-  }
+    ofs=((long)dwMsg-1L) * (long)SQIDX_SIZE;
 
-  *pdwIdxSize=dwIdxSize;
-  return psqi;
+
+    /* Now read it from disk */
+
+    if (lseek(Sqd->ifd, ofs, SEEK_SET) != ofs ||
+            read_sqidx(Sqd->ifd, psqi, ((long)ha->num_msg - (long)dwMsg + 1L)) != 1)
+    {
+        msgapierr=MERR_BADF;
+        pfree(psqi);
+        return NULL;
+    }
+
+    *pdwIdxSize=dwIdxSize;
+    return psqi;
 }
 
 /* This function removes the specified message number from the Squish index *
@@ -485,50 +485,50 @@ SQIDX * _SquishAllocIndex(HAREA ha, dword dwMsg, dword *pdwIdxSize)
 
 unsigned _SquishRemoveIndex(HAREA ha, dword dwMsg, SQIDX *psqiOut, SQHDR *psqh)
 {
-  dword dwIdxSize;
-  SQIDX *psqiLast;
-  SQIDX *psqi;
-  unsigned rc;
+    dword dwIdxSize;
+    SQIDX *psqiLast;
+    SQIDX *psqi;
+    unsigned rc;
 
-  assert(Sqd->fHaveExclusive);
+    assert(Sqd->fHaveExclusive);
 
-  /* Read the index from disk */
+    /* Read the index from disk */
 
-  if ((psqi=_SquishAllocIndex(ha, dwMsg, &dwIdxSize))==NULL)
-    return FALSE;
-
-
-  /* If the caller wants a copy of the record that we are deleting... */
-
-  if (psqiOut)
-    memmove(psqiOut, psqi, sizeof(SQIDX));
+    if ((psqi=_SquishAllocIndex(ha, dwMsg, &dwIdxSize))==NULL)
+        return FALSE;
 
 
-  /* Shift everything over by one to accomodate for the deleted msg */
+    /* If the caller wants a copy of the record that we are deleting... */
 
-  memmove(psqi, psqi+1, (size_t)dwIdxSize-sizeof(SQIDX));
-
-
-  /* Blank out the last index pointer in the file so that it is invalid */
-
-  psqiLast=psqi + (ha->num_msg - (long)dwMsg);
-
-  psqiLast->ofs=NULL_FRAME;
-  psqiLast->umsgid=(UMSGID)-1L;
-  psqiLast->hash=(dword)-1L;
+    if (psqiOut)
+        memmove(psqiOut, psqi, sizeof(SQIDX));
 
 
-  /* Write it back to disk and free memory */
+    /* Shift everything over by one to accomodate for the deleted msg */
 
-  rc=_SquishFreeIndex(ha, dwMsg, psqi, dwIdxSize, TRUE);
+    memmove(psqi, psqi+1, (size_t)dwIdxSize-sizeof(SQIDX));
 
 
-  /* If the delete succeeded, adjust the memory pointers */
+    /* Blank out the last index pointer in the file so that it is invalid */
 
-  if (rc)
-    rc=_SquishFixMemoryPointers(ha, dwMsg, psqh);
+    psqiLast=psqi + (ha->num_msg - (long)dwMsg);
 
-  return rc;
+    psqiLast->ofs=NULL_FRAME;
+    psqiLast->umsgid=(UMSGID)-1L;
+    psqiLast->hash=(dword)-1L;
+
+
+    /* Write it back to disk and free memory */
+
+    rc=_SquishFreeIndex(ha, dwMsg, psqi, dwIdxSize, TRUE);
+
+
+    /* If the delete succeeded, adjust the memory pointers */
+
+    if (rc)
+        rc=_SquishFixMemoryPointers(ha, dwMsg, psqh);
+
+    return rc;
 }
 #endif
 

@@ -15,23 +15,23 @@
 
 #include "compiler.h"
 #ifdef HAVE_CONFIG_H
-  # include "aconfig.h"
+    #include "aconfig.h"
 #endif
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
-  #include <unistd.h>
+    #include <unistd.h>
 #endif
 #ifdef HAVE_DOS_H
-  #include <dos.h>
+    #include <dos.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "string.hpp"
 #include <ctype.h>
 #ifdef HAVE_FCNTL_H
-  #include <fcntl.h>
+    #include <fcntl.h>
 #endif
 #include <errno.h>
 #include "constant.hpp"
@@ -46,17 +46,17 @@
 #include "mytypes.hpp"
 #include "msg.hpp"
 #if defined(HAS_IO_H) || defined(HAVE_IO_H)
-  #include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef __WATCOMC__
-  #undef far
+    #undef far
 #endif
 
 #ifdef __NT__
-  #undef byte
-  #undef EXPENTRY
-  #include <windows.h>
+    #undef byte
+    #undef EXPENTRY
+    #include <windows.h>
 #endif
 
 // --------------------------------------------------------------------
@@ -118,7 +118,7 @@ static char * FullName(char * name)
 
     if((strchr(name, PATHDELIMC) == NULL
 #ifndef __unix__
-        && strchr(name, ':') == NULL
+            && strchr(name, ':') == NULL
 #endif
        ) || (IgnoreAttachPath != FALSE))
     {
@@ -159,7 +159,7 @@ int _AttToSize(char * Buff)
         if(i != ENOENT)
         {
             Log.Level(LOGE) << "   Unable to open file: '" << tmt <<
-                               "', Errno: " << i << EOL;
+                            "', Errno: " << i << EOL;
             return FALSE;
         }
         else
@@ -175,7 +175,7 @@ int _AttToSize(char * Buff)
         i = errno;
         close(fh);
         Log.Level(LOGE) << "   Unable to get size of file: '" << tmt <<
-                           "', Errno: " << i << EOL;
+                        "', Errno: " << i << EOL;
         return FALSE;
     }
 
@@ -397,7 +397,7 @@ int _MoveAttach(char * Buff)
         CharToOem(tmt, tmt);
 #endif
         Log.Level(LOGE) << "   Unable to move file '" << tmt << "' to " <<
-                           NewPath << EOL;
+                        NewPath << EOL;
         return FALSE;
     }
 
@@ -424,7 +424,7 @@ int _CopyAttach(char * Buff)
         CharToOem(tmt, tmt);
 #endif
         Log.Level(LOGI) << "   File not found: '" << tmt <<
-                           "', can't copy." << EOL;
+                        "', can't copy." << EOL;
         return TRUE;
     }
 
@@ -442,7 +442,7 @@ int _CopyAttach(char * Buff)
         CharToOem(tmt, tmt);
 #endif
         Log.Level(LOGE) << "   Unable to copy file '" << tmt << "' to " <<
-                           NewPath << EOL;
+                        NewPath << EOL;
         return FALSE;
     }
 

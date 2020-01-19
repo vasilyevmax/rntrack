@@ -14,7 +14,7 @@
 #define SMAPI_WATCOMC_H
 
 #ifndef __WATCOMC__
-  #error This file may be used only with Watcom C !
+    #error This file may be used only with Watcom C !
 #endif
 
 
@@ -23,8 +23,8 @@
 
 
 #if ( __WATCOMC__ > 1000 )
-/* Watcom C 10.0 */
-# define mktemp _mktemp
+    /* Watcom C 10.0 */
+    #define mktemp _mktemp
 #endif
 
 #  define strcasecmp  stricmp
@@ -54,15 +54,15 @@
 #  define mysleep(x)    sleep(x) /* dos.h */
 #  define HAS_sleep
 
-#  if defined(__WATCOMC__DOS4G__) /* WATCOM C/C++ for DOS4G */
-#    include "WCX.h"
-#  elif defined(__WATCOMC__DOS__) /* WATCOM C/C++ for MS-DOS (16 bit)*/
-#    include "WCD.h"
-#  elif defined(__WATCOMC__OS2__)/* WATCOM C/C++ for OS/2 */
-#    include "WCO.h"
-#  elif defined(__WATCOMC__NT__) /* WATCOM C/C++ for Windows NT */
-#    include "WCW.h"
-#  endif
+#if defined(__WATCOMC__DOS4G__) /* WATCOM C/C++ for DOS4G */
+    #include "WCX.h"
+#elif defined(__WATCOMC__DOS__) /* WATCOM C/C++ for MS-DOS (16 bit)*/
+    #include "WCD.h"
+#elif defined(__WATCOMC__OS2__)/* WATCOM C/C++ for OS/2 */
+    #include "WCO.h"
+#elif defined(__WATCOMC__NT__) /* WATCOM C/C++ for Windows NT */
+    #include "WCW.h"
+#endif
 
 
 typedef unsigned bit;
@@ -74,11 +74,11 @@ typedef unsigned short word;
 typedef signed short sword;
 
 #ifdef __ALPHA__    /* add other 64 bit systems here */
-typedef unsigned int dword;
-typedef signed   int sdword;
+    typedef unsigned int dword;
+    typedef signed   int sdword;
 #else             /* 32 and 16 bit machines */
-typedef unsigned long dword;
-typedef signed long sdword;
+    typedef unsigned long dword;
+    typedef signed long sdword;
 #endif
 
 typedef signed short sshort;
@@ -102,20 +102,20 @@ typedef   signed short     hSINT16;              /*  2 bytes */
 typedef unsigned short     hUINT16;              /*  2 bytes */
 
 #ifdef __ALPHA__    /* add other 64 bit systems here */
-typedef   signed int        hINT32;              /*  4 bytes */
-typedef   signed int       hSINT32;              /*  4 bytes */
-typedef unsigned int       hUINT32;              /*  4 bytes */
+    typedef   signed int        hINT32;              /*  4 bytes */
+    typedef   signed int       hSINT32;              /*  4 bytes */
+    typedef unsigned int       hUINT32;              /*  4 bytes */
 #else
-typedef   signed long       hINT32;              /*  4 bytes */
-typedef   signed long      hSINT32;              /*  4 bytes */
-typedef unsigned long      hUINT32;              /*  4 bytes */
+    typedef   signed long       hINT32;              /*  4 bytes */
+    typedef   signed long      hSINT32;              /*  4 bytes */
+    typedef unsigned long      hUINT32;              /*  4 bytes */
 #endif
 
 #if __WATCOMC__ >1000
-typedef   signed __int64    hINT64;            /*  8 bytes */
-typedef   signed __int64   hSINT64;            /*  8 bytes */
-typedef unsigned __int64   hUINT64;            /*  8 bytes */
-#define HAS_INT64
+    typedef   signed __int64    hINT64;            /*  8 bytes */
+    typedef   signed __int64   hSINT64;            /*  8 bytes */
+    typedef unsigned __int64   hUINT64;            /*  8 bytes */
+    #define HAS_INT64
 #endif
 
 #endif

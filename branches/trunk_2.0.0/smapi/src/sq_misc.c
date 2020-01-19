@@ -37,13 +37,13 @@ static char rcs_id[]="$Id$";
 #include "compiler.h"
 
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #include "memory.h"
@@ -64,11 +64,11 @@ static char rcs_id[]="$Id$";
 
 sword _XPENTRY apiSquishSetCurPos(HMSG hmsg, dword dwOfs)
 {
-  if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
-    return -1;
+    if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
+        return -1;
 
-  hmsg->cur_pos=dwOfs;
-  return 0;
+    hmsg->cur_pos=dwOfs;
+    return 0;
 }
 
 
@@ -77,10 +77,10 @@ sword _XPENTRY apiSquishSetCurPos(HMSG hmsg, dword dwOfs)
 
 dword _XPENTRY apiSquishGetCurPos(HMSG hmsg)
 {
-  if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
-    return (dword)-1;
+    if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
+        return (dword)-1;
 
-  return hmsg->cur_pos;
+    return hmsg->cur_pos;
 }
 
 
@@ -88,10 +88,10 @@ dword _XPENTRY apiSquishGetCurPos(HMSG hmsg)
 
 dword _XPENTRY apiSquishGetTextLen(HMSG hmsg)
 {
-  if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
-    return (dword)-1L;
+    if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
+        return (dword)-1L;
 
-  return hmsg->sqhRead.msg_length - XMSG_SIZE - hmsg->sqhRead.clen;
+    return hmsg->sqhRead.msg_length - XMSG_SIZE - hmsg->sqhRead.clen;
 }
 
 
@@ -101,10 +101,10 @@ dword _XPENTRY apiSquishGetTextLen(HMSG hmsg)
 
 dword _XPENTRY apiSquishGetCtrlLen(HMSG hmsg)
 {
-  if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
-    return (dword)-1L;
+    if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
+        return (dword)-1L;
 
-  return hmsg->sqhRead.clen;
+    return hmsg->sqhRead.clen;
 }
 
 
@@ -112,10 +112,10 @@ dword _XPENTRY apiSquishGetCtrlLen(HMSG hmsg)
 
 dword _XPENTRY apiSquishGetHighWater(HAREA ha)
 {
-  if (MsgInvalidHarea(ha))
-    return (dword)-1L;
+    if (MsgInvalidHarea(ha))
+        return (dword)-1L;
 
-  return apiSquishUidToMsgn(ha, ha->high_water, UID_PREV);
+    return apiSquishUidToMsgn(ha, ha->high_water, UID_PREV);
 }
 
 
@@ -125,30 +125,30 @@ dword _XPENTRY apiSquishGetHighWater(HAREA ha)
 
 sword _XPENTRY apiSquishSetHighWater(HAREA ha, dword dwMsg)
 {
-  if (MsgInvalidHarea(ha))
-    return -1;
+    if (MsgInvalidHarea(ha))
+        return -1;
 
-  /* Make sure that the message exists */
+    /* Make sure that the message exists */
 
-  if (dwMsg > ha->num_msg)
-  {
-    msgapierr=MERR_NOENT;
+    if (dwMsg > ha->num_msg)
+    {
+        msgapierr=MERR_NOENT;
 
-    return -1;
-  }
+        return -1;
+    }
 
-  if (!_SquishExclusiveBegin(ha))
-    return -1;
+    if (!_SquishExclusiveBegin(ha))
+        return -1;
 
-  ha->high_water=apiSquishMsgnToUid(ha, dwMsg);
+    ha->high_water=apiSquishMsgnToUid(ha, dwMsg);
 
 
-  if (!_SquishExclusiveEnd(ha))
-  {
-    return -1;
-  }
+    if (!_SquishExclusiveEnd(ha))
+    {
+        return -1;
+    }
 
-  return 0;
+    return 0;
 }
 
 
@@ -157,71 +157,71 @@ sword _XPENTRY apiSquishSetHighWater(HAREA ha, dword dwMsg)
 
 void _XPENTRY apiSquishSetMaxMsg(HAREA ha, dword dwMaxMsgs, dword dwSkipMsgs, dword dwMaxDays)
 {
-  if (MsgInvalidHarea(ha))
-    return;
+    if (MsgInvalidHarea(ha))
+        return;
 
-  /* Update base only if max msg settings have changed */
+    /* Update base only if max msg settings have changed */
 
-  if ((dwMaxMsgs  != (dword)-1L && dwMaxMsgs  != Sqd->dwMaxMsg) ||
-      (dwSkipMsgs != (dword)-1L && dwSkipMsgs != Sqd->wSkipMsg) ||
-      (dwMaxDays  != (dword)-1L && dwMaxDays  != Sqd->wMaxDays))
-  {
-    if (!_SquishExclusiveBegin(ha))
+    if ((dwMaxMsgs  != (dword)-1L && dwMaxMsgs  != Sqd->dwMaxMsg) ||
+            (dwSkipMsgs != (dword)-1L && dwSkipMsgs != Sqd->wSkipMsg) ||
+            (dwMaxDays  != (dword)-1L && dwMaxDays  != Sqd->wMaxDays))
     {
-      return;
+        if (!_SquishExclusiveBegin(ha))
+        {
+            return;
+        }
+
+        if (dwMaxMsgs != (dword)-1L)
+            Sqd->dwMaxMsg=dwMaxMsgs;
+
+        if (dwSkipMsgs != (dword)-1L)
+            Sqd->wSkipMsg=(word)dwSkipMsgs;
+
+        if (dwMaxDays != (dword)-1L)
+            Sqd->wMaxDays=(word)dwMaxDays;
+
+        (void)_SquishExclusiveEnd(ha);
     }
-
-    if (dwMaxMsgs != (dword)-1L)
-      Sqd->dwMaxMsg=dwMaxMsgs;
-
-    if (dwSkipMsgs != (dword)-1L)
-      Sqd->wSkipMsg=(word)dwSkipMsgs;
-
-    if (dwMaxDays != (dword)-1L)
-      Sqd->wMaxDays=(word)dwMaxDays;
-
-    (void)_SquishExclusiveEnd(ha);
-  }
 
 }
 
 void _XPENTRY apiSquishGetMaxMsg(HAREA ha, dword *dwMaxMsgs, dword *dwSkipMsgs, dword *dwMaxDays)
 {
-  if (MsgInvalidHarea(ha))
-    return;
+    if (MsgInvalidHarea(ha))
+        return;
 
-  if (dwMaxMsgs)
-    *dwMaxMsgs = Sqd->dwMaxMsg;
+    if (dwMaxMsgs)
+        *dwMaxMsgs = Sqd->dwMaxMsg;
 
-  if (dwSkipMsgs)
-    *dwSkipMsgs = (dword) Sqd->wSkipMsg;
+    if (dwSkipMsgs)
+        *dwSkipMsgs = (dword) Sqd->wSkipMsg;
 
-  if (dwMaxDays)
-    *dwMaxDays = (dword) Sqd->wMaxDays;
+    if (dwMaxDays)
+        *dwMaxDays = (dword) Sqd->wMaxDays;
 }
 
 /* Hash function used for calculating the hashes in the .sqi file */
 
 dword SquishHash(byte  *f)
 {
-  dword hash=0, g;
+    dword hash=0, g;
 
-  while (*f)
-  {
-    hash=(hash << 4) + (dword)tolower(*f);
-
-    g = hash & 0xf0000000L;
-    if (g != 0L)
+    while (*f)
     {
-      hash |= g >> 24;
-      hash |= g;
+        hash=(hash << 4) + (dword)tolower(*f);
+
+        g = hash & 0xf0000000L;
+        if (g != 0L)
+        {
+            hash |= g >> 24;
+            hash |= g;
+        }
+        f++;
     }
-    f++;
-  }
 
 
-  /* Strip off high bit */
+    /* Strip off high bit */
 
-  return (hash & 0x7fffffffLu);
+    return (hash & 0x7fffffffLu);
 }
 

@@ -29,7 +29,7 @@ int ParseCmdArgs(int argc, char ** argv, const char * opts)
     const char * cp;
 
     if(optionInd < argc && argv[optionInd][0] == '-' && argv[optionInd][1] ==
-       '\0')
+            '\0')
     {
         if((cp = strchr(opts, '-')) != NULL)
         {
@@ -46,7 +46,7 @@ int ParseCmdArgs(int argc, char ** argv, const char * opts)
     if(sp == 1)
     {
         if(optionInd >= argc || argv[optionInd][0] != '-' ||
-           argv[optionInd][1] == '\0')
+                argv[optionInd][1] == '\0')
         {
             return EOF;
         }

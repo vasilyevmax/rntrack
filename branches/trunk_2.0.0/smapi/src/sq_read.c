@@ -38,16 +38,16 @@ static char rcs_id[]="$Id$";
 #include "compiler.h"
 
 #ifdef HAS_UNISTD_H
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_SHARE_H
-#include <share.h>
+    #include <share.h>
 #endif
 #ifdef HAS_MALLOC_H
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 
 #include "memory.h"
@@ -69,54 +69,54 @@ static char rcs_id[]="$Id$";
 
 static unsigned near _SquishReadXmsg(HMSG hmsg, PXMSG pxm, dword *pdwOfs)
 {
-  long ofs=hmsg->foRead + HSqd->cbSqhdr;
+    long ofs=hmsg->foRead + HSqd->cbSqhdr;
 
-  if (*pdwOfs != (dword)ofs)
-    if (lseek(HSqd->sfd, ofs, SEEK_SET) != ofs)
+    if (*pdwOfs != (dword)ofs)
+        if (lseek(HSqd->sfd, ofs, SEEK_SET) != ofs)
+        {
+            msgapierr=MERR_BADF;
+            return FALSE;
+        }
+
+    if (read_xmsg(HSqd->sfd, pxm) != 1)
     {
-      msgapierr=MERR_BADF;
-      return FALSE;
+        msgapierr=MERR_BADF;
+        return FALSE;
     }
 
-  if (read_xmsg(HSqd->sfd, pxm) != 1)
-  {
-    msgapierr=MERR_BADF;
-    return FALSE;
-  }
+    /* Update our position */
 
-  /* Update our position */
+    *pdwOfs=(dword)ofs + (dword) XMSG_SIZE;
 
-  *pdwOfs=(dword)ofs + (dword) XMSG_SIZE;
+    /* If there is a UMSGID associated with this message, store it in         *
+     * memory in case we have to write the message later.  Blank it           *
+     * out so that the application cannot access it.                          */
 
-  /* If there is a UMSGID associated with this message, store it in         *
-   * memory in case we have to write the message later.  Blank it           *
-   * out so that the application cannot access it.                          */
+    if (pxm->attr & MSGUID)
+    {
+        hmsg->uidUs=pxm->umsgid;
 
-  if (pxm->attr & MSGUID)
-  {
-      hmsg->uidUs=pxm->umsgid;
+        /*
+         OG: I throw out this stupid 2 lines, because application SHOULD use
+         the umsgid !
+         */
+        /*
+        pxm->attr &= ~MSGUID;
+        pxm->umsgid=0L;
+        */
+    }
 
-      /*
-       OG: I throw out this stupid 2 lines, because application SHOULD use
-       the umsgid !
-       */
-       /*
-       pxm->attr &= ~MSGUID;
-       pxm->umsgid=0L;
-       */
-  }
+    /* Og: It's not the idea of the MsgApi to check all Data on every read.
+    */
+    /*
+      if (pxm->date_written.date.yr == 0 ||
+          pxm->__ftsc_date[0] == 0)
+      {
+         MsgCvtFTSCDateToBinary(pxm->__ftsc_date, (union stamp_combo *)&pxm->date_written);
+      }
+    */
 
-/* Og: It's not the idea of the MsgApi to check all Data on every read.
-*/
-/*
-  if (pxm->date_written.date.yr == 0 ||
-      pxm->__ftsc_date[0] == 0)
-  {
-     MsgCvtFTSCDateToBinary(pxm->__ftsc_date, (union stamp_combo *)&pxm->date_written);
-  }
-*/
-
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -125,32 +125,32 @@ static unsigned near _SquishReadXmsg(HMSG hmsg, PXMSG pxm, dword *pdwOfs)
 static unsigned near _SquishReadCtrl(HMSG hmsg, byte  *szCtrl,
                                      dword dwCtrlLen, dword *pdwOfs)
 {
-  long ofs=hmsg->foRead + HSqd->cbSqhdr + XMSG_SIZE;
-  unsigned uMaxLen=(unsigned)min(dwCtrlLen, hmsg->sqhRead.clen);
+    long ofs=hmsg->foRead + HSqd->cbSqhdr + XMSG_SIZE;
+    unsigned uMaxLen=(unsigned)min(dwCtrlLen, hmsg->sqhRead.clen);
 
-  /* Read the specified amount of text, but no more than specified in       *
-   * the frame header.                                                      */
+    /* Read the specified amount of text, but no more than specified in       *
+     * the frame header.                                                      */
 
 
-/* Solving O.Kopp's problem with unintialised Return-Buffers */
-  *szCtrl = 0;
+    /* Solving O.Kopp's problem with unintialised Return-Buffers */
+    *szCtrl = 0;
 
-  if (*pdwOfs != (dword)ofs)
-    if (lseek(HSqd->sfd, ofs, SEEK_SET) != ofs)
+    if (*pdwOfs != (dword)ofs)
+        if (lseek(HSqd->sfd, ofs, SEEK_SET) != ofs)
+        {
+            msgapierr=MERR_BADF;
+            return FALSE;
+        }
+
+    if (read(HSqd->sfd, (char *)szCtrl, uMaxLen) != (int)uMaxLen)
     {
-      msgapierr=MERR_BADF;
-      return FALSE;
+        msgapierr=MERR_BADF;
+        return FALSE;
     }
 
-  if (read(HSqd->sfd, (char *)szCtrl, uMaxLen) != (int)uMaxLen)
-  {
-    msgapierr=MERR_BADF;
-    return FALSE;
-  }
+    *pdwOfs=(dword)ofs + (dword)uMaxLen;
 
-  *pdwOfs=(dword)ofs + (dword)uMaxLen;
-
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -159,108 +159,108 @@ static unsigned near _SquishReadCtrl(HMSG hmsg, byte  *szCtrl,
 static dword near _SquishReadTxt(HMSG hmsg, byte  *szTxt, dword dwTxtLen,
                                  dword *pdwOfs)
 {
-  /* Start reading from the cur_pos offset */
+    /* Start reading from the cur_pos offset */
 
-  long ofs=hmsg->foRead + (long)HSqd->cbSqhdr + (long)XMSG_SIZE
-                        + (long)hmsg->sqhRead.clen;
+    long ofs=hmsg->foRead + (long)HSqd->cbSqhdr + (long)XMSG_SIZE
+             + (long)hmsg->sqhRead.clen;
 
-  /* Max length is the size of the msg text inside the frame */
+    /* Max length is the size of the msg text inside the frame */
 
-  unsigned uMaxLen=(unsigned)(hmsg->sqhRead.msg_length -
-                              hmsg->sqhRead.clen - XMSG_SIZE);
+    unsigned uMaxLen=(unsigned)(hmsg->sqhRead.msg_length -
+                                hmsg->sqhRead.clen - XMSG_SIZE);
 
-/* Solving theoretical problem with 0-Byte Body's (thx to O.Kopp) */
-  *szTxt = 0;
+    /* Solving theoretical problem with 0-Byte Body's (thx to O.Kopp) */
+    *szTxt = 0;
 
-  /* Make sure that we don't try to read beyond the end of the msg */
+    /* Make sure that we don't try to read beyond the end of the msg */
 
-  if (hmsg->cur_pos > uMaxLen)
-    hmsg->cur_pos=uMaxLen;
+    if (hmsg->cur_pos > uMaxLen)
+        hmsg->cur_pos=uMaxLen;
 
-  /* Now seek to the position that we are supposed to read from */
+    /* Now seek to the position that we are supposed to read from */
 
-  ofs += (long)hmsg->cur_pos;
+    ofs += (long)hmsg->cur_pos;
 
-  /* Decrement the max length by the seek posn, but don't read more than    *
-   * the user asked for.                                                    */
+    /* Decrement the max length by the seek posn, but don't read more than    *
+     * the user asked for.                                                    */
 
-  uMaxLen -= (unsigned)hmsg->cur_pos;
-  uMaxLen=min(uMaxLen, (unsigned)dwTxtLen);
+    uMaxLen -= (unsigned)hmsg->cur_pos;
+    uMaxLen=min(uMaxLen, (unsigned)dwTxtLen);
 
-  /* Now try to read that information from the file */
+    /* Now try to read that information from the file */
 
-  if (ofs != (long)*pdwOfs)
-    if (lseek(HSqd->sfd, ofs, SEEK_SET) != ofs)
+    if (ofs != (long)*pdwOfs)
+        if (lseek(HSqd->sfd, ofs, SEEK_SET) != ofs)
+        {
+            msgapierr=MERR_BADF;
+            return (dword)-1L;
+        }
+
+
+    if (read(HSqd->sfd, (char *)szTxt, uMaxLen) != (int)uMaxLen)
     {
-      msgapierr=MERR_BADF;
-      return (dword)-1L;
+        msgapierr=MERR_BADF;
+        return (dword)-1L;
     }
 
-
-  if (read(HSqd->sfd, (char *)szTxt, uMaxLen) != (int)uMaxLen)
-  {
-    msgapierr=MERR_BADF;
-    return (dword)-1L;
-  }
-
-  *pdwOfs = (dword)ofs + (dword)uMaxLen;
+    *pdwOfs = (dword)ofs + (dword)uMaxLen;
 
 
-  /* Increment the current position by the number of bytes that we read */
+    /* Increment the current position by the number of bytes that we read */
 
-  hmsg->cur_pos += (dword)uMaxLen;
+    hmsg->cur_pos += (dword)uMaxLen;
 
-  return (dword)uMaxLen;
+    return (dword)uMaxLen;
 }
 
 
 /* Read a message from the Squish base */
 
 dword _XPENTRY apiSquishReadMsg(HMSG hmsg, PXMSG pxm, dword dwOfs,
-                              dword dwTxtLen, byte  *szTxt,
-                              dword dwCtrlLen, byte  *szCtrl)
+                                dword dwTxtLen, byte  *szTxt,
+                                dword dwCtrlLen, byte  *szCtrl)
 {
-  dword dwSeekOfs=(dword)-1L; /* Current offset */
-  unsigned fOkay=TRUE;        /* Any errors so far? */
-  dword dwGot=0;              /* Bytes read from file */
+    dword dwSeekOfs=(dword)-1L; /* Current offset */
+    unsigned fOkay=TRUE;        /* Any errors so far? */
+    dword dwGot=0;              /* Bytes read from file */
 
-  /* Make sure that we have a valid handle (and that it's in read mode) */
+    /* Make sure that we have a valid handle (and that it's in read mode) */
 
-  if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
-    return (dword)-1L;
+    if (MsgInvalidHmsg(hmsg) || !_SquishReadMode(hmsg))
+        return (dword)-1L;
 
-  /* Make sure that we can use szTxt and szCtrl as flags controlling what   *
-   * to read.                                                               */
+    /* Make sure that we can use szTxt and szCtrl as flags controlling what   *
+     * to read.                                                               */
 
-  if (!dwTxtLen)
-    szTxt=NULL;
+    if (!dwTxtLen)
+        szTxt=NULL;
 
-  if (!dwCtrlLen)
-    szCtrl=NULL;
+    if (!dwCtrlLen)
+        szCtrl=NULL;
 
 
-  /* Now read in the message header, the control information, and the       *
-   * message text.                                                          */
+    /* Now read in the message header, the control information, and the       *
+     * message text.                                                          */
 
- if (pxm)
-    fOkay=_SquishReadXmsg(hmsg, pxm, &dwSeekOfs);
+    if (pxm)
+        fOkay=_SquishReadXmsg(hmsg, pxm, &dwSeekOfs);
 
-  if (fOkay && szCtrl)
-    fOkay=_SquishReadCtrl(hmsg, szCtrl, dwCtrlLen, &dwSeekOfs);
+    if (fOkay && szCtrl)
+        fOkay=_SquishReadCtrl(hmsg, szCtrl, dwCtrlLen, &dwSeekOfs);
 
-  if (fOkay && szTxt)
-  {
-    hmsg->cur_pos=dwOfs;
+    if (fOkay && szTxt)
+    {
+        hmsg->cur_pos=dwOfs;
 
-    dwGot=_SquishReadTxt(hmsg, szTxt, dwTxtLen, &dwSeekOfs);
-    if (dwGot==(dword)-1L)
-      fOkay=FALSE;
-  }
+        dwGot=_SquishReadTxt(hmsg, szTxt, dwTxtLen, &dwSeekOfs);
+        if (dwGot==(dword)-1L)
+            fOkay=FALSE;
+    }
 
-  /* If everything worked okay, return the number bytes that we read        *
-   * from the message body.                                                 */
+    /* If everything worked okay, return the number bytes that we read        *
+     * from the message body.                                                 */
 
-  return fOkay ? dwGot : (dword)-1L;
+    return fOkay ? dwGot : (dword)-1L;
 }
 
 

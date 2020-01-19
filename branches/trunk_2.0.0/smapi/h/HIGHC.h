@@ -14,12 +14,12 @@
 #define SMAPI_HIGHC_H
 
 #ifndef __HIGHC__
-  #  error This file may be used only with MetaWare High C/C++ for OS/2 !
+    #  error This file may be used only with MetaWare High C/C++ for OS/2 !
 #endif
 
-#ifndef __LITTLE_ENDIAN__   
-#warning High C exists for i386 only? I don't known. (Stas Degteff)
-#  define __LITTLE_ENDIAN__ /* High C exists for i386 only? */
+#ifndef __LITTLE_ENDIAN__
+    #warning High C exists for i386 only? I don't known. (Stas Degteff)
+    #define __LITTLE_ENDIAN__ /* High C exists for i386 only? */
 #endif
 
 #  define _stdc

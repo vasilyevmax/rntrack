@@ -113,7 +113,7 @@ int waitlock2(int handle, long ofs, long length, long t)
 #include <stdlib.h>
 
 #ifndef F_GETOSFD
-#define F_GETOSFD 6
+    #define F_GETOSFD 6
 #endif
 
 int waitlock(int handle, long ofs, long length)
@@ -140,17 +140,17 @@ int waitlock2(int handle, long ofs, long length, long t)
 {
     int forever = 0;
     int rc;
-    
-    if (t==0) 
-      forever = 1;
-     
-    t *= 10; 
+
+    if (t==0)
+        forever = 1;
+
+    t *= 10;
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
     {
         tdelay(100);
         t--;
     }
-    
+
     return rc;
 }
 
@@ -159,7 +159,7 @@ int lock(int handle, long ofs, long length)
     int nt_handle = __fcntl(handle, F_GETOSFD, 0);
 
     if (nt_handle < 0 ||
-        LockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length, 0L) == FALSE)
+            LockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length, 0L) == FALSE)
     {
         return -1;
     }
@@ -171,8 +171,8 @@ int unlock(int handle, long ofs, long length)
     int nt_handle = __fcntl(handle, F_GETOSFD, 0);
 
     if (nt_handle < 0 ||
-        UnlockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length,
-                   0L) == FALSE)
+            UnlockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length,
+                       0L) == FALSE)
     {
         return -1;
     }
@@ -182,7 +182,7 @@ int unlock(int handle, long ofs, long length)
 #elif defined(__MINGW32__) || (defined(_MSC_VER) && (_MSC_VER >= 1200))
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#include <stdio.h>
+    #include <stdio.h>
 #endif
 
 #include <io.h>
@@ -216,7 +216,7 @@ int lock(int handle, long ofs, long length)
     lseek(handle, offset, SEEK_SET);
 
     if  (r)
-       return -1;
+        return -1;
 
     return 0;
 }
@@ -243,18 +243,18 @@ int waitlock2(int handle, long ofs, long length, long t)
 {
     int forever = 0;
     int rc;
-    
-    if (t==0) 
-      forever = 1;
-     
-    t *= 10; 
+
+    if (t==0)
+        forever = 1;
+
+    t *= 10;
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
     {
 
         tdelay(100);
         t--;
     }
-    
+
     return rc;
 }
 
@@ -276,17 +276,17 @@ int waitlock2(int handle, long ofs, long length, long t)
 {
     int forever = 0;
     int rc;
-    
-    if (t==0) 
-      forever = 1;
-     
-    t *= 10; 
+
+    if (t==0)
+        forever = 1;
+
+    t *= 10;
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
     {
         tdelay(100);
         t--;
     }
-    
+
     return rc;
 }
 
@@ -303,7 +303,7 @@ int lock(int handle, long ofs, long length)
     lseek(handle, offset, SEEK_SET);
 
     if  (r)
-       return -1;
+        return -1;
 
     return 0;
 }
@@ -348,8 +348,8 @@ int lock(int handle, long ofs, long length)
 #ifndef __BEOS__
     return fcntl(handle, F_SETLK, file_lock(F_WRLCK, ofs, length));
 #else
-	return 0;
-#endif   
+    return 0;
+#endif
 }
 
 int waitlock(int handle, long ofs, long length)
@@ -368,15 +368,15 @@ int waitlock(int handle, long ofs, long length)
 int waitlock2(int handle, long ofs, long length, long t)
 {
 #ifndef __BEOS__
-	int rc;
-	
-	alarm(t);
-	rc = fcntl(handle, F_SETLKW, file_lock(F_WRLCK, ofs, length));
-	alarm(0);
-	
-	return rc;
+    int rc;
+
+    alarm(t);
+    rc = fcntl(handle, F_SETLKW, file_lock(F_WRLCK, ofs, length));
+    alarm(0);
+
+    return rc;
 #else
-  	return 0;
+    return 0;
 #endif
 }
 
@@ -399,34 +399,34 @@ int sopen(const char *name, int oflag, int ishared, int mode)
     /*
      * I removed this code, 'cause there is no more need for it (i hope so)
      */
-/*
+    /*
 #ifndef NO_LOCKING
-    if (fd != -1 && fcntl(fd, F_SETLK,
-              file_lock((ishared == SH_DENYNONE) ? F_RDLCK : F_WRLCK, 0, 0)))
+        if (fd != -1 && fcntl(fd, F_SETLK,
+                  file_lock((ishared == SH_DENYNONE) ? F_RDLCK : F_WRLCK, 0, 0)))
 
-    {
-        close(fd);
-        return -1;
-    }
+        {
+            close(fd);
+            return -1;
+        }
 #endif
-*/
+    */
     return fd;
 }
 
 #else
 
 #ifdef OS2
-#define INCL_DOSDATETIME
-#include <os2.h>
+    #define INCL_DOSDATETIME
+    #include <os2.h>
 #endif
 
 #if defined(__TURBOC__) && defined(__MSDOS__)
-#include <io.h>
-#include <dos.h>
+    #include <io.h>
+    #include <dos.h>
 #endif
 
-#ifdef UNIX 
-#include <unistd.h>
+#ifdef UNIX
+    #include <unistd.h>
 #endif
 
 int waitlock(int handle, long ofs, long length)
@@ -442,18 +442,18 @@ int waitlock2(int handle, long ofs, long length, long t)
 {
     int forever = 0;
     int rc;
-    
-    if (t==0) 
-      forever = 1;
-    
-    t *= 10; 
-     
+
+    if (t==0)
+        forever = 1;
+
+    t *= 10;
+
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
     {
         tdelay(100);
         t--;
     }
-    
+
     return rc;
 }
 

@@ -17,7 +17,7 @@
 #include <compiler.h>
 
 #ifdef HAS_STRINGS_H
-#   include <strings.h>
+    #include <strings.h>
 #endif
 
 #include "memory.h"
@@ -27,15 +27,15 @@
 
 int ctoi(const char *s)
 {
-  char *foo;
-  unsigned long res;
-  if(!s) return 0;
-  res = strtoul(s, &foo, 0);
-  if (*foo)	/* parse error */
-    return 0;
-  if (res>(((unsigned)-1)>>1))  /* Too big */
-    return 0;
-  return (int)res;
+    char *foo;
+    unsigned long res;
+    if(!s) return 0;
+    res = strtoul(s, &foo, 0);
+    if (*foo)	/* parse error */
+        return 0;
+    if (res>(((unsigned)-1)>>1))  /* Too big */
+        return 0;
+    return (int)res;
 }
 
 char *_fast strocpy(char *dst, const char *src)
@@ -133,16 +133,18 @@ char *_fast firstchar(const char *strng, const char *delim, int findword)
 
 char *strrstr(const char *HAYSTACK, const char *NEEDLE)
 {
-  char *start = NULL, *temp = NULL;
+    char *start = NULL, *temp = NULL;
 
-  if(HAYSTACK&&NEEDLE){
-   temp = strstr(HAYSTACK, NEEDLE);
-   while (temp  != NULL) {
-      start = temp;
-      temp = strstr(temp+1,NEEDLE);
-   }
-  }
-  return start;
+    if(HAYSTACK&&NEEDLE)
+    {
+        temp = strstr(HAYSTACK, NEEDLE);
+        while (temp  != NULL)
+        {
+            start = temp;
+            temp = strstr(temp+1,NEEDLE);
+        }
+    }
+    return start;
 }
 
 /*
@@ -157,16 +159,21 @@ char *fc_stristr(const char *str, const char *find)
     {
         find++;
         ch = *(find-1);
-        if (ch != 0) {
-            do {
-                do {
+        if (ch != 0)
+        {
+            do
+            {
+                do
+                {
                     str++;
                     if ((sc = *(str-1)) == 0) return (NULL);
-                } while (tolower((unsigned char) sc) != tolower((unsigned char) ch));
+                }
+                while (tolower((unsigned char) sc) != tolower((unsigned char) ch));
 
                 for(str1=str,find1=find; *find1 && *str1 && tolower(*find1)==tolower(*str1); str1++,find1++);
 
-            } while (*find1);
+            }
+            while (*find1);
             str--;
         }
     }
@@ -175,7 +182,8 @@ char *fc_stristr(const char *str, const char *find)
 
 char *stripLeadingChars(char *str, const char *chr)
 {
-    if (str && chr && *chr) {
+    if (str && chr && *chr)
+    {
         int i = (int)strspn(str, chr);
         memmove(str, str + i, strlen(str) - i+1);
     }
@@ -190,38 +198,41 @@ char *stripLeadingChars(char *str, const char *chr)
 */
 char *stripTrailingChars(char *str, const char *chr)
 {
-   char *i;
-   register int l;
+    char *i;
+    register int l;
 
-   if( str && chr && (l=(int)strlen(str))>0 ) {
-      i = str+l-1;
-      while( (NULL != strchr(chr, *i)) && (i>=str) )
-         *i-- = '\0';
-   }
-   return str;
+    if( str && chr && (l=(int)strlen(str))>0 )
+    {
+        i = str+l-1;
+        while( (NULL != strchr(chr, *i)) && (i>=str) )
+            *i-- = '\0';
+    }
+    return str;
 }
 
 
 char *strUpper(char *str)
 {
-   char *temp = str;
+    char *temp = str;
 
-   if(str) while(*str != 0) {
-      *str = (char)toupper(*str);
-      str++;
-   }
-   return temp;
+    if(str) while(*str != 0)
+        {
+            *str = (char)toupper(*str);
+            str++;
+        }
+    return temp;
 }
 
 char *strLower(char *str)
 {
-   char *temp = str;
+    char *temp = str;
 
-   if(str) while(*str != 0) {
-      *str = (char)tolower(*str);
-      str++;
-   }
-   return temp;
+    if(str) while(*str != 0)
+        {
+            *str = (char)tolower(*str);
+            str++;
+        }
+    return temp;
 }
 
 char *sstrdup(const char *src)
@@ -229,10 +240,11 @@ char *sstrdup(const char *src)
     char *ptr;
 
     if (src == NULL) return NULL;
-/*    if (!strlen(src)) return NULL; */
+    /*    if (!strlen(src)) return NULL; */
     ptr = strdup (src);
-    if (ptr == NULL) {
-		abort();
+    if (ptr == NULL)
+    {
+        abort();
     }
     return ptr;
 }
@@ -240,37 +252,37 @@ char *sstrdup(const char *src)
 /* safe strcmp */
 int sstrcmp(const char *str1, const char *str2)
 {
-  if( str1==str2 ) return 0;  /* strings match */
-  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
-  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
-  return strcmp(str1,str2);   /* compare strings */
+    if( str1==str2 ) return 0;  /* strings match */
+    if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+    if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+    return strcmp(str1,str2);   /* compare strings */
 }
 
 /* safety strncmp */
 int sstrncmp(const char *str1, const char *str2, size_t length)
 {
-  if( str1==str2 ) return 0;  /* strings match */
-  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
-  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
-  return strncmp(str1,str2, length);  /* compare strings */
+    if( str1==str2 ) return 0;  /* strings match */
+    if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+    if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+    return strncmp(str1,str2, length);  /* compare strings */
 }
 
 /* safe stricmp (case-insencitive) */
 int sstricmp(const char *str1, const char *str2)
 {
-  if( str1==str2 ) return 0;  /* strings match */
-  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
-  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
-  return stricmp(str1,str2);   /* compare strings */
+    if( str1==str2 ) return 0;  /* strings match */
+    if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+    if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+    return stricmp(str1,str2);   /* compare strings */
 }
 
 /* safety strnicmp (case-insencitive) */
 int sstrnicmp(const char *str1, const char *str2, size_t length)
 {
-  if( str1==str2 ) return 0;  /* strings match */
-  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
-  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
-  return strnicmp(str1,str2, length);  /* compare strings */
+    if( str1==str2 ) return 0;  /* strings match */
+    if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+    if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+    return strnicmp(str1,str2, length);  /* compare strings */
 }
 
 /* From binkd sources (tools.c), modified by Stas Degteff
@@ -283,14 +295,15 @@ int sstrnicmp(const char *str1, const char *str2, size_t length)
  */
 char *strnzcpy (char *dst, const char *src, size_t len)
 {
-  assert(len>0);
-  if (!dst) return NULL;
-  if (!src || len==1) {
-     dst[0]='\0';
-     return dst;
-  }
-  dst[len - 1] = 0;
-  return strncpy (dst, src, len - 1);
+    assert(len>0);
+    if (!dst) return NULL;
+    if (!src || len==1)
+    {
+        dst[0]='\0';
+        return dst;
+    }
+    dst[len - 1] = 0;
+    return strncpy (dst, src, len - 1);
 }
 
 /* From binkd sources (tools.c), modified by Stas Degteff
@@ -303,34 +316,34 @@ char *strnzcpy (char *dst, const char *src, size_t len)
  */
 char *strnzcat (char *dst, const char *src, size_t len)
 {
-  size_t x;
+    size_t x;
 
-  if (!dst) return NULL;
-  if (!src) return dst;
-  x = strlen (dst);
-  return strnzcpy (dst + x, src, len);
+    if (!dst) return NULL;
+    if (!src) return dst;
+    x = strlen (dst);
+    return strnzcpy (dst + x, src, len);
 }
 
 char *strseparate(char **stringp, const char *delim)
 {
-  char *p, *q;
+    char *p, *q;
 
-  if (!(stringp&&delim)) return NULL;
+    if (!(stringp&&delim)) return NULL;
 
-  p = *stringp;
-  if (p == NULL || *p == '\0')
-    return NULL;
+    p = *stringp;
+    if (p == NULL || *p == '\0')
+        return NULL;
 
-  q = strpbrk (p, delim);
-  if (q != NULL)
+    q = strpbrk (p, delim);
+    if (q != NULL)
     {
-      *stringp = q + 1;
-      *q = '\0';
-      while (**stringp && strchr(delim, **stringp)) (*stringp)++;
+        *stringp = q + 1;
+        *q = '\0';
+        while (**stringp && strchr(delim, **stringp)) (*stringp)++;
     }
-  else
-    *stringp = NULL;
-  return p;
+    else
+        *stringp = NULL;
+    return p;
 }
 
 char *extract_CVS_keyword(char *str)
@@ -365,65 +378,65 @@ char *extract_CVS_keyword(char *str)
 
 int copyString(char *str, char **pmem)
 {
-   if (!(str&&pmem))
-      return 1;
+    if (!(str&&pmem))
+        return 1;
 
-   nfree(*pmem);
-   *pmem = (char *) sstrdup (str);
+    nfree(*pmem);
+    *pmem = (char *) sstrdup (str);
 
-   return 0;
+    return 0;
 }
 
 int copyStringUntilSep(char *str, char *seps, char **dest)
 {
-  char *sepPos;
+    char *sepPos;
 
-  if ((!str) || (!(*str)) || !(seps&&dest) )
-    return 0;
+    if ((!str) || (!(*str)) || !(seps&&dest) )
+        return 0;
 
-  nfree(*dest);
-  sepPos = strpbrk(str, seps);
-  if (sepPos)
-  {
-    *dest = malloc(sepPos - str + 1);
-    strnzcpy(*dest, str, sepPos - str);
+    nfree(*dest);
+    sepPos = strpbrk(str, seps);
+    if (sepPos)
+    {
+        *dest = malloc(sepPos - str + 1);
+        strnzcpy(*dest, str, sepPos - str);
 
-    return (int)(sepPos - str);
-  }
+        return (int)(sepPos - str);
+    }
 
-  *dest = (char *) sstrdup(str);
-  return (int)strlen(str);
+    *dest = (char *) sstrdup(str);
+    return (int)strlen(str);
 }
 
 /* helper function for s_str_array */
 int findInStrArray(s_str_array const *ss, char const *find)
 {
-	int ii = 0;
-	assert(ss != NULL && find != NULL);
+    int ii = 0;
+    assert(ss != NULL && find != NULL);
 
-	while(ii < ss->count && stricmp(find, STR_N(ss, ii))) ++ii;
-	if(ii < ss->count)
-		return ii;
+    while(ii < ss->count && stricmp(find, STR_N(ss, ii))) ++ii;
+    if(ii < ss->count)
+        return ii;
 
-	return -1;
+    return -1;
 }
 
 char *StrArray2String(s_str_array *ss)
 {
-	int ii;
-	int size;
-	char *string;
-	assert(ss != NULL);
+    int ii;
+    int size;
+    char *string;
+    assert(ss != NULL);
 
-	if(ss->count == 0)
-		return NULL;
+    if(ss->count == 0)
+        return NULL;
 
-	size = (int)STR_A_SSIZE(ss);
-	string = (char *)smalloc(size);
-	memcpy(string, STR_N(ss, 0), size);
-	/* \0 -> ' ' */
-	for(ii = 1; ii < ss->count; ++ii)
-		string[ss->data.offsets[ii] - 1 - ss->data.offsets[0]] = ' ';
+    size = (int)STR_A_SSIZE(ss);
+    string = (char *)smalloc(size);
+    memcpy(string, STR_N(ss, 0), size);
+    /* \0 -> ' ' */
+    for(ii = 1; ii < ss->count; ++ii)
+        string[ss->data.offsets[ii] - 1 - ss->data.offsets[0]] = ' ';
 
-	return string;
+    return string;
 }

@@ -25,35 +25,35 @@
 #include "compiler.h"
 
 #ifdef HAS_DOS_H
-#  include <dos.h>
+    #include <dos.h>
 #endif
 #if defined(HAS_UNISTD_H)
-#  include <unistd.h>
+    #include <unistd.h>
 #endif
 #if defined(HAS_DIRENT_H)
-#  include <dirent.h>
+    #include <dirent.h>
 #endif
 #if defined(HAS_DIR_H)
-#include <dir.h>
+    #include <dir.h>
 #endif
 
 #if defined(__RSXNT__) || defined(__MINGW32__) || defined(__MSVC__)
-#   define WIN32_LEAN_AND_MEAN
-#   define NOGDI
-#   define NOUSER
-#   define NOMSG
+    #define WIN32_LEAN_AND_MEAN
+    #define NOGDI
+    #define NOUSER
+    #define NOMSG
 
-#   ifdef __RSXNT__
-                                /* The RSXNT winsock.h conflicts with EMX
-                                   io.h. As we do not need sockets anyway, we
-                                   just prevent their inclusion. */
-#       define _WINSOCK_H
-#   endif
-#   if defined(__MINGW32__)
-/* For HTick compatibility */
-#       define _WINUSER_H
-#   endif
-#   include <windows.h>
+    #ifdef __RSXNT__
+        /* The RSXNT winsock.h conflicts with EMX
+        io.h. As we do not need sockets anyway, we
+        just prevent their inclusion. */
+        #define _WINSOCK_H
+    #endif
+    #if defined(__MINGW32__)
+        /* For HTick compatibility */
+        #define _WINUSER_H
+    #endif
+    #include <windows.h>
 #endif
 
 

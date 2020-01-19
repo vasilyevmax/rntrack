@@ -9,7 +9,7 @@
 */
 
 /* standalone msgid generator: print new msgid to stdout
- * 
+ *
  *  SMAPI; Modified Squish MSGAPI
  *
  */
@@ -45,20 +45,28 @@ int outrunparse(char *line, unsigned long *seqoutrun)
     p = line;
     while (isdigit((int)(*p))) p++;
     if (*p == '\0') return 0;
-    if (p[1]) {
+    if (p[1])
+    {
         fprintf(stderr, "Bad SeqOutrun value '%s'!\n", line);
         return 1;
     }
-    switch (tolower(*p)) {
-    case 'y':	*seqoutrun *= 365;
-    case 'd':	*seqoutrun *= 24;
-    case 'h':	*seqoutrun *= 60*60;
+    switch (tolower(*p))
+    {
+    case 'y':
+        *seqoutrun *= 365;
+    case 'd':
+        *seqoutrun *= 24;
+    case 'h':
+        *seqoutrun *= 60*60;
         break;
-    case 'w':	*seqoutrun *= 7l*24*60*60;
+    case 'w':
+        *seqoutrun *= 7l*24*60*60;
         break;
-    case 'm':	*seqoutrun *= 31l*24*60*60;
+    case 'm':
+        *seqoutrun *= 31l*24*60*60;
         break;
-    default:	fprintf(stderr, "Bad SeqOutrun value '%s'!\n", line);
+    default:
+        fprintf(stderr, "Bad SeqOutrun value '%s'!\n", line);
         return 1;
     }
     return 0;
@@ -85,10 +93,10 @@ void printversion(void)
     date = extract_CVS_keyword(gnmsgid_date);
     gen_rev = extract_CVS_keyword(genmsgid_rev);
     gen_date = extract_CVS_keyword(genmsgid_date);
-   
+
     printf("gnmsgid - standalone msgid generator using smapi library\n");
     printf("\nCopyright (c) Alexander Reznikov, 2:4600/220@fidonet\n");
-    printf("Copyright (c) HUSKY development team.\n\n"); 
+    printf("Copyright (c) HUSKY development team.\n\n");
     printf("gnmsgid.c revision:  %s\n", str_or_unknown(rev));
     printf("gnmsgid.c date:      %s\n", str_or_unknown(date));
     printf("genmsgid.c revision: %s\n", str_or_unknown(gen_rev));
@@ -168,7 +176,7 @@ int main(int argc, char *argv[])
             {
                 version = 1;
                 break;
-            }    
+            }
             fprintf(stderr, "Illegal parameter: '%s'!\n", argv[i]);
             perr = 1;
             break;
@@ -187,17 +195,17 @@ int main(int argc, char *argv[])
                 perr = 1;
                 break;
             }
-            if (perr!=0)
-                break;
-
-            num = atoi(argv[i]);
-
-            if (num<1)
-            {
-                fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);
-                perr = 1;
-            }
+        if (perr!=0)
             break;
+
+        num = atoi(argv[i]);
+
+        if (num<1)
+        {
+            fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);
+            perr = 1;
+        }
+        break;
     }
 
     if (perr==0)
@@ -218,7 +226,7 @@ int main(int argc, char *argv[])
         {
             msgid = GenMsgIdEx(seqdir, seqoutrun, NULL, &msgiderr);
             if (msgiderr)
-            fprintf(stderr, "warning (id #%i): %s, fall to ugly old algorithm\n", i, msgiderr);
+                fprintf(stderr, "warning (id #%i): %s, fall to ugly old algorithm\n", i, msgiderr);
             printf("%08x\n", msgid);
         }
     }

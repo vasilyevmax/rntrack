@@ -46,41 +46,41 @@ void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
     timeval = time(NULL);
     tim = localtime(&timeval);
 
-  if (*msgdate=='\0') /* If no date... */
-  {
-    /* OG: localtime must only generated, if msgadate == '' & yr = 1980
-           A little bit more speed !
-    */
-    /* max: and why you leave generation upper *msgdate=='\0' ?
-            but you can't remove, because it needed at the end of function
-	    think you must remove localtime generation below */
-
-    if (d_written->msg_st.date.yr == 0)
+    if (*msgdate=='\0') /* If no date... */
     {
-      timeval=time(NULL);
-      tim=localtime(&timeval);
+        /* OG: localtime must only generated, if msgadate == '' & yr = 1980
+               A little bit more speed !
+        */
+        /* max: and why you leave generation upper *msgdate=='\0' ?
+                but you can't remove, because it needed at the end of function
+            think you must remove localtime generation below */
 
-      /* Insert today's date */
-      fts_time(msgdate, tim);
+        if (d_written->msg_st.date.yr == 0)
+        {
+            timeval=time(NULL);
+            tim=localtime(&timeval);
 
-      StandardDate(d_written);
-    }  
-    else /* If msgdate = '' & yr > 1980, date_written seems to be ok ! */
-    {
-      if (d_written->msg_st.date.mo == 0 ||
-          d_written->msg_st.date.mo > 12)
-        d_written->msg_st.date.mo = 1;
-      sprintf(msgdate,
-             "%02d %s %02d  %02d:%02d:%02d",
-             d_written->msg_st.date.da,
-             months_ab[d_written->msg_st.date.mo-1],
-             (d_written->msg_st.date.yr+80) % 100,
-             d_written->msg_st.time.hh,
-             d_written->msg_st.time.mm,
-             d_written->msg_st.time.ss);
+            /* Insert today's date */
+            fts_time(msgdate, tim);
+
+            StandardDate(d_written);
+        }
+        else /* If msgdate = '' & yr > 1980, date_written seems to be ok ! */
+        {
+            if (d_written->msg_st.date.mo == 0 ||
+                    d_written->msg_st.date.mo > 12)
+                d_written->msg_st.date.mo = 1;
+            sprintf(msgdate,
+                    "%02d %s %02d  %02d:%02d:%02d",
+                    d_written->msg_st.date.da,
+                    months_ab[d_written->msg_st.date.mo-1],
+                    (d_written->msg_st.date.yr+80) % 100,
+                    d_written->msg_st.time.hh,
+                    d_written->msg_st.time.mm,
+                    d_written->msg_st.time.ss);
+        }
+        return;
     }
-    return;
-  }
 
     if (sscanf(msgdate, "%d %s %d %d:%d:%d", &dd, temp, &yy, &hh, &mm, &ss) == 6)
     {

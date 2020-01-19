@@ -21,13 +21,13 @@
 #define __TYPEDEFS_H__
 
 #ifdef SASC
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 typedef unsigned bit;
 
 #ifndef SASC
-typedef unsigned char byte;
+    typedef unsigned char byte;
 #endif
 
 typedef signed char sbyte;
@@ -36,13 +36,13 @@ typedef unsigned short word;
 typedef signed short sword;
 
 #if !defined(__unix__) && !defined(SASC) && !defined(__MINGW32__)
-typedef unsigned short ushort;
+    typedef unsigned short ushort;
 #endif
 
 typedef signed short sshort;
 
 #ifndef __unix__
-typedef unsigned long ulong;
+    typedef unsigned long ulong;
 #endif
 
 typedef signed long slong;

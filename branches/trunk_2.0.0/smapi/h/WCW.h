@@ -14,10 +14,10 @@
 #define SMAPI_WCW_H
 
 #ifndef __WATCOMC__
-  #error This file may be used only with Watcom C !
+    #error This file may be used only with Watcom C !
 #endif
 #if !defined(__WIN32__) && !defined(__NT__)
-  #error This file may be used only with Watcom C Win32/NT target !
+    #error This file may be used only with Watcom C Win32/NT target !
 #endif
 
 
@@ -34,9 +34,9 @@
 /*#  define mysleep(x) Sleep(x*1000) */ /* winbase.h */
 
 #    include <limits.h>
-#    ifndef MAXPATHLEN
-#      define MAXPATHLEN NAME_MAX
-#    endif
+#ifndef MAXPATHLEN
+    #define MAXPATHLEN NAME_MAX
+#endif
 
 #  define HAS_sopen     3   /* sopen() : in io.h, 3 or 4 parameters */
 

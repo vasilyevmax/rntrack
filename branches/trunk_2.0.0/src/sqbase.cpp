@@ -141,9 +141,9 @@ bool SQUISH::Open(void)
     if(Area == NULL)
     {
         Log.Level(LOGE) << "SQUISH.Open: Unable to open message base '" <<
-                           DirName <<
-                           "', code: " << (uint)msgapierr <<
-                           ", errno: " << errno << EOL;
+                        DirName <<
+                        "', code: " << (uint)msgapierr <<
+                        ", errno: " << errno << EOL;
         return FALSE;
     }
 
@@ -202,9 +202,9 @@ bool SQUISH::Set(char * Dir, int BaseType)
 
         if(Area == NULL)
         {
-            Log.Level(LOGD) << "SQUISH.Set: Unable to create message base '" << 
-                               Dir << "', code: " << (uint)msgapierr <<
-                               ", errno: " << errno << EOL;
+            Log.Level(LOGD) << "SQUISH.Set: Unable to create message base '" <<
+                            Dir << "', code: " << (uint)msgapierr <<
+                            ", errno: " << errno << EOL;
         }
     }
     else
@@ -216,8 +216,8 @@ bool SQUISH::Set(char * Dir, int BaseType)
         if(Area == NULL)
         {
             Log.Level(LOGD) << "SQUISH.Set: Unable to open message base '" <<
-                               Dir << "', code: " << (uint)msgapierr <<
-                               ", errno: " << errno << EOL;
+                            Dir << "', code: " << (uint)msgapierr <<
+                            ", errno: " << errno << EOL;
         }
     }
 
@@ -251,7 +251,7 @@ bool SQUISH::Next(void)
     HMSG fh;
 
     Log.Level(LOGD) << "(1) SQUISH.Next: MsgNum == " << MsgNum <<
-                       " tMsgNum == " << tMsgNum << EOL;
+                    " tMsgNum == " << tMsgNum << EOL;
     CHP = 519;
 
     if(Area == NULL)
@@ -277,7 +277,7 @@ bool SQUISH::Next(void)
     while(MsgNum <= MsgGetHighMsg(Area))
     {
         Log.Level(LOGD) << "(W) SQUISH.Next: MsgNum == " << MsgNum <<
-                           " tMsgNum == " << tMsgNum << EOL;
+                        " tMsgNum == " << tMsgNum << EOL;
         CHP = 520002;
         fh  = MsgOpenMsg(Area, MOPEN_READ, MsgNum);
         CHP = 520003;
@@ -323,7 +323,7 @@ bool SQUISH::Rewind(void)
     CHP = 523;
     CHP = 525;
     Log.Level(LOGD) << "High message number: " << (int)MsgGetHighMsg(Area) <<
-                       EOL;
+                    EOL;
 
     if(MsgGetHighMsg(Area) == 0)
     {
@@ -356,9 +356,9 @@ bool SQUISH::DeleteMsg(void)
     {
         CHP = 531;
         Log.Level(LOGD) << "SQUISH.DeleteMsg: Unable to delete message '" <<
-                           MessageName() <<
-                           "', code: " << (uint)msgapierr <<
-                           ", errno: " << errno << EOL;
+                        MessageName() <<
+                        "', code: " << (uint)msgapierr <<
+                        ", errno: " << errno << EOL;
         return FALSE;
     }
 
@@ -422,9 +422,9 @@ bool SQUISH::ReadMsg(cMSG & m)
     if(fh == NULL)
     {
         Log.Level(LOGD) << "MSGAPI:MsgOpenMsg: Unable to open message '" <<
-                           MessageName() <<
-                           "', code: " << (uint)msgapierr <<
-                           ", errno: " << errno << EOL;
+                        MessageName() <<
+                        "', code: " << (uint)msgapierr <<
+                        ", errno: " << errno << EOL;
         errno = 0;
         CHP   = 541;
         return FALSE;
@@ -651,7 +651,7 @@ bool SQUISH::WriteOneMsg(unsigned int Num, cMSG & m)
         {
             CHP = 569;
             Log.Level(LOGD) << "MSGAPI::WriteOneMsg: last char == '" <<
-                               (int)c << "'(" << c << ") " << EOL;
+                            (int)c << "'(" << c << ") " << EOL;
             Log.Level(LOGD) << "MSGAPI::WriteOneMsg: Append newline. " << EOL;
             AddKluToChain(Body, "\0", NULL);
             CHP = 570;

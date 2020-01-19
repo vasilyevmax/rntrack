@@ -28,15 +28,15 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_DOS_H
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 #ifdef HAS_IO_H
-#include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef HAS_UNISTD_H
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 /***  Declarations & defines  ***********************************************/
@@ -47,19 +47,19 @@ int _fast setfsize(int fd, long size);
 
 #ifdef __DOS__
 
-  /* Call DOS Fn 40H: Write to File via Handle
-   * AH    0x40
-   * BX    file handle
-   * CX    number of bytes to write (Note: 0 means truncate the file)
-   * DS:DX address of a buffer containing the data to write
-   * Returns: AX    error code if CF is set to CY
-   *                number of bytes actually written  use for error test
-   *
-   * DOS 3.0+ If CX is 0000H on entry, the file is truncated at the
-   * current file position -- or the file is padded to that position.
-   */
-  int _fast setfsize(int fd, long size)
-  {
+/* Call DOS Fn 40H: Write to File via Handle
+ * AH    0x40
+ * BX    file handle
+ * CX    number of bytes to write (Note: 0 means truncate the file)
+ * DS:DX address of a buffer containing the data to write
+ * Returns: AX    error code if CF is set to CY
+ *                number of bytes actually written  use for error test
+ *
+ * DOS 3.0+ If CX is 0000H on entry, the file is truncated at the
+ * current file position -- or the file is padded to that position.
+ */
+int _fast setfsize(int fd, long size)
+{
     union REGS r;
     long pos=tell(fd);
 
@@ -68,53 +68,53 @@ int _fast setfsize(int fd, long size);
 
     r.h.ah=0x40;
 
-    #if defined(__DOS16__) || defined(__DJGPP__)
+#if defined(__DOS16__) || defined(__DJGPP__)
     r.x.bx=fd;
 
     int86(0x21, &r, &r);
 
-    #elif defined(__DPMI__)
+#elif defined(__DPMI__)
     r.x.ebx=fd;
 
     int386(0x21, &r, &r);
-    #endif
+#endif
 
     lseek(fd, pos, SEEK_SET);
 
     return 0;
-  }
+}
 #elif defined(__OS2__)
 
-  #define INCL_DOSFILEMGR
-  #include <os2.h>
+#define INCL_DOSFILEMGR
+#include <os2.h>
 
-  int _fast setfsize(int fd, long size)
-  {
+int _fast setfsize(int fd, long size)
+{
     return ((int)DosSetFileSize((HFILE)fd, (ULONG)size)); /*ULONG & HFILE defined in os2.h*/
-  }
+}
 
 #elif defined(__UNIX__)
 
-  int _fast setfsize(int fd, long size)
-  {
+int _fast setfsize(int fd, long size)
+{
     return ftruncate(fd, size);
-  }
+}
 #elif defined(__WIN32__)
 
-  #define WIN32_LEAN_AND_MEAN
-  #include <windows.h>
-  #include <winbase.h>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winbase.h>
 
-  int _fast setfsize(int fd, long size)
-  {
+int _fast setfsize(int fd, long size)
+{
 #if defined(__MSVC__) || defined(__MINGW32__)
     return chsize(fd, size);
 #else
     SetFilePointer((HANDLE)fd, size, NULL, FILE_BEGIN);
     return (!SetEndOfFile((HANDLE)fd));
 #endif
-  }
+}
 #else
-  #error Unknown OS
+#error Unknown OS
 #endif
 
