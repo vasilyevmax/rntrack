@@ -163,7 +163,7 @@ kwtable[] =
     {"TempMail:", _TEMPMAIL},
     {"TrafficLog:", _TRAFFICLOG},
     {"Password:", _PASSWORD},
-    {"Domain:", _DOMAIN},
+    {"Domain:", _DOMAINP},
     {"FileBox:", _FILEBOX},
     {"UseFileBoxes", _USEFILEBOXES},
     {"UTC:", _UTC},

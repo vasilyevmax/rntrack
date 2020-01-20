@@ -114,7 +114,7 @@ enum yytokentype
     _MAXPKTSIZE = 324,
     _MAXMSGSIZE = 325,
     _TIMESTAMPFILE = 326,
-    _DOMAIN = 327,
+    _DOMAINP = 327,
     _FILEBOX = 328,
     _TRAFFICLOGTEMPLATE = 329,
     _STRIPPATHINPKT = 330,
