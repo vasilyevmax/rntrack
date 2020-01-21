@@ -72,7 +72,7 @@ static HMSG near NewHmsg(HAREA ha, word wMode)
 
     /* Allocate memory for the message handle */
 
-    hmsg=palloc(sizeof *hmsg);
+    hmsg = (HMSG)palloc(sizeof *hmsg);
     if (hmsg==NULL)
         return NULL;
 

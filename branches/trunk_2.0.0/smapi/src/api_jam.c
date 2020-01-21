@@ -173,7 +173,7 @@ MSGA *MSGAPI JamOpenArea(byte * name, word mode, word type)
         return NULL;
     }
 
-    jm = palloc(sizeof(MSGA));
+    jm = (MSGA *)palloc(sizeof(MSGA));
     if (jm == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -378,7 +378,7 @@ static MSGH *_XPENTRY JamOpenMsg(MSGA * jm, word mode, dword msgnum)
         }
         else
         {
-            msgh = palloc(sizeof(struct _msgh));
+            msgh = (struct _msgh *)palloc(sizeof(struct _msgh));
             if (msgh == NULL)
             {
                 msgapierr = MERR_NOMEM;
@@ -1348,7 +1348,7 @@ int JamDeleteBase(char *name)
         return 0;
     }
 
-    fn = palloc( strlen(name)+5 );
+    fn = (char *)palloc( strlen(name)+5 );
     if( !fn )
     {
         errno = ENOMEM;
@@ -1582,7 +1582,7 @@ static MSGH *Jam_OpenMsg(MSGA * jm, word mode, dword msgnum)
         } /* endif */
     }
 
-    msgh = palloc(sizeof(struct _msgh));
+    msgh = (struct _msgh *)palloc(sizeof(struct _msgh));
     if (msgh == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -1737,7 +1737,7 @@ char *Jam_GetKludge(MSGA *jm, dword msgnum, word what)
     for (i=0, subfptr = subf->subfield; i<subf->subfieldCount; i++, subfptr++)
         if (subfptr->LoID == what)
         {
-            res = palloc(subfptr->DatLen + 1);
+            res = (char *)palloc(subfptr->DatLen + 1);
             if (res == NULL)
             {
                 if (Jmd->actmsg[msgnum-1].subfield == NULL) pfree(subf);
@@ -2146,7 +2146,7 @@ static void MSGAPI ConvertXmsgToJamHdr(MSGH *msgh, XMSG *msg, JAMHDRptr jamhdr, 
     clen = msgh->sq->isecho ? 3 : 5;
     sublen = sizeof(JAMSUBFIELD2LIST)+sizeof(JAMSUBFIELD2)*clen+37+37+73+
              (msgh->sq->isecho ? 0 : 30*2);
-    *subfield = palloc(sublen);
+    *subfield = (JAMSUBFIELD2LISTptr)palloc(sublen);
     if (*subfield==NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -2289,7 +2289,7 @@ static void resize_subfields(JAMSUBFIELD2LISTptr *sflist, dword newcount,
 
     assert(newcount > old_list->subfieldCount); /* Code below relies on this */
 
-    new_list = palloc(len);
+    new_list = (JAMSUBFIELD2LISTptr)palloc(len);
     if (!new_list)
     {
         msgapierr = MERR_NOMEM;

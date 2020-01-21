@@ -87,7 +87,7 @@ HIDX _SquishOpenIndex(HAREA ha)
 {
     HIDX hix;
 
-    hix=palloc(sizeof(*hix));
+    hix = (HIDX)palloc(sizeof(*hix));
     if (hix==NULL)
     {
         msgapierr=MERR_NOMEM;
@@ -147,7 +147,7 @@ int _SquishBeginBuffer(HIDX hix)
 
     /* Allocate memory for the array of segments */
 
-    hix->pss=palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
+    hix->pss = (SQIDXSEG *)palloc(sizeof(SQIDXSEG) * (unsigned)hix->cSeg);
     if (hix->pss==NULL)
     {
         msgapierr=MERR_NOMEM;
@@ -181,7 +181,7 @@ int _SquishBeginBuffer(HIDX hix)
 
         /* Try to allocate memory for this segment */
 
-        hix->pss[i].psqi=farpalloc((size_t)dwSize * (size_t)sizeof(SQIDX));
+        hix->pss[i].psqi = (SQIDX *)farpalloc((size_t)dwSize * (size_t)sizeof(SQIDX));
         if (hix->pss[i].psqi==NULL)
         {
             while (i--)
@@ -347,7 +347,7 @@ static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
             /* Don't use realloc because we cannot afford to lose the info that we  *
              * already have!                                                        */
 
-            psqiNew=farpalloc(((size_t)pss->dwMax + MORE_SPACE) * SQIDX_SIZE);
+            psqiNew = (SQIDX far *)farpalloc(((size_t)pss->dwMax + MORE_SPACE) * SQIDX_SIZE);
             if (psqiNew==NULL)
             {
                 msgapierr=MERR_NOMEM;
@@ -374,7 +374,7 @@ static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
      * existing segments are full.  To handle this, we need to reallocate     *
      * the array of pointers to segments and add a new one.                   */
 
-    pss=palloc(sizeof(SQIDXSEG) * (size_t)(hix->cSeg+1));
+    pss = (SQIDXSEG *)palloc(sizeof(SQIDXSEG) * (size_t)(hix->cSeg+1));
     if (pss==NULL)
     {
         msgapierr=MERR_NOMEM;
@@ -387,7 +387,7 @@ static int near _SquishAppendIndexRecord(HIDX hix, SQIDX *psqi)
 
     /* Allocate memory for the new segment */
 
-    hix->pss[hix->cSeg].psqi=farpalloc(MORE_SPACE * SQIDX_SIZE);
+    hix->pss[hix->cSeg].psqi = (SQIDX *)farpalloc(MORE_SPACE * SQIDX_SIZE);
     if (hix->pss[hix->cSeg].psqi==NULL)
     {
         msgapierr=MERR_NOMEM;
@@ -536,7 +536,7 @@ unsigned _SquishRemoveIndexEntry(HIDX hix, dword dwMsg, SQIDX *psqiOut,
 
     (void)lseek(HixSqd->ifd, (long)dwMsg * (long)SQIDX_SIZE, SEEK_SET);
 
-    pcBuf=palloc(SHIFT_SIZE);
+    pcBuf = (char *)palloc(SHIFT_SIZE);
     if (pcBuf==NULL)
     {
         msgapierr=MERR_NOMEM;

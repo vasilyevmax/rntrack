@@ -381,7 +381,7 @@ byte *_XPENTRY GetCtrlToken(byte *where, byte *what)
     if (end == NULL) end = (byte *) strchr((char *) where, '\001');
     if (end == NULL) end = where + strlen((char *) where);
 
-    out = palloc((size_t) (end - where) + 1);
+    out = (byte *)palloc((size_t) (end - where) + 1);
     if (out == NULL) return NULL;
 
     memmove(out, where, (size_t) (end - where));
@@ -475,7 +475,7 @@ byte *_XPENTRY CvtCtrlToKludge(byte * ctrl)
 
     clen = strlen((char *) ctrl) + NumKludges((char *) ctrl) + 20;
 
-    buf = palloc(clen);
+    buf = (byte *)palloc(clen);
     if (buf == NULL)
     {
         return NULL;

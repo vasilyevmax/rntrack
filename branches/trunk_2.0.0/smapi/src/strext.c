@@ -364,7 +364,7 @@ char *extract_CVS_keyword(char *str)
     if (l<3)
         return NULL;
 
-    r = malloc(l-1);
+    r = (char *)malloc(l-1);
     if (!r)
         return NULL;
 
@@ -398,7 +398,7 @@ int copyStringUntilSep(char *str, char *seps, char **dest)
     sepPos = strpbrk(str, seps);
     if (sepPos)
     {
-        *dest = malloc(sepPos - str + 1);
+        *dest = (char *)malloc(sepPos - str + 1);
         strnzcpy(*dest, str, sepPos - str);
 
         return (int)(sepPos - str);

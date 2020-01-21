@@ -87,7 +87,7 @@ MSGA *MSGAPI SdmOpenArea(byte * name, word mode, word type)
         return NULL;
     }
 
-    mh = palloc(sizeof(MSGA));
+    mh = (MSGA *)palloc(sizeof(MSGA));
     if (mh == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -181,7 +181,7 @@ int SdmDeleteBase(char *name)
         return FALSE;
     }
 
-    temp = malloc(strlen(name)+6);
+    temp = (char *)malloc(strlen(name)+6);
     if (temp == NULL)
         return FALSE;
     sprintf(temp, "%s*.msg", name);
@@ -194,7 +194,7 @@ int SdmDeleteBase(char *name)
     {
         do
         {
-            temp = malloc(strlen(name) + strlen(ff->ff_name) + 1);
+            temp = (char *)malloc(strlen(name) + strlen(ff->ff_name) + 1);
             if (temp == NULL)
             {
                 FFindClose(ff);
@@ -418,7 +418,7 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
 
     mh->cur_msg = msgnum;
 
-    msgh = palloc(sizeof(MSGH));
+    msgh = (MSGH *)palloc(sizeof(MSGH));
     if (msgh == NULL)
     {
         close(handle);
@@ -442,7 +442,7 @@ static MSGH *_XPENTRY SdmOpenMsg(MSGA * mh, word mode, dword msgnum)
         if ((mh->num_msg + 1) >= Mhd->msgnum_len)
         {
             word msgnum_len_new = Mhd->msgnum_len + (word) SDM_BLOCK;
-            Mhd->msgnum = realloc(Mhd->msgnum, msgnum_len_new * sizeof(unsigned));
+            Mhd->msgnum = (unsigned *)realloc(Mhd->msgnum, msgnum_len_new * sizeof(unsigned));
 
             if (!Mhd->msgnum)
             {
@@ -610,7 +610,7 @@ static dword _XPENTRY SdmReadMsg(MSGH * msgh, XMSG * msg, dword offset, dword by
     {
         struct stat st;
         fstat(msgh->fd, &st);
-        text = fake_msgbuf = palloc(st.st_size - OMSG_SIZE + 1);
+        text = fake_msgbuf = (byte *)palloc(st.st_size - OMSG_SIZE + 1);
         if (text == NULL)
         {
             msgapierr = MERR_NOMEM;
@@ -1122,7 +1122,7 @@ static sword near _SdmRescanArea(MSGA * mh)
 
     mh->num_msg = 0;
 
-    Mhd->msgnum = palloc(SDM_BLOCK * sizeof(unsigned));
+    Mhd->msgnum = (unsigned *)palloc(SDM_BLOCK * sizeof(unsigned));
     if (Mhd->msgnum == NULL)
     {
         msgapierr = MERR_NOMEM;
@@ -1131,7 +1131,7 @@ static sword near _SdmRescanArea(MSGA * mh)
 
     Mhd->msgnum_len = SDM_BLOCK;
 
-    temp = malloc(strlen((char *)Mhd->base)+6);
+    temp = (char *)malloc(strlen((char *)Mhd->base)+6);
     if (temp == NULL)
         return -1;
     sprintf((char *) temp, "%s*.msg", Mhd->base);
@@ -1164,7 +1164,7 @@ static sword near _SdmRescanArea(MSGA * mh)
             if (mn >= Mhd->msgnum_len)
             {
                 word msgnum_len_new = Mhd->msgnum_len + (word) SDM_BLOCK;
-                Mhd->msgnum = realloc(Mhd->msgnum, msgnum_len_new * sizeof(unsigned));
+                Mhd->msgnum = (unsigned *)realloc(Mhd->msgnum, msgnum_len_new * sizeof(unsigned));
 
                 if (!Mhd->msgnum)
                 {

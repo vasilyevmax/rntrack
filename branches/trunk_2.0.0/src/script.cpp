@@ -925,7 +925,7 @@ void PrepareMsgForScript(cMSG & sm)
 #ifdef OS2
 char * strdup(const char * src)
 {
-    char * dest = malloc(strlen(src) + 1);
+    char * dest = (char *)malloc(strlen(src) + 1);
 
     if(dest != NULL)
     {

@@ -60,7 +60,7 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
 {
     FFIND *ff;
 
-    ff = malloc(sizeof(FFIND));
+    ff = (FFIND *)malloc(sizeof(FFIND));
 
 #if defined(__unix__)
     /* prevent compiler warning */
@@ -470,7 +470,7 @@ FFIND *_fast FindInfo(const char *filespec)
     FILESTATUS fs;
     const char *f;
 
-    ff = malloc(sizeof *ff);
+    ff = (FFIND *)malloc(sizeof *ff);
     if (ff == NULL)
     {
         return NULL;

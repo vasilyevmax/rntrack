@@ -421,7 +421,7 @@ int read_sqidx(int handle, SQIDX *psqidx, dword n)
         {
             maxbuf = (dword)32768L / SQIDX_SIZE;
         }
-        accel_buffer = malloc(SQIDX_SIZE * maxbuf);
+        accel_buffer = (byte *)malloc(SQIDX_SIZE * maxbuf);
     }
 
     for (i = 0; i < n; i++)
@@ -489,7 +489,7 @@ int write_sqidx(int handle, SQIDX *psqidx, dword n)
         {
             maxbuf = (dword)32768L / SQIDX_SIZE;
         }
-        accel_buffer = malloc(SQIDX_SIZE * maxbuf);
+        accel_buffer = (byte *)malloc(SQIDX_SIZE * maxbuf);
         pbuf = accel_buffer;
     }
 
@@ -997,7 +997,7 @@ int copy_subfield(JAMSUBFIELD2LISTptr *to, JAMSUBFIELD2LISTptr from)
 {
     dword i;
 
-    *to = palloc(from->arraySize);
+    *to = (JAMSUBFIELD2LISTptr)palloc(from->arraySize);
     if (*to == NULL) return 1;
     memcpy(*to, from, from->arraySize);
     for (i=0; i<from->subfieldCount; i++)
@@ -1060,7 +1060,7 @@ static void decode_subfield(byte *buf, JAMSUBFIELD2LISTptr *subfield, dword *Sub
         pbuf += JAM_SF_HEADER_SIZE + size;
     }
     len = sizeof(JAMSUBFIELD2LIST)+count*(sizeof(JAMSUBFIELD2)-JAM_SF_HEADER_SIZE+1)+*SubfieldLen;
-    *subfield = palloc(len);
+    *subfield = (JAMSUBFIELD2LISTptr)palloc(len);
     subfield[0]->arraySize = len;
     subfield[0]->subfieldCount = 0;
     /* reserve memory for (real count + 1)*JAMSUBFIELD2 */

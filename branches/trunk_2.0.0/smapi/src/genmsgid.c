@@ -143,7 +143,7 @@ dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGen
 emptydir:
                 if (seq < curtime) seq = curtime;
                 if (new_fname == NULL)
-                    new_fname = malloc(strlen(seqpath) + 13);
+                    new_fname = (char *)malloc(strlen(seqpath) + 13);
                 *pname = '\0';
                 sprintf(new_fname, "%s%08lx.seq", seqpath, (unsigned long)(seq + 1));
                 if (max_fname[0] == '\0')
