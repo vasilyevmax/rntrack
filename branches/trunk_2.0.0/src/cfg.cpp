@@ -2598,7 +2598,7 @@ yyreduce:
     {
         if (strlen((yyvsp[0].ch)) > 8)
         {
-            yyerror("Password too long. Max password length is a 8 characters.");
+            yyerror("Password too long. Max password length is 8 characters.");
             YYABORT;
         }
         cffa.Clean();
@@ -2623,7 +2623,7 @@ yyreduce:
     {
         if (strlen((yyvsp[0].ch)) > 10)
         {
-            yyerror("Domain too long. Max domain length is a 10 characters.");
+            yyerror("Domain too long. Max domain length is 10 characters.");
             YYABORT;
         }
         cffa.Clean();
@@ -2648,7 +2648,7 @@ yyreduce:
     {
         if (strlen((yyvsp[0].ch)) > 100)
         {
-            yyerror("Path too long. Max path length is a 100 characters.");
+            yyerror("Path too long. Max path length is 100 characters.");
             YYABORT;
         }
         cffa.Clean();
@@ -3049,7 +3049,7 @@ yyreduce:
         time_t b_time;
         if ((yyvsp[0].t) == (time_t) 0)
         {
-            yyerror("Time of pereodical event should be between 00:01 and 23:59");
+            yyerror("Time of periodical event should be between 00:01 and 23:59");
             YYABORT;
         }
         tt->_STime = TimeOfBeginOfDay(-1);
@@ -3425,7 +3425,7 @@ yyreduce:
         }
         if (((NormalMask *)msk)->sd->_MaxAttachSize == 0 && MaxAttachSize == 0)
         {
-            yyerror("Not one (global or local) MaxAttachSize is not defined.");
+            yyerror("Any (global or local) MaxAttachSize is not defined.");
             YYABORT;
         }
         ((NormalMask *)msk)->fMaxAttach = (FlagMode == 2) ? 2 : 1;
@@ -3443,7 +3443,7 @@ yyreduce:
         }
         if (((NormalMask *)msk)->sd->_MaxMsgSize == 0 && MaxMsgSize == 0)
         {
-            yyerror("Not one (global or local) MaxMsgSize is not defined.");
+            yyerror("Any (global or local) MaxMsgSize is not defined.");
             YYABORT;
         }
         ((NormalMask *)msk)->fMaxMsg = (FlagMode == 2) ? 2 : 1;
@@ -3519,7 +3519,7 @@ yyreduce:
         }
         if (((NormalMask *)msk)->sd->_MaxAge == 0 && MaxAge == 0)
         {
-            yyerror("Not one (global or local) MaxAge is not defined.");
+            yyerror("Any (global or local) MaxAge is not defined.");
             YYABORT;
         }
         ((NormalMask *)msk)->fMaxAge = (FlagMode == 2) ? 2 : 1;
@@ -4176,7 +4176,7 @@ yyreduce:
         act->_Act = ACT_ROUTE;
         if (act->sd == act->Before|| act->sd == act->After)
         {
-            yyerror("You can not use the Action Route in 'ScanDir: @AfterRoute|@BeforeRoute'");
+            yyerror("You cannot use the Action Route in 'ScanDir: @AfterRoute|@BeforeRoute'");
             YYABORT;
         }
         act->_Flav = (yyvsp[-2].pktmode);
@@ -4213,7 +4213,7 @@ yyreduce:
         }
         if (act->sd == act->Before|| act->sd == act->After)
         {
-            yyerror("You can not use the Action RouteFilebox in 'ScanDir: @AfterRoute|@BeforeRoute'");
+            yyerror("You cannot use the Action RouteFilebox in 'ScanDir: @AfterRoute|@BeforeRoute'");
             YYABORT;
         }
         act->_Flav = (yyvsp[-2].pktmode);
@@ -4245,7 +4245,7 @@ yyreduce:
         act->_Act = ACT_ROUTEHUB;
         if (act->sd == act->Before|| act->sd == act->After)
         {
-            yyerror("You can not use the Action RouteHub in 'ScanDir: @AfterRoute|@BeforeRoute'");
+            yyerror("You cannot use the Action RouteHub in 'ScanDir: @AfterRoute|@BeforeRoute'");
             YYABORT;
         }
         act->_Flav = (yyvsp[-1].pktmode);
@@ -4448,7 +4448,7 @@ yyreduce:
         act->_Act = ACT_SPLIT;
         if ((yyvsp[0].ln) < 1 || (yyvsp[0].ln) > 65535)
         {
-            yyerror("Parameter 'Lines' should be positive integer between 1 and 65535");
+            yyerror("Parameter 'Lines' should be a positive integer between 1 and 65535");
             YYABORT;
         }
         act->_Lines = (yyvsp[0].ln);
