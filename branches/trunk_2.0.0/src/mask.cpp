@@ -490,13 +490,13 @@ NormalMask::NormalMask()
     _Subject  = NULL;
     Loops     = (unsigned int)-1;
     fPrivate  = fCrash      = fReceived    = fSend       = fFileAttach =
-                                  fTransit    = fOrphan      = fKillSend   = fLocal      =
-                                          fHold       = fFileRequest = fRRQ        = fIRR        =
-                                                  fARQ        = fFURQ        = fDIR        = fIMM        =
-                                                          fCFM        = fTFS         = fKFS        = fEmpty      =
-                                                                  fMaxAge     = fLoop        = fAttExists  = fEchomail   =
-                                                                          fScanned    = fMaxAttach   = fMaxMsg     = fLok        =
-                                                                                  fAS         = 0;
+                fTransit    = fOrphan      = fKillSend   = fLocal      =
+                fHold       = fFileRequest = fRRQ        = fIRR        =
+                fARQ        = fFURQ        = fDIR        = fIMM        =
+                fCFM        = fTFS         = fKFS        = fEmpty      =
+                MaxAge      = fLoop        = fAttExists  = fEchomail   =
+                fScanned    = fMaxAttach   = fMaxMsg     = fLok        =
+                fAS         = 0;
     _Type = MASK_ERROR;
     sd    = NULL;
 }
@@ -538,8 +538,8 @@ void NormalMask::Print(void) const
     strcpy(fa1, _FromAddr.ToStr());
     strcpy(fa2, _ToAddr.ToStr());
     Log << "Mask: \"" << _FromName << "\" " << fa1 <<
-        " \"" << _ToName << "\" " << fa2 <<
-        " \"" << _Subject << '"';
+                " \"" << _ToName << "\" " << fa2 <<
+                " \"" << _Subject << '"';
     fa1[0] = '\0';
 
     if(fMaxAge == 1)
