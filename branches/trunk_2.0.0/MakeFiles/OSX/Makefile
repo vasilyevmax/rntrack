@@ -73,8 +73,8 @@ OBJS= \
 %.o: $(SRCDIR)%.cpp
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
-$(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
-	bison -l -d $< -o $(SRCDIR)cfg.cpp
+#$(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
+#	bison -l -d $< -o $(SRCDIR)cfg.cpp
 
 # Thunderbirds are go!
 smapi:
