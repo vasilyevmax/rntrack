@@ -116,9 +116,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\cfg.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\hpp\age.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -315,6 +312,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\smapi\h\wcx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\hpp\cfg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

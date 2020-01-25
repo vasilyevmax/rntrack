@@ -194,6 +194,7 @@
     <ClInclude Include="..\..\..\hpp\a_list.hpp" />
     <ClInclude Include="..\..\..\hpp\badmsg.hpp" />
     <ClInclude Include="..\..\..\hpp\badpkt.hpp" />
+    <ClInclude Include="..\..\..\hpp\cfg.hpp" />
     <ClInclude Include="..\..\..\hpp\configure.hpp" />
     <ClInclude Include="..\..\..\hpp\constant.hpp" />
     <ClInclude Include="..\..\..\hpp\dirent\dirent.h" />
@@ -253,7 +254,6 @@
     <ClInclude Include="..\..\..\smapi\h\wco.h" />
     <ClInclude Include="..\..\..\smapi\h\wcw.h" />
     <ClInclude Include="..\..\..\smapi\h\wcx.h" />
-    <ClInclude Include="..\..\..\src\cfg.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
