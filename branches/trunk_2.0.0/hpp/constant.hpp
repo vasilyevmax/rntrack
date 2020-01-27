@@ -79,8 +79,10 @@
     "\n(C) 2003-2006 Alex Soukhotine (2:5030/1157)\n    2007-2011 Stas Degteff (2:5080/102)\n    2009-2020 Michael Dukelsky (2:5020/1042)\n"
 
 #ifndef DefaultConfig
-    #ifdef __unix__
+    #if defined(__unix__)
         #define DefaultConfig "~/fido/etc/rntrack.conf"
+    #elif defined(__WIN32__)
+        #define DefaultConfig "%USERPROFILE%\\fido\\rntrack.cfg"
     #else
         #define DefaultConfig "rntrack.cfg"
     #endif

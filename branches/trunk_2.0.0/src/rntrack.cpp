@@ -156,6 +156,67 @@ int InitSystem(void)
         ConfigFile = strdup(DefaultConfig);
     }
 
+#if defined(__unix__)
+    if(*ConfigFile == '~' && *(ConfigFile + 1) == '/')
+    {
+        char buffer[4096];
+        ConfigFile++;
+        char * home = getenv("HOME");
+        if(home == NULL)
+        {
+            Log.Level(LOGE) << "Cannot get $HOME value. Specify configuration path on command line" << EOL;
+            return FALSE;
+        }
+        int res = snprintf(buffer, sizeof(buffer), "%s%s", home, ConfigFile);
+        if(res < 0 || res >= sizeof(buffer))
+        {
+            Log.Level(LOGE) << "Configuration file path is too long" << EOL;
+            return FALSE;
+        }
+        free(--ConfigFile);
+        ConfigFile = strdup(buffer);
+    }
+#elif defined(__WIN32__)
+    if(*ConfigFile == '%')
+    {
+        char buffer[4096];
+        char *varname;
+        ConfigFile++;
+        char * secondPercent = strrchr(ConfigFile, '%');
+        if(secondPercent == NULL || secondPercent == ConfigFile )
+        {
+            Log.Level(LOGE) << "Cannot get environment variable name." << EOL
+                            << "Specify configuration path on command line" << EOL;
+            return FALSE;
+        }
+        size_t varlen = (size_t)(secondPercent - ConfigFile);
+        varname = (char *)malloc(varlen + 1);
+        if(varname == NULL)
+        {
+            Log.Level(LOGE) << "No memory" << EOL;
+            return FALSE;
+        }
+        varname = strncpy(varname, ConfigFile, varlen);
+        varname[varlen] = '\0';
+        char * envvar = getenv(varname);
+        if(envvar == NULL)
+        {
+            Log.Level(LOGE) << "Cannot get environment variable value." << EOL
+                            << "Specify configuration path on command line" << EOL;
+            return FALSE;
+        }
+        int res = snprintf(buffer, sizeof(buffer), "%s%s", envvar, ++secondPercent);
+        if(res < 0 || res >= sizeof(buffer))
+        {
+            Log.Level(LOGE) << "Configuration file path is too long" << EOL;
+            return FALSE;
+        }
+        free(--ConfigFile);
+        free(varname);
+        ConfigFile = strdup(buffer);
+    }
+#endif
+
     CHP = 99105;
 
     if(ParseConfig((const char *)ConfigFile) != 0)
