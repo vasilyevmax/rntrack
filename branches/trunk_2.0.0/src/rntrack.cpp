@@ -206,7 +206,7 @@ int InitSystem(void)
             return FALSE;
         }
         int res = snprintf(buffer, sizeof(buffer), "%s%s", envvar, ++secondPercent);
-        if(res < 0 || res >= sizeof(buffer))
+        if(res < 0 || (unsigned)res >= sizeof(buffer))
         {
             Log.Level(LOGE) << "Configuration file path is too long" << EOL;
             return FALSE;
