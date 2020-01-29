@@ -494,7 +494,7 @@ NormalMask::NormalMask()
                 fHold       = fFileRequest = fRRQ        = fIRR        =
                 fARQ        = fFURQ        = fDIR        = fIMM        =
                 fCFM        = fTFS         = fKFS        = fEmpty      =
-                MaxAge      = fLoop        = fAttExists  = fEchomail   =
+                fMaxAge     = fLoop        = fAttExists  = fEchomail   =
                 fScanned    = fMaxAttach   = fMaxMsg     = fLok        =
                 fAS         = 0;
     _Type = MASK_ERROR;
