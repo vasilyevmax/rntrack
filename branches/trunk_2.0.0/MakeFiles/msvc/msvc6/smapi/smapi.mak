@@ -37,18 +37,18 @@ ALL : "$(OUTDIR)\smapi.lib"
 
 
 CLEAN :
-	-@erase "$(INTDIR)\1stchar.obj"
 	-@erase "$(INTDIR)\api_jam.obj"
 	-@erase "$(INTDIR)\api_sdm.obj"
-	-@erase "$(INTDIR)\cvtdate.obj"
 	-@erase "$(INTDIR)\date2bin.obj"
 	-@erase "$(INTDIR)\dosdate.obj"
 	-@erase "$(INTDIR)\fexist.obj"
 	-@erase "$(INTDIR)\ffind.obj"
 	-@erase "$(INTDIR)\flush.obj"
+	-@erase "$(INTDIR)\ftnaddr.obj"
 	-@erase "$(INTDIR)\genmsgid.obj"
 	-@erase "$(INTDIR)\gnmsgid.obj"
 	-@erase "$(INTDIR)\locking.obj"
+	-@erase "$(INTDIR)\memory.obj"
 	-@erase "$(INTDIR)\months.obj"
 	-@erase "$(INTDIR)\msgapi.obj"
 	-@erase "$(INTDIR)\parsenn.obj"
@@ -66,9 +66,8 @@ CLEAN :
 	-@erase "$(INTDIR)\sq_read.obj"
 	-@erase "$(INTDIR)\sq_uid.obj"
 	-@erase "$(INTDIR)\sq_write.obj"
-	-@erase "$(INTDIR)\strextra.obj"
+	-@erase "$(INTDIR)\strext.obj"
 	-@erase "$(INTDIR)\strftim.obj"
-	-@erase "$(INTDIR)\strocpy.obj"
 	-@erase "$(INTDIR)\structrw.obj"
 	-@erase "$(INTDIR)\tdelay.obj"
 	-@erase "$(INTDIR)\trail.obj"
@@ -120,18 +119,18 @@ BSC32_SBRS= \
 LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\smapi.lib" 
 LIB32_OBJS= \
-	"$(INTDIR)\1stchar.obj" \
 	"$(INTDIR)\api_jam.obj" \
 	"$(INTDIR)\api_sdm.obj" \
-	"$(INTDIR)\cvtdate.obj" \
 	"$(INTDIR)\date2bin.obj" \
 	"$(INTDIR)\dosdate.obj" \
 	"$(INTDIR)\fexist.obj" \
 	"$(INTDIR)\ffind.obj" \
 	"$(INTDIR)\flush.obj" \
+	"$(INTDIR)\ftnaddr.obj" \
 	"$(INTDIR)\genmsgid.obj" \
 	"$(INTDIR)\gnmsgid.obj" \
 	"$(INTDIR)\locking.obj" \
+	"$(INTDIR)\memory.obj" \
 	"$(INTDIR)\months.obj" \
 	"$(INTDIR)\msgapi.obj" \
 	"$(INTDIR)\parsenn.obj" \
@@ -149,9 +148,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\sq_read.obj" \
 	"$(INTDIR)\sq_uid.obj" \
 	"$(INTDIR)\sq_write.obj" \
-	"$(INTDIR)\strextra.obj" \
+	"$(INTDIR)\strext.obj" \
 	"$(INTDIR)\strftim.obj" \
-	"$(INTDIR)\strocpy.obj" \
 	"$(INTDIR)\structrw.obj" \
 	"$(INTDIR)\tdelay.obj" \
 	"$(INTDIR)\trail.obj" \
@@ -174,14 +172,10 @@ ALL : "$(OUTDIR)\smapi.lib" "$(OUTDIR)\smapi.bsc"
 
 
 CLEAN :
-	-@erase "$(INTDIR)\1stchar.obj"
-	-@erase "$(INTDIR)\1stchar.sbr"
 	-@erase "$(INTDIR)\api_jam.obj"
 	-@erase "$(INTDIR)\api_jam.sbr"
 	-@erase "$(INTDIR)\api_sdm.obj"
 	-@erase "$(INTDIR)\api_sdm.sbr"
-	-@erase "$(INTDIR)\cvtdate.obj"
-	-@erase "$(INTDIR)\cvtdate.sbr"
 	-@erase "$(INTDIR)\date2bin.obj"
 	-@erase "$(INTDIR)\date2bin.sbr"
 	-@erase "$(INTDIR)\dosdate.obj"
@@ -192,12 +186,16 @@ CLEAN :
 	-@erase "$(INTDIR)\ffind.sbr"
 	-@erase "$(INTDIR)\flush.obj"
 	-@erase "$(INTDIR)\flush.sbr"
+	-@erase "$(INTDIR)\ftnaddr.obj"
+	-@erase "$(INTDIR)\ftnaddr.sbr"
 	-@erase "$(INTDIR)\genmsgid.obj"
 	-@erase "$(INTDIR)\genmsgid.sbr"
 	-@erase "$(INTDIR)\gnmsgid.obj"
 	-@erase "$(INTDIR)\gnmsgid.sbr"
 	-@erase "$(INTDIR)\locking.obj"
 	-@erase "$(INTDIR)\locking.sbr"
+	-@erase "$(INTDIR)\memory.obj"
+	-@erase "$(INTDIR)\memory.sbr"
 	-@erase "$(INTDIR)\months.obj"
 	-@erase "$(INTDIR)\months.sbr"
 	-@erase "$(INTDIR)\msgapi.obj"
@@ -232,12 +230,10 @@ CLEAN :
 	-@erase "$(INTDIR)\sq_uid.sbr"
 	-@erase "$(INTDIR)\sq_write.obj"
 	-@erase "$(INTDIR)\sq_write.sbr"
-	-@erase "$(INTDIR)\strextra.obj"
-	-@erase "$(INTDIR)\strextra.sbr"
+	-@erase "$(INTDIR)\strext.obj"
+	-@erase "$(INTDIR)\strext.sbr"
 	-@erase "$(INTDIR)\strftim.obj"
 	-@erase "$(INTDIR)\strftim.sbr"
-	-@erase "$(INTDIR)\strocpy.obj"
-	-@erase "$(INTDIR)\strocpy.sbr"
 	-@erase "$(INTDIR)\structrw.obj"
 	-@erase "$(INTDIR)\structrw.sbr"
 	-@erase "$(INTDIR)\tdelay.obj"
@@ -291,18 +287,18 @@ RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\smapi.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\1stchar.sbr" \
 	"$(INTDIR)\api_jam.sbr" \
 	"$(INTDIR)\api_sdm.sbr" \
-	"$(INTDIR)\cvtdate.sbr" \
 	"$(INTDIR)\date2bin.sbr" \
 	"$(INTDIR)\dosdate.sbr" \
 	"$(INTDIR)\fexist.sbr" \
 	"$(INTDIR)\ffind.sbr" \
 	"$(INTDIR)\flush.sbr" \
+	"$(INTDIR)\ftnaddr.sbr" \
 	"$(INTDIR)\genmsgid.sbr" \
 	"$(INTDIR)\gnmsgid.sbr" \
 	"$(INTDIR)\locking.sbr" \
+	"$(INTDIR)\memory.sbr" \
 	"$(INTDIR)\months.sbr" \
 	"$(INTDIR)\msgapi.sbr" \
 	"$(INTDIR)\parsenn.sbr" \
@@ -320,9 +316,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\sq_read.sbr" \
 	"$(INTDIR)\sq_uid.sbr" \
 	"$(INTDIR)\sq_write.sbr" \
-	"$(INTDIR)\strextra.sbr" \
+	"$(INTDIR)\strext.sbr" \
 	"$(INTDIR)\strftim.sbr" \
-	"$(INTDIR)\strocpy.sbr" \
 	"$(INTDIR)\structrw.sbr" \
 	"$(INTDIR)\tdelay.sbr" \
 	"$(INTDIR)\trail.sbr" \
@@ -336,18 +331,18 @@ BSC32_SBRS= \
 LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\smapi.lib" 
 LIB32_OBJS= \
-	"$(INTDIR)\1stchar.obj" \
 	"$(INTDIR)\api_jam.obj" \
 	"$(INTDIR)\api_sdm.obj" \
-	"$(INTDIR)\cvtdate.obj" \
 	"$(INTDIR)\date2bin.obj" \
 	"$(INTDIR)\dosdate.obj" \
 	"$(INTDIR)\fexist.obj" \
 	"$(INTDIR)\ffind.obj" \
 	"$(INTDIR)\flush.obj" \
+	"$(INTDIR)\ftnaddr.obj" \
 	"$(INTDIR)\genmsgid.obj" \
 	"$(INTDIR)\gnmsgid.obj" \
 	"$(INTDIR)\locking.obj" \
+	"$(INTDIR)\memory.obj" \
 	"$(INTDIR)\months.obj" \
 	"$(INTDIR)\msgapi.obj" \
 	"$(INTDIR)\parsenn.obj" \
@@ -365,9 +360,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\sq_read.obj" \
 	"$(INTDIR)\sq_uid.obj" \
 	"$(INTDIR)\sq_write.obj" \
-	"$(INTDIR)\strextra.obj" \
+	"$(INTDIR)\strext.obj" \
 	"$(INTDIR)\strftim.obj" \
-	"$(INTDIR)\strocpy.obj" \
 	"$(INTDIR)\structrw.obj" \
 	"$(INTDIR)\tdelay.obj" \
 	"$(INTDIR)\trail.obj" \
@@ -391,24 +385,6 @@ LIB32_OBJS= \
 
 
 !IF "$(CFG)" == "smapi - Win32 Release" || "$(CFG)" == "smapi - Win32 Debug"
-SOURCE=..\..\..\..\smapi\src\1stchar.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\1stchar.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\1stchar.obj"	"$(INTDIR)\1stchar.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\..\..\smapi\src\api_jam.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
@@ -440,24 +416,6 @@ SOURCE=..\..\..\..\smapi\src\api_sdm.c
 
 
 "$(INTDIR)\api_sdm.obj"	"$(INTDIR)\api_sdm.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\..\..\smapi\src\cvtdate.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\cvtdate.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\cvtdate.obj"	"$(INTDIR)\cvtdate.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -553,6 +511,24 @@ SOURCE=..\..\..\..\smapi\src\flush.c
 
 !ENDIF 
 
+SOURCE=..\..\..\..\smapi\src\ftnaddr.c
+
+!IF  "$(CFG)" == "smapi - Win32 Release"
+
+
+"$(INTDIR)\ftnaddr.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
+
+
+"$(INTDIR)\ftnaddr.obj"	"$(INTDIR)\ftnaddr.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\..\..\smapi\src\genmsgid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
@@ -602,6 +578,24 @@ SOURCE=..\..\..\..\smapi\src\locking.c
 
 
 "$(INTDIR)\locking.obj"	"$(INTDIR)\locking.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\..\..\smapi\src\memory.c
+
+!IF  "$(CFG)" == "smapi - Win32 Release"
+
+
+"$(INTDIR)\memory.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
+
+
+"$(INTDIR)\memory.obj"	"$(INTDIR)\memory.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -913,19 +907,19 @@ SOURCE=..\..\..\..\smapi\src\sq_write.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\smapi\src\strextra.c
+SOURCE=..\..\..\..\smapi\src\strext.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
 
-"$(INTDIR)\strextra.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\strext.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
 
 
-"$(INTDIR)\strextra.obj"	"$(INTDIR)\strextra.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\strext.obj"	"$(INTDIR)\strext.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -944,24 +938,6 @@ SOURCE=..\..\..\..\smapi\src\strftim.c
 
 
 "$(INTDIR)\strftim.obj"	"$(INTDIR)\strftim.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\..\..\smapi\src\strocpy.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\strocpy.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\strocpy.obj"	"$(INTDIR)\strocpy.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

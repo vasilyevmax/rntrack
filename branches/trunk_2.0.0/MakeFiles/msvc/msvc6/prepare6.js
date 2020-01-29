@@ -552,6 +552,14 @@ SOURCE=..\..\..\hpp\badpkt.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\hpp\cfg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\compiler.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\configure.hpp
 # End Source File
 # Begin Source File
@@ -576,6 +584,10 @@ SOURCE=..\..\..\hpp\filebox.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\smapi\h\ftnaddr.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\getopt.hpp
 # End Source File
 # Begin Source File
@@ -596,7 +608,15 @@ SOURCE=..\..\..\hpp\msg.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\smapi\h\msgapi.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\msgbase.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\MSVC.h
 # End Source File
 # Begin Source File
 
@@ -624,6 +644,14 @@ SOURCE=..\..\..\hpp\pktbase.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\smapi\h\prog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\progprot.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\scandir.hpp
 # End Source File
 # Begin Source File
@@ -633,6 +661,10 @@ SOURCE=..\..\..\hpp\script.hpp
 # Begin Source File
 
 SOURCE=..\..\..\hpp\sqbase.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\stamp.h
 # End Source File
 # Begin Source File
 
@@ -649,6 +681,14 @@ SOURCE=..\..\..\hpp\tpkt.hpp
 # Begin Source File
 
 SOURCE=..\..\..\smapi\h\typedefs.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\typesize.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\unused.h
 # End Source File
 # Begin Source File
 

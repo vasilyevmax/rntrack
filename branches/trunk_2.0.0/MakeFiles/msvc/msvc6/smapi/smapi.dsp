@@ -87,19 +87,11 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\..\smapi\src\1stchar.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\..\smapi\src\api_jam.c
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\..\smapi\src\api_sdm.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\smapi\src\cvtdate.c
 # End Source File
 # Begin Source File
 
@@ -123,6 +115,10 @@ SOURCE=..\..\..\..\smapi\src\flush.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\..\smapi\src\ftnaddr.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\..\smapi\src\genmsgid.c
 # End Source File
 # Begin Source File
@@ -132,6 +128,10 @@ SOURCE=..\..\..\..\smapi\src\gnmsgid.c
 # Begin Source File
 
 SOURCE=..\..\..\..\smapi\src\locking.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\src\memory.c
 # End Source File
 # Begin Source File
 
@@ -203,15 +203,11 @@ SOURCE=..\..\..\..\smapi\src\sq_write.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\smapi\src\strextra.c
+SOURCE=..\..\..\..\smapi\src\strext.c
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\..\smapi\src\strftim.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\smapi\src\strocpy.c
 # End Source File
 # Begin Source File
 
@@ -267,6 +263,26 @@ SOURCE=..\..\..\..\smapi\h\apidebug.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\..\smapi\h\BCD.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\BCO.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\BCW.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\BEOS5.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\BORLANDC.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\..\smapi\h\compiler.h
 # End Source File
 # Begin Source File
@@ -275,7 +291,15 @@ SOURCE=..\..\..\..\smapi\h\cvsdate.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\..\smapi\h\DJGPP.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\..\smapi\h\dr.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\EMX.h
 # End Source File
 # Begin Source File
 
@@ -283,7 +307,47 @@ SOURCE=..\..\..\..\smapi\h\ffind.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\..\smapi\h\ftnaddr.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\genmsgid.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\HIGHC.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\IBMC_OS2.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\locking.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\memory.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\MINGW32.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\months.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\MSC.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\..\smapi\h\msgapi.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\MSVC.h
 # End Source File
 # Begin Source File
 
@@ -303,11 +367,19 @@ SOURCE=..\..\..\..\smapi\h\progprot.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\..\smapi\h\pstdint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\SASC.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\..\smapi\h\stamp.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\smapi\h\strextra.h
+SOURCE=..\..\..\..\smapi\h\strext.h
 # End Source File
 # Begin Source File
 
@@ -315,7 +387,35 @@ SOURCE=..\..\..\..\smapi\h\typedefs.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\..\smapi\h\typesize.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\UNIX.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\..\smapi\h\unused.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\WATCOMC.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\WCD.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\WCO.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\WCW.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\..\smapi\h\WCX.h
 # End Source File
 # End Group
 # End Target
