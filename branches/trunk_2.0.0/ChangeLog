@@ -4,6 +4,17 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.0.0 2020-0X-XX (Subversion rev.XXX)
+------------------------------------
+# upgrade smapi library from v.2.4.1 to v.2.5.1
+! fixed Visual Studio 6 build
+# add Windows x64 build
+# add Visual Studio 2019 solution
+# update Russian manual
+# make a new translation of the amended manual from Russian into English
+# add manual in the form of man-pages and plain text
+# change default path of configuration file
+
 1.41 2019-09-29 (Subversion rev.191)
 -----------------------------------
 # add a log message at LogLevel=2 with full path of the created pkt.
