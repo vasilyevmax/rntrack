@@ -25,7 +25,7 @@
 #endif
 
 #if defined(__NT__) || defined(__MINGW32__) || defined(_WINDOWS)
-    #define OsType         "/W32"
+    #define OsType         "/Win"
     #define PATHDELIMS     "\\"
     #define PATHDELIMC     '\\'
 #elif defined(__OS2__) || defined(__os2__)
