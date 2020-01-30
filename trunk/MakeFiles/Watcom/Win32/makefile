@@ -9,6 +9,7 @@ CFLAGS	= -I$(INCLUDE) -bt=nt /oilmrt /s $(CDEFS)
 TOS	= NT
 TNAME	= rntrack_w32
 SRCDIR	= ..\..\..\src
+SMAPIDIR= ..\..\..\smapi
 WORKDIR	= $+ $(%cdrive):$(%cwd) $-
 DEBUG	= 0
 #CONFIG	= C:\\ftn\\rntrack.cfg
@@ -18,16 +19,14 @@ DEBUG	= 0
 #ENABLE_LOG_PID=1
 #ENABLE_SYSLOG_LOG_FORMAT=1
 
+OBJS= age.o aix_conv.o aka.o attach.o badmsg.o badpkt.o cfg.o configure.o
+OBJS+= dirent.o domain.o fidoaddr.o filebox.o getopt.o help.o log.o
+OBJS+= mask.o msg.o msgbase.o nodelist.o outbound.o parsetpl.o passwd.o
+OBJS+= pktbase.o rntrack.o scandir.o script.o sqbase.o string.o
+OBJS+= tmstamp.o utils.o vars.o wildmat.o
 
-OBJS= cfg.obj configure.obj rntrack.obj log.obj help.obj
-OBJS+= fidoaddr.obj msg.obj msgbase.obj scandir.obj vars.obj age.obj
-OBJS+= badmsg.obj aka.obj parsetpl.obj attach.obj outbound.obj
-OBJS+= passwd.obj wildmat.obj tmstamp.obj badpkt.obj
-OBJS+= sqbase.obj mask.obj getopt.obj cfg.obj utils.obj nodelist.obj
-OBJS+= pktbase.obj script.obj domain.obj filebox.obj string.obj
-
-INCLUDE=..\..\..\hpp;$(SRCDIR)
-LIB=$(SRCDIR)\smapi\smapiwcw.lib
+INCLUDE=..\..\..\hpp;$(SRCDIR);$(SMAPIDIR)\h;$(SMAPIDIR)\src
+LIB=$(SMAPIDIR)\smapiwcw.lib
 
 
 !ifdef ENABLE_SCRIPTS
@@ -110,7 +109,7 @@ $(TNAME).exe : smapi $(OBJS) tmp.lnk
     wlink.exe @tmp.lnk
 
 smapi: .symbolic
-    cd  $(SRCDIR)\smapi
+    cd  $(SMAPIDIR)
     wmake -f makefile.wcw
     cd $(WORKDIR)
 
@@ -127,7 +126,7 @@ tmp.lnk : $(__MAKEFILES__)
     @%append $^@ library $(LIB)
 clean: .symbolic
 	del *.obj
-	del $(SRCDIR)\smapi\*.obj
-	del $(SRCDIR)\smapi\*.lib
+	del $(SMAPIDIR)\*.obj
+	del $(SMAPIDIR)\*.lib
 	del tmp.lnk
 	del $(TNAME).exe

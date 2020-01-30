@@ -21,7 +21,7 @@
 #include "fidoaddr.hpp"
 #include "msg.hpp"
 #include "msgbase.hpp"
-#include <smapi/msgapi.h>
+#include "msgapi.h"
 #include "mytypes.hpp"
 
 

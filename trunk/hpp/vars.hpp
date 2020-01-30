@@ -35,7 +35,8 @@
 typedef enum {KILL_NEVER, KILL_ALWAYS, KILL_FLAG} KillModeT;
 typedef enum {CHECKPNT_NEVER, CHECKPNT_HARD, CHECKPNT_SOFT} CheckPointsT;
 typedef enum {FILEBOXLONG, FILEBOXTMLONG, FILEBOXTMSHORT,
-              FILEBOXBRAKE} fileboxType;
+              FILEBOXBRAKE
+             } fileboxType;
 
 extern KillModeT KillMode;
 

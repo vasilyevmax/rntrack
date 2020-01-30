@@ -9,11 +9,12 @@ CC=	gcc
 
 PERL=D:/PERLLIB/LIB/5.00553/os2
 
+SMAPIDIR= ../../smapi
 CFLAGS=	-Wall -fno-rtti -s -g
 CDEFS=	-DOS2 -DEMX -DDO_PERL -DDOSISH -DEMBED -DHAVE_UNISTD_H -DHAVE_IO_H -DHAS_strupr -DHAVE_LOCALE_H -DHAVE_TIME_H -DHAVE_UTIME_H
-COPT=	-I../../hpp -I../../.. -I$(SRCDIR) -I$(PERL)/CORE -O3
+COPT=	-I../../hpp -I../../.. -I$(SRCDIR) -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -I$(PERL)/CORE -O3
 SRCDIR= ../../src/
-LFLAGS=	-Zcrtdll -L../../src/smapi -lsmapiemx -g
+LFLAGS=	-Zcrtdll -L$(SMAPIDIR) -lsmapiemx -g
 EXEEND= _os2.exe
 STRIP=	-s
 
@@ -21,36 +22,39 @@ ALL: rntrack$(EXEEND)
 
 TARGET= f
 
-OBJS=	fidoaddr.o \
-	log.o \
+OBJS= \
 	age.o \
+	aix_conv.o \
 	aka.o \
 	attach.o \
 	badmsg.o \
+	badpkt.o \
 	cfg.o \
 	configure.o \
-	rntrack.o \
+	dirent.o \
+	domain.o \
+	fidoaddr.o \
+	filebox.o \
 	getopt.o \
 	help.o \
+	log.o \
+	mask.o \
 	msg.o \
 	msgbase.o \
 	nodelist.o \
-	vars.o \
 	outbound.o \
 	parsetpl.o \
 	passwd.o \
 	pktbase.o \
+	rntrack.o \
 	scandir.o \
+	script.o \
 	sqbase.o \
+	string.o \
 	tmstamp.o \
 	utils.o \
-	mask.o  \
-	wildmat.o \
-	badpkt.o \
-	script.o \
-	domain.o \
-	filebox.o \
-	string.o
+	vars.o \
+	wildmat.o
 
 PERLLIBS=\
         $(PERL)/auto/DB_File/DB_File.a \

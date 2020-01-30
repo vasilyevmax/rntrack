@@ -37,7 +37,7 @@ public:
         Prev = Next = NULL;
     }
 
-    virtual ~AbstractElem(){}
+    virtual ~AbstractElem() {}
 
     AbstractElem * operator +(int i)
     {
@@ -275,9 +275,9 @@ protected:
         }
 
     protected:
-        Elem(T & t) : data(t){}
+        Elem(T & t) : data(t) {}
 
-        virtual ~Elem(){}
+        virtual ~Elem() {}
     };
 
     Elem * GetFirstElem()
@@ -318,7 +318,7 @@ public:
             p = e2.p;
         }
 
-        ~ElemPtr(){}
+        ~ElemPtr() {}
 
         ElemPtr operator ++()    // Preincrement
         {
@@ -358,14 +358,15 @@ public:
             return ElemPtr((*p) - i);
         }
 
-        operator T *(){
+        operator T *()
+        {
             return p ? &(p->data) : NULL;
         }
     };
 
 public:
 
-    BiList() : TAbstractList(){}
+    BiList() : TAbstractList() {}
 
     ~BiList()
     {
@@ -478,7 +479,7 @@ public:
     class ElemPtr : public BiList<T>::ElemPtr
     {
     public:
-        ElemPtr(typename BiList<T>::ElemPtr & e) : BiList<T>::ElemPtr(e){}
+        ElemPtr(typename BiList<T>::ElemPtr & e) : BiList<T>::ElemPtr(e) {}
 
         operator T *();
         T * operator ->()
@@ -610,7 +611,7 @@ public:
             p = e2.p;
         }
 
-        ~ElemPtr(){}
+        ~ElemPtr() {}
 
         ElemPtr operator ++()    // Preincrement
         {
@@ -655,7 +656,7 @@ public:
             return p ? (T *)p->data : (T *)NULL;
         }
 
-        operator T *() const 
+        operator T *() const
         {
             return operator ->();
         }
@@ -672,7 +673,7 @@ public:
 
 public:
 
-    IndBiList() : TAbstractList(){}
+    IndBiList() : TAbstractList() {}
 
     ~IndBiList()
     {

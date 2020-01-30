@@ -19,7 +19,7 @@
 #ifdef HAVE_CONFIG_H
     #include "constant.hpp"
 #else
-    #include <smapi/compiler.h>
+    #include "compiler.h"
 #endif
 
 #include <stdlib.h>
@@ -30,7 +30,7 @@
 #endif
 
 // #if defined(__WATCOMC__) && (defined(__OS2__) || defined(MSDOS))
-/* Why it's not implemented in smapi/compiler.h? */
+/* Why it's not implemented in smapi/h/compiler.h? */
 // #define strcasecmp stricmp
 // #define strncasecmp strnicmp
 // #endif
@@ -69,23 +69,23 @@ unsigned short & FirstWord(const unsigned int & Dword);
 int fsCompareName(const char * Name, const char * Mask);
 
 #if defined (__WATCOMC__) && defined (MSDOS)
-    #ifdef __cplusplus
-        extern "C"
-        {
-    #endif
-            void pascal far flush_handle2_(int fh);
-    #ifdef __cplusplus
-        }
-    #endif
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+void pascal far flush_handle2_(int fh);
+#ifdef __cplusplus
+}
+#endif
 #endif
 
 #ifdef __cplusplus
-    extern "C"
-    {
+extern "C"
+{
 #endif
-        void ShowLogLine(char * msg);
+void ShowLogLine(char * msg);
 #ifdef __cplusplus
-    }
+}
 #endif
 
 #endif /* _UTILS_HPP_ */

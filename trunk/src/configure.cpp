@@ -26,10 +26,10 @@
 /*--------------------------------------------------------------------*/
 
 #ifdef HAVE_UNISTD_H
-  #include <unistd.h>
+    #include <unistd.h>
 #endif
 #ifdef __NT__
-  #include <io.h>
+    #include <io.h>
 #endif
 #include <string.h>
 #include <stdlib.h>
@@ -47,6 +47,7 @@
 /*                        Program include files                       */
 /*--------------------------------------------------------------------*/
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -56,7 +57,7 @@
 #if defined (__PERL_VERSION__)
     #include "script.hpp"
 #endif
-#include "smapi/unused.h"
+#include "unused.h"
 
 /*--------------------------------------------------------------------*/
 /*                         Global definitions                         */
@@ -162,7 +163,7 @@ kwtable[] =
     {"TempMail:", _TEMPMAIL},
     {"TrafficLog:", _TRAFFICLOG},
     {"Password:", _PASSWORD},
-    {"Domain:", _DOMAIN},
+    {"Domain:", _DOMAIN_},
     {"FileBox:", _FILEBOX},
     {"UseFileBoxes", _USEFILEBOXES},
     {"UTC:", _UTC},
@@ -991,7 +992,7 @@ int ParseConfig(const char * CfgFile)
     if(access(CfgFile, R_OK) != 0)
     {
         Log.Level(LOGE) << "Configuration file '" << CfgFile <<
-                           "' not found." << EOL;
+                        "' not found." << EOL;
         return -1;
     }
 
@@ -1001,7 +1002,7 @@ int ParseConfig(const char * CfgFile)
     if(fh == 0)
     {
         Log.Level(LOGE) << "Unable to open configuration file '" << CfgFile <<
-                           "'." << EOL;
+                        "'." << EOL;
         return -1;
     }
 
@@ -1052,7 +1053,7 @@ int yyerror(const char * s)
     int i;
 
     Log.Level(LOGE) << "\nError in '" << ConfigFile << "' Line: " <<
-                       LineNumber << EOL;
+                    LineNumber << EOL;
     Log.Level(LOGE) << CurrentLine << EOL;
 
     for(i = 0; i < Pos; i++)
@@ -1064,7 +1065,7 @@ int yyerror(const char * s)
     if(stricmp(s, "parse error") == 0)
     {
         Log.Level(LOGE) << "Syntax error. Please, refer to documentation." <<
-                           EOL;
+                        EOL;
     }
     else
     {
@@ -1086,7 +1087,7 @@ int SearchToken(char * s)
     int l;
     char * Buff;
 
-    l = strlen(s);
+    l = (int)strlen(s);
 
     if(l == 0)
     {
@@ -1124,7 +1125,7 @@ int SearchToken(char * s)
 //    {
     if(kwtable[i].kw != NULL)
     {
-        Pos += strlen(Buff);
+        Pos += (int)strlen(Buff);
 //          Log.Level(LOGD) << "Found token: '" << kwtable[i].kw << "'." << EOL;
     }
     else
@@ -1328,61 +1329,23 @@ int yylex(void)
     {
         switch(LexStat)
         {
-            case LEX_START:
-                nxtch   = TakeChar();
-                LexStat = LEX_PARSE;
-                break;
+        case LEX_START:
+            nxtch   = TakeChar();
+            LexStat = LEX_PARSE;
+            break;
 
-            case LEX_PARSE:
+        case LEX_PARSE:
 
-                if(nxtch > 256)
+            if(nxtch > 256)
+            {
+                if(nxtch == __EOF)
                 {
-                    if(nxtch == __EOF)
-                    {
-                        LexStat = LEX_END;
-                        break;
-                    }
-                    else if(nxtch == _CRLF)
-                    {
-                        LexStat = LEX_CRLF;
-                        break;
-                    }
-                    else
-                    {
-                        LexStat = LEX_START;
-                        return nxtch;
-                    }
-
-//     printf("NxtCh == '%s'(%d)\n",TokenName(nxtch),nxtch);
-//                } else {
-//     printf("NxtCh == '%c'(%d)\n",nxtch,nxtch);
-                }
-
-                if(strchr(DELIMETERS, nxtch) != NULL)
-                {
-                    LexStat = LEX_START;
+                    LexStat = LEX_END;
                     break;
                 }
-                else if(isdigit(nxtch))
+                else if(nxtch == _CRLF)
                 {
-                    yylval.ln = 0;
-                    LexStat   = LEX_DIGIT;
-                    break;
-                }
-                else if(nxtch == '(')
-                {
-                    LexStat = LEX_COMMENT;
-                    break;
-                }
-                else if(nxtch == '\\')
-                {
-                    LexStat = LEX_COMMLINE;
-                    break;
-                }
-                else if(nxtch == '"')
-                {
-                    p = &chpool[avail];
-                    LexStat = LEX_STRING;
+                    LexStat = LEX_CRLF;
                     break;
                 }
                 else
@@ -1391,102 +1354,140 @@ int yylex(void)
                     return nxtch;
                 }
 
-            case LEX_DIGIT:
+//     printf("NxtCh == '%s'(%d)\n",TokenName(nxtch),nxtch);
+//                } else {
+//     printf("NxtCh == '%c'(%d)\n",nxtch,nxtch);
+            }
 
-                if(nxtch < 256 && isdigit(nxtch))
-                {
-                    yylval.ln = (yylval.ln * 10) + nxtch - '0';
-                    nxtch = TakeChar();
-                    break;
-                }
-                else
-                {
-                    LexStat = LEX_PARSE;
-                    return _DIGIT_;
-                }
-
-            case LEX_COMMENT:
-                nxtch = TakeChar();
-
-                if(nxtch == __EOF)
-                {
-                    LexStat = LEX_PARSE;
-                }
-
-                if(nxtch == ')')
-                {
-                    LexStat = LEX_START;
-                }
-
-                break;
-
-            case LEX_COMMLINE:
-                nxtch = TakeChar();
-
-                if(nxtch == __EOF || nxtch == _CRLF)
-                {
-                    LexStat = LEX_PARSE;
-                }
-
-                break;
-
-            case LEX_ERROR:
-
-                if(nxtch == _CRLF || nxtch == __EOF)
-                {
-                    NoTokensF = FALSE;
-                    LexStat   = LEX_PARSE;
-                }
-                else
-                {
-                    nxtch = TakeChar();
-                }
-
-                break;
-
-            case LEX_STRING:
-
-                if(avail + 3 > MAXCFGLINE)
-                {
-                    Log.Level(LOGE) <<
-                    "Internal error #1. Please, contact with author!" << EOL;
-                    exit(-1);
-                }
-
-                nxtch = TakeChar();
-
-                if(nxtch == _CRLF || nxtch == __EOF)
-                {
-                    LexStat = LEX_PARSE;
-                    return LEXERR;
-                }
-                else if(nxtch == '"')
-                {
-                    chpool[avail] = '\0';
-                    avail -= strlen(p);
-                    strcpy(p, PrepareString(p));
-                    avail += (strlen(p) + 1);
-                    yylval.ch = p;
-                    LexStat   = LEX_START;
-                    return _STRING;
-                }
-                else
-                {
-                    chpool[avail++] = nxtch;
-                    break;
-                }
-
-            case LEX_CRLF:
-                DetectError = FALSE;
+            if(strchr(DELIMETERS, nxtch) != NULL)
+            {
                 LexStat = LEX_START;
-                return _CRLF;
+                break;
+            }
+            else if(isdigit(nxtch))
+            {
+                yylval.ln = 0;
+                LexStat   = LEX_DIGIT;
+                break;
+            }
+            else if(nxtch == '(')
+            {
+                LexStat = LEX_COMMENT;
+                break;
+            }
+            else if(nxtch == '\\')
+            {
+                LexStat = LEX_COMMLINE;
+                break;
+            }
+            else if(nxtch == '"')
+            {
+                p = &chpool[avail];
+                LexStat = LEX_STRING;
+                break;
+            }
+            else
+            {
+                LexStat = LEX_START;
+                return nxtch;
+            }
 
-            case LEX_END:
-                return 0;
+        case LEX_DIGIT:
 
-            default:
-                Log.Level(LOGE) << "Wrong state of LexStateMachine!" << EOL;
+            if(nxtch < 256 && isdigit(nxtch))
+            {
+                yylval.ln = (yylval.ln * 10) + nxtch - '0';
+                nxtch = TakeChar();
+                break;
+            }
+            else
+            {
+                LexStat = LEX_PARSE;
+                return _DIGIT_;
+            }
+
+        case LEX_COMMENT:
+            nxtch = TakeChar();
+
+            if(nxtch == __EOF)
+            {
+                LexStat = LEX_PARSE;
+            }
+
+            if(nxtch == ')')
+            {
+                LexStat = LEX_START;
+            }
+
+            break;
+
+        case LEX_COMMLINE:
+            nxtch = TakeChar();
+
+            if(nxtch == __EOF || nxtch == _CRLF)
+            {
+                LexStat = LEX_PARSE;
+            }
+
+            break;
+
+        case LEX_ERROR:
+
+            if(nxtch == _CRLF || nxtch == __EOF)
+            {
+                NoTokensF = FALSE;
+                LexStat   = LEX_PARSE;
+            }
+            else
+            {
+                nxtch = TakeChar();
+            }
+
+            break;
+
+        case LEX_STRING:
+
+            if(avail + 3 > MAXCFGLINE)
+            {
+                Log.Level(LOGE) <<
+                                "Internal error #1. Please, contact with author!" << EOL;
                 exit(-1);
+            }
+
+            nxtch = TakeChar();
+
+            if(nxtch == _CRLF || nxtch == __EOF)
+            {
+                LexStat = LEX_PARSE;
+                return LEXERR;
+            }
+            else if(nxtch == '"')
+            {
+                chpool[avail] = '\0';
+                avail -= (int)strlen(p);
+                strcpy(p, PrepareString(p));
+                avail += (int)(strlen(p) + 1);
+                yylval.ch = p;
+                LexStat   = LEX_START;
+                return _STRING;
+            }
+            else
+            {
+                chpool[avail++] = nxtch;
+                break;
+            }
+
+        case LEX_CRLF:
+            DetectError = FALSE;
+            LexStat = LEX_START;
+            return _CRLF;
+
+        case LEX_END:
+            return 0;
+
+        default:
+            Log.Level(LOGE) << "Wrong state of LexStateMachine!" << EOL;
+            exit(-1);
         } // switch
     }
     Log.Level(LOGE) << "Exit from LEXX!" << EOL;

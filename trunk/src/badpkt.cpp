@@ -74,12 +74,12 @@ int BadPkt(char * PktName)
         if(FileMove(Buff, PktName))
         {
             Log.Level(LOGE) << "   PKT '" << PktName << "' moved to '" <<
-                               Buff << "'." << EOL;
+                            Buff << "'." << EOL;
         }
         else
         {
             Log.Level(LOGE) << "   Can't move PKT '" << PktName << "' to '" <<
-                               Buff << "'." << EOL;
+                            Buff << "'." << EOL;
             return -1;
         }
     }
@@ -92,7 +92,7 @@ int BadPkt(char * PktName)
         else
         {
             Log.Level(LOGE) << "   Can't remove PKT '" << PktName << "'." <<
-                               EOL;
+                            EOL;
             return -1;
         }
     }

@@ -40,6 +40,7 @@
 /*--------------------------------------------------------------------*/
 /*                         Local include files                        */
 /*--------------------------------------------------------------------*/
+#include "compiler.h"
 #include "mytypes.hpp"
 #include "log.hpp"
 
@@ -85,7 +86,7 @@ char * Date(void)
 #ifdef SYSLOG_LOG_FORMAT
     strftime(Buff, 60, "%b %d %H:%M:%S", ts);
 #else
-    strftime(Buff, 60, "%d.%m.%Y %H:%M:%S", ts);
+    strftime(Buff, 60, "%Y-%m-%d %H:%M:%S", ts);
 #endif
     return Buff;
 }
@@ -299,15 +300,34 @@ LogStream & LogStream::operator <<(int i)
     return *this;
 }
 
-LogStream & LogStream::operator <<(time_t t)
+#ifdef HAS_INT64
+LogStream & LogStream::operator <<(long t)
 {
-    ShowLine("%lld", (long long)t);
+    ShowLine("%ld", t);
     return *this;
 }
 
-LogStream & LogStream::operator <<(unsigned int i)
+LogStream & LogStream::operator <<(unsigned long t)
 {
-    ShowLine("%u", (unsigned int)i);
+    ShowLine("%ld", t);
+    return *this;
+}
+
+LogStream & LogStream::operator <<(long long t)
+{
+    ShowLine("%lld", t);
+    return *this;
+}
+
+LogStream & LogStream::operator <<(unsigned long long t)
+{
+    ShowLine("%lld", t);
+    return *this;
+}
+#else
+LogStream & LogStream::operator <<(time_t t)
+{
+    ShowLine("%ld", (long)t);
     return *this;
 }
 
@@ -320,5 +340,12 @@ LogStream & LogStream::operator <<(word i)
 LogStream & LogStream::operator <<(dword i)
 {
     ShowLine("%lu", (unsigned long)i);
+    return *this;
+}
+#endif
+
+LogStream & LogStream::operator <<(unsigned int i)
+{
+    ShowLine("%u", (unsigned int)i);
     return *this;
 }

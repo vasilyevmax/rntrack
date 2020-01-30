@@ -11,7 +11,8 @@
 #    Alternate config file location
 
 CC	= g++
-CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -O1
+SMAPIDIR= ../../smapi
+CFLAGS	=  -mno-cygwin -Wall -W -fno-rtti -fno-strict-aliasing -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O1
 CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H \
 	 -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H  -DHAVE_STRINGS_H \
 	 -DHAVE_CTYPE_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_STAT_H -DHAVE_UNISTD_H \
@@ -19,7 +20,7 @@ CDEFS	= -D__NT__ -DNDEBUG -DWIN32 -DWIN32IOP_H \
           -DHAVE_TIME_H -DHAVE_STDARG_H -DHAVE_ASSERT_H -DHAVE_DIRECT_H -DHAVE_DIRENT_H \
           -DHAVE_SYS_TIME_H -DHAVE_LOCALE_H -DHAVE_UTIME_H -DHAVE_LIMITS_H
 
-LFLAGS	= -s -mno-cygwin -L$(SRCDIR)smapi -lsmapicyg -lmingwex
+LFLAGS	= -s -mno-cygwin -L$(SMAPIDIR) -lsmapicyg -lmingwex
 SRCDIR	= ../../src/
 EXEEND= _w32.exe
 #CONFIG	= c:\\ftn\\rntrack.cfg
@@ -47,36 +48,39 @@ endif
 
 all: rntrack
 
-OBJS=	fidoaddr.o \
-	log.o \
+OBJS= \
 	age.o \
+	aix_conv.o \
 	aka.o \
 	attach.o \
 	badmsg.o \
+	badpkt.o \
 	cfg.o \
 	configure.o \
-	rntrack.o \
+	dirent.o \
+	domain.o \
+	fidoaddr.o \
+	filebox.o \
 	getopt.o \
 	help.o \
+	log.o \
+	mask.o \
 	msg.o \
 	msgbase.o \
 	nodelist.o \
-	vars.o \
 	outbound.o \
 	parsetpl.o \
 	passwd.o \
 	pktbase.o \
+	rntrack.o \
 	scandir.o \
+	script.o \
 	sqbase.o \
+	string.o \
 	tmstamp.o \
 	utils.o \
-	mask.o  \
-	wildmat.o \
-	badpkt.o \
-	script.o \
-	domain.o \
-	filebox.o \
-	string.o
+	vars.o \
+	wildmat.o
 
 %.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
@@ -87,15 +91,15 @@ OBJS=	fidoaddr.o \
 # Thunderbirds are go!
 
 smapi:
-	cd $(SRCDIR)smapi && make -f makefile.cyg static
+	cd $(SMAPIDIR) && make -f makefile.cyg static
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
 
 clean:
-	-rm -f $(SRCDIR)smapi/*.o
-	-rm -f $(SRCDIR)smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f *~
-	-rm -f core                                                                                                
+	-rm -f core
 	-rm -f rntrack$(EXEEND)

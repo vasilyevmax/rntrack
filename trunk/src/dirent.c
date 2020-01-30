@@ -21,107 +21,107 @@ extern "C"
 {
 #endif
 
-    DIR * opendir(const char * name)
+DIR * opendir(const char * name)
+{
+    DIR * dir = 0;
+
+    if(name && name[0])
     {
-        DIR * dir = 0;
-
-        if(name && name[0])
-        {
-            size_t base_length = strlen(name);
-            const char * all   = /* search pattern must end with suitable
+        size_t base_length = strlen(name);
+        const char * all   = /* search pattern must end with suitable
                                    wildcard */
-                                 strchr("/\\",
-                                        name[base_length - 1]) ? "*" : "/*";
+            strchr("/\\",
+                   name[base_length - 1]) ? "*" : "/*";
 
-            if((dir = (DIR *)malloc(sizeof *dir)) != 0 &&
-               (dir->name = (char *)malloc(base_length + strlen(all) + 1)) !=
-               0)
-            {
-                strcat(strcpy(dir->name, name), all);
+        if((dir = (DIR *)malloc(sizeof *dir)) != 0 &&
+                (dir->name = (char *)malloc(base_length + strlen(all) + 1)) !=
+                0)
+        {
+            strcat(strcpy(dir->name, name), all);
 
-                if((dir->handle =
+            if((dir->handle =
                         (long)_findfirst(dir->name, &dir->info)) != -1)
-                {
-                    dir->result.d_name = 0;
-                }
-                else /* rollback */
-                {
-                    free(dir->name);
-                    free(dir);
-                    dir = 0;
-                }
+            {
+                dir->result.d_name = 0;
             }
             else /* rollback */
             {
+                free(dir->name);
                 free(dir);
-                dir   = 0;
-                errno = ENOMEM;
+                dir = 0;
             }
         }
-        else
+        else /* rollback */
         {
-            errno = EINVAL;
-        }
-
-        return dir;
-    } // opendir
-
-    int closedir(DIR * dir)
-    {
-        int result = -1;
-
-        if(dir)
-        {
-            if(dir->handle != -1)
-            {
-                result = _findclose(dir->handle);
-            }
-
-            free(dir->name);
             free(dir);
+            dir   = 0;
+            errno = ENOMEM;
         }
-
-        if(result == -1) /* map all errors to EBADF */
-        {
-            errno = EBADF;
-        }
-
-        return result;
     }
-
-    struct dirent * readdir(DIR * dir)
+    else
     {
-        struct dirent * result = 0;
-
-        if(dir && dir->handle != -1)
-        {
-            if(!dir->result.d_name || _findnext(dir->handle, &dir->info) != -1)
-            {
-                result = &dir->result;
-                result->d_name = dir->info.name;
-            }
-        }
-        else
-        {
-            errno = EBADF;
-        }
-
-        return result;
+        errno = EINVAL;
     }
 
-    void rewinddir(DIR * dir)
+    return dir;
+} // opendir
+
+int closedir(DIR * dir)
+{
+    int result = -1;
+
+    if(dir)
     {
-        if(dir && dir->handle != -1)
+        if(dir->handle != -1)
         {
-            _findclose(dir->handle);
-            dir->handle = (long)_findfirst(dir->name, &dir->info);
-            dir->result.d_name = 0;
+            result = _findclose(dir->handle);
         }
-        else
+
+        free(dir->name);
+        free(dir);
+    }
+
+    if(result == -1) /* map all errors to EBADF */
+    {
+        errno = EBADF;
+    }
+
+    return result;
+}
+
+struct dirent * readdir(DIR * dir)
+{
+    struct dirent * result = 0;
+
+    if(dir && dir->handle != -1)
+    {
+        if(!dir->result.d_name || _findnext(dir->handle, &dir->info) != -1)
         {
-            errno = EBADF;
+            result = &dir->result;
+            result->d_name = dir->info.name;
         }
     }
+    else
+    {
+        errno = EBADF;
+    }
+
+    return result;
+}
+
+void rewinddir(DIR * dir)
+{
+    if(dir && dir->handle != -1)
+    {
+        _findclose(dir->handle);
+        dir->handle = (long)_findfirst(dir->name, &dir->info);
+        dir->result.d_name = 0;
+    }
+    else
+    {
+        errno = EBADF;
+    }
+}
 
 #ifdef __cplusplus
 }

@@ -13,8 +13,8 @@
  *  $Id$
  */
 
-#include        <string.h>
 #include        <time.h>
+#include        "compiler.h"
 #include        "fidoaddr.hpp"
 #include        <stdlib.h>
 #include        <ctype.h>
@@ -325,7 +325,7 @@ int FA::Parse(const char * & p)
     if(node_v & FA_MASK)
     {
         if((zone_v & FA_NOTDEF) && (net_v & FA_NOTDEF) &&
-           (point_v & FA_NOTDEF))
+                (point_v & FA_NOTDEF))
         {
             zone_v  = node_v;
             net_v   = node_v;
@@ -536,7 +536,7 @@ LogStream & operator <<(LogStream & os, FA const & f)
 int FA::Valid(void) const
 {
     if((zone_v & FA_NOTDEF) && (net_v & FA_NOTDEF) &&
-       (node_v & FA_NOTDEF) && (point_v & FA_NOTDEF))
+            (node_v & FA_NOTDEF) && (point_v & FA_NOTDEF))
     {
         return FALSE;
     }

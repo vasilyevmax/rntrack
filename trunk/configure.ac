@@ -138,6 +138,6 @@ AC_ARG_ENABLE(scripts,		 [  --enable-scripts		 enable Perl-scripting (auto)],
 
 
 AC_CONFIG_FILES([Makefile
-		 src/smapi/Makefile
+		 smapi/Makefile
 		 src/Makefile])
 AC_OUTPUT

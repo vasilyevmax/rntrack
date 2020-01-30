@@ -34,7 +34,7 @@
 #include <string.h>
 
 #ifdef __REGISTER_PREFIX__
-#define register __REGISTER_PREFIX__
+    #define register __REGISTER_PREFIX__
 #endif
 
 /*

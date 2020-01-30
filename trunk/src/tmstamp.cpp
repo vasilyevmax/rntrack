@@ -97,7 +97,7 @@ int GetLastTime(char * FName)
     if(stat(FName, &_fstat) != 0)
     {
         Log.Level(LOGE) << "Unable to get time from file '" << FName << '"' <<
-                           EOL;
+                        EOL;
         return FALSE;
     }
 
@@ -123,10 +123,10 @@ int InTime(IndBiList<tTimes>::ElemPtr tmt)
     {
         ETime = tmt->_ETime;
         STime = tmt->_STime;
-        Log.Level(LOGD) << "CTime == " << (int)CTime << 
-                           " STime == " << (int)STime << 
-                           " ETime == " << (int)ETime << 
-                           " LastTime == " << (int)LastTime << EOL;
+        Log.Level(LOGD) << "CTime == " << (int)CTime <<
+                        " STime == " << (int)STime <<
+                        " ETime == " << (int)ETime <<
+                        " LastTime == " << (int)LastTime << EOL;
 
         if(ETime != 0)
         {

@@ -29,7 +29,7 @@
 #include "string.hpp"
 #include <assert.h>
 #include <errno.h>
-#include "smapi/unused.h"
+#include "unused.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "log.hpp"
@@ -42,8 +42,8 @@
 #include "passwd.hpp"
 #include "aka.hpp"
 #include "configure.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+#include "msgapi.h"
+#include "progprot.h"
 #include "tpkt.hpp"
 #ifdef _AIX_CONV
     #include "aix_conv.hpp"
@@ -108,7 +108,7 @@ bool PKTBASE::CopyHeader(FILE * tf)
     if(fread(&PKTH, sizeof(tPKTH), 1, fh) != 1)
     {
         Log.Level(LOGE) << "   Error reading PKT header '" << PktName <<
-                           "'." << EOL;
+                        "'." << EOL;
         return FALSE;
     }
 
@@ -135,7 +135,7 @@ bool PKTBASE::CopyTail(FILE * tf)
 
     while(!feof(fh))
     {
-        if((rc = fread(Buffer, 1, 10240, fh)) != 10240)
+        if((rc = (int)fread(Buffer, 1, 10240, fh)) != 10240)
         {
             if(!feof(fh))
             {
@@ -168,7 +168,7 @@ bool PKTBASE::CopyOneMessage(FILE * tf)
     if(LogLevel >= 5)
     {
         Log.Level(LOGD) << "...Current file position " << (int)ftell(fh) <<
-                           EOL;
+                        EOL;
     }
 
     I = 0;
@@ -177,7 +177,7 @@ bool PKTBASE::CopyOneMessage(FILE * tf)
     {
         free(Buff);
         Log.Level(LOGE) <<
-        "   Error: Unable to read packed message header." << EOL;
+                        "   Error: Unable to read packed message header." << EOL;
         return FALSE;
     }
 
@@ -186,7 +186,7 @@ bool PKTBASE::CopyOneMessage(FILE * tf)
     if(I != 2)
     {
         Log.Level(LOGE) <<
-        "   Error: Missing 0200 at the beginning of the message." << EOL;
+                        "   Error: Missing 0200 at the beginning of the message." << EOL;
         free(Buff);
         return FALSE;
     }
@@ -195,7 +195,7 @@ bool PKTBASE::CopyOneMessage(FILE * tf)
     {
         free(Buff);
         Log.Level(LOGE) <<
-        "   Error: Unable to read packed message header." << EOL;
+                        "   Error: Unable to read packed message header." << EOL;
         return FALSE;
     }
 
@@ -226,7 +226,7 @@ bool PKTBASE::CopyOneMessage(FILE * tf)
             if(fread(Buff + I, 1, 1, fh) != 1)
             {
                 Log.Level(LOGE) << "   Error reading body of the message." <<
-                                   EOL;
+                                EOL;
                 free(Buff);
                 return FALSE;
             }
@@ -396,7 +396,7 @@ bool PKTBASE::_Close(void)
         MsgNum    = 0;
         MaxMsgNum = 0;
         Log.Level(LOGE) <<
-        "   Unable to seek to the beginning of the PKT file." << EOL;
+                        "   Unable to seek to the beginning of the PKT file." << EOL;
 
         if(BadPktMode == EXIT)
         {
@@ -424,9 +424,9 @@ bool PKTBASE::_Close(void)
         else
         {
 #endif
-        tmt = TempName;
+            tmt = TempName;
 #ifndef __unix__
-    }
+        }
 
 #endif
     }
@@ -665,8 +665,8 @@ bool PKTBASE::Next(void)
         if(fread(&SIGN, 2, 1, fh) != 1)
         {
             Log.Level(LOGE) <<
-            "   Error: Unable to read signature from PKT '" << PktName <<
-            "'" << EOL;
+                            "   Error: Unable to read signature from PKT '" << PktName <<
+                            "'" << EOL;
             fclose(fh);
             fh = NULL;
 
@@ -703,7 +703,7 @@ bool PKTBASE::Next(void)
         while((de = readdir(dp)) != NULL)
         {
             Log.Level(LOGD) << "PKTBASE::Next(). de->d_name == '" <<
-                               de->d_name << "'" << EOL;
+                            de->d_name << "'" << EOL;
 
             if(fsCompareName(de->d_name, "*.[Pp][Kk][Tt]") != 0)
             {
@@ -740,7 +740,7 @@ bool PKTBASE::Next(void)
     else if(SIGN != 2)
     {
         Log.Level(LOGE) << "   Error: Wrong signature in PKT '" << PktName <<
-                           "'" << EOL;
+                        "'" << EOL;
         fclose(fh);
         fh = NULL;
 
@@ -779,8 +779,8 @@ bool PKTBASE::_Open(void)
             if((uint)tmp_stat.st_size > MaxPktSize)
             {
                 Log.Level(LOGE) << "   Error: size of PKT '" << PktName <<
-                                   "' is " << (uint)tmp_stat.st_size << 
-                                   " (" << MaxPktSize << " allowed)." << EOL;
+                                "' is " << (uint)tmp_stat.st_size <<
+                                " (" << MaxPktSize << " allowed)." << EOL;
 
                 if(BadPktMode == EXIT)
                 {
@@ -806,7 +806,7 @@ bool PKTBASE::_Open(void)
     if(errno == EACCES)
     {
         Log.Level(LOGE) << "   Error _open PKT '" << PktName <<
-                           "' - permission denied." << EOL;
+                        "' - permission denied." << EOL;
         return TRUE;
     }
 
@@ -845,15 +845,15 @@ bool PKTBASE::_Open(void)
 #endif
 
     if(PKTH.c0002 != 2 ||
-       ((PKTH.c0001 != 0 && PKTH.c0100 != 0) && 
-        (PKTH.c0001 != 1 && PKTH.c0100 != 256)))
+            ((PKTH.c0001 != 0 && PKTH.c0100 != 0) &&
+             (PKTH.c0001 != 1 && PKTH.c0100 != 256)))
     {
         Log.Level(LOGD) << "   " << (uint)PKTH.c0002 << " " <<
-                           (uint)PKTH.c0001 << " " << (uint)PKTH.c0100 << EOL;
+                        (uint)PKTH.c0001 << " " << (uint)PKTH.c0100 << EOL;
         Log.Level(LOGE) <<
-        "   Error: destroyed header or unknown PKT format in PKT '" <<
-        PktName << "'" << EOL;
-        
+                        "   Error: destroyed header or unknown PKT format in PKT '" <<
+                        PktName << "'" << EOL;
+
         fclose(fh);
         fh = NULL;
 
@@ -888,7 +888,7 @@ bool PKTBASE::_Open(void)
         fclose(fh);
         fh = NULL;
         Log.Level(LOGW) << "Sender of PKT '" << PktName <<
-                           "' does not match with " << FMask << EOL;
+                        "' does not match with " << FMask << EOL;
         return TRUE;
     }
 
@@ -907,9 +907,9 @@ bool PKTBASE::_Open(void)
         if(stricmp(Buff, tmt) != 0)
         {
             Log.Level(LOGW) << "Wrong password in PKT '" << PktName << "'" <<
-                               EOL;
+                            EOL;
             Log.Level(LOGW) << "Should be '" << tmt << "'. In PKT '" <<
-                               Buff << "'" << EOL;
+                            Buff << "'" << EOL;
             fclose(fh);
             fh = NULL;
 
@@ -948,7 +948,7 @@ bool PKTBASE::Rewind(void)
     }
 
     Log.Level(LOGD) << "PKTBASE::Rewind(). DirName == '" <<
-                       (DirName == NULL ? "(NULL)" : DirName) << "'" << EOL;
+                    (DirName == NULL ? "(NULL)" : DirName) << "'" << EOL;
 
     if(DirName != NULL)
     {
@@ -1081,14 +1081,14 @@ bool PKTBASE::ReadMsg(cMSG & m)
         if(feof(fh) != 0)
         {
             Log.Level(LOGE) <<
-            "   Warning: New message, but EOF found in PKT '" << PktName <<
-            "'." << EOL;
+                            "   Warning: New message, but EOF found in PKT '" << PktName <<
+                            "'." << EOL;
             return FALSE;
         }
 
         Log.Level(LOGE) <<
-        "   Error: Unable to read message header from PKT '" << PktName <<
-        "'." << EOL;
+                        "   Error: Unable to read message header from PKT '" << PktName <<
+                        "'." << EOL;
         return FALSE;
     }
 
@@ -1117,8 +1117,8 @@ bool PKTBASE::ReadMsg(cMSG & m)
         if(fread(m._ToName + i, 1, 1, fh) != 1)
         {
             Log.Level(LOGE) <<
-            "   Error: Unable to read message header (ToName) from PKT '" <<
-            PktName << "'" << EOL;
+                            "   Error: Unable to read message header (ToName) from PKT '" <<
+                            PktName << "'" << EOL;
             return FALSE;
         }
 
@@ -1134,8 +1134,8 @@ bool PKTBASE::ReadMsg(cMSG & m)
         if(fread(m._FromName + i, 1, 1, fh) != 1)
         {
             Log.Level(LOGE) <<
-            "   Error: Unable to read message header (FromName) from PKT '" <<
-            PktName << "'" << EOL;
+                            "   Error: Unable to read message header (FromName) from PKT '" <<
+                            PktName << "'" << EOL;
             return FALSE;
         }
 
@@ -1151,8 +1151,8 @@ bool PKTBASE::ReadMsg(cMSG & m)
         if(fread(m._Subject + i, 1, 1, fh) != 1)
         {
             Log.Level(LOGE) <<
-            "   Error: Unable to read message header (Subject) from PKT '" <<
-            PktName << "'" << EOL;
+                            "   Error: Unable to read message header (Subject) from PKT '" <<
+                            PktName << "'" << EOL;
             return FALSE;
         }
 
@@ -1200,18 +1200,18 @@ bool PKTBASE::ReadMsg(cMSG & m)
     }
     while(Buff[I - 1] != '\0');
 
-/*  if(MaxMsgSize != 0)
-    {
-        if(I > MaxMsgSize)
+    /*  if(MaxMsgSize != 0)
         {
-            Log.Level(LOGE) << "   Error: size of MSG body from '" << 
-                               PktName << "' is " << I << " (" << MaxMsgSize << 
-                               " allowed)." << EOL;
-            free(Buff);
-            return FALSE;
+            if(I > MaxMsgSize)
+            {
+                Log.Level(LOGE) << "   Error: size of MSG body from '" <<
+                                   PktName << "' is " << I << " (" << MaxMsgSize <<
+                                   " allowed)." << EOL;
+                free(Buff);
+                return FALSE;
+            }
         }
-    }
-*/
+    */
 
     CHP = 646;
     m.ParseMem(Buff);
@@ -1251,7 +1251,7 @@ bool PKTBASE::WriteNewMsg(cMSG & m)
 
 // ---------------------------
 
-void PKTBASE::Print(void){}
+void PKTBASE::Print(void) {}
 
 // ---------------------------
 

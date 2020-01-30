@@ -135,7 +135,7 @@ static int ctoi(char *s) {
    int res = 0;
 
    res = strtoul(s, &foo, 0);
-   if (*foo)	/* parse error */
+   if (*foo)    /* parse error */
       return 0;
    return res;
 }
@@ -152,7 +152,7 @@ static int ctoi(char *s) {
    CheckPointsT pmode;
    tBadMsgMode  bmode;
    tBadMsgMode  bpmode;
-   fileboxType	fbtype;
+   fileboxType  fbtype;
    time_t       t;
    PKTMode      pktmode;
 };
@@ -172,9 +172,9 @@ static int ctoi(char *s) {
        _KILLROUTEDMESSAGE  _IGNOREBSY   _AFTERSCRIPT _BEFORESCRIPT _AGEFROMVIA
        _MAXNODELISTAGE _USEFILEBOXES _FILEBOXTYPE _LONG _TMLONG _TMSHORT _BRAKE
        _SOFTCHECKINNODELIST _BADPACKETS _IGNOREATTACHPATH _MAXPKTSIZE _MAXMSGSIZE
-       _TIMESTAMPFILE _DOMAIN _FILEBOX
+       _TIMESTAMPFILE _DOMAIN_ _FILEBOX
        _TRAFFICLOGTEMPLATE
-		 _STRIPPATHINPKT
+         _STRIPPATHINPKT
 
        _CRLF        _SKIP _DELETE _EXIT _MOVE __EOF
        _STRING      _BEFOREROUTE _AFTERROUTE
@@ -186,7 +186,7 @@ static int ctoi(char *s) {
        _APPENDTOFILE _CALL _ROUTE _ROUTEFBOX _ROUTEHUB _POLL _DELETEATTACH _CHANGEPATH _MOVEATTACH
        _ASCRIPT _TOLOWERPATH _TOUPPERPATH _COPYATTACHFBOX _MOVEATTACHFBOX
        _COPYATTACH _SPLIT _RECODE _ADDKLUDGE _HOLD _CRASH _DIRECT _NORMAL _IMMEDIATE
-	LEXERR
+    LEXERR
 
 %start  Conf
 
@@ -244,8 +244,8 @@ ConfLine :  Action _CRLF
          |  PMask _CRLF
          |  MaxAge _CRLF
          |  MaxAttachSize _CRLF
-	 |  MaxMsgSize _CRLF
-	 |  MaxPktSize _CRLF
+     |  MaxMsgSize _CRLF
+     |  MaxPktSize _CRLF
          |  MaxNodelistAge _CRLF
          |  Nodelist _CRLF
          |  NodelistPath _CRLF
@@ -257,8 +257,8 @@ ConfLine :  Action _CRLF
             }
          |  Outbound _CRLF
          |  Password _CRLF
-	 |  Domain _CRLF
-	 |  FileBox _CRLF
+     |  Domain _CRLF
+     |  FileBox _CRLF
          |  ScriptMask _CRLF
          |  SScriptMask _CRLF
          |  PScriptMask _CRLF
@@ -307,27 +307,27 @@ ConfLine :  Action _CRLF
                }
             }
          |  _USEASO _CRLF
-	         {
-	            if (SetUseASO() != 0) {
+             {
+                if (SetUseASO() != 0) {
                   YYABORT;
-	            }
-	         }
-	 | _USEBRAKE _CRLF
-	         {
-		    if (SetUseBrake() != 0) {
-		  YYABORT;
-		    }
-		 }
-	 |  _USEFILEBOXES _CRLF
-	         {
-	            if (SetUseFileBoxes() != 0) {
+                }
+             }
+     | _USEBRAKE _CRLF
+             {
+            if (SetUseBrake() != 0) {
+          YYABORT;
+            }
+         }
+     |  _USEFILEBOXES _CRLF
+             {
+                if (SetUseFileBoxes() != 0) {
                   YYABORT;
-	            }
-	         }
+                }
+             }
          | _STRIPPATHINPKT _CRLF
-			   {
-				   if (SetStripPathInPkt() != 0) {
-					   YYABORT;
+               {
+                   if (SetStripPathInPkt() != 0) {
+                       YYABORT;
                }
             }
          |  _AGEFROMVIA _CRLF
@@ -345,8 +345,8 @@ ConfLine :  Action _CRLF
          |  Semaphore _CRLF
          |  TrafficLogTemplate _CRLF
          |  ScriptFile _CRLF
-	 |  FileBoxDir _CRLF
-	 |  FileBoxType _CRLF
+     |  FileBoxDir _CRLF
+     |  FileBoxType _CRLF
          |   error _CRLF { YYABORT; }
          { DetectError = TRUE;
          }
@@ -373,14 +373,14 @@ FileBoxDir : _FILEBOXDIR _STRING {
 FileBoxType: _FILEBOXTYPE FBOXTYPE
               {
                 if (SetFileBoxType($<fbtype>2) != 0) {
-		  YYABORT;
+          YYABORT;
                 }
               }
             ;
 FBOXTYPE  : _LONG { $<fbtype>$ = FILEBOXLONG}
             | _TMLONG { $<fbtype>$ = FILEBOXTMLONG }
             | _TMSHORT { $<fbtype>$ = FILEBOXTMSHORT }
-	    | _BRAKE { $<fbtype>$ = FILEBOXBRAKE }
+        | _BRAKE { $<fbtype>$ = FILEBOXBRAKE }
             ;
 
 
@@ -621,7 +621,7 @@ Password    : _PASSWORD _STRING
             }
             ;
 
-Domain    : _DOMAIN _STRING
+Domain    : _DOMAIN_ _STRING
             {
                if (strlen($<ch>2) > 10){
                   yyerror("Domain too long. Max domain length is a 10 characters.");
@@ -675,7 +675,7 @@ BadPackets  : _BADPACKETS BadPktMode
                 if (SetBadPktMode($<bpmode>2,BPktDir) != 0) {
                   YYABORT;
                 }
-		BPktDir = NULL;
+        BPktDir = NULL;
               }
             ;
 BadPktMode  : _SKIP { $<bpmode>$ = SKIP; BPktDir = NULL;}
@@ -1289,21 +1289,21 @@ ActionCmd : AAddNote
           | AAppendToFile
           | ACall
           | ARoute
-	  | ARouteFbox
-	  | ARouteHub
+      | ARouteFbox
+      | ARouteHub
           | APoll
           | _DELETEATTACH { act->_Act = ACT_DELETEATTACH; }
           | AChangePath
-	  | AToLowerPath
-	  | AToUpperPath
+      | AToLowerPath
+      | AToUpperPath
           | AMoveAttach
-	  | AMoveAttachFbox
+      | AMoveAttachFbox
           | ACopyAttach
-	  | ACopyAttachFbox
+      | ACopyAttachFbox
           | ASplit
           | ARecode
           | AScript
-	  | AAddKludge
+      | AAddKludge
           ;
 
 AAddNote : _ADDNOTE _STRING {
@@ -1509,11 +1509,11 @@ ARoute : _ROUTE RouMode { cffa.Clean(); } faddress {
 
 ARouteFbox : _ROUTEFBOX RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_ROUTEFBOX;
-	  if (FileBoxDir == NULL)
-	  {
-	   yyerror("You must define FileBoxDir before using Action: RouteFilebox.");
-	   YYABORT;
-	  }
+      if (FileBoxDir == NULL)
+      {
+       yyerror("You must define FileBoxDir before using Action: RouteFilebox.");
+       YYABORT;
+      }
           if (act->sd == act->Before|| act->sd == act->After) {
              yyerror("You can not use the Action RouteFilebox in 'ScanDir: @AfterRoute|@BeforeRoute'");
              YYABORT;
@@ -1543,11 +1543,11 @@ ARouteHub : _ROUTEHUB RouMode { cffa.Clean(); } {
 
 ACopyAttachFbox : _COPYATTACHFBOX RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_COPYATTACHFBOX;
-	  if (FileBoxDir == NULL)
-	  {
-	   yyerror("You must define FileBoxDir before using Action: CopyAttachFilebox.");
-	   YYABORT;
-	  }
+      if (FileBoxDir == NULL)
+      {
+       yyerror("You must define FileBoxDir before using Action: CopyAttachFilebox.");
+       YYABORT;
+      }
           act->_Flav = $<pktmode>2;
           act->_f = cffa;
        }
@@ -1555,11 +1555,11 @@ ACopyAttachFbox : _COPYATTACHFBOX RouMode { cffa.Clean(); } faddress {
 
 AMoveAttachFbox : _MOVEATTACHFBOX RouMode { cffa.Clean(); } faddress {
           act->_Act = ACT_MOVEATTACHFBOX;
-	  if (FileBoxDir == NULL)
-	  {
-	   yyerror("You must define FileBoxDir before using Action: MoveAttachFilebox.");
-	   YYABORT;
-	  }
+      if (FileBoxDir == NULL)
+      {
+       yyerror("You must define FileBoxDir before using Action: MoveAttachFilebox.");
+       YYABORT;
+      }
           act->_Flav = $<pktmode>2;
           act->_f = cffa;
        }
@@ -1569,7 +1569,7 @@ RouMode : _HOLD   { $<pktmode>$ = F_HOLD; }
         | _CRASH  { $<pktmode>$ = F_CRASH; }
         | _DIRECT { $<pktmode>$ = F_DIRECT; }
         | _NORMAL { $<pktmode>$ = F_NORMAL; }
-	| _IMMEDIATE{ $<pktmode>$ = F_IMMEDIATE; }
+    | _IMMEDIATE{ $<pktmode>$ = F_IMMEDIATE; }
         ;
 
 APoll : _POLL RouMode { cffa.Clean(); } faddress {
@@ -1609,8 +1609,8 @@ AToUpperPath : _TOUPPERPATH {
 
 AAddKludge : _ADDKLUDGE _STRING _STRING {
                act->_Act = ACT_ADDKLUDGE;
-	       act->_OutDir = strdup($<ch>2);
-	       act->_TplName = strdup($<ch>3);
+           act->_OutDir = strdup($<ch>2);
+           act->_TplName = strdup($<ch>3);
             }
             ;
 
@@ -1618,7 +1618,7 @@ AAddKludge : _ADDKLUDGE _STRING _STRING {
 AMoveAttach : _MOVEATTACH _STRING {
                act->_Act = ACT_MOVEATTACH;
                if (!DirExists($<ch>2)) {
-	         Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
+             Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
                }
                if (strlen($<ch>2) > 72) {
                   yyerror("New path too long");
@@ -1631,7 +1631,7 @@ AMoveAttach : _MOVEATTACH _STRING {
 ACopyAttach : _COPYATTACH _STRING {
                act->_Act = ACT_COPYATTACH;
                if (!DirExists($<ch>2)) {
-	         Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
+             Log.Level(LOGE) << "Target directory '" << $<ch>2 << "' not found." << EOL;
                }
                if (strlen($<ch>2) > 72) {
                   yyerror("New path too long");

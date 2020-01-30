@@ -8,8 +8,8 @@ make
 
 Make options:
 
-CONFIG="path/to/cfg"       - Default config path. If not defined, using "/etc/ftn/rntrack.cfg" under *NIX or "rntrack.cfg"
-                             under other os.
+CONFIG="path/to/cfg"       - Default config path. If not defined, using "~/fido/etc/rntrack.cfg" under *NIX
+                             "%USERPROFILE%\fido\rntrack.cfg" under Windows or "rntrack.cfg" under other OS.
 
 ENABLE_SCRIPTS=1           - Enable Perl scripts support (currently not available on WIN32 and OS/2)
 ENABLE_LOG_PID=1           - Enable pid logging (ex: 21.04.2004 12:02:39 [212] --- RNtrack 1.11/LNX started.)
