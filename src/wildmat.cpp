@@ -86,96 +86,96 @@ static int DoMatch(const char * text, const char * p)
 
         switch(*p)
         {
-            case '\\': /* Literal match with following character. */
-                p++;
+        case '\\': /* Literal match with following character. */
+            p++;
 
-            //!!!!!!!!!!!!!!! do not change it!!!!!!!!!!
-            default: /* FALLTHROUGH */
+        //!!!!!!!!!!!!!!! do not change it!!!!!!!!!!
+        default: /* FALLTHROUGH */
 
-                if(*text != *p)
-                {
-                    return 0;
-                }
+            if(*text != *p)
+            {
+                return 0;
+            }
 
+            continue;
+
+        case '#': /* Match with digit */
+
+            if(!isdigit((uchar) * text))
+            {
+                return 0;
+            }
+
+            continue;
+
+        case '$': /* Match with any _char_ great than space */
+
+            if(*text <= ' ')
+            {
+                return 0;
+            }
+
+            continue;
+
+        case '?': /* Match anything. */
+            continue;
+
+        case '*':
+
+            /* Consecutive stars act just like one. */
+            while(*++p == '*')
+            {
                 continue;
+            }
 
-            case '#': /* Match with digit */
+            /* Trailing star matches everything. */
+            if(*p == '\0')
+            {
+                return 1;
+            }
 
-                if(!isdigit((uchar) * text))
+            while(*text)
+            {
+                if((matched = DoMatch(text++, p)) == 1)
                 {
-                    return 0;
+                    return matched;
                 }
+            }
+            return -2;
 
-                continue;
+        case '[':
+            reverse = p[1] == NEGATE_CLASS ? 1 : 0;
 
-            case '$': /* Match with any _char_ great than space */
+            if(reverse)
+            {
+                p++;              /* Inverted character class. */
+            }
 
-                if(*text <= ' ')
-                {
-                    return 0;
-                }
+            p++;
+            matched = 0;
 
-                continue;
+            // if (p[1] == ']' || p[1] == '-')
+            if(*p == *text)
+            {
+                matched = 1;
+            }
 
-            case '?': /* Match anything. */
-                continue;
-
-            case '*':
-
-                /* Consecutive stars act just like one. */
-                while(*++p == '*')
-                {
-                    continue;
-                }
-
-                /* Trailing star matches everything. */
-                if(*p == '\0')
-                {
-                    return 1;
-                }
-
-                while(*text)
-                {
-                    if((matched = DoMatch(text++, p)) == 1)
-                    {
-                        return matched;
-                    }
-                }
-                return -2;
-
-            case '[':
-                reverse = p[1] == NEGATE_CLASS ? 1 : 0;
-
-                if(reverse)
-                {
-                    p++;              /* Inverted character class. */
-                }
-
-                p++;
-                matched = 0;
-
-                // if (p[1] == ']' || p[1] == '-')
-                if(*p == *text)
+            for(last = *p; *++p && *p != ']'; last = *p)
+            {
+                /* This next line requires a good C compiler. */
+                if(*p == '-' && p[1] != ']' ?
+                        *text <= *++p && *text >= last : *text == *p)
                 {
                     matched = 1;
                 }
+            }
 
-                for(last = *p; *++p && *p != ']'; last = *p)
-                {
-                    /* This next line requires a good C compiler. */
-                    if(*p == '-' && p[1] != ']' ?
-                       *text <= *++p && *text >= last : *text == *p)
-                    {
-                        matched = 1;
-                    }
-                }
+            if(matched == reverse)
+            {
+                return 0;
+            }
 
-                if(matched == reverse)
-                {
-                    return 0;
-                }
-
-                continue;
+            continue;
         } // switch
     }
 
@@ -210,49 +210,49 @@ int wildmat(const char * text, const char * p)
 
 /* Yes, we use gets not fgets.  Sue me. */
 
-    int main(void)
-    {
-        char p[80];
-        char text[80];
+int main(void)
+{
+    char p[80];
+    char text[80];
 
-        printf("Wildmat tester.  Enter pattern, then strings to test.\n");
-        printf(
-            "A blank line gets prompts for a new pattern; a blank pattern\n");
-        printf("exits the program.\n");
+    printf("Wildmat tester.  Enter pattern, then strings to test.\n");
+    printf(
+        "A blank line gets prompts for a new pattern; a blank pattern\n");
+    printf("exits the program.\n");
+
+    for( ; ; )
+    {
+        printf("\nEnter pattern:  ");
+        (void)fflush(stdout);
+
+        if(gets(p) == NULL || p[0] == '\0')
+        {
+            break;
+        }
 
         for( ; ; )
         {
-            printf("\nEnter pattern:  ");
+            printf("Enter text:  ");
             (void)fflush(stdout);
 
-            if(gets(p) == NULL || p[0] == '\0')
+            if(gets(text) == NULL)
             {
+                return 0;
+            }
+
+            if(text[0] == '\0')
+            {
+                /* Blank line; go back and get a new pattern. */
                 break;
             }
 
-            for( ; ; )
-            {
-                printf("Enter text:  ");
-                (void)fflush(stdout);
-
-                if(gets(text) == NULL)
-                {
-                    return 0;
-                }
-
-                if(text[0] == '\0')
-                {
-                    /* Blank line; go back and get a new pattern. */
-                    break;
-                }
-
-                printf("      %s\n", wildmat(text, p) ? "YES" : "NO");
-            }
+            printf("      %s\n", wildmat(text, p) ? "YES" : "NO");
         }
+    }
 
-        return 0;
-        /* NOTREACHED */
-    } // main
+    return 0;
+    /* NOTREACHED */
+} // main
 
 #endif /* defined(TEST) */
 

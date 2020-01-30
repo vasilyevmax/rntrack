@@ -25,9 +25,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
 OUTDIR=.\Release
@@ -40,18 +37,18 @@ ALL : "$(OUTDIR)\smapi.lib"
 
 
 CLEAN :
-	-@erase "$(INTDIR)\1stchar.obj"
 	-@erase "$(INTDIR)\api_jam.obj"
 	-@erase "$(INTDIR)\api_sdm.obj"
-	-@erase "$(INTDIR)\cvtdate.obj"
 	-@erase "$(INTDIR)\date2bin.obj"
 	-@erase "$(INTDIR)\dosdate.obj"
 	-@erase "$(INTDIR)\fexist.obj"
 	-@erase "$(INTDIR)\ffind.obj"
 	-@erase "$(INTDIR)\flush.obj"
+	-@erase "$(INTDIR)\ftnaddr.obj"
 	-@erase "$(INTDIR)\genmsgid.obj"
 	-@erase "$(INTDIR)\gnmsgid.obj"
 	-@erase "$(INTDIR)\locking.obj"
+	-@erase "$(INTDIR)\memory.obj"
 	-@erase "$(INTDIR)\months.obj"
 	-@erase "$(INTDIR)\msgapi.obj"
 	-@erase "$(INTDIR)\parsenn.obj"
@@ -69,9 +66,8 @@ CLEAN :
 	-@erase "$(INTDIR)\sq_read.obj"
 	-@erase "$(INTDIR)\sq_uid.obj"
 	-@erase "$(INTDIR)\sq_write.obj"
-	-@erase "$(INTDIR)\strextra.obj"
+	-@erase "$(INTDIR)\strext.obj"
 	-@erase "$(INTDIR)\strftim.obj"
-	-@erase "$(INTDIR)\strocpy.obj"
 	-@erase "$(INTDIR)\structrw.obj"
 	-@erase "$(INTDIR)\tdelay.obj"
 	-@erase "$(INTDIR)\trail.obj"
@@ -82,7 +78,40 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /ML /W3 /GX /O2 /D "NDEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP=cl.exe
+CPP_PROJ=/nologo /ML /W3 /GX /O2 /I "..\..\..\..\smapi\h" /I "..\..\..\..\smapi\src" /D "NDEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\smapi.bsc" 
 BSC32_SBRS= \
@@ -90,18 +119,18 @@ BSC32_SBRS= \
 LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\smapi.lib" 
 LIB32_OBJS= \
-	"$(INTDIR)\1stchar.obj" \
 	"$(INTDIR)\api_jam.obj" \
 	"$(INTDIR)\api_sdm.obj" \
-	"$(INTDIR)\cvtdate.obj" \
 	"$(INTDIR)\date2bin.obj" \
 	"$(INTDIR)\dosdate.obj" \
 	"$(INTDIR)\fexist.obj" \
 	"$(INTDIR)\ffind.obj" \
 	"$(INTDIR)\flush.obj" \
+	"$(INTDIR)\ftnaddr.obj" \
 	"$(INTDIR)\genmsgid.obj" \
 	"$(INTDIR)\gnmsgid.obj" \
 	"$(INTDIR)\locking.obj" \
+	"$(INTDIR)\memory.obj" \
 	"$(INTDIR)\months.obj" \
 	"$(INTDIR)\msgapi.obj" \
 	"$(INTDIR)\parsenn.obj" \
@@ -119,9 +148,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\sq_read.obj" \
 	"$(INTDIR)\sq_uid.obj" \
 	"$(INTDIR)\sq_write.obj" \
-	"$(INTDIR)\strextra.obj" \
+	"$(INTDIR)\strext.obj" \
 	"$(INTDIR)\strftim.obj" \
-	"$(INTDIR)\strocpy.obj" \
 	"$(INTDIR)\structrw.obj" \
 	"$(INTDIR)\tdelay.obj" \
 	"$(INTDIR)\trail.obj" \
@@ -144,14 +172,10 @@ ALL : "$(OUTDIR)\smapi.lib" "$(OUTDIR)\smapi.bsc"
 
 
 CLEAN :
-	-@erase "$(INTDIR)\1stchar.obj"
-	-@erase "$(INTDIR)\1stchar.sbr"
 	-@erase "$(INTDIR)\api_jam.obj"
 	-@erase "$(INTDIR)\api_jam.sbr"
 	-@erase "$(INTDIR)\api_sdm.obj"
 	-@erase "$(INTDIR)\api_sdm.sbr"
-	-@erase "$(INTDIR)\cvtdate.obj"
-	-@erase "$(INTDIR)\cvtdate.sbr"
 	-@erase "$(INTDIR)\date2bin.obj"
 	-@erase "$(INTDIR)\date2bin.sbr"
 	-@erase "$(INTDIR)\dosdate.obj"
@@ -162,12 +186,16 @@ CLEAN :
 	-@erase "$(INTDIR)\ffind.sbr"
 	-@erase "$(INTDIR)\flush.obj"
 	-@erase "$(INTDIR)\flush.sbr"
+	-@erase "$(INTDIR)\ftnaddr.obj"
+	-@erase "$(INTDIR)\ftnaddr.sbr"
 	-@erase "$(INTDIR)\genmsgid.obj"
 	-@erase "$(INTDIR)\genmsgid.sbr"
 	-@erase "$(INTDIR)\gnmsgid.obj"
 	-@erase "$(INTDIR)\gnmsgid.sbr"
 	-@erase "$(INTDIR)\locking.obj"
 	-@erase "$(INTDIR)\locking.sbr"
+	-@erase "$(INTDIR)\memory.obj"
+	-@erase "$(INTDIR)\memory.sbr"
 	-@erase "$(INTDIR)\months.obj"
 	-@erase "$(INTDIR)\months.sbr"
 	-@erase "$(INTDIR)\msgapi.obj"
@@ -202,12 +230,10 @@ CLEAN :
 	-@erase "$(INTDIR)\sq_uid.sbr"
 	-@erase "$(INTDIR)\sq_write.obj"
 	-@erase "$(INTDIR)\sq_write.sbr"
-	-@erase "$(INTDIR)\strextra.obj"
-	-@erase "$(INTDIR)\strextra.sbr"
+	-@erase "$(INTDIR)\strext.obj"
+	-@erase "$(INTDIR)\strext.sbr"
 	-@erase "$(INTDIR)\strftim.obj"
 	-@erase "$(INTDIR)\strftim.sbr"
-	-@erase "$(INTDIR)\strocpy.obj"
-	-@erase "$(INTDIR)\strocpy.sbr"
 	-@erase "$(INTDIR)\structrw.obj"
 	-@erase "$(INTDIR)\structrw.sbr"
 	-@erase "$(INTDIR)\tdelay.obj"
@@ -224,98 +250,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MLd /W3 /Gm /ZI /Od /D "_DEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\smapi.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\1stchar.sbr" \
-	"$(INTDIR)\api_jam.sbr" \
-	"$(INTDIR)\api_sdm.sbr" \
-	"$(INTDIR)\cvtdate.sbr" \
-	"$(INTDIR)\date2bin.sbr" \
-	"$(INTDIR)\dosdate.sbr" \
-	"$(INTDIR)\fexist.sbr" \
-	"$(INTDIR)\ffind.sbr" \
-	"$(INTDIR)\flush.sbr" \
-	"$(INTDIR)\genmsgid.sbr" \
-	"$(INTDIR)\gnmsgid.sbr" \
-	"$(INTDIR)\locking.sbr" \
-	"$(INTDIR)\months.sbr" \
-	"$(INTDIR)\msgapi.sbr" \
-	"$(INTDIR)\parsenn.sbr" \
-	"$(INTDIR)\patmat.sbr" \
-	"$(INTDIR)\qksort.sbr" \
-	"$(INTDIR)\setfsize.sbr" \
-	"$(INTDIR)\sq_area.sbr" \
-	"$(INTDIR)\sq_hash.sbr" \
-	"$(INTDIR)\sq_help.sbr" \
-	"$(INTDIR)\sq_idx.sbr" \
-	"$(INTDIR)\sq_kill.sbr" \
-	"$(INTDIR)\sq_lock.sbr" \
-	"$(INTDIR)\sq_misc.sbr" \
-	"$(INTDIR)\sq_msg.sbr" \
-	"$(INTDIR)\sq_read.sbr" \
-	"$(INTDIR)\sq_uid.sbr" \
-	"$(INTDIR)\sq_write.sbr" \
-	"$(INTDIR)\strextra.sbr" \
-	"$(INTDIR)\strftim.sbr" \
-	"$(INTDIR)\strocpy.sbr" \
-	"$(INTDIR)\structrw.sbr" \
-	"$(INTDIR)\tdelay.sbr" \
-	"$(INTDIR)\trail.sbr" \
-	"$(INTDIR)\weekday.sbr"
-
-"$(OUTDIR)\smapi.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LIB32=link.exe -lib
-LIB32_FLAGS=/nologo /out:"$(OUTDIR)\smapi.lib" 
-LIB32_OBJS= \
-	"$(INTDIR)\1stchar.obj" \
-	"$(INTDIR)\api_jam.obj" \
-	"$(INTDIR)\api_sdm.obj" \
-	"$(INTDIR)\cvtdate.obj" \
-	"$(INTDIR)\date2bin.obj" \
-	"$(INTDIR)\dosdate.obj" \
-	"$(INTDIR)\fexist.obj" \
-	"$(INTDIR)\ffind.obj" \
-	"$(INTDIR)\flush.obj" \
-	"$(INTDIR)\genmsgid.obj" \
-	"$(INTDIR)\gnmsgid.obj" \
-	"$(INTDIR)\locking.obj" \
-	"$(INTDIR)\months.obj" \
-	"$(INTDIR)\msgapi.obj" \
-	"$(INTDIR)\parsenn.obj" \
-	"$(INTDIR)\patmat.obj" \
-	"$(INTDIR)\qksort.obj" \
-	"$(INTDIR)\setfsize.obj" \
-	"$(INTDIR)\sq_area.obj" \
-	"$(INTDIR)\sq_hash.obj" \
-	"$(INTDIR)\sq_help.obj" \
-	"$(INTDIR)\sq_idx.obj" \
-	"$(INTDIR)\sq_kill.obj" \
-	"$(INTDIR)\sq_lock.obj" \
-	"$(INTDIR)\sq_misc.obj" \
-	"$(INTDIR)\sq_msg.obj" \
-	"$(INTDIR)\sq_read.obj" \
-	"$(INTDIR)\sq_uid.obj" \
-	"$(INTDIR)\sq_write.obj" \
-	"$(INTDIR)\strextra.obj" \
-	"$(INTDIR)\strftim.obj" \
-	"$(INTDIR)\strocpy.obj" \
-	"$(INTDIR)\structrw.obj" \
-	"$(INTDIR)\tdelay.obj" \
-	"$(INTDIR)\trail.obj" \
-	"$(INTDIR)\weekday.obj"
-
-"$(OUTDIR)\smapi.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
-    $(LIB32) @<<
-  $(LIB32_FLAGS) $(DEF_FLAGS) $(LIB32_OBJS)
-<<
-
-!ENDIF 
+CPP=cl.exe
+CPP_PROJ=/nologo /MLd /W3 /Gm /ZI /Od /I "..\..\..\..\smapi\h" /I "..\..\..\..\smapi\src" /D "_DEBUG" /D "_LIB" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -347,6 +283,97 @@ LIB32_OBJS= \
    $(CPP_PROJ) $< 
 <<
 
+RSC=rc.exe
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\smapi.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\api_jam.sbr" \
+	"$(INTDIR)\api_sdm.sbr" \
+	"$(INTDIR)\date2bin.sbr" \
+	"$(INTDIR)\dosdate.sbr" \
+	"$(INTDIR)\fexist.sbr" \
+	"$(INTDIR)\ffind.sbr" \
+	"$(INTDIR)\flush.sbr" \
+	"$(INTDIR)\ftnaddr.sbr" \
+	"$(INTDIR)\genmsgid.sbr" \
+	"$(INTDIR)\gnmsgid.sbr" \
+	"$(INTDIR)\locking.sbr" \
+	"$(INTDIR)\memory.sbr" \
+	"$(INTDIR)\months.sbr" \
+	"$(INTDIR)\msgapi.sbr" \
+	"$(INTDIR)\parsenn.sbr" \
+	"$(INTDIR)\patmat.sbr" \
+	"$(INTDIR)\qksort.sbr" \
+	"$(INTDIR)\setfsize.sbr" \
+	"$(INTDIR)\sq_area.sbr" \
+	"$(INTDIR)\sq_hash.sbr" \
+	"$(INTDIR)\sq_help.sbr" \
+	"$(INTDIR)\sq_idx.sbr" \
+	"$(INTDIR)\sq_kill.sbr" \
+	"$(INTDIR)\sq_lock.sbr" \
+	"$(INTDIR)\sq_misc.sbr" \
+	"$(INTDIR)\sq_msg.sbr" \
+	"$(INTDIR)\sq_read.sbr" \
+	"$(INTDIR)\sq_uid.sbr" \
+	"$(INTDIR)\sq_write.sbr" \
+	"$(INTDIR)\strext.sbr" \
+	"$(INTDIR)\strftim.sbr" \
+	"$(INTDIR)\structrw.sbr" \
+	"$(INTDIR)\tdelay.sbr" \
+	"$(INTDIR)\trail.sbr" \
+	"$(INTDIR)\weekday.sbr"
+
+"$(OUTDIR)\smapi.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LIB32=link.exe -lib
+LIB32_FLAGS=/nologo /out:"$(OUTDIR)\smapi.lib" 
+LIB32_OBJS= \
+	"$(INTDIR)\api_jam.obj" \
+	"$(INTDIR)\api_sdm.obj" \
+	"$(INTDIR)\date2bin.obj" \
+	"$(INTDIR)\dosdate.obj" \
+	"$(INTDIR)\fexist.obj" \
+	"$(INTDIR)\ffind.obj" \
+	"$(INTDIR)\flush.obj" \
+	"$(INTDIR)\ftnaddr.obj" \
+	"$(INTDIR)\genmsgid.obj" \
+	"$(INTDIR)\gnmsgid.obj" \
+	"$(INTDIR)\locking.obj" \
+	"$(INTDIR)\memory.obj" \
+	"$(INTDIR)\months.obj" \
+	"$(INTDIR)\msgapi.obj" \
+	"$(INTDIR)\parsenn.obj" \
+	"$(INTDIR)\patmat.obj" \
+	"$(INTDIR)\qksort.obj" \
+	"$(INTDIR)\setfsize.obj" \
+	"$(INTDIR)\sq_area.obj" \
+	"$(INTDIR)\sq_hash.obj" \
+	"$(INTDIR)\sq_help.obj" \
+	"$(INTDIR)\sq_idx.obj" \
+	"$(INTDIR)\sq_kill.obj" \
+	"$(INTDIR)\sq_lock.obj" \
+	"$(INTDIR)\sq_misc.obj" \
+	"$(INTDIR)\sq_msg.obj" \
+	"$(INTDIR)\sq_read.obj" \
+	"$(INTDIR)\sq_uid.obj" \
+	"$(INTDIR)\sq_write.obj" \
+	"$(INTDIR)\strext.obj" \
+	"$(INTDIR)\strftim.obj" \
+	"$(INTDIR)\structrw.obj" \
+	"$(INTDIR)\tdelay.obj" \
+	"$(INTDIR)\trail.obj" \
+	"$(INTDIR)\weekday.obj"
+
+"$(OUTDIR)\smapi.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
+    $(LIB32) @<<
+  $(LIB32_FLAGS) $(DEF_FLAGS) $(LIB32_OBJS)
+<<
+
+!ENDIF 
+
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
 !IF EXISTS("smapi.dep")
@@ -358,25 +385,7 @@ LIB32_OBJS= \
 
 
 !IF "$(CFG)" == "smapi - Win32 Release" || "$(CFG)" == "smapi - Win32 Debug"
-SOURCE=..\..\..\..\src\smapi\1stchar.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\1stchar.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\1stchar.obj"	"$(INTDIR)\1stchar.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\..\..\src\smapi\api_jam.c
+SOURCE=..\..\..\..\smapi\src\api_jam.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -394,7 +403,7 @@ SOURCE=..\..\..\..\src\smapi\api_jam.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\api_sdm.c
+SOURCE=..\..\..\..\smapi\src\api_sdm.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -412,25 +421,7 @@ SOURCE=..\..\..\..\src\smapi\api_sdm.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\cvtdate.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\cvtdate.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\cvtdate.obj"	"$(INTDIR)\cvtdate.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\..\..\src\smapi\date2bin.c
+SOURCE=..\..\..\..\smapi\src\date2bin.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -448,7 +439,7 @@ SOURCE=..\..\..\..\src\smapi\date2bin.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\dosdate.c
+SOURCE=..\..\..\..\smapi\src\dosdate.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -466,7 +457,7 @@ SOURCE=..\..\..\..\src\smapi\dosdate.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\fexist.c
+SOURCE=..\..\..\..\smapi\src\fexist.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -484,7 +475,7 @@ SOURCE=..\..\..\..\src\smapi\fexist.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\ffind.c
+SOURCE=..\..\..\..\smapi\src\ffind.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -502,7 +493,7 @@ SOURCE=..\..\..\..\src\smapi\ffind.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\flush.c
+SOURCE=..\..\..\..\smapi\src\flush.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -520,7 +511,25 @@ SOURCE=..\..\..\..\src\smapi\flush.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\genmsgid.c
+SOURCE=..\..\..\..\smapi\src\ftnaddr.c
+
+!IF  "$(CFG)" == "smapi - Win32 Release"
+
+
+"$(INTDIR)\ftnaddr.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
+
+
+"$(INTDIR)\ftnaddr.obj"	"$(INTDIR)\ftnaddr.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\..\..\smapi\src\genmsgid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -538,7 +547,7 @@ SOURCE=..\..\..\..\src\smapi\genmsgid.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\gnmsgid.c
+SOURCE=..\..\..\..\smapi\src\gnmsgid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -556,7 +565,7 @@ SOURCE=..\..\..\..\src\smapi\gnmsgid.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\locking.c
+SOURCE=..\..\..\..\smapi\src\locking.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -574,7 +583,25 @@ SOURCE=..\..\..\..\src\smapi\locking.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\months.c
+SOURCE=..\..\..\..\smapi\src\memory.c
+
+!IF  "$(CFG)" == "smapi - Win32 Release"
+
+
+"$(INTDIR)\memory.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
+
+
+"$(INTDIR)\memory.obj"	"$(INTDIR)\memory.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\..\..\smapi\src\months.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -592,7 +619,7 @@ SOURCE=..\..\..\..\src\smapi\months.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\msgapi.c
+SOURCE=..\..\..\..\smapi\src\msgapi.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -610,7 +637,7 @@ SOURCE=..\..\..\..\src\smapi\msgapi.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\parsenn.c
+SOURCE=..\..\..\..\smapi\src\parsenn.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -628,7 +655,7 @@ SOURCE=..\..\..\..\src\smapi\parsenn.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\patmat.c
+SOURCE=..\..\..\..\smapi\src\patmat.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -646,7 +673,7 @@ SOURCE=..\..\..\..\src\smapi\patmat.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\qksort.c
+SOURCE=..\..\..\..\smapi\src\qksort.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -664,7 +691,7 @@ SOURCE=..\..\..\..\src\smapi\qksort.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\setfsize.c
+SOURCE=..\..\..\..\smapi\src\setfsize.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -682,7 +709,7 @@ SOURCE=..\..\..\..\src\smapi\setfsize.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_area.c
+SOURCE=..\..\..\..\smapi\src\sq_area.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -700,7 +727,7 @@ SOURCE=..\..\..\..\src\smapi\sq_area.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_hash.c
+SOURCE=..\..\..\..\smapi\src\sq_hash.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -718,7 +745,7 @@ SOURCE=..\..\..\..\src\smapi\sq_hash.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_help.c
+SOURCE=..\..\..\..\smapi\src\sq_help.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -736,7 +763,7 @@ SOURCE=..\..\..\..\src\smapi\sq_help.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_idx.c
+SOURCE=..\..\..\..\smapi\src\sq_idx.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -754,7 +781,7 @@ SOURCE=..\..\..\..\src\smapi\sq_idx.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_kill.c
+SOURCE=..\..\..\..\smapi\src\sq_kill.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -772,7 +799,7 @@ SOURCE=..\..\..\..\src\smapi\sq_kill.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_lock.c
+SOURCE=..\..\..\..\smapi\src\sq_lock.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -790,7 +817,7 @@ SOURCE=..\..\..\..\src\smapi\sq_lock.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_misc.c
+SOURCE=..\..\..\..\smapi\src\sq_misc.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -808,7 +835,7 @@ SOURCE=..\..\..\..\src\smapi\sq_misc.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_msg.c
+SOURCE=..\..\..\..\smapi\src\sq_msg.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -826,7 +853,7 @@ SOURCE=..\..\..\..\src\smapi\sq_msg.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_read.c
+SOURCE=..\..\..\..\smapi\src\sq_read.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -844,7 +871,7 @@ SOURCE=..\..\..\..\src\smapi\sq_read.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_uid.c
+SOURCE=..\..\..\..\smapi\src\sq_uid.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -862,7 +889,7 @@ SOURCE=..\..\..\..\src\smapi\sq_uid.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\sq_write.c
+SOURCE=..\..\..\..\smapi\src\sq_write.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -880,25 +907,25 @@ SOURCE=..\..\..\..\src\smapi\sq_write.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\strextra.c
+SOURCE=..\..\..\..\smapi\src\strext.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
 
-"$(INTDIR)\strextra.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\strext.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
 
 
-"$(INTDIR)\strextra.obj"	"$(INTDIR)\strextra.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\strext.obj"	"$(INTDIR)\strext.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\strftim.c
+SOURCE=..\..\..\..\smapi\src\strftim.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -916,25 +943,7 @@ SOURCE=..\..\..\..\src\smapi\strftim.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\strocpy.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\strocpy.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\strocpy.obj"	"$(INTDIR)\strocpy.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\..\..\src\smapi\structrw.c
+SOURCE=..\..\..\..\smapi\src\structrw.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -952,7 +961,7 @@ SOURCE=..\..\..\..\src\smapi\structrw.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\tdelay.c
+SOURCE=..\..\..\..\smapi\src\tdelay.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -970,7 +979,7 @@ SOURCE=..\..\..\..\src\smapi\tdelay.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\trail.c
+SOURCE=..\..\..\..\smapi\src\trail.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 
@@ -988,7 +997,7 @@ SOURCE=..\..\..\..\src\smapi\trail.c
 
 !ENDIF 
 
-SOURCE=..\..\..\..\src\smapi\weekday.c
+SOURCE=..\..\..\..\smapi\src\weekday.c
 
 !IF  "$(CFG)" == "smapi - Win32 Release"
 

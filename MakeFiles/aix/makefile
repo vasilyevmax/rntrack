@@ -1,9 +1,10 @@
 # $Id$
 # this file not tested
 CC	= g++
-CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -DUNIX -D_AIX -D_AIX_CONV
-LFLAGS	= -s -L$(SRCDIR)smapi -lsmapiaix
+LFLAGS	= -s -L$(SMAPIDIR) -lsmapiaix
 SRCDIR	= ../../src/
 #CONFIG	= /etc/ftn/rntrack.cfg
 
@@ -31,37 +32,39 @@ endif
 
 all: rntrack
 
-OBJS=	fidoaddr.o \
-	log.o \
+OBJS= \
 	age.o \
+	aix_conv.o \
 	aka.o \
 	attach.o \
 	badmsg.o \
+	badpkt.o \
 	cfg.o \
 	configure.o \
-	rntrack.o \
+	dirent.o \
+	domain.o \
+	fidoaddr.o \
+	filebox.o \
 	getopt.o \
 	help.o \
+	log.o \
+	mask.o \
 	msg.o \
 	msgbase.o \
 	nodelist.o \
-	vars.o \
 	outbound.o \
 	parsetpl.o \
 	passwd.o \
 	pktbase.o \
+	rntrack.o \
 	scandir.o \
+	script.o \
 	sqbase.o \
+	string.o \
 	tmstamp.o \
 	utils.o \
-	mask.o \
-	script.o \
-	wildmat.o \
-	badpkt.o \
-	aix_conv.o \
-	domain.o \
-	filebox.o \
-	string.o
+	vars.o \
+	wildmat.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
@@ -72,15 +75,15 @@ OBJS=	fidoaddr.o \
 # Thunderbirds are go!
 
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.aix
+	make -C $(SMAPIDIR) -f makefile.aix
 
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
 
 clean:
-	-rm -f $(SRCDIR)smapi/*.o
-	-rm -f $(SRCDIR)smapi/*.a
+	-rm -f $(SMAPIDIR)/*.o
+	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
 	-rm -f *~
 	-rm -f core

@@ -1,10 +1,12 @@
 # $Id$
 CC	= gxx
-CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -O3
+SMAPIDIR= ../../smapi
+CFLAGS	= -Wall -W -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -D__FLAT__ -DNOSEMAPHORES -DHAVE_DOS_H -DHAVE_UNISTD_H -DHAVE_IO_H -DHAS_strupr -DHAVE_LOCALE_H -DHAVE_TIME_H -DHAVE_UTIME_H
-LFLAGS	= -s $(SRCDIR)smapi/smapidjg.a
+LFLAGS	= -s $(SMAPIDIR)/smapidjg.a
 SRCDIR	= ../../src/
 SRCDIR1 = ..\\..\\src\\
+SMAPIDIR1 = ..\\..\\smapi
 EXEEND	= _386.exe
 #CONFIG = c:\\\\ftn\\\\rntrack.cfg
 
@@ -32,36 +34,39 @@ endif
 
 all: rntrack
 
-OBJS=	fidoaddr.o \
-	log.o \
+OBJS= \
 	age.o \
+	aix_conv.o \
 	aka.o \
 	attach.o \
 	badmsg.o \
+	badpkt.o \
 	cfg.o \
 	configure.o \
-	rntrack.o \
+	dirent.o \
+	domain.o \
+	fidoaddr.o \
+	filebox.o \
 	getopt.o \
 	help.o \
+	log.o \
+	mask.o \
 	msg.o \
 	msgbase.o \
 	nodelist.o \
-	vars.o \
 	outbound.o \
 	parsetpl.o \
 	passwd.o \
 	pktbase.o \
+	rntrack.o \
 	scandir.o \
+	script.o \
 	sqbase.o \
+	string.o \
 	tmstamp.o \
 	utils.o \
-	mask.o \
-	script.o \
-	wildmat.o \
-	badpkt.o \
-	domain.o \
-	filebox.o \
-	string.o
+	vars.o \
+	wildmat.o
 
 %.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(CDEFS) -c $<
@@ -72,14 +77,14 @@ OBJS=	fidoaddr.o \
 # Thunderbirds are go!
 
 smapi:
-	make -C $(SRCDIR)smapi -f makefile.djg
+	make -C $(SMAPIDIR) -f makefile.djg
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS)
 
 clean:
-	-del $(SRCDIR1)smapi\\*.o
-	-del $(SRCDIR1)smapi\\*.a
+	-del $(SMAPIDIR1)\\*.o
+	-del $(SMAPIDIR1)\\*.a
 	-del *.o
 	-del  *~
 	-del core

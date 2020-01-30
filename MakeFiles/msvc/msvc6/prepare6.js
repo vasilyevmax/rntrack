@@ -345,7 +345,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /I "..\..\..\hpp" /I "..\..\..\src" @@perl_ADD_CPP@@ /D "NDEBUG" /D "_CONSOLE" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /I "..\..\..\hpp" /I "..\..\..\src" /I "..\..\..\smapi\h" /I "..\..\..\smapi\src" @@perl_ADD_CPP@@ /D "NDEBUG" /D "_CONSOLE" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x419 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -370,7 +370,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /I "..\..\..\hpp" /I "..\..\..\src" @@perl_ADD_CPP@@ /D "_CONSOLE" /D "_DEBUG" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /I "..\..\..\hpp" /I "..\..\..\src" /I "..\..\..\smapi\h" /I "..\..\..\smapi\src" @@perl_ADD_CPP@@ /D "_CONSOLE" /D "_DEBUG" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x419 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -552,6 +552,14 @@ SOURCE=..\..\..\hpp\badpkt.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\hpp\cfg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\compiler.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\configure.hpp
 # End Source File
 # Begin Source File
@@ -576,6 +584,10 @@ SOURCE=..\..\..\hpp\filebox.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\smapi\h\ftnaddr.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\getopt.hpp
 # End Source File
 # Begin Source File
@@ -596,7 +608,15 @@ SOURCE=..\..\..\hpp\msg.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\smapi\h\msgapi.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\msgbase.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\MSVC.h
 # End Source File
 # Begin Source File
 
@@ -624,6 +644,14 @@ SOURCE=..\..\..\hpp\pktbase.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\smapi\h\prog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\progprot.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\hpp\scandir.hpp
 # End Source File
 # Begin Source File
@@ -633,6 +661,10 @@ SOURCE=..\..\..\hpp\script.hpp
 # Begin Source File
 
 SOURCE=..\..\..\hpp\sqbase.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\stamp.h
 # End Source File
 # Begin Source File
 
@@ -648,7 +680,15 @@ SOURCE=..\..\..\hpp\tpkt.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\smapi\typedefs.h
+SOURCE=..\..\..\smapi\h\typedefs.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\typesize.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\smapi\h\unused.h
 # End Source File
 # Begin Source File
 
@@ -818,7 +858,7 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /ML /W3 /GX /O2 /I "..\..\..\hpp" /I "..\..\..\src" @@perl_ADD_CPP@@ /D "NDEBUG" /D "_CONSOLE" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /ML /W3 /GX /O2 /I "..\..\..\hpp" /I "..\..\..\src" /I "..\..\..\smapi\h" /I "..\..\..\smapi\src" @@perl_ADD_CPP@@ /D "NDEBUG" /D "_CONSOLE" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -996,7 +1036,7 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MLd /W3 /Gm /GX /ZI /Od /I "..\..\..\hpp" /I "..\..\..\src" @@perl_ADD_CPP@@ /D "_CONSOLE" /D "_DEBUG" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MLd /W3 /Gm /GX /ZI /Od /I "..\..\..\hpp" /I "..\..\..\src" /I "..\..\..\smapi\h" /I "..\..\..\smapi\src" @@perl_ADD_CPP@@ /D "_CONSOLE" /D "_DEBUG" /D "__NT__" /D "WIN32IOP_H" /D "HAVE_IO_H" /D "WIN32" /D "_MBCS" /D "HAVE_TIME_H" /D "HAVE_SYS_UTIME_H" /D "HAVE_LOCALE_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<

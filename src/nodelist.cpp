@@ -30,6 +30,7 @@
 #include <string.h>
 #include <assert.h>
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "configure.hpp"
@@ -46,7 +47,7 @@ static int NodelistLineNum  = 0;
 static const char mErrReadIndex[] = "Error reading index file.";
 static const char mNdlChanged[] =
     "Some nodelists have changed. Recompilation is necessary.";
-static const char mIndNFound[] = 
+static const char mIndNFound[] =
     "Index file not found. Create new index file.";
 static const char mErrNdlMustFull[] =
     "Error: You must define default Zone for Regional and Network versions of nodelist.";
@@ -68,7 +69,7 @@ typedef struct _Ntr
 void ErrNdlFormat(const char * m)
 {
     Log.Level(LOGE) << "Error in line " << NodelistLineNum << ", " <<
-                       mErrNdlFormat << EOL;
+                    mErrNdlFormat << EOL;
     Log.Level(LOGE) << m << EOL;
     NodelistTurnOff = TRUE;
 }
@@ -90,7 +91,7 @@ int FindNodelist(char * Mask, char * Name)
 
     if(NodelistPath != NULL && *Path != PATHDELIMC
 #ifndef __unix__
-       && Path[1] != ':'
+            && Path[1] != ':'
 #endif
       )
     {
@@ -108,7 +109,7 @@ int FindNodelist(char * Mask, char * Name)
             while((ff = readdir(dd)) != NULL)
             {
                 if(fsCompareName(ff->d_name, Fname) != 0 &&
-                   (tmt = strrchr(ff->d_name, '.')) != NULL)
+                        (tmt = strrchr(ff->d_name, '.')) != NULL)
                 {
                     tmt++;
 
@@ -223,7 +224,7 @@ int ReadNdlLine(char * Buff, int Count)
             Buff[0] = ';';
         }
     }
-    return strlen(Buff);
+    return (int)strlen(Buff);
 } // ReadNdlLine
 
 Ntr * ExistByNumber(Ntr * Addr, unsigned int Number)
@@ -297,9 +298,9 @@ bool DelDupNode(unsigned int Node)
                     ((Node & A_MASK) == A_HUB))
             {
 //            Log.Level(LOGD) << "Two nodes? " << tr->Number << " " << Node <<
-                                 // EOL;
+                // EOL;
 //            Log.Level(LOGD) << "Net: " << CurrentZone << ":" << CurrentNet <<
-                                 // EOL;
+                // EOL;
                 CurrentHub = &(tr->Next);
                 return FALSE;
             }
@@ -463,24 +464,42 @@ bool ParseNodeLine(char * tmt)
 //   printf("'%s'\n",tmt);
     switch(*tmt)
     {
-        case 'B': // Boss record. Pointlist?
-        case 'b':
-            PointListMode = TRUE;
+    case 'B': // Boss record. Pointlist?
+    case 'b':
+        PointListMode = TRUE;
 
-            if(_SetCurrentBoss(tmt + 5) != TRUE)
-            {
-                ErrNdlFormat("Bad BOSS record");
-                return FALSE;
-            }
+        if(_SetCurrentBoss(tmt + 5) != TRUE)
+        {
+            ErrNdlFormat("Bad BOSS record");
+            return FALSE;
+        }
 
-            break;
+        break;
 
-        case 'Z': // Zone record
-            PointListMode = FALSE;
-            _SetCurrentZone(atoi(tmt + 5));
-            break;
+    case 'Z': // Zone record
+        PointListMode = FALSE;
+        _SetCurrentZone(atoi(tmt + 5));
+        break;
 
-        case 'R': // Region record
+    case 'R': // Region record
+        PointListMode = FALSE;
+
+        if(CurrentZone == 0)
+        {
+            Log.Level(LOGE) << mErrNdlMustFull << EOL;
+            return FALSE;
+        }
+
+        tmp  = atoi(tmt + 7);
+        tmp |= A_REGION;
+        _SetCurrentNet(tmp); // Region is a strange type of net.
+        break;
+
+    case 'H': // Host, Hub, or Hold record
+
+        switch(*(tmt + 2))
+        {
+        case 's': // Host
             PointListMode = FALSE;
 
             if(CurrentZone == 0)
@@ -489,172 +508,154 @@ bool ParseNodeLine(char * tmt)
                 return FALSE;
             }
 
-            tmp  = atoi(tmt + 7);
-            tmp |= A_REGION;
-            _SetCurrentNet(tmp); // Region is a strange type of net.
+            _SetCurrentNet(atoi(tmt + 5));
             break;
 
-        case 'H': // Host, Hub, or Hold record
-
-            switch(*(tmt + 2))
-            {
-                case 's': // Host
-                    PointListMode = FALSE;
-
-                    if(CurrentZone == 0)
-                    {
-                        Log.Level(LOGE) << mErrNdlMustFull << EOL;
-                        return FALSE;
-                    }
-
-                    _SetCurrentNet(atoi(tmt + 5));
-                    break;
-
-                case 'b': // Hub
-
-                    if(PointListMode == TRUE)
-                    {
-                        ErrNdlFormat("HUB record in pointlist!");
-                        return FALSE;
-                    }
-
-                    if(CurrentZone == 0)
-                    {
-                        ErrNdlFormat("HUB record without Zone record!");
-                        return FALSE;
-                    }
-
-                    tmp  = atoi(tmt + 4);
-                    tmp |= A_HUB;
-                    _AddNode(tmp);
-                    break;
-
-                case 'l': // Hold
-
-                    if(PointListMode == TRUE)
-                    {
-                        ErrNdlFormat("Node or point with HOLD flag!");
-                        return FALSE;
-                    }
-
-                    if(CurrentZone == 0)
-                    {
-                        ErrNdlFormat("HOLD record without Zone record!");
-                        return FALSE;
-                    }
-
-                    tmp  = atoi(tmt + 5);
-                    tmp |= A_HOLD;
-                    _AddNode(tmp);
-                    break;
-
-                default:
-                    ErrNdlFormat("Unknown format!");
-                    return FALSE;
-            } // switch
-            break;
-
-        case ',': // Simple node
+        case 'b': // Hub
 
             if(PointListMode == TRUE)
             {
-                _AddPoint(atoi(tmt + 1));
-            }
-            else
-            {
-                if(CurrentZone == 0)
-                {
-                    ErrNdlFormat("Node record without Zone record!");
-                    return FALSE;
-                }
-
-                if(CurrentNet == 0)
-                {
-                    ErrNdlFormat("Node record without Host/Region record!");
-                    return FALSE;
-                }
-
-                _AddNode(atoi(tmt + 1));
-            }
-
-            break;
-
-        case 'D': // Down
-
-            if(PointListMode == TRUE)
-            {
-                ErrNdlFormat("DOWN record in pointlist!");
+                ErrNdlFormat("HUB record in pointlist!");
                 return FALSE;
             }
 
             if(CurrentZone == 0)
             {
-                ErrNdlFormat("Node Down record without Zone record!");
+                ErrNdlFormat("HUB record without Zone record!");
+                return FALSE;
+            }
+
+            tmp  = atoi(tmt + 4);
+            tmp |= A_HUB;
+            _AddNode(tmp);
+            break;
+
+        case 'l': // Hold
+
+            if(PointListMode == TRUE)
+            {
+                ErrNdlFormat("Node or point with HOLD flag!");
+                return FALSE;
+            }
+
+            if(CurrentZone == 0)
+            {
+                ErrNdlFormat("HOLD record without Zone record!");
+                return FALSE;
+            }
+
+            tmp  = atoi(tmt + 5);
+            tmp |= A_HOLD;
+            _AddNode(tmp);
+            break;
+
+        default:
+            ErrNdlFormat("Unknown format!");
+            return FALSE;
+        } // switch
+        break;
+
+    case ',': // Simple node
+
+        if(PointListMode == TRUE)
+        {
+            _AddPoint(atoi(tmt + 1));
+        }
+        else
+        {
+            if(CurrentZone == 0)
+            {
+                ErrNdlFormat("Node record without Zone record!");
                 return FALSE;
             }
 
             if(CurrentNet == 0)
             {
-                ErrNdlFormat("Node Down record without Host/Region record!");
+                ErrNdlFormat("Node record without Host/Region record!");
                 return FALSE;
             }
 
-            tmp  = atoi(tmt + 5);
-            tmp |= A_DOWN;
+            _AddNode(atoi(tmt + 1));
+        }
+
+        break;
+
+    case 'D': // Down
+
+        if(PointListMode == TRUE)
+        {
+            ErrNdlFormat("DOWN record in pointlist!");
+            return FALSE;
+        }
+
+        if(CurrentZone == 0)
+        {
+            ErrNdlFormat("Node Down record without Zone record!");
+            return FALSE;
+        }
+
+        if(CurrentNet == 0)
+        {
+            ErrNdlFormat("Node Down record without Host/Region record!");
+            return FALSE;
+        }
+
+        tmp  = atoi(tmt + 5);
+        tmp |= A_DOWN;
+        _AddNode(tmp);
+        break;
+
+    case 'P': // Pvt or Point
+    case 'p':
+
+        switch(*(tmt + 1))
+        {
+        case 'v': // Pvt
+
+            if(PointListMode == TRUE)
+            {
+                ErrNdlFormat("PVT record in pointlist!");
+                return FALSE;
+            }
+
+            if(CurrentZone == 0)
+            {
+                ErrNdlFormat("Node Pvt record without Zone record!");
+                return FALSE;
+            }
+
+            if(CurrentNet == 0)
+            {
+                ErrNdlFormat("Node Pvt record without Host record!");
+                return FALSE;
+            }
+
+            tmp  = atoi(tmt + 4);
+            tmp |= A_PVT;
             _AddNode(tmp);
             break;
 
-        case 'P': // Pvt or Point
-        case 'p':
+        case 'o': // Point
 
-            switch(*(tmt + 1))
+            if(PointListMode == FALSE)
             {
-                case 'v': // Pvt
+                ErrNdlFormat("POINT record not in pointlist!");
+                return FALSE;
+            }
 
-                    if(PointListMode == TRUE)
-                    {
-                        ErrNdlFormat("PVT record in pointlist!");
-                        return FALSE;
-                    }
-
-                    if(CurrentZone == 0)
-                    {
-                        ErrNdlFormat("Node Pvt record without Zone record!");
-                        return FALSE;
-                    }
-
-                    if(CurrentNet == 0)
-                    {
-                        ErrNdlFormat("Node Pvt record without Host record!");
-                        return FALSE;
-                    }
-
-                    tmp  = atoi(tmt + 4);
-                    tmp |= A_PVT;
-                    _AddNode(tmp);
-                    break;
-
-                case 'o': // Point
-
-                    if(PointListMode == FALSE)
-                    {
-                        ErrNdlFormat("POINT record not in pointlist!");
-                        return FALSE;
-                    }
-
-                    tmp = atoi(tmt + 6);
-                    _AddPoint(tmp);
-                    break;
-
-                default:
-                    ErrNdlFormat("Unknown format!");
-                    return FALSE;
-            } // switch
+            tmp = atoi(tmt + 6);
+            _AddPoint(tmp);
             break;
 
-        default: // No one? Hmm...
+        default:
             ErrNdlFormat("Unknown format!");
             return FALSE;
+        } // switch
+        break;
+
+    default: // No one? Hmm...
+        ErrNdlFormat("Unknown format!");
+        return FALSE;
     } // switch
     return TRUE;
 } // ParseNodeLine
@@ -668,8 +669,8 @@ bool ParseOneNodelist(NodeListElem * Elem)
     if(Elem->StartZone != 0)
     {
         _SetCurrentZone(Elem->StartZone); // Set address to Zone:Zone/0; 1st
-                                          // line of the nodelist should be
-                                          // "Host" or "Region"
+        // line of the nodelist should be
+        // "Host" or "Region"
         Log.Level(LOGI) << ", start zone number is " << Elem->StartZone << EOL;
     }
     else
@@ -705,26 +706,26 @@ bool ParseOneNodelist(NodeListElem * Elem)
 // ------------------------------------------------------
 
 #if 0
-    void PrintNtr(Ntr * tmt, char * Buff)
+void PrintNtr(Ntr * tmt, char * Buff)
+{
+    int len;
+    Ntr * tmt2;
+
+    len  = strlen(Buff);
+    tmt2 = tmt;
+
+    while(tmt != NULL)
     {
-        int len;
-        Ntr * tmt2;
-    
-        len  = strlen(Buff);
-        tmt2 = tmt;
-    
-        while(tmt != NULL)
-        {
-            sprintf(Buff + len, "%d ", tmt->Number & 0xffff);
-            PrintNtr(tmt->Sub, Buff);
-            tmt = tmt->Next;
-        }
-    
-        if(tmt2 == NULL)
-        {
-            printf("%s\n", Buff);
-        }
+        sprintf(Buff + len, "%d ", tmt->Number & 0xffff);
+        PrintNtr(tmt->Sub, Buff);
+        tmt = tmt->Next;
     }
+
+    if(tmt2 == NULL)
+    {
+        printf("%s\n", Buff);
+    }
+}
 #endif
 
 int ElementsInList(Ntr * Addr)
@@ -890,26 +891,26 @@ NodeLists::~NodeLists()
 }
 
 #if 0
-    void PrintNch(Nch * tmt, char * Buff)
+void PrintNch(Nch * tmt, char * Buff)
+{
+    int i;
+    int len;
+
+    len = strlen(Buff);
+    i   = 0;
+
+    while(tmt[i].Number != -1)
     {
-        int i;
-        int len;
-    
-        len = strlen(Buff);
-        i   = 0;
-    
-        while(tmt[i].Number != -1)
-        {
-            sprintf(Buff + len, "%d ", tmt[i].Number & 0xffff);
-            PrintNch(tmt[i].Sub, Buff);
-            i++;
-        }
-    
-        if(tmt[0].Number == -1)
-        {
-            printf("%s\n", Buff);
-        }
+        sprintf(Buff + len, "%d ", tmt[i].Number & 0xffff);
+        PrintNch(tmt[i].Sub, Buff);
+        i++;
     }
+
+    if(tmt[0].Number == -1)
+    {
+        printf("%s\n", Buff);
+    }
+}
 #endif
 
 void NodeLists::Print(void)
@@ -980,9 +981,9 @@ bool NodeLists::CompileNeed(void)
     if(tmp != NdlSign)
     {
         Log.Level(LOGE) <<
-        "Index file from the old version of RNtrack. Recompilation is necessary."
-        <<
-        EOL;
+                        "Index file from the old version of RNtrack. Recompilation is necessary."
+                        <<
+                        EOL;
         fclose(fh);
         return TRUE;
     }
@@ -1018,14 +1019,14 @@ bool NodeLists::CompileNeed(void)
             if((time(NULL) - (NList + i)->Time) > MaxNodelistAge)
             {
                 Log.Level(LOGW) << "Nodelist '" <<
-                                   (NList + i)->Name << "' too old." << EOL;
+                                (NList + i)->Name << "' too old." << EOL;
                 Log.Level(LOGI) <<
-                "Checking existance in nodelists turned off." << EOL;
+                                "Checking existance in nodelists turned off." << EOL;
                 NodelistTurnOff = TRUE;
                 Log.Level(LOGD) << "Time  : " << (int)(time(NULL)) << EOL;
                 Log.Level(LOGD) << "NTime : " << (int)(NList + i)->Time << EOL;
                 Log.Level(LOGD) << "Age   : " <<
-                                   (int)(time(NULL) - (NList + i)->Time) << EOL;
+                                (int)(time(NULL) - (NList + i)->Time) << EOL;
                 Log.Level(LOGD) << "MaxAge: " << (int)MaxNodelistAge << EOL;
             }
         }
@@ -1033,12 +1034,12 @@ bool NodeLists::CompileNeed(void)
         if(memcmp(&Elem, NList + i, sizeof(Elem)) != 0)
         {
             Log.Level(LOGD) <<
-            "NodeLists::CompileNeed. memcmp failed. Nodelist changed." << EOL;
+                            "NodeLists::CompileNeed. memcmp failed. Nodelist changed." << EOL;
             Log.Level(LOGD) << "--Information should be:" << EOL;
             Log.Level(LOGD) << "NName : " << (NList + i)->Name << EOL;
             Log.Level(LOGD) << "NTime : " << (int)(NList + i)->Time << EOL;
             Log.Level(LOGD) << "Zone  : " <<
-                               (int)(NList + i)->StartZone << EOL;
+                            (int)(NList + i)->StartZone << EOL;
             Log.Level(LOGD) << "--Information in index file:" << EOL;
             Log.Level(LOGD) << "NName : " << Elem.Name << EOL;
             Log.Level(LOGD) << "NTime : " << Elem.Time << EOL;
@@ -1100,7 +1101,7 @@ bool NodeLists::Compile(void)
     }
 
     tmt = (char *)malloc(
-        sizeof(NdlSign) + sizeof(int) + sizeof(NodeListElem) * Lists);
+              sizeof(NdlSign) + sizeof(int) + sizeof(NodeListElem) * Lists);
     CheckMem(tmt);
     memset(tmt, '\0',
            sizeof(NdlSign) + sizeof(int) + sizeof(NodeListElem) * Lists);
@@ -1109,7 +1110,7 @@ bool NodeLists::Compile(void)
               Lists, 1, fh) != 1)
     {
         Log.Level(LOGE) <<
-        "Unable to write temporary header to index file." << EOL;
+                        "Unable to write temporary header to index file." << EOL;
         fclose(fh);
         free(tmt);
         return FALSE;
@@ -1139,7 +1140,7 @@ bool NodeLists::Compile(void)
     if(fseek(fh, 0, SEEK_SET) != 0)
     {
         Log.Level(LOGE) <<
-        "Unable to set pointer to the beginning of the index file." << EOL;
+                        "Unable to set pointer to the beginning of the index file." << EOL;
         fclose(fh);
         return FALSE;
     }
@@ -1149,7 +1150,7 @@ bool NodeLists::Compile(void)
     if(fwrite(&tmp, sizeof(tmp), 1, fh) != 1)
     {
         Log.Level(LOGE) << "Unable to write a signature to the index file." <<
-                           EOL;
+                        EOL;
         fclose(fh);
         return FALSE;
     }
@@ -1157,7 +1158,7 @@ bool NodeLists::Compile(void)
     if(fwrite(&Lists, sizeof(Lists), 1, fh) != 1)
     {
         Log.Level(LOGE) <<
-        "Unable to write a Nodelist counter to the index file." << EOL;
+                        "Unable to write a Nodelist counter to the index file." << EOL;
         fclose(fh);
         return FALSE;
     }
@@ -1169,12 +1170,12 @@ bool NodeLists::Compile(void)
             if((time(NULL) - (NList + i)->Time) > MaxNodelistAge)
             {
                 Log.Level(LOGW) << "Nodelist '" <<
-                                   (NList + i)->Name << "' too old." << EOL;
+                                (NList + i)->Name << "' too old." << EOL;
                 Log.Level(LOGI) <<
-                "Checking of existence in nodelists is turned off." << EOL;
+                                "Checking of existence in nodelists is turned off." << EOL;
                 NodelistTurnOff = TRUE;
                 Log.Level(LOGD) << "Age   : " <<
-                                   (int)(time(NULL) - (NList + i)->Time) << EOL;
+                                (int)(time(NULL) - (NList + i)->Time) << EOL;
                 Log.Level(LOGD) << "MaxAge: " << (int)MaxNodelistAge << EOL;
             }
         }
@@ -1182,7 +1183,7 @@ bool NodeLists::Compile(void)
         if(fwrite(NList + i, sizeof(NodeListElem), 1, fh) != 1)
         {
             Log.Level(LOGE) <<
-            "Unable to write a Nodelist information to the index file." << EOL;
+                            "Unable to write a Nodelist information to the index file." << EOL;
             fclose(fh);
             return FALSE;
         }
@@ -1366,7 +1367,7 @@ unsigned int NodeLists::FindHub(FA const & f)
             }
 
             if((((tmt + 1)->Number & 0xffff) == (f.Node() & 0xffff)) &&
-               (((tmt + 1)->Number & A_MASK) == A_HUB))
+                    (((tmt + 1)->Number & A_MASK) == A_HUB))
             {
                 currHub = (tmt + 1)->Number;
             }
@@ -1429,36 +1430,36 @@ unsigned int NodeLists::ExistInNodelist(FA const & f)
     {
         switch(CheckPoints)
         {
-            case CHECKPNT_HARD:
+        case CHECKPNT_HARD:
 
-                if(Srch(tmt->Sub, f.Point() & 0xffff) == NULL)
-                {
-                    return (unsigned int)-1;
-                }
+            if(Srch(tmt->Sub, f.Point() & 0xffff) == NULL)
+            {
+                return (unsigned int)-1;
+            }
 
+            break;
+
+        case CHECKPNT_SOFT:
+
+            if(tmt->Sub == NULL)
+            {
                 break;
+            }
 
-            case CHECKPNT_SOFT:
-
-                if(tmt->Sub == NULL)
-                {
-                    break;
-                }
-
-                if(tmt->Sub->Number == (unsigned int)-1)
-                {
-                    break;
-                }
-
-                if(Srch(tmt->Sub, f.Point() & 0xffff) == NULL)
-                {
-                    return (unsigned int)-1;
-                }
-
+            if(tmt->Sub->Number == (unsigned int)-1)
+            {
                 break;
+            }
 
-            case CHECKPNT_NEVER:
-                break;
+            if(Srch(tmt->Sub, f.Point() & 0xffff) == NULL)
+            {
+                return (unsigned int)-1;
+            }
+
+            break;
+
+        case CHECKPNT_NEVER:
+            break;
         } // switch
     }
 
@@ -1565,8 +1566,8 @@ bool NodeLists::InSubHubs(FA const & Addr, FA const & Mask)
 
 // Node is equal Mask?
     if((Addr.Zone() & 0xffff) == (Mask.Zone() & 0xffff) &&
-       (Addr.Net() & 0xffff) == (Mask.Net() & 0xffff) &&
-       (Addr.Node() & 0xffff) == (Mask.Node() & 0xffff))
+            (Addr.Net() & 0xffff) == (Mask.Net() & 0xffff) &&
+            (Addr.Node() & 0xffff) == (Mask.Node() & 0xffff))
     {
         if((Addr.Point() & 0xffff) != 0)
         {
@@ -1593,7 +1594,7 @@ bool NodeLists::InSubHubs(FA const & Addr, FA const & Mask)
     if(tmt == NULL)
     {
 //      Log.Level(LOGD) << "Zone " << (Mask.Zone() & 0xffff) << " missing" <<
-                           // EOL;
+        // EOL;
         return FALSE;
     }
 
@@ -1611,7 +1612,7 @@ bool NodeLists::InSubHubs(FA const & Addr, FA const & Mask)
     if(tmt == NULL)
     {
 //      Log.Level(LOGD) << "Net " << (Mask.Zone() & 0xffff) << ":" <<
-                           // (Mask.Net() & 0xffff) << " missing" << EOL;
+        // (Mask.Net() & 0xffff) << " missing" << EOL;
         return FALSE;
     }
 
@@ -1746,7 +1747,7 @@ int NodeLists::AddNodelist(char * tmt, int TempZone)
     if(stat(Buff, &NdlStat) != 0)
     {
         Log.Level(LOGE) << "Unable to get information about nodelist '" <<
-                           Buff << "'." << EOL;
+                        Buff << "'." << EOL;
         return -1;
     }
 

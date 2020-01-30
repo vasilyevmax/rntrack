@@ -44,8 +44,8 @@
 #include "outbound.hpp"
 #include "filebox.hpp"
 #include "mytypes.hpp"
-#include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+#include "msgapi.h"
+#include "progprot.h"
 #include "tpkt.hpp"
 
 #ifdef _AIX_CONV
@@ -53,7 +53,7 @@
 #endif
 
 #if defined (__sun__) || defined (__OSX__)
-  #define strftim strftime
+    #define strftim strftime
 #endif
 
 // --------------------------------------------------------------------
@@ -90,7 +90,7 @@ void LogTraffic(cMSG & m, FA & ToAddr)
         if(fh == NULL)
         {
             Log.Level(LOGE) << "Unable to open file '" << TrafficLog << "'" <<
-                               EOL;
+                            EOL;
             return;
         }
 
@@ -119,7 +119,7 @@ void LogTraffic(cMSG & m, FA & ToAddr)
         if(tpl->Set(TrafficLogTpl) != TRUE)
         {
             Log.Level(LOGE) << "Unable to open traffic log template file '" <<
-                               TrafficLogTpl << "'." << EOL;
+                            TrafficLogTpl << "'." << EOL;
             return;
         }
 
@@ -205,28 +205,28 @@ void AddOutExt(PKTMode m, char * Buff, int outmode)
     {
         switch(m)
         {
-            case F_DIRECT:
-                RSTRLCAT(Buff, ".direct", BUFF_SIZE);
-                break;
+        case F_DIRECT:
+            RSTRLCAT(Buff, ".direct", BUFF_SIZE);
+            break;
 
-            case F_CRASH:
-                RSTRLCAT(Buff, ".crash", BUFF_SIZE);
-                break;
+        case F_CRASH:
+            RSTRLCAT(Buff, ".crash", BUFF_SIZE);
+            break;
 
-            case F_HOLD:
-                RSTRLCAT(Buff, ".hold", BUFF_SIZE);
-                break;
+        case F_HOLD:
+            RSTRLCAT(Buff, ".hold", BUFF_SIZE);
+            break;
 
-            case F_NORMAL:
-                RSTRLCAT(Buff, ".normal", BUFF_SIZE);
-                break;
+        case F_NORMAL:
+            RSTRLCAT(Buff, ".normal", BUFF_SIZE);
+            break;
 
-            case F_IMMEDIATE:
-                RSTRLCAT(Buff, ".immediate", BUFF_SIZE);
-                break;
+        case F_IMMEDIATE:
+            RSTRLCAT(Buff, ".immediate", BUFF_SIZE);
+            break;
 
-            case F_ATTACH:
-                break;
+        case F_ATTACH:
+            break;
         }
 
         if(outmode == 1)
@@ -244,56 +244,56 @@ void AddOutExt(PKTMode m, char * Buff, int outmode)
         {
             switch(m)
             {
-                case F_DIRECT:
-                    RSTRLCAT(Buff, ".dut", BUFF_SIZE);
-                    break;
+            case F_DIRECT:
+                RSTRLCAT(Buff, ".dut", BUFF_SIZE);
+                break;
 
-                case F_CRASH:
-                    RSTRLCAT(Buff, ".cut", BUFF_SIZE);
-                    break;
+            case F_CRASH:
+                RSTRLCAT(Buff, ".cut", BUFF_SIZE);
+                break;
 
-                case F_HOLD:
-                    RSTRLCAT(Buff, ".hut", BUFF_SIZE);
-                    break;
+            case F_HOLD:
+                RSTRLCAT(Buff, ".hut", BUFF_SIZE);
+                break;
 
-                case F_NORMAL:
-                    RSTRLCAT(Buff, ".out", BUFF_SIZE);
-                    break;
+            case F_NORMAL:
+                RSTRLCAT(Buff, ".out", BUFF_SIZE);
+                break;
 
-                case F_IMMEDIATE:
-                    RSTRLCAT(Buff, ".iut", BUFF_SIZE);
-                    break;
+            case F_IMMEDIATE:
+                RSTRLCAT(Buff, ".iut", BUFF_SIZE);
+                break;
 
-                case F_ATTACH:
-                    break;
+            case F_ATTACH:
+                break;
             }
         }
         else
         {
             switch(m)
             {
-                case F_DIRECT:
-                    RSTRLCAT(Buff, ".dlo", BUFF_SIZE);
-                    break;
+            case F_DIRECT:
+                RSTRLCAT(Buff, ".dlo", BUFF_SIZE);
+                break;
 
-                case F_CRASH:
-                    RSTRLCAT(Buff, ".clo", BUFF_SIZE);
-                    break;
+            case F_CRASH:
+                RSTRLCAT(Buff, ".clo", BUFF_SIZE);
+                break;
 
-                case F_HOLD:
-                    RSTRLCAT(Buff, ".hlo", BUFF_SIZE);
-                    break;
+            case F_HOLD:
+                RSTRLCAT(Buff, ".hlo", BUFF_SIZE);
+                break;
 
-                case F_NORMAL:
-                    RSTRLCAT(Buff, ".flo", BUFF_SIZE);
-                    break;
+            case F_NORMAL:
+                RSTRLCAT(Buff, ".flo", BUFF_SIZE);
+                break;
 
-                case F_IMMEDIATE:
-                    RSTRLCAT(Buff, ".ilo", BUFF_SIZE);
-                    break;
+            case F_IMMEDIATE:
+                RSTRLCAT(Buff, ".ilo", BUFF_SIZE);
+                break;
 
-                case F_ATTACH:
-                    break;
+            case F_ATTACH:
+                break;
             }
         }
     }
@@ -349,7 +349,7 @@ int AddToLo(char * Txt)
     LoFile = (char *)realloc(LoFile, size);
     CheckMem(LoFile);
     RSTRLCPY(LoFile + ind, Txt, size);
-    ind += strlen(Txt);
+    ind += (int)strlen(Txt);
     LoFile[ind++] = '\0';
     LoFile[ind]   = '\0';
     return TRUE;
@@ -837,13 +837,13 @@ PKTrc PKT::AddMsg(cMSG & m, PKTMode mod, int Dest)
 
         switch(rc)
         {
-            case PKTOK:
-            case NEWPKT:
-                break;
+        case PKTOK:
+        case NEWPKT:
+            break;
 
-            default:
-                Clean();
-                return rc;
+        default:
+            Clean();
+            return rc;
         }
         NewPkt = TRUE;
         Mode   = mod;
@@ -862,16 +862,16 @@ PKTrc PKT::AddMsg(cMSG & m, PKTMode mod, int Dest)
 
         switch(rc)
         {
-            case PKTOK:
-                break;
+        case PKTOK:
+            break;
 
-            case NEWPKT:
-                NewPkt = TRUE;
-                break;
+        case NEWPKT:
+            NewPkt = TRUE;
+            break;
 
-            default:
-                Clean();
-                return rc;
+        default:
+            Clean();
+            return rc;
         }
     }
     else
@@ -885,18 +885,18 @@ PKTrc PKT::AddMsg(cMSG & m, PKTMode mod, int Dest)
 
         switch(rc)
         {
-            case PKTOK:
-                break;
+        case PKTOK:
+            break;
 
-            case NEWPKT:
-                NewPkt = TRUE;
-                Log.Level(LOGI) << Buff;
-                Log.Level(LOGI) << " has been created" << EOL;
-                break;
+        case NEWPKT:
+            NewPkt = TRUE;
+            Log.Level(LOGI) << Buff;
+            Log.Level(LOGI) << " has been created" << EOL;
+            break;
 
-            default:
-                Clean();
-                return rc;
+        default:
+            Clean();
+            return rc;
         }
     }
 
@@ -1101,7 +1101,7 @@ PKTrc PKT::Poll(PKTMode mod)
     {
         Clean();
         Log.Level(LOGD) << "PKT.Poll: Unbale to create/open '" << TmtName <<
-                           "', Errno: " << i << EOL;
+                        "', Errno: " << i << EOL;
         return PKTERROR;
     }
 
@@ -1156,7 +1156,7 @@ int UnpackOneMsg(char * & tmt)
     if(!TempMail->WriteNewMsg(m))
     {
         Log.Level(LOGE) << "   Unable to write message to base " <<
-                           TempMail->BaseName() << EOL;
+                        TempMail->BaseName() << EOL;
         return FALSE;
     }
 
@@ -1214,7 +1214,7 @@ int DoRepackFile(char * Name)
     if((PktSize = ftell(fh)) == 0)
     {
         Log.Level(LOGW) << "Packet " << Name << " have null size. Skipped." <<
-                           EOL;
+                        EOL;
         fclose(fh);
         return TRUE;
     }
@@ -1269,7 +1269,7 @@ static int _FileInAPKT(char * FName)
     char * tmt;
 
     Log.Level(LOGD) << "_FileInAPKT: Check '" << FName << "' in APKT dir?" <<
-                       EOL;
+                    EOL;
     RSTRLCPY(Buff, FName, BUFF_SIZE);
     tmt = strrchr(Buff, PATHDELIMC);
 
@@ -1402,7 +1402,7 @@ int DoRepackBundle(char * Name)
     if(fh == NULL)
     {
         Log.Level(LOGW) << "Unable to create temp file '" << Name << "'" <<
-                           EOL;
+                        EOL;
         return TRUE;
     }
 
@@ -1598,7 +1598,7 @@ int DoRepack(void)
 
     Log.Level(LOGD) << "--==( DoRepack )==--" << EOL;
     Log.Level(LOGD) << "DoRepack started. Outbound directory: '" <<
-                       Outbound << "'." << EOL;
+                    Outbound << "'." << EOL;
     TempMail->Rewind();
     RSTRLCPY(Buff, Outbound, BUFF_SIZE);
 
@@ -1621,7 +1621,7 @@ int DoRepack(void)
         Log.Level(LOGD) << "DoRepack: Outbound is not a directory???" << EOL;
         Log.Level(LOGD) << "          rc == " << rc << EOL;
         Log.Level(LOGD) << "          statb.st_mode == " << statb.st_mode <<
-                           EOL;
+                        EOL;
     }
 
     dd = opendir(dirslashbug(fdir));
@@ -1629,7 +1629,7 @@ int DoRepack(void)
     if(dd == NULL)
     {
         Log.Level(LOGD) << "DoRepack: Unable to open '" << fdir <<
-                           "', exit." << EOL;
+                        "', exit." << EOL;
         Log.Level(LOGD) << "--==( End DoRepack )==--" << EOL;
         return TRUE;
     }

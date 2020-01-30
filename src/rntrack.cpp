@@ -13,6 +13,7 @@
  *  $Id$
  */
 
+#include "compiler.h"
 #include "constant.hpp"
 #include "vars.hpp"
 #include "help.hpp"
@@ -28,7 +29,7 @@
 #include "parsetpl.hpp"
 #include "tmstamp.hpp"
 #include "script.hpp"
-#include "smapi/msgapi.h"
+#include "msgapi.h"
 
 #ifdef HAVE_CONFIG_H
     #include "aconfig.h"
@@ -117,22 +118,22 @@ int InitSystem(void)
     signal(SIGILL, &AbrtHndl);
 #endif
 
-/*  if(sizeof(int) != 4 || sizeof(long) != 4)
-    {
-        fprintf(stderr,
-        "RNtrack was compiled for a wrong platform.\nPlease, inform the packager.\n"                                                                    );
-    
-        if(sizeof(long) == 8 && sizeof(void *) == 8 && sizeof(int) == 4)
+    /*  if(sizeof(int) != 4 || sizeof(long) != 4)
         {
             fprintf(stderr,
-                "Continue at your own risk! This software is not 64-bit ready yet!\n"                                                                    );
-        }
-        else
-        {
-            return FALSE;
-        }
-    } */
-    
+            "RNtrack was compiled for a wrong platform.\nPlease, inform the packager.\n"                                                                    );
+
+            if(sizeof(long) == 8 && sizeof(void *) == 8 && sizeof(int) == 4)
+            {
+                fprintf(stderr,
+                    "Continue at your own risk! This software is not 64-bit ready yet!\n"                                                                    );
+            }
+            else
+            {
+                return FALSE;
+            }
+        } */
+
     CHP = 99101;
     tzset();
     CHP = 99102;
@@ -154,6 +155,67 @@ int InitSystem(void)
     {
         ConfigFile = strdup(DefaultConfig);
     }
+
+#if defined(__unix__)
+    if(*ConfigFile == '~' && *(ConfigFile + 1) == '/')
+    {
+        char buffer[4096];
+        ConfigFile++;
+        char * home = getenv("HOME");
+        if(home == NULL)
+        {
+            Log.Level(LOGE) << "Cannot get $HOME value. Specify configuration path on command line" << EOL;
+            return FALSE;
+        }
+        int res = snprintf(buffer, sizeof(buffer), "%s%s", home, ConfigFile);
+        if(res < 0 || (unsigned)res >= sizeof(buffer))
+        {
+            Log.Level(LOGE) << "Configuration file path is too long" << EOL;
+            return FALSE;
+        }
+        free(--ConfigFile);
+        ConfigFile = strdup(buffer);
+    }
+#elif defined(__WIN32__)
+    if(*ConfigFile == '%')
+    {
+        char buffer[4096];
+        char *varname;
+        ConfigFile++;
+        char * secondPercent = strrchr(ConfigFile, '%');
+        if(secondPercent == NULL || secondPercent == ConfigFile )
+        {
+            Log.Level(LOGE) << "Cannot get environment variable name." << EOL
+                            << "Specify configuration path on command line" << EOL;
+            return FALSE;
+        }
+        size_t varlen = (size_t)(secondPercent - ConfigFile);
+        varname = (char *)malloc(varlen + 1);
+        if(varname == NULL)
+        {
+            Log.Level(LOGE) << "No memory" << EOL;
+            return FALSE;
+        }
+        varname = strncpy(varname, ConfigFile, varlen);
+        varname[varlen] = '\0';
+        char * envvar = getenv(varname);
+        if(envvar == NULL)
+        {
+            Log.Level(LOGE) << "Cannot get environment variable value." << EOL
+                            << "Specify configuration path on command line" << EOL;
+            return FALSE;
+        }
+        int res = snprintf(buffer, sizeof(buffer), "%s%s", envvar, ++secondPercent);
+        if(res < 0 || (unsigned)res >= sizeof(buffer))
+        {
+            Log.Level(LOGE) << "Configuration file path is too long" << EOL;
+            return FALSE;
+        }
+        free(--ConfigFile);
+        free(varname);
+        ConfigFile = strdup(buffer);
+    }
+#endif
 
     CHP = 99105;
 
@@ -196,11 +258,11 @@ int InitSystem(void)
     char * tmp = (char *)"BeforeWork";
     switch(DoSomeWordRc(tmp))
     {
-        case SS_ERROR:
-            return FALSE;
+    case SS_ERROR:
+        return FALSE;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     {
@@ -239,7 +301,7 @@ void DoneSystem(void)
         {
             CHP = 99203;
             Log.Level(LOGE) <<
-            "Error at deinitialisation scripts subsystem." << EOL;
+                            "Error at deinitialisation scripts subsystem." << EOL;
         }
     }
 
@@ -261,7 +323,7 @@ void DoneSystem(void)
             CHP = 99207;
             i   = errno;
             Log.Level(LOGE) << "Unable to set modification time for file '" <<
-                               TimeStampFile << "'. Errno: " << i << EOL;
+                            TimeStampFile << "'. Errno: " << i << EOL;
             CHP = 99208;
         }
 
@@ -300,30 +362,30 @@ int main(int argc, char * argv[])
     {
         switch(Option)
         {
-            case 'u':
-                UnpackNeed = TRUE;
-                break;
+        case 'u':
+            UnpackNeed = TRUE;
+            break;
 
-            case 'c': /* Kill all mail */
-                ConfigFile = strdup(optionArg);
-                break;
+        case 'c': /* Kill all mail */
+            ConfigFile = strdup(optionArg);
+            break;
 
-            case 't':
-                DoScan = TRUE;
-                break;
+        case 't':
+            DoScan = TRUE;
+            break;
 
-            case '?':
-                Help();
-                exit(1);
+        case '?':
+            Help();
+            exit(1);
 
-            case 'h':
-                Hello();
-                Help();
-                exit(0);
+        case 'h':
+            Hello();
+            Help();
+            exit(0);
 
-            case 'v':
-                Hello();
-                exit(0);
+        case 'v':
+            Hello();
+            exit(0);
         } /* switch */
     } /* while */
 
