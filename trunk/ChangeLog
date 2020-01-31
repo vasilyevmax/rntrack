@@ -4,6 +4,10 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.0.3 2020-01-31 (Subversion rev.260)
+------------------------------------
+# add RNtrack configuration files from 2:5020/1042
+
 2.0.2 2020-01-30 (Subversion rev.257)
 ------------------------------------
 # upgrade smapi library from v.2.4.1 to v.2.5.1
