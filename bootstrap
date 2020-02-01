@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# Run all automake & autoconf tools to prepare configure
-
-aclocal -I MakeFiles && autoheader && \
-automake -a && autoconf
