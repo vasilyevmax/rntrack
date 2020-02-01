@@ -1,6 +1,6 @@
-SMAPI; Modified Squish MSGAPI - version 2.4
+SMAPI; Modified Squish MSGAPI - version 2.5
 
-This version of the SMAPI library is part of the HUSKY fidosoft project.
+This version of the SMAPI library has been taken from the HUSKY fidosoft project.
 
 
 Squish MSGAPI0 is copyright 1991 by Scott J. Dudley. The terms of use are
@@ -31,7 +31,6 @@ The following makefiles can be used to compile this release of SMAPI:
 
 Makefile       Target library   Compiler
 ------------   --------------   -------------------------------------------
-Makefile       libsmapi.*       Any (huskymak.cfg required)
 makefile.bcd   smapibcd.lib     Borland C++ 3.1 for DOS
 makefile.bco   smapibco.lib     Borland C++ 1.0 for OS/2
 makefile.bcw   smapibco.lib     Borland C++ 4.0 for Windows
@@ -64,7 +63,7 @@ makefile.wco   smapiwco.lib     WATCOM C/C++ 10.x for 32-bit OS/2
 makefile.wcw   smapiwcw.lib     WATCOM C/C++ 10.x for 32-bit Windows NT
 makefile.wcx   smapiwcx.lib     WATCOM C/C++ 10.x for 32-bit DOS
 
-Use GNU version of make (gmake on many platforms) if don't specified other.
+Use GNU version of make (gmake on many platforms) if other version is not specified.
 
 Note that the Linux and FreeBSD makefiles must be in UNIX text file
 format (linefeeds only; no carriage returns), in addition to COMPILER.H
