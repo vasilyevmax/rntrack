@@ -17,7 +17,7 @@
 # update Russian manual
 # make a new translation of the amended manual from Russian into English
 # add manual in the form of man-pages and plain text in English
-# change default path of configuration file: "~/fido/etc/rntrack.cfg" under
+# change default path of configuration file: "~/fido/etc/rntrack.conf" under
   a UNIX-like OS, "%USERPROFILE%\fido\rntrack.cfg" under Windows or 
   "rntrack.cfg" under other OS
 # change the log date format to ISO 8601
