@@ -1,7 +1,7 @@
 /* $Id$
  *  DJGPP version of GNU C on DOS compiler-specific declarations
  *
- * See also http://www.gnu.org, license may be found here.
+ * See also https://www.gnu.org, license may be found here.
  */
 
 /* DJGPP for MS-DOS (DPMI, GNU C) */

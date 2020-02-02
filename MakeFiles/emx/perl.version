@@ -12,7 +12,7 @@ GNU General Public License, which may be found in the Perl 5.0 source kit.
 
 Complete documentation for Perl, including FAQ lists, should be found on
 this system using `man perl' or `perldoc perl'.  If you have access to the
-Internet, point your browser at http://www.perl.com/, the Perl Home Page.
+Internet, point your browser at https://www.perl.com/, the Perl Home Page.
 
 Summary of my perl5 (5.0 patchlevel 5 subversion 53) configuration:
   Platform:

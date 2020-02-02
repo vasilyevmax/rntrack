@@ -6,7 +6,7 @@
  * License along with this library; see file COPYING. If not, write to the
  * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * See also http://www.gnu.org, license may be found here.
+ * See also https://www.gnu.org, license may be found here.
  */
 
 #include <stdio.h>

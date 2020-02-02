@@ -78,7 +78,7 @@ SUPPORT
 
 SMAPI is no longer supported by Andrew Clarke.
 Post your support requests into FIDOSOFT.HUSKY or RU.HUSKY (russian) FIDOnet
-echoes or support/bugtrack area on http://sourceforge.net/projects/husky
+echoes or support/bugtrack area on https://github.com/huskyproject/smapi/issues
 
 PORTING
 
@@ -90,7 +90,7 @@ above channels.
 OBTAINING SMAPI
 
 Latest version of the Husky Smapi available at the Husky homepage:
-http://husky.sourceforge.net.
+https://github.com/huskyproject/smapi
 
 The latest release of original SMAPI is available for file request (FREQ) from
 FidoNet node 3:635/728.  It can also be downloaded from Internet site
