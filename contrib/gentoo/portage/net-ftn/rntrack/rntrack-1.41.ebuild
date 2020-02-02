@@ -4,33 +4,30 @@
 
 EAPI="4"
 
-inherit eutils subversion
+inherit eutils autotools versionator
 
-DESCRIPTION="An FTN Messages tracker"
+DESCRIPTION="A FTN Messages tracker"
+SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(replace_version_separator ${V} . _)-src.tar.bz2"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
-ESVN_REPO_URI="http://svn.code.sf.net/p/ftrack-as/code/trunk"
 
 SLOT="0"
 LICENSE="GPL"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 x86"
 IUSE="-perl -perl_fix -log_pid -syslog_log_format"
 
-DEPEND="sys-devel/automake
-	perl? ( dev-lang/perl )"
+DEPEND="perl? ( dev-lang/perl )"
 RDEPEND="${DEPEND}"
-S=${WORKDIR}/${PN}
 
 AT_M4DIR="MakeFiles"
 
-src_unpack() {
-	subversion_src_unpack
-}
-
 src_prepare() {
+
+	eautoreconf || die "eautoreconf failed"
+
 	# apply patch for perl support if need
 	use perl_fix || einfo "Please specify perl_fix flag if your build with perl support is unsuccessfull"
-	use perl_fix && (epatch ${FILESDIR}/perl2.patch.gz || die "epatch failed")
-	
+	use perl_fix && (epatch ${FILESDIR}/perl.patch.gz || die "epatch failed")
+
 	# prevent to strip while linking
 	sed -e "s:-s -L:-L:" -i MakeFiles/linux/Makefile
 }
