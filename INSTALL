@@ -26,7 +26,7 @@ make
 Make options:
 
 CONFIG="/path/to/cfg"      - Default config path. If not defined,
-                             "~/fido/etc/rntrack.cfg" under UNIX-like OS,
+                             "~/fido/etc/rntrack.conf" under UNIX-like OS,
                              "%USERPROFILE%\fido\rntrack.cfg" under Windows
                              or "rntrack.cfg" under other OS will be used.
 ENABLE_SCRIPTS=1           - Enable Perl scripts support 
