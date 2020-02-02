@@ -3,9 +3,9 @@
 # Common makefiles part (include-file)
 
 VERMAJOR= 2
-VERMINOR= 4
-VERH =  2.4
-VER  =  2.4.0
+VERMINOR= 5
+VERH =  2.5
+VER  =  2.5.2
 SRCDIR = src
 HDIR   = h
 
