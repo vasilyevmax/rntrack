@@ -41,7 +41,8 @@ RMFLAGS=-f
 
 .include "makefile.inc"
 
-.c.o:
+#.c.o:
+%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
 all: $(TARGET) $(PROGRAMS)
