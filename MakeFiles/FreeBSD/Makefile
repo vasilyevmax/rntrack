@@ -8,8 +8,8 @@ CDEFS	= -DUNIX -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_CTYPE_H -DH
           -DHAVE_SYS_TIME_H -DHAVE_LOCALE_H -DHAVE_UTIME_H -DHAVE_SIGNAL_H -DHAVE_LIMITS_H \
           -DHAVE_SYS_NLS_H
 
-LFLAGS	= -s -L$(SMAPIDIR) -lsmapibsd
-SRCDIR	= ../../src/
+LFLAGS	= -s -L$(SMAPIDIR)/src -lsmapibsd
+SRCDIR	= ../../src
 
 # to enable: run `make ENABLE_SCRIPTS=1` & etc.
 ENABLE_SCRIPTS?=0
@@ -71,26 +71,26 @@ OBJS= \
 	wildmat.o
 
 .PATH.cpp: $(SRCDIR)
+.PATH.c: $(SRCDIR)
 
 .cpp.o:
 	${CC} ${CFLAGS} ${CDEFS} -c $<
 
-%.o: $(SRCDIR)%.cpp
+.c.o:
 	${CC} ${CFLAGS} ${CDEFS} -c $<
 
 #${SRCDIR}cfg.cpp: ${SRCDIR}cfg.y
 #	bison -l -d $< -o ${SRCDIR}cfg.cpp
 
-# Thunderbirds are go!
 smapi:
-	cd  $(SMAPIDIR) && make -f makefile.bsd
+	cd  $(SMAPIDIR)/src && make -f ../makefile.bsd
 
 rntrack: smapi ${OBJS}
 	${CC} -o rntrack ${OBJS} ${LFLAGS}
 
 clean:
-	-rm -f $(SMAPIDIR)/*.o 
-	-rm -f $(SMAPIDIR)/*.a
+	-rm -f $(SMAPIDIR)/src/*.o 
+	-rm -f $(SMAPIDIR)/src/*.a
 	-rm -f *.o
 	-rm -f *~
 	-rm -f core
