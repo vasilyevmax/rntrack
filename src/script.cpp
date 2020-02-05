@@ -831,7 +831,7 @@ void MakeHash(const char * KName, char * KBody)
         *p1 = '\0';
     }
 
-    sprintf(buff, "push(@{$"KLUVARNAME "{'%s'}},'%s');",
+    sprintf(buff, "push(@{$" KLUVARNAME "{'%s'}},'%s');",
             (KName != NULL) ? KName : "undef",
             (tmt != NULL) ? tmt : "undef");
     Log.Level(LOGD) << buff << EOL;

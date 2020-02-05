@@ -8,7 +8,7 @@
 
 prefix=	/usr/local
 CC=	cc
-CFLAGS=	-Wall -I../h
+CFLAGS=	-Wall -I$(HDIR)
 CDEFS=	-DUNIX
 COPT=	-O3
 NAMEOPT=-o
@@ -41,6 +41,7 @@ RMFLAGS=-f
 
 .include "makefile.inc"
 
+.PATH.c: $(SRCDIR)
 .c.o:
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
