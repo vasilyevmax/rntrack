@@ -17,6 +17,14 @@ where REV is the revision number you want to obtain. If you want to get
 a specific RNtrack version number, you may find the correponding revision
 number in ChangeLog.
 
+If a tag of the form version-X.XX.XXX is mentioned in ChangeLog, you may
+obtain the tagged version using the command
+
+svn checkout https://svn.code.sf.net/p/ftrack-as/code/tags/version-X.XX.XXX rntrack
+
+where you should replace X.XX.XXX with digits that give you the specific version.
+After that you may start the build:
+
 tar jxf rntrack-version-src.tar.bz2
 # or `cd rntrack` if you made a checkout
 cd MakeFiles/YourSystem
