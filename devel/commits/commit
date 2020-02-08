@@ -1,0 +1,5 @@
+#!/bin/sh
+./pre-commit.pl
+[ $? -ne 0 ] && exit
+svn commit -F ./commit.msg hpp/constant.hpp MakeFiles/linux/rntrack.spec --targets ./commit.lst
+svn up

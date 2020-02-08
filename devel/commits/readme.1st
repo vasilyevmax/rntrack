@@ -1,0 +1,33 @@
+This directory is for developers who are allowed
+to make commits to repository at sourceforge.net.
+
+Since this project has string fields in two files that should be changed
+before each commit and there is a specific reason not to use a pre-commit
+hook, we should use a special commit script in our working copy.
+
+Files in the directory are
+commit          - the script making commit to the repository
+                  after running all necessary actions;
+commit.lst      - an example of a file list to commit (excluding the two
+                  inescapable files)
+commit.msg      - an example of a commit message
+makelst.pl      - script forming 'commit.lst' file
+pre-commit.pl   - script called from 'commit' script to make preliminary
+                  actions
+readme.1st      - this file
+
+How to make a commit using these files
+--------------------------------------
+
+Copy all the files except readme.1st to 'trunk' directory. All the following
+actions are in the 'trunk' directory. Write your commit message to commit.lst
+instead of the example. Please pay attention not to end the message with a
+line feed. After that write a list of the files to commit to commit.lst, one
+file in a line, instead of the example. If you are going to commit all
+modified files, run makelst.pl to fill commit.lst.
+
+Before making your commit run `svn up`. If as a result you obtain some files
+from the repository, resolve any conflicts, test the changes, run `svn up`
+again and if you obtain no new files from the repository, run `commit`. If
+you get from it any error messages, solve the problem, run `svn up` and
+`commit` again.
