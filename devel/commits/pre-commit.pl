@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-sub error()
+sub error
 {
     my $line = shift;
     print STDERR "$line\n";
