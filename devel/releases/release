@@ -1,0 +1,8 @@
+#!/bin/sh
+./pre-release.pl
+[ $? -ne 0 ] && exit
+svn commit -F ./release.msg --targets ./release.lst
+svn up
+tag=$(cat ./tag.txt)
+rev=$(cat ./rev.txt)
+svn copy -r $rev svn+ssh://dukelsky@svn.code.sf.net/p/ftrack-as/code/trunk svn+ssh://dukelsky@svn.code.sf.net/p/ftrack-as/code/tags/$tag -m "tagging $tag"

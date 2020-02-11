@@ -1,0 +1,10 @@
+How to make a RNtrack release
+
+1. Run `svn up` and `svn st -q`
+2. Copy everything except readme.1st and ChangeLog from
+   trunk/devel/releases/ to the root directory of the
+   working copy.
+3. Copy ChangeLog from trunk/devel/releases/ to trunk/
+4. Insert new ChangeLog entries under the template line in trunk/ChangeLog
+   There should be one blank line after the entries.
+5. Run `release` from the root directory of the working copy.

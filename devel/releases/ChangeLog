@@ -1,0 +1,335 @@
+     RNTrack's changes log
+     $Id: ChangeLog 260 2020-01-31 13:57:54Z dukelsky $
+
+! - Bug fixed
+# - Added feature or changes
+
+X.XX.XXX XXXX-XX-XX (Subversion rev.XXXX, tag "version-X.XX.XXX")
+------------------------------------------------------------
+
+2.0.3 2020-01-31 (Subversion rev.260, tag "version-2.0.3")
+----------------------------------------------------------
+# add RNtrack configuration files from 2:5020/1042
+
+2.0.2 2020-01-30 (Subversion rev.257)
+------------------------------------
+# upgrade smapi library from v.2.4.1 to v.2.5.1
+! fix Visual Studio 6 build
+# add Windows x64 build
+# add Visual Studio 2019 solution
+# update Russian manual
+# make a new translation of the amended manual from Russian into English
+# add manual in the form of man-pages and plain text in English
+# change default path of configuration file: "~/fido/etc/rntrack.conf" under
+  a UNIX-like OS, "%USERPROFILE%\fido\rntrack.cfg" under Windows or
+  "rntrack.cfg" under another OS
+# change the log date format to ISO 8601
+
+1.41 2019-09-29 (Subversion rev.191)
+-----------------------------------
+# add a log message at LogLevel=2 with full path of the created pkt.
+
+1.40 2019-09-29 (Subversion rev.190)
+-----------------------------------
+! test simple boolean value before testing a function value.
+! fix compatibility with new portage version, add 1.39 version for gentoo.
+
+1.39 2019-06-14 (Subversion rev.188)
+-----------------------------------
+# change fonts in Manual_ru.odt.
+! fix small issues in README, INSTALL and BUG-REPORTING.
+! Create solution for a build using MS Visual C++ 2010
+  and fix sources for that.
+
+1.38 2019-06-08 (Subversion rev.184)
+-----------------------------------
+! Fix variable initialization.
+! Fix defined and/or set but unused variables.
+! Fix conversion from string constant to ‘char *’.
+! Fix similar issue breaking strict-aliasing rules in sqbase.cpp.
+! Fix dereferencing type-punned pointer breaking strict-aliasing rules in api_sdm.c.
+
+1.37 2019-06-07 (Subversion rev.179)
+-----------------------------------
+! Fix build under FreeBSD 12.0. Patch by andrew clarke 3:633/267.
+! Fix build under linux (Ubuntu server 18.04 LTS). Patch by mark lewis 1:3634/12.
+
+1.36 2018-08-25 (Subversion rev.174)
+-----------------------------------
+! Fix a bug in not deleting a flag after ScanDir of an empty base.
+  Bug report by Alex Barinov 2:5020/715
+
+1.35 2018-08-25 (Subversion rev.172)
+-----------------------------------
+! Fix a bug in setting message attributes.
+  Bug report by Alex Barinov 2:5020/715
+
+1.34 2018-08-25 (Subversion rev.171)
+-----------------------------------
+! Gentoo linux: fix repository path in layman config
+! Share presence check. Patch by Max Vasilyev 2:5057/77
+# Add man page to linux makefile
+# Add rntrack.spec for .rpm build
+! Remove recursion in a makefile variable definition.
+  Thanks to Benny Pedersen 2:230/38
+! Change deprecated AM_PROG_INSTALL macro for AC_PROG_INSTALL one
+! Fix erroneously overwriting timesRead msg field with a point number
+
+1.33 2013-01-08 (Subversion rev.161)
+-----------------------------------
+! DJGPP makefile fixed. Patch by Max Vasilyev 2:5057/77
+! Mingw32 makefile was fixed for the case with no scripts support
+# Gentoo linux ebuild
+! An incorrect log message for Action: AddNote was fixed
+
+1.32 2011-04-26 (Subversion rev.156)
+-----------------------------------
+# Some editorial changes in the manual
+! A syntax error was fixed in the manual text
+! A bug in comparing a text to a mask was fixed
+
+1.31 2011-04-08 (Subversion rev.149)
+-----------------------------------
+! OS/2 build using gcc 3.3.5 without script support was fixed.
+  Patch by Max Vasilyev 2:5057/77.
+# Added patch for building with perl and USE-flag perl_fix for it
+
+1.30 2011-04-05 (Subversion rev.147)
+-----------------------------------
+! Fix the previous commit
+
+1.29 2011-04-04 (Subversion rev.146)
+-----------------------------------
+# (char *) was replaced by (const char *) where it was necessary and possible
+
+1.28 2011-04-03 (Subversion rev.144)
+-----------------------------------
+! Compilation with __PERL_VERSION__ >= 5010000 was fixed.
+# External dependency file is not used any more with a MSVC 6 makefile.
+! Try to make rntrack with perl in mingw
+! An unappropriate compiler option was deleted (linux).
+
+1.27 2011-03-18 (Subversion rev.129)
+-----------------------------------
+! Compiling with gcc 4.1 and Perl 5.8.8 was fixed.
+! Building with script support using GNU make 3.81 was fixed.
+! Reporting an error message in prepare6.js was fixed.
+# One has to run prepare6.js now to create MS Visual Studio 6.0 project
+  files, makefiles and also batch files.
+! A logic of the match to pattern fixed
+# Russian manual is now in OpenDocument format instead of the plain
+  text. ODF will be converted into HTML and PDF for releases.
+! SPLIT kludge is fixed ("^aSPLIT text" -> "^aSPLIT: text")
+# Gentoo ebuild added.
+! Perl deinitialisation fixed, rntrack/w32/perl don't crashed at exit.
+# Don't show version and copyright information in normal work. Use
+  command line options -v or -h for viewing this info.
+# New command line option '-v' (view program version).
+
+1.26 2011-02-08 (Subversion rev.95)
+-----------------------------------
+# New log level 3 "Notice" for messages without action ("Scanning...",
+  "Skip...", "Ignore...", "...not used" & etc.)
+# Update manual (described nuances works with the attached files)
+! Fix build on unix-like OS using GNU C 4.x
+
+1.25 2011-02-04 (Subversion rev.87)
+-----------------------------------
+# A possibility to build RNTrack/W32 with embedded Perl (using MS
+  Visual Studio 6).
+! Fix manual: "AgeFromVia" not implemented but described.
+
+1.24 2011-02-02 (Subversion rev.80)
+-----------------------------------
+# Add info about Perl in program banner and log messages (if RNTrack
+  compiled with embedded Perl).
+! Fix build with embedded Perl up to Perl version 5.12.2.
+! Fix build in FreeBSD.
+! Fix build in Cygwin (mingw).
+# Cygwin build instruction created.
+
+1.22 2010-01-29 (Subversion rev.63)
+-----------------------------------
+# A possibility to build RNTrack using MS Visual Studio 6.
+
+1.20 2010-01-28 (Subversion rev.61)
+-----------------------------------
+! Handling optional comma after boss node in a pointlist (FTS-5002).
+
+1.17 2009-11-02 (Subversion rev.59)
+-----------------------------------
+# The date of commit does not follow the program version number in
+  printed strings any more, since the version number changes at each 
+  commit now.
+
+1.16 2009-10-23
+---------------
+# The program version number from configure.ac is not used any more,
+  that is why it is now not necessary to change configure.ac and
+  configure at every change of RNtrack version.
+
+1.15 2009-10-16
+---------------
+# English usage in strings that RNtrack logs is fixed.
+
+1.14 2009-10-09
+---------------
+! The flag of presence of a certain message in MSG base was not set after
+  writing the message down to the base.
+! The flag of presence of a certain message in MSG base was cleared after
+  deleting the message file without check whether the deletion succeeded.
+# If an invalid nodelist is found all nodelist handling functions are
+  switched off and RNtrack continues running.
+
+1.13 XX-XX-XX
+-------------
+! Fix originate address recognition for messages with dublicated origin lines.
+# Migrated to SVN repository. CVS no longer supported.
+! Fix build with gcc 4.1.0
+! Fix build with ENABLE_SCRIPTS=1 when Perl 5.8+ installed
+
+1.12 22-10-05
+-------------
+
+! Fix build with mingw32
+! Fix Solaris/x86 byte order (thanks to Alex V. Bagmanov)
+# Added Immediate outbound flavour
+# New keyword "Domain"
+# Added The Brake! fileboxes and outbound support
+# Added personal fileboxes support
+# String processing code was replaced (taken from OpenBSD source).
+! CVS version string format replaced to: RNtrack X.Y.YYYYMMDD/OS.
+# Added 'rntrack-stable' cvs branch. This source tree will contain only bugfixes
+  and tested features from current source.
+# New action: AddKludge
+# Add new mask flag "+M/-M" (check message size). Removed automatical
+  message size check when MaxMsgSize set.
+# Rewritten Watcom makefiles. Now you don't need build smapi manually. Now you can use
+  ENABLE_LOG_PID, ENABLE_SYSLOG_LOG_FORMAT and CONFIG make options.
+! Temporary disabled @MsgLoops, @MaxAge and @MaxAttachSize macroses.
+# Test build for Linux/x86_64
+
+1.11 30-01-05 (aka as11)
+------------------------
+
+# RNtrack: fork from FTrack 3.1.1-as 2005/01/12 03:00.
+! Fix FreeBSD port (thanks to Andrey Slusar, 2:467/126)
+! Fix compilation with gcc 3.4
+# Added Slackware linux package build script (MakeFiles/linux/slackware)
+# New variable: MaxPktSize.
+! gcc 3.4 and FreeBSD port fixes (thanks to Andrey Slusar, 2:467/126)
+# New perl API function: NewMsg() which creates message and put it to base.
+# For security reasons default value of BadPackets changed to 'Skip'.
+! Upgrade to cvs smapi-2_4-stable.
+! Fix JAM-base (thanks to Michael Kostylev, 2:5030/1530)
+! Fix OADDRESS subfield in JAM-base (thanks to Michael Kostylev, 2:5030/1530)
+# Now we have own FTSC product code: 16FF
+# New variable: MaxMsgSize
+
+Previous changes
+----------------
+
+3.1.1-as10 27-09-04 ! Fix RouteFilebox error. FTrack reported "can't route attached files" if
+                      message didn't contain attach.
+            ! Fix CONFIG variable in djgpp and mingw32 makefiles
+            # Now builds on Solaris 9 (SPARC)
+                    # Now builds on MacOS X 
+            # bsd makefiles rewritten for bsd make
+            ! Fix byte order on Solaris/SPARC and MacOS X (thanks to Serguei Revtov,
+              2:5021/19.1)
+            # Tested build on NetBSD
+            # FreeBSD port added
+            # Manpage added
+
+3.1.1-as9 09-05-04 ! Fix broken ENABLE_SYSLOG_LOG_FORMAT
+           # Now all documentation placed in one directory. Some filename changes:
+
+             doc/eng/readme     -> doc/README
+             doc/eng/ftrack.faq -> doc/FAQ
+             doc/eng/report.err -> doc/report.err
+             
+             doc/rus/readme     -> doc/README.ru
+             doc/rus/ftrack.faq -> doc/FAQ.ru
+             doc/rus/report.err -> doc/report.err.ru
+             
+             All russian text now in CP1251
+             
+           # Now you can choose config path by setting FTRACKCONFIG environment
+             variable.
+           # New action: "Action: RouteHub"
+           ! Code cleanup
+           ! Fix missing BSO directory creation
+           ! Fix crash when ftrack detects bad date field in message.
+           # New perl API function: FindHub() which returns hub number for specified node.
+           ! Fix build with Watcom C/C++ compiler (tested with OpenWatcom 1.2).
+           # smapi updated to version 2.4
+           # Now builds on OpenBSD
+           ! Fix ignore attach path by default.
+           # New keyword: IgnoreAttachPath.
+           ! Move attaches to fileboxes (when UseFileBoxes set or used Action: RouteFilebox) 
+             only if KFS flag present. In other case copy attaches.
+
+3.1.1-as8 17-03-04 ! Removed Str class. Returned string processing code from older versions.
+                   ! Fix build on FreeBSD 4.x with ENABLE_SCRIPTS=1.
+           ! Fix DOS path stripping under *NIX and vice versa when processing attaches
+           ! Don't exit if can't CopyAttach or MoveAttach
+           # Now messages with attaches placed to filebox as individual packets if UseFileBoxes
+                   # New action: "Action: RouteFilebox". Works same as "Action: Route" but
+             message placed as individual packet to filebox.
+           # New actions: "Action: ToLowerPath" and "Action: ToUpperPath" which
+             converts path of attached files and filename to lower or upper case.
+           # New actions: "Action: CopyAttachFilebox" and "Action: MoveAttachFilebox"
+             which copies or moves attach to filebox.
+
+3.1.1-as7 20-02-04 ! Remove unused code.
+           # Added filebox support. New keywords: 
+
+            UseFileBoxes
+            FileBoxDir: <Dir>
+            FileBoxType: <Type>
+            
+            See documentation for details.
+            
+           # Added Makefile for cygwin (thanks to Dmitry Pankov, 2:5022/81)
+           # Now you can choose actions when FTrack detect bad packet. New keyword:
+           
+             BadPackets: <mode>
+           
+           ! Fix errors when compile with MinGW32
+           ! Fix gcc3 compilation warnings
+             
+3.1.1-as6 04-02-04 # New keys for %FMSG hash: InetFromAddr and InetToAddr.
+           ! script.cpp: Fix key size for AreaName
+           # Scripting now full documented.
+           # Now you can change with Update() API function new keys of %FMSG hash:
+             FromAddr, ToAddr, AreaName, Body, Cost, ReplyTo, NextReply and TimesRead.
+           # For compartible returned old log format. It's using by default.
+             To enable syslog-like format run make with ENABLE_SYSLOG_LOG_FORMAT=1 option.
+             To enable PID logging (for both formats) run make with
+             ENABLE_LOG_PID=1 option
+
+3.1.1-as5 02-02-04 # ficl scripts -> perl scripts (backport from FTrack 4.0.1). 
+             Scripts disabled by default. To enable uncomment
+             ENABLE_SCRIPTS=1 in Makefile. WARNING! Code _NOT_ fully tested!
+             Documentation will be available later. See sample script for now.
+           # Default config file now can changed from Makefile (see CONFIG variable)
+
+3.1.1-as4 31-01-04 # New template macros: @InetFromAddr which contain sender
+             address in internet-style (p.f.n.z)
+           # New template macros: @InetToAddr which contain recepient
+             address in internet-style (p.f.n.z)
+           ! Fixed product version in packets
+           # Now smapi code included in project
+           ! Fixed some warnings when compile with gcc 3.x (taken from FreeBSD port)
+           ! Fixed errors when compile with djgpp
+
+3.1.1-as3 10-08-03 ! Now builds with gcc 3.x             
+
+3.1.1-as2 30-07-03 ! Now @Pid macros defined only under UNIX
+           ! Fixed FreeBSD makefile
+
+3.1.1-as1 26-07-03 # Log format changed to syslog-like.
+                   # New template macros: @Pid which replaced by current 
+             FTrack PID
+                   # Now default config placed at /etc/ftn/ftrack.cfg in UNIX
+                   # Added sample configs from 2:5030/1157
