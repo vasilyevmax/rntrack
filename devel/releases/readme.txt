@@ -32,6 +32,14 @@ Examples.
 X.XX.XXX XXXX-XX-XX (Subversion rev.XXXX, tag "version-X.XX.XXX")
 ------------------------------------------------------------
 
+2.0.26 2020-02-12 (Subversion rev.291, tag "version-2.0.26")
+------------------------------------------------------------
+! remove lines from node1042 configuration sample trying
+  to delete flags from a .pkt
+! fix linux build with Perl
+# small translation edits in English manual
+! fix FreeBSD build. Patch by Sergey Anohin 2:5034/10
+
 2.0.3 2020-01-31 (Subversion rev.260, tag "version-2.0.3")
 ----------------------------------------------------------
 # add RNtrack configuration files from 2:5020/1042

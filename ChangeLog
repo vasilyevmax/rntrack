@@ -4,8 +4,16 @@
 ! - Bug fixed
 # - Added feature or changes
 
-2.0.3 2020-01-31 (Subversion rev.260)
-------------------------------------
+2.0.26 2020-02-12 (Subversion rev.291, tag "version-2.0.26")
+------------------------------------------------------------
+! remove lines from node1042 configuration sample trying
+  to delete flags from a .pkt
+! fix linux build with Perl
+# small translation edits in English manual
+! fix FreeBSD build. Patch by Sergey Anohin 2:5034/10
+
+2.0.3 2020-01-31 (Subversion rev.260, tag "version-2.0.3")
+----------------------------------------------------------
 # add RNtrack configuration files from 2:5020/1042
 
 2.0.2 2020-01-30 (Subversion rev.257)
@@ -18,8 +26,8 @@
 # make a new translation of the amended manual from Russian into English
 # add manual in the form of man-pages and plain text in English
 # change default path of configuration file: "~/fido/etc/rntrack.conf" under
-  a UNIX-like OS, "%USERPROFILE%\fido\rntrack.cfg" under Windows or 
-  "rntrack.cfg" under other OS
+  a UNIX-like OS, "%USERPROFILE%\fido\rntrack.cfg" under Windows or
+  "rntrack.cfg" under another OS
 # change the log date format to ISO 8601
 
 1.41 2019-09-29 (Subversion rev.191)
