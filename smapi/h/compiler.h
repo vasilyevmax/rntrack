@@ -804,7 +804,7 @@ int qq(void)
     #if !defined(__ARM__)
         #define __ARM__
     #endif
-    #if !defined(__BIG_ENDIAN__) && !defined(__LITTLE_ENDIAN__).
+    #if !defined(__BIG_ENDIAN__) && !defined(__LITTLE_ENDIAN__)
         #define __LITTLE_ENDIAN__
     #endif
     #ifndef __FLAT__
