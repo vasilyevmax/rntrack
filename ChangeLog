@@ -4,6 +4,11 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.0.30 2020-02-14 (Subversion rev.295, tag "version-2.0.30")
+------------------------------------------------------------
+! fix FreeBSD build. Patch by Sergey Anohin 2:5034/10
+# replace tag "version-2.0.26" by current tag
+
 2.0.26 2020-02-12 (Subversion rev.291, tag "version-2.0.26")
 ------------------------------------------------------------
 ! remove lines from node1042 configuration sample trying

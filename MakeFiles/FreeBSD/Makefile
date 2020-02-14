@@ -34,6 +34,8 @@ ENABLE_SYSLOG_LOG_FORMAT?=0
     CDEFS += -DDefaultConfig=\"${CONFIG}\"
 .endif
 
+.PHONY : smapi
+
 all: rntrack
 
 OBJS= \
@@ -84,7 +86,7 @@ OBJS= \
 
 # Thunderbirds are go!
 smapi:
-	cd  $(SMAPIDIR) && make -f makefile.bsd
+	$(MAKE) -C $(SMAPIDIR) -f makefile.bsd
 
 rntrack: smapi ${OBJS}
 	${CC} -o rntrack ${OBJS} ${LFLAGS}
