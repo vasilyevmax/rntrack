@@ -42,7 +42,6 @@ OBJS= \
 	badpkt.o \
 	cfg.o \
 	configure.o \
-	dirent.o \
 	domain.o \
 	fidoaddr.o \
 	filebox.o \

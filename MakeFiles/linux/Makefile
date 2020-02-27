@@ -11,9 +11,15 @@
 #    Alternate config file location
 
 PREFIX=/usr
-CC	= g++
+USE_CLANG?=0
+ifeq ($(USE_CLANG), 1)
+    CC = clang++
+    CFLAGS = -O3 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+else
+    CC = g++
+    CFLAGS = -O3 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+endif
 SMAPIDIR= ../../smapi
-CFLAGS	= -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src -O3
 CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
           -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
           -DHAVE_LOCALE_H
@@ -57,7 +63,6 @@ OBJS= \
 	badpkt.o \
 	cfg.o \
 	configure.o \
-	dirent.o \
 	domain.o \
 	fidoaddr.o \
 	filebox.o \
@@ -92,7 +97,7 @@ OBJS= \
 #	bison -l -d $< -o $(SRCDIR)cfg.cpp
 
 smapi:
-	make -C $(SMAPIDIR) -f makefile.lnx
+	make -C $(SMAPIDIR) -f makefile.lnx USE_CLANG=$(USE_CLANG)
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)
