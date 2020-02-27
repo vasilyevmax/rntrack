@@ -2,8 +2,14 @@
 # Legacy makefile for building on Linux with gcc
 # No support for the Husky build environment
 
-CC=	gcc
-CFLAGS=	-Wall -fPIC -funsigned-char -Ih
+ifeq ($(USE_CLANG), 1)
+    CC = clang
+    CFLAGS = -O3 -Wall -Wextra -funsigned-char -Ih
+else
+    CC = gcc
+    CFLAGS = -Wall -fPIC -funsigned-char -Ih
+endif
+
 CDEFS=	-DUNIX
 COPT=	-O3
 OBJ=	.o

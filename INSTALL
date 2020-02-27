@@ -43,5 +43,6 @@ ENABLE_LOG_PID=1           - Enable pid logging
                              (ex: 2020-02-28 12:02:39 [212] --- RNtrack 2.0.3/Lnx started.)
 ENABLE_SYSLOG_LOG_FORMAT=1 - Use syslog-like log style
                              (ex: Apr 04 22:00:02 --- RNtrack 2.0.3/Lnx started.)
+USE_CLANG=1                - Use Clang compiler instead of the default one (Linux only).
 
 These make options are disabled by default.
