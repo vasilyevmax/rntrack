@@ -32,6 +32,10 @@ Examples.
 X.XX.XXX XXXX-XX-XX (Subversion rev.XXXX, tag "version-X.XX.XXX")
 ------------------------------------------------------------
 
+2.1.2 2020-04-22 (Subversion rev.326, tag "version-2.1.2")
+----------------------------------------------------------
+# update the manual according to changes made in v.2.1.0
+
 2.1.0 2020-04-22 (Subversion rev.323, tag "version-2.1.0")
 ----------------------------------------------------------
 # do not pack messages when at least one of Locked, Sent,
