@@ -7,6 +7,15 @@
 X.XX.XXX XXXX-XX-XX (Subversion rev.XXXX, tag "version-X.XX.XXX")
 ------------------------------------------------------------
 
+2.1.0 2020-04-22 (Subversion rev.323, tag "version-2.1.0")
+----------------------------------------------------------
+# do not pack messages when at least one of Locked, Sent,
+  Archive/Sent attributes is set
+# reset Received, Sent, KillSent, Local, Hold message attributes
+  when packing the message to a packet
+! fix date when a month name in the message header is not found
+# add USE_CLANG=1 for using Clang compiler in linux
+
 2.0.30 2020-02-14 (Subversion rev.295, tag "version-2.0.30")
 ------------------------------------------------------------
 ! fix FreeBSD build. Patch by Sergey Anohin 2:5034/10
