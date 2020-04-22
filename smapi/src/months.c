@@ -16,9 +16,9 @@
  *  agreement, or such other agreement as you are able to reach with the
  *  author.
  */
-#include "months.h"
+#include "prog.h"
 
-char months[12][10] =
+const char months[12][10] =
 {
     "January",
     "February",
@@ -34,7 +34,7 @@ char months[12][10] =
     "December"
 };
 
-char months_ab[12][4] =
+const char months_ab[12][4] =
 {
     "Jan",
     "Feb",

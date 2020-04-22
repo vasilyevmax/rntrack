@@ -40,30 +40,8 @@
 #include "prog.h"
 #include "unused.h"
 
-#ifdef __WATCOMC__
-    #include "months.c"
-#endif
-
 #if defined (__sun__) || defined (__OSX__)
     #define strftim strftime
-#endif
-
-#ifdef _MSC_VER
-char months_ab[][4] =
-{
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-};
 #endif
 
 char * FromTime(time_t tmt)
@@ -84,7 +62,6 @@ time_t ToTime(char * txt)
     struct tm t;
     char mon[4];
     int i;
-// struct tm *t2;
     time_t tt;
 
     sscanf(txt, "%02u %3s %02u  %02u:%02u:%02u",
@@ -93,7 +70,7 @@ time_t ToTime(char * txt)
           );
 
     t.tm_isdst = -1;
-    t.tm_mon   = 0;
+    t.tm_mon   = -1; /* Current time is returned if month is not found */
 
     if(t.tm_year < 70)
     {
@@ -559,8 +536,8 @@ void cMSG::Clear(void)
     _TimesRead = 0;
     _ReplyTo   = 0;
     _NextReply = 0;
-    fChanged   = fPrivate    = fCrash   = fReceived    = fSend     =
-            fFileAttach = fTransit = fOrphan      = fKillSend =
+    fChanged   = fPrivate    = fCrash   = fReceived    = fSent     =
+            fFileAttach = fTransit = fOrphan      = fKillSent =
                                          fLocal      = fHold    = fFileRequest = fRRQ      =
                                                  fIRR        = fARQ     = fFURQ        = fDIR      =
                                                          fIMM        = fCFM     = fTFS         = fKFS      =
@@ -1031,11 +1008,11 @@ void cMSG::AddKludge(const char * & Txt)
             }
             else if(stricmp(p, "K/S") == 0)
             {
-                fKillSend = 1;
+                fKillSent = 1;
             }
             else if(stricmp(p, "SNT") == 0)
             {
-                fSend = 1;
+                fSent = 1;
             }
             else if(stricmp(p, "RCV") == 0)
             {
@@ -1275,7 +1252,7 @@ char * cMSG::FlagsToStr(char * Str)
         strcat(Str, "Rcv ");
     }
 
-    if(fSend)
+    if(fSent)
     {
         strcat(Str, "Snt ");
     }
@@ -1295,7 +1272,7 @@ char * cMSG::FlagsToStr(char * Str)
         strcat(Str, "Orp ");
     }
 
-    if(fKillSend)
+    if(fKillSent)
     {
         strcat(Str, "K/S ");
     }
@@ -1681,11 +1658,11 @@ cMSG & cMSG::operator =(const cMSG & m)
     fPrivate     = m.fPrivate;
     fCrash       = m.fCrash;
     fReceived    = m.fReceived;
-    fSend        = m.fSend;
+    fSent        = m.fSent;
     fFileAttach  = m.fFileAttach;
     fTransit     = m.fTransit;
     fOrphan      = m.fOrphan;
-    fKillSend    = m.fKillSend;
+    fKillSent    = m.fKillSent;
     fLocal       = m.fLocal;
     fHold        = m.fHold;
     fFileRequest = m.fFileRequest;

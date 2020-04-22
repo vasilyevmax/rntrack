@@ -71,7 +71,6 @@ HEADERS	= $(addprefix $(HDIR)/,api_brow.h \
                                locking.h \
                                memory.h \
                                MINGW32.h \
-                               months.h \
                                MSC.h \
                                msgapi.h \
                                MSVC.h \

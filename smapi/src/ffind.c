@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "compiler.h"
+#include "unused.h"
 
 #if defined(HAS_DIR_H)
     #include <dir.h>
@@ -64,7 +65,7 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
 
 #if defined(__unix__)
     /* prevent compiler warning */
-    attribute = attribute;
+    unused(attribute);
 #endif
 
     if (ff != NULL)

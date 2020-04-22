@@ -227,12 +227,12 @@ void PrepareMsg(cMSG & s, cMSG & d, NormalMask * _Mask)
         d.fPrivate  = (_Mask->fPrivate != 0) ? _Mask->fPrivate : s.fPrivate;
         d.fCrash    = (_Mask->fCrash != 0) ? _Mask->fCrash : s.fCrash;
         d.fReceived = (_Mask->fReceived != 0) ? _Mask->fReceived : s.fReceived;
-        d.fSend = (_Mask->fSend != 0) ? _Mask->fSend : s.fSend;
+        d.fSent = (_Mask->fSent != 0) ? _Mask->fSent : s.fSent;
         d.fFileAttach =
             (_Mask->fFileAttach != 0) ? _Mask->fFileAttach : s.fFileAttach;
         d.fTransit  = (_Mask->fTransit != 0) ? _Mask->fTransit : s.fTransit;
         d.fOrphan   = (_Mask->fOrphan != 0) ? _Mask->fOrphan : s.fOrphan;
-        d.fKillSend = (_Mask->fKillSend != 0) ? _Mask->fKillSend : s.fKillSend;
+        d.fKillSent = (_Mask->fKillSent != 0) ? _Mask->fKillSent : s.fKillSent;
         d.fLocal    = (_Mask->fLocal != 0) ? _Mask->fLocal : s.fLocal;
         d.fHold = (_Mask->fHold != 0) ? _Mask->fHold : s.fHold;
         d.fFileRequest =
@@ -255,11 +255,11 @@ void PrepareMsg(cMSG & s, cMSG & d, NormalMask * _Mask)
         d.fPrivate  = (_Mask->fPrivate != 0) ? _Mask->fPrivate : 0;
         d.fCrash    = (_Mask->fCrash != 0) ? _Mask->fCrash : 0;
         d.fReceived = (_Mask->fReceived != 0) ? _Mask->fReceived : 0;
-        d.fSend = (_Mask->fSend != 0) ? _Mask->fSend : 0;
+        d.fSent = (_Mask->fSent != 0) ? _Mask->fSent : 0;
         d.fFileAttach = (_Mask->fFileAttach != 0) ? _Mask->fFileAttach : 0;
         d.fTransit    = (_Mask->fTransit != 0) ? _Mask->fTransit : 0;
         d.fOrphan   = (_Mask->fOrphan != 0) ? _Mask->fOrphan : 0;
-        d.fKillSend = (_Mask->fKillSend != 0) ? _Mask->fKillSend : 0;
+        d.fKillSent = (_Mask->fKillSent != 0) ? _Mask->fKillSent : 0;
         d.fLocal    = (_Mask->fLocal != 0) ? _Mask->fLocal : 0;
         d.fHold = (_Mask->fHold != 0) ? _Mask->fHold : 0;
         d.fFileRequest = (_Mask->fFileRequest != 0) ? _Mask->fFileRequest : 0;
@@ -325,6 +325,11 @@ bool Action::Do(MSGBASE & b, cMSG & m)
     case ACT_DELETE:
         CHP = 9;
         tmt = b.MessageName();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be deleted" << EOL;
+            return FALSE;
+        }
         Log.Level(LOGI) << "Delete msg " << tmt << EOL;
 
         if(!b.DeleteMsg())
@@ -388,6 +393,11 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
         if(m.fFileAttach)
         {
+            if(m.fLok == 1)
+            {
+                Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+                return FALSE;
+            }
             m.Normalise();
             tmt = b.MessageName();
 
@@ -470,6 +480,11 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
         if(m.fFileAttach)
         {
+            if(m.fLok == 1)
+            {
+                Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+                return FALSE;
+            }
             m.Normalise();
             tmt  = b.MessageName();
             tmt2 = FileInbound;
@@ -634,14 +649,19 @@ bool Action::Do(MSGBASE & b, cMSG & m)
     case ACT_MOVE:
         CHP = 15;
         m.Normalise();
-        CHP = 1501;
+        tmt = b.MessageName();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+            return FALSE;
+        }
 
+        CHP = 1501;
         if(SetViaAlways)
         {
             m.AddOurVia();
         }
 
-        tmt = b.MessageName();
         CHP = 1502;
         Log.Level(LOGI) << "Move msg " << tmt << " to " <<
                         _Base->BaseName() << EOL;
@@ -722,6 +742,12 @@ bool Action::Do(MSGBASE & b, cMSG & m)
     case ACT_ADDNOTE:
         CHP = 16100;
         m.Normalise();
+        tmt = b.MessageName();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+            return FALSE;
+        }
 
         if(SetViaAlways)
         {
@@ -730,7 +756,6 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
         _Tpl->Clean();
         _Tpl->SetMsg(m);
-        tmt = b.MessageName();
         Log.Level(LOGI) << "Add note " << _Tpl->GetName() << " to msg " << tmt <<
                         EOL;
 
@@ -780,6 +805,11 @@ bool Action::Do(MSGBASE & b, cMSG & m)
     case ACT_ADDKLUDGE:
         CHP = 162;
         m.Normalise();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << b.MessageName() << " has Locked flag set and cannot be changed" << EOL;
+            return FALSE;
+        }
         Kludge * TKlu;
         char kName[SMALL_BUFF_SIZE];
         RSTRLCPY(kName, "\1", SMALL_BUFF_SIZE);
@@ -868,17 +898,41 @@ bool Action::Do(MSGBASE & b, cMSG & m)
             }
         }
 
-        Log.Level(LOGI) << "Route message from " << m._FromAddr;
-        Log.Level(LOGI) << " to " << m._ToAddr;
-        Log.Level(LOGI) << " via " << f.ToStr() << EOL;
+        if((m.fLok == 0 && m.fSent == 0 && m.fAS == 0) || Before != NULL)
+        {
+            Log.Level(LOGI) << "Route message from " << m._FromAddr;
+            Log.Level(LOGI) << " to " << m._ToAddr;
+            Log.Level(LOGI) << " via " << f.ToStr() << EOL;
 
-        RSTRLCPY(m._RoutedVia, f.ToStr(), 127);
+            RSTRLCPY(m._RoutedVia, f.ToStr(), 127);
+        }
 
         if(Before != NULL)
         {
             Log.Level(LOGI) << " Execute 'BeforeRoute' ScanDir." << EOL;
             Before->DoWithRoute(*sd->_Base, m);
             m._RoutedVia[0] = '\0';
+        }
+
+        if(m.fLok == 1 || m.fSent == 1 || m.fAS == 1)
+        {
+            Log.Level(LOGE) << "Error: the message from " << m._FromAddr;
+            Log.Level(LOGE) << " to " << m._ToAddr << " has ";
+            if(m.fLok == 1)
+            {
+                Log.Level(LOGE) << "Locked";
+            }
+            else if(m.fSent == 1)
+            {
+                Log.Level(LOGE) << "Sent";
+            }
+            else if(m.fAS == 1)
+            {
+                Log.Level(LOGE) << "Archive/Sent";
+            }
+            Log.Level(LOGE) << " flag set and will not be routed" << EOL;
+            p.Clean();
+            return TRUE;
         }
 
         p.Set(f);
@@ -945,7 +999,7 @@ bool Action::Do(MSGBASE & b, cMSG & m)
         tmt = b.MessageName();
 
         if(KillMode == KILL_ALWAYS ||
-                (KillMode == KILL_FLAG && m.fKillSend))
+                (KillMode == KILL_FLAG && m.fKillSent))
         {
             if(!b.DeleteMsg())
             {
@@ -1076,6 +1130,12 @@ bool Action::Do(MSGBASE & b, cMSG & m)
     case ACT_REWRITE:
         CHP = 19;
         tmt = b.MessageName();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+            return FALSE;
+        }
+
         Log.Level(LOGI) << "Rewrite msg " << tmt << EOL;
         PrepareMsg(m, m, (NormalMask *)_Mask);
         m.Normalise();
@@ -1096,9 +1156,15 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
     case ACT_RECODE:
         CHP = 1901;
-        tmt = b.MessageName();
-        Log.Level(LOGI) << "Recode msg " << tmt << EOL;
         m.Normalise();
+        tmt = b.MessageName();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+            return FALSE;
+        }
+
+        Log.Level(LOGI) << "Recode msg " << tmt << EOL;
         m.Recode(_TplName);
 
         if(!b.WriteMsg(m))
@@ -1135,13 +1201,18 @@ bool Action::Do(MSGBASE & b, cMSG & m)
         char * tmt2;
         char * stmt = NULL;
         m.Normalise();
+        tmt = b.MessageName();
+        if(m.fLok == 1)
+        {
+            Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
+            return FALSE;
+        }
 
         if(SetViaAlways)
         {
             m.AddOurVia();
         }
 
-        tmt = b.MessageName();
         Lns = m.Lines();
 
         if(Lns > _Lines)

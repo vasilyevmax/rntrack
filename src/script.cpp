@@ -82,7 +82,6 @@ XSdEfInE(perl_Log)
     char * str;
     STRLEN n_a;
 
-    cv  = cv;
     CHP = 60005;
 
     if(items != 1)
@@ -111,7 +110,6 @@ XSdEfInE(perl_Update)
     FA a;
     unsigned int i;
 
-    cv  = cv;
     CHP = 600014;
 
     if(items != 0)
@@ -236,7 +234,6 @@ XSdEfInE(perl_ExistsInNodelist)
     STRLEN n_a;
     FA fa;
 
-    cv  = cv;
     CHP = 60030;
 
     if(items != 1)
@@ -285,7 +282,6 @@ XSdEfInE(perl_FindHub)
     STRLEN n_a;
     FA fa;
 
-    cv  = cv;
     CHP = 60030;
 
     if(items != 1)
@@ -339,7 +335,6 @@ XSdEfInE(perl_NewMsg)
     IndBiList<Kludge>::ElemPtr Klu;
     char * base;
     char * tmp = NULL;
-    cv  = cv;
     CHP = 60056;
 
     if(items < 9)

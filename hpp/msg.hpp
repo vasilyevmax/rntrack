@@ -101,13 +101,14 @@ public:
     uint fPrivate     : 1;   // Private.
     uint fCrash       : 1;   // Crash.
     uint fReceived    : 1;   // Received
-    uint fSend        : 1;   // Send
+    uint fSent        : 1;   // Sent
     uint fFileAttach  : 1;   // File attach
     uint fTransit     : 1;   // Transit
     uint fOrphan      : 1;   // Orphan
-    uint fKillSend    : 1;   // Kill/Send
+    uint fKillSent    : 1;   // Kill/Sent
     uint fLocal       : 1;   // Local
     uint fHold        : 1;   // Hold
+    uint fNotUsed     : 1;   // Not used
     uint fFileRequest : 1;   // File Request
     uint fRRQ         : 1;   // RRQ
     uint fIRR         : 1;   // IRR
@@ -116,7 +117,7 @@ public:
     uint fDIR         : 1;   // DIR
     uint fIMM         : 1;   // IMM
     uint fCFM         : 1;   // CFM
-    uint fEmpty       : 1;   // Empty message (not have Body)
+    uint fEmpty       : 1;   // Empty message (has no Body)
     uint fTFS         : 1;   // TFS
     uint fKFS         : 1;   // KFS
     uint fScanned     : 1;   // Message is scanned (Squish only)

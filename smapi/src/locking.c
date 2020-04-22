@@ -29,6 +29,7 @@
 #include "compiler.h"
 #include "progprot.h"
 #include "locking.h"
+#include "unused.h"
 
 #ifdef __DJGPP__
 #include <dpmi.h>
@@ -395,6 +396,7 @@ int unlock(int handle, long ofs, long length)
 int sopen(const char *name, int oflag, int ishared, int mode)
 {
     int fd = open(name, oflag, mode);
+    unused(ishared);
 
     /*
      * I removed this code, 'cause there is no more need for it (i hope so)

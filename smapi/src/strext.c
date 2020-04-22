@@ -348,7 +348,7 @@ char *strseparate(char **stringp, const char *delim)
 
 char *extract_CVS_keyword(char *str)
 {
-    int l;
+    size_t l;
     char *tmp, *r;
 
     if(!str)
@@ -359,7 +359,7 @@ char *extract_CVS_keyword(char *str)
     if ((!tmp)||(!*(++tmp)))
         return NULL;
 
-    l = (int)strlen(tmp);
+    l = strlen(tmp);
 
     if (l<3)
         return NULL;
@@ -368,7 +368,15 @@ char *extract_CVS_keyword(char *str)
     if (!r)
         return NULL;
 
+#if defined(__GNUC__) && !defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
     strncpy(r, tmp, l-2);
+#if defined(__GNUC__) && !defined(__clang__)
+    #pragma GCC diagnostic pop
+#endif
+
     r[l-2] = 0;
 
     return r;

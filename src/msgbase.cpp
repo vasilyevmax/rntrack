@@ -69,14 +69,14 @@ typedef struct
 #define H_Private     0x0001
 #define H_Crash       0x0002
 #define H_Received    0x0004
-#define H_Send        0x0008
+#define H_Sent        0x0008
 #define H_FileAttach  0x0010
 #define H_Transit     0x0020
 #define H_Orphan      0x0040
-#define H_KillSend    0x0080
+#define H_KillSent    0x0080
 #define H_Local       0x0100
 #define H_Hold        0x0200
-#define H_NU1         0x0400
+#define H_NotUsed     0x0400
 #define H_FileRequest 0x0800
 #define H_RRQ         0x1000
 #define H_IRR         0x2000
@@ -105,9 +105,9 @@ void SetMsgAttr(cMSG & m, unsigned short int & Attr)
         Attr = Attr | H_Received;
     }
 
-    if(m.fSend == 1)
+    if(m.fSent == 1)
     {
-        Attr = Attr | H_Send;
+        Attr = Attr | H_Sent;
     }
 
     if(m.fFileAttach == 1)
@@ -125,9 +125,9 @@ void SetMsgAttr(cMSG & m, unsigned short int & Attr)
         Attr = Attr | H_Orphan;
     }
 
-    if(m.fKillSend == 1)
+    if(m.fKillSent == 1)
     {
-        Attr = Attr | H_KillSend;
+        Attr = Attr | H_KillSent;
     }
 
     if(m.fLocal == 1)
@@ -138,6 +138,11 @@ void SetMsgAttr(cMSG & m, unsigned short int & Attr)
     if(m.fHold == 1)
     {
         Attr = Attr | H_Hold;
+    }
+
+    if(m.fNotUsed == 1)
+    {
+        Attr = Attr | H_NotUsed;
     }
 
     if(m.fFileRequest == 1)
@@ -183,9 +188,9 @@ void SetMsgAttr(unsigned short int & Attr, cMSG & m)
         m.fReceived = 1;
     }
 
-    if(Attr & H_Send)
+    if(Attr & H_Sent)
     {
-        m.fSend = 1;
+        m.fSent = 1;
     }
 
     if(Attr & H_FileAttach)
@@ -203,9 +208,9 @@ void SetMsgAttr(unsigned short int & Attr, cMSG & m)
         m.fOrphan = 1;
     }
 
-    if(Attr & H_KillSend)
+    if(Attr & H_KillSent)
     {
-        m.fKillSend = 1;
+        m.fKillSent = 1;
     }
 
     if(Attr & H_Local)
@@ -216,6 +221,11 @@ void SetMsgAttr(unsigned short int & Attr, cMSG & m)
     if(Attr & H_Hold)
     {
         m.fHold = 1;
+    }
+
+    if(Attr & H_NotUsed)
+    {
+        m.fNotUsed = 1;
     }
 
     if(Attr & H_FileRequest)
@@ -501,7 +511,7 @@ bool MSGASMSG::Set(char * Dir, int BaseType)
     if(!CreateMissingBase && !DirExists(Dir))
     {
         Log.Level(LOGD) << "MSGASMSG.Set: Message base directory '" << Dir <<
-                        "' is not exist." << EOL;
+                        "' does not exist." << EOL;
         return FALSE;
     }
 
@@ -1032,7 +1042,14 @@ bool MSGASMSG::WriteOneMsg(unsigned int Num, cMSG & m)
     strncpy(Hdr.Subject, m._Subject, 72);
     strncpy(Hdr.FromName, m._FromName, 36);
     strncpy(Hdr.ToName, m._ToName, 36);
+#if defined(__GNUC__) && !defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wstringop-truncation"
+#endif
     strncpy(Hdr.DateTime, FromTime(m._Time), 20);
+#if defined(__GNUC__) && !defined(__clang__)
+    #pragma GCC diagnostic pop
+#endif
     Hdr.Cost      = m._Cost;
     Hdr.ReplyTo   = m._ReplyTo;
     Hdr.TimesRead = m._TimesRead;

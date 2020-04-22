@@ -107,11 +107,11 @@ public:
     uint fPrivate : 2;       // Private.
     uint fCrash : 2;         // Crash.
     uint fReceived : 2;      // Received
-    uint fSend : 2;          // Send
+    uint fSent : 2;          // Sent
     uint fFileAttach : 2;    // File attach
     uint fTransit : 2;       // Transit
     uint fOrphan : 2;        // Orphan
-    uint fKillSend : 2;      // Kill/Send
+    uint fKillSent : 2;      // Kill/Sent
     uint fLocal : 2;         // Local
     uint fHold : 2;          // Hold
     uint fFileRequest : 2;   // File Request

@@ -17,7 +17,9 @@
  *  author.
  */
 
-char weekday[][10] =
+#include "prog.h"
+
+const char weekday[7][10] =
 {
     "Sunday",
     "Monday",
@@ -28,7 +30,7 @@ char weekday[][10] =
     "Saturday"
 };
 
-char weekday_ab[][4] =
+const char weekday_ab[7][4] =
 {
     "Sun",
     "Mon",

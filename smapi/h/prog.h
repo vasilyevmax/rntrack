@@ -20,6 +20,10 @@
 #ifndef __PROG_H__
 #define __PROG_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 #include <time.h>
 #include "compiler.h"
@@ -91,12 +95,16 @@ void far *farcalloc(int n, int m);
 #define eqstri(str1,str2)     (stricmp(str1,str2)==0)
 #define eqstrn(str1,str2,n)   (strncmp(str1,str2,n)==0)
 
-extern char _stdc months[][10];
-extern char _stdc weekday[][10];
+extern const char _stdc months[12][10];
+extern const char _stdc weekday[7][10];
 
-extern char _stdc months_ab[][4];
-extern char _stdc weekday_ab[][4];
+extern const char _stdc months_ab[12][4];
+extern const char _stdc weekday_ab[7][4];
 
 #include "progprot.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -3554,7 +3554,7 @@ yyreduce:
     case 218:
 
     {
-        ((NormalMask *)msk)->fKillSend = (FlagMode == 2) ? 2 : 1;
+        ((NormalMask *)msk)->fKillSent = (FlagMode == 2) ? 2 : 1;
     }
 
     break;
@@ -3626,7 +3626,7 @@ yyreduce:
     case 227:
 
     {
-        ((NormalMask *)msk)->fSend = (FlagMode == 2) ? 2 : 1;
+        ((NormalMask *)msk)->fSent = (FlagMode == 2) ? 2 : 1;
     }
 
     break;

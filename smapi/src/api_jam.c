@@ -19,7 +19,7 @@
 #include "locking.h"
 #include "unused.h"
 #include "strext.h"
-#include "months.h"
+#include "prog.h"
 
 #ifdef HAS_IO_H
     #include <io.h>
@@ -2484,7 +2484,14 @@ static void addkludge(char **line, char *kludge, char *ent, char *lf, dword len)
 
     strcpy(*line, kludge);
     *line += strlen(kludge);
+#if defined(__GNUC__) && !defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wstringop-truncation"
+#endif
     strncpy(*line, ent, len);
+#if defined(__GNUC__) && !defined(__clang__)
+    #pragma GCC diagnostic pop
+#endif
     (*line)[len]='\0';
     *line += strlen(*line);
     strcpy(*line, lf);
