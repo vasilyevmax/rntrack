@@ -393,13 +393,13 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
         if(m.fFileAttach)
         {
+            m.Normalise();
+            tmt = b.MessageName();
             if(m.fLok == 1)
             {
                 Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
                 return FALSE;
             }
-            m.Normalise();
-            tmt = b.MessageName();
 
             if(_Act == ACT_CHANGEPATH)
             {
@@ -480,13 +480,13 @@ bool Action::Do(MSGBASE & b, cMSG & m)
 
         if(m.fFileAttach)
         {
+            m.Normalise();
+            tmt  = b.MessageName();
             if(m.fLok == 1)
             {
                 Log.Level(LOGE) << "Error: message " << tmt << " has Locked flag set and cannot be changed" << EOL;
                 return FALSE;
             }
-            m.Normalise();
-            tmt  = b.MessageName();
             tmt2 = FileInbound;
 
             if(sd->_FileInbound != NULL)
