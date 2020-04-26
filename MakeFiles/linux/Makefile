@@ -9,6 +9,8 @@
 #    Write the Process ID number into log file lines.
 # CONFIG=/path/to/config.file
 #    Alternate config file location
+# USE_CLANG=1
+#    Use Clang compiler instead of gcc
 
 PREFIX=/usr
 USE_CLANG?=0
