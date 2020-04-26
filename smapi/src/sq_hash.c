@@ -21,10 +21,10 @@
  *                                                                         *
  ***************************************************************************/
 /*
-#pragma off(unreferenced)
-static char rcs_id[]="$Id$";
-#pragma on(unreferenced)
-*/
+ #pragma off(unreferenced)
+   static char rcs_id[]="$Id$";
+ #pragma on(unreferenced)
+ */
 
 #define MSGAPI_HANDLERS
 #define MSGAPI_NO_OLD_TYPES
@@ -51,7 +51,6 @@ static char rcs_id[]="$Id$";
 #include "memory.h"
 #include "ftnaddr.h"
 #include "locking.h"
-
 /* Swith for build DLL */
 #define DLLEXPORT
 
@@ -66,12 +65,11 @@ dword _XPENTRY apiSquishGetHash(HAREA ha, dword dwMsg)
 {
     SQIDX sqi;
 
-    if (!SidxGet(Sqd->hix, dwMsg, &sqi))
+    if(!SidxGet(Sqd->hix, dwMsg, &sqi))
     {
         return (dword)0L;
     }
 
-    msgapierr=MERR_NONE;
+    msgapierr = MERR_NONE;
     return sqi.hash;
 }
-

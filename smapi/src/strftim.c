@@ -16,7 +16,6 @@
  *  agreement, or such other agreement as you are able to reach with the
  *  author.
  */
-
 /* This file contents our own implementation of strftime() function for using
  * with compilers where this function not implemented in clib.
  */
@@ -33,154 +32,171 @@
 /* Use function instead macro to prevent compiler warning or error.
  * (If file do not content any code some compilers report about error.)
  */
-size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
+size_t cdecl strftim(char * string,
+                     size_t maxsize,
+                     const char * format,
+                     const struct tm * current_time)
 {
     return strftime(string, maxsize, format, current_time);
 }
 
 #else
 /* We own implementation instead strftime() */
-
 /* Note: TZ environment variable MUST be defined to use the %Z function
  * at least in form "SET TZ=XYZ"
  */
-
-size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
+size_t cdecl strftim(char * string,
+                     size_t maxsize,
+                     const char * format,
+                     const struct tm * current_time)
 {
-    const char *in;
-
-    char *out, *scrptr;
-
+    const char * in;
+    char * out, * scrptr;
     char temp[250];
 
     maxsize = min(maxsize, 230);
 
-    for (in = format, out = temp; *in; in++)
+    for(in = format, out = temp; *in; in++)
     {
-        if ((int)(out - (int)temp) >= maxsize)
+        if((int)(out - (int)temp) >= maxsize)
         {
             break;
         }
 
-        if (*in == '%')
+        if(*in == '%')
         {
-            switch (*++in)
+            switch(*++in)
             {
-            case 'a':
-                strcpy(out, weekday_ab[current_time->tm_wday]);
-                break;
+                case 'a':
+                    strcpy(out, weekday_ab[current_time->tm_wday]);
+                    break;
 
-            case 'A':
-                strcpy(out, weekday[current_time->tm_wday]);
-                break;
+                case 'A':
+                    strcpy(out, weekday[current_time->tm_wday]);
+                    break;
 
-            case 'b':
-                strcpy(out, months_ab[current_time->tm_mon]);
-                break;
+                case 'b':
+                    strcpy(out, months_ab[current_time->tm_mon]);
+                    break;
 
-            case 'B':
-                strcpy(out, months[current_time->tm_mon]);
-                break;
+                case 'B':
+                    strcpy(out, months[current_time->tm_mon]);
+                    break;
 
-            case 'c':
-                sprintf(out, "%02d-%02d-%02d %02d:%02d:%02d",
-                        current_time->tm_mon + 1, current_time->tm_mday,
-                        current_time->tm_year, current_time->tm_hour,
-                        current_time->tm_min, current_time->tm_sec);
-                break;
+                case 'c':
+                    sprintf(out,
+                            "%02d-%02d-%02d %02d:%02d:%02d",
+                            current_time->tm_mon + 1,
+                            current_time->tm_mday,
+                            current_time->tm_year,
+                            current_time->tm_hour,
+                            current_time->tm_min,
+                            current_time->tm_sec);
+                    break;
 
-            case 'd':
-                sprintf(out, "%02d", current_time->tm_mday);
-                break;
+                case 'd':
+                    sprintf(out, "%02d", current_time->tm_mday);
+                    break;
 
-            case 'H':
-                sprintf(out, "%02d", current_time->tm_hour);
-                break;
+                case 'H':
+                    sprintf(out, "%02d", current_time->tm_hour);
+                    break;
 
-            case 'I':
-                sprintf(out, "%02d",
-                        current_time->tm_hour >= 0 && current_time->tm_hour <= 12 ?
-                        current_time->tm_hour : current_time->tm_hour - 12);
-                break;
+                case 'I':
+                    sprintf(out,
+                            "%02d",
+                            current_time->tm_hour >= 0 &&
+                            current_time->tm_hour <=
+                            12 ? current_time->tm_hour : current_time->tm_hour - 12);
+                    break;
 
-            case 'j':
-                sprintf(out, "%03d", current_time->tm_yday + 1);
-                break;
+                case 'j':
+                    sprintf(out, "%03d", current_time->tm_yday + 1);
+                    break;
 
-            case 'm':
-                sprintf(out, "%02d", (current_time->tm_mon) + 1);
-                break;
+                case 'm':
+                    sprintf(out, "%02d", (current_time->tm_mon) + 1);
+                    break;
 
-            case 'M':
-                sprintf(out, "%02d", current_time->tm_min);
-                break;
+                case 'M':
+                    sprintf(out, "%02d", current_time->tm_min);
+                    break;
 
-            case 'p':
-                strcpy(out, current_time->tm_hour < 12 ? "am" : "pm");
-                break;
+                case 'p':
+                    strcpy(out, current_time->tm_hour < 12 ? "am" : "pm");
+                    break;
 
-            case 'S':
-                sprintf(out, "%02d", current_time->tm_sec);
-                break;
+                case 'S':
+                    sprintf(out, "%02d", current_time->tm_sec);
+                    break;
 
-            case 'U': /* Not from Sunday, BUG!!! */
-                sprintf(out, "%02d", current_time->tm_yday / 7);
-                break;
+                case 'U': /* Not from Sunday, BUG!!! */
+                    sprintf(out, "%02d", current_time->tm_yday / 7);
+                    break;
 
-            case 'w':
-                sprintf(out, "%d", current_time->tm_wday);
-                break;
+                case 'w':
+                    sprintf(out, "%d", current_time->tm_wday);
+                    break;
 
-            case 'W': /* Not from Monday, BUG!!! */
-                sprintf(out, "%02d", (current_time->tm_yday) / 7);
-                break;
+                case 'W': /* Not from Monday, BUG!!! */
+                    sprintf(out, "%02d", (current_time->tm_yday) / 7);
+                    break;
 
-            case 'x':
-                sprintf(out, "%02d-%02d-%02d", current_time->tm_mon + 1,
-                        current_time->tm_mday, current_time->tm_year);
-                break;
+                case 'x':
+                    sprintf(out,
+                            "%02d-%02d-%02d",
+                            current_time->tm_mon + 1,
+                            current_time->tm_mday,
+                            current_time->tm_year);
+                    break;
 
-            case 'X':
-                sprintf(out, "%02d:%02d:%02d", current_time->tm_hour,
-                        current_time->tm_min, current_time->tm_sec);
-                break;
+                case 'X':
+                    sprintf(out,
+                            "%02d:%02d:%02d",
+                            current_time->tm_hour,
+                            current_time->tm_min,
+                            current_time->tm_sec);
+                    break;
 
-            case 'y':
-                sprintf(out, "%02d", current_time->tm_year % 100);
-                break;
+                case 'y':
+                    sprintf(out, "%02d", current_time->tm_year % 100);
+                    break;
 
-            case 'Y':
-                sprintf(out, "%02d", current_time->tm_year + 1900);
-                break;
+                case 'Y':
+                    sprintf(out, "%02d", current_time->tm_year + 1900);
+                    break;
 
-            case 'Z':
-                scrptr = getenv("TZ");
-                if (scrptr != NULL)
-                {
-                    /*!!! todo1: replace with extract 3 first alpha chars
-                                 to prevent illegal value
-                          todo2: implement full parsing TZ env.var */
-                    strncpy(out, scrptr, 3);
-                    out[3] = '\0';
-                    strupr(out);
-                }
-                else
-                {
-                    static char firstcall=1;
-                    if(firstcall)
+                case 'Z':
+                    scrptr = getenv("TZ");
+
+                    if(scrptr != NULL)
                     {
-                        firstcall=0;
-                        fprintf( stderr, "Please set the TZ enviroment variable!");
+                        /*!!! todo1: replace with extract 3 first alpha chars
+                                     to prevent illegal value
+                              todo2: implement full parsing TZ env.var */
+                        strncpy(out, scrptr, 3);
+                        out[3] = '\0';
+                        strupr(out);
                     }
-                    strcpy(out, "??T");
-                }
-                break;
+                    else
+                    {
+                        static char firstcall = 1;
 
-            case '%':
-                strcpy(out, "%");
-                break;
-            }
+                        if(firstcall)
+                        {
+                            firstcall = 0;
+                            fprintf(stderr, "Please set the TZ enviroment variable!");
+                        }
 
+                        strcpy(out, "??T");
+                    }
+
+                    break;
+
+                case '%':
+                    strcpy(out, "%");
+                    break;
+            } /* switch */
             out += strlen(out);
         }
         else
@@ -188,11 +204,9 @@ size_t cdecl strftim(char *string, size_t maxsize, const char *format, const str
             *out++ = *in;
         }
     }
-
     *out = '\0';
-
     strcpy(string, temp);
-
     return strlen(string);
-}
-#endif
+} /* strftim */
+
+#endif /* ifdef HAS_strftime */

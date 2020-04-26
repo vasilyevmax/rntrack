@@ -1,7 +1,6 @@
 /*
  *  PATMAT.C - Pattern matching. Taken from sh sources
  */
-
 /*
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -44,114 +43,169 @@
 #include "patmat.h"
 
 #define CTLESC '\\'
-
 /*
  * Returns true if the pattern matches the string.
  */
-
-int patmat(char *string, char *pattern)
+int patmat(char * string, char * pattern)
 {
-    register char *p, *q;
+    register char * p, * q;
     register char c;
 
     p = pattern;
     q = string;
-    for (;;)
-    {
-        switch (c = *p++)
-        {
-        case '\0':
-            goto breakloop;
-        case CTLESC:
-            if (*q++ != *p++)
-                return 0;
-            break;
-        case '?':
-            if (*q++ == '\0')
-                return 0;
-            break;
-        case '*':
-            c = *p;
-            if (c != CTLESC && c != '?' && c != '*' && c != '[')
-            {
-                while (*q != c)
-                {
-                    if (*q == '\0')
-                        return 0;
-                    q++;
-                }
-            }
-            do
-            {
-                if (patmat(q, p))
-                    return 1;
-            }
-            while (*q++ != '\0');
-            return 0;
-        case '[':
-        {
-            char *endp;
-            int invert, found;
-            char chr;
 
-            endp = p;
-            if (*endp == '!')
-                endp++;
-            for (;;)
+    for( ; ; )
+    {
+        switch(c = *p++)
+        {
+            case '\0':
+                goto breakloop;
+
+            case CTLESC:
+
+                if(*q++ != *p++)
+                {
+                    return 0;
+                }
+
+                break;
+
+            case '?':
+
+                if(*q++ == '\0')
+                {
+                    return 0;
+                }
+
+                break;
+
+            case '*':
+                c = *p;
+
+                if(c != CTLESC && c != '?' && c != '*' && c != '[')
+                {
+                    while(*q != c)
+                    {
+                        if(*q == '\0')
+                        {
+                            return 0;
+                        }
+
+                        q++;
+                    }
+                }
+
+                do
+                {
+                    if(patmat(q, p))
+                    {
+                        return 1;
+                    }
+                }
+                while(*q++ != '\0');
+                return 0;
+
+            case '[':
             {
-                if (*endp == '\0')
-                    goto dft;	/* no matching ] */
-                if (*endp == CTLESC)
+                char * endp;
+                int invert, found;
+                char chr;
+                endp = p;
+
+                if(*endp == '!')
+                {
                     endp++;
-                if (*++endp == ']')
-                    break;
-            }
-            invert = 0;
-            if (*p == '!')
-            {
-                invert++;
-                p++;
-            }
-            found = 0;
-            chr = *q++;
-            c = *p++;
-            do
-            {
-                if (c == CTLESC)
-                    c = *p++;
-                if (*p == '-' && p[1] != ']')
+                }
+
+                for( ; ; )
                 {
+                    if(*endp == '\0')
+                    {
+                        goto dft; /* no matching ] */
+                    }
+
+                    if(*endp == CTLESC)
+                    {
+                        endp++;
+                    }
+
+                    if(*++endp == ']')
+                    {
+                        break;
+                    }
+                }
+                invert = 0;
+
+                if(*p == '!')
+                {
+                    invert++;
                     p++;
-                    if (*p == CTLESC)
+                }
+
+                found = 0;
+                chr   = *q++;
+                c     = *p++;
+
+                do
+                {
+                    if(c == CTLESC)
+                    {
+                        c = *p++;
+                    }
+
+                    if(*p == '-' && p[1] != ']')
+                    {
                         p++;
-                    if (chr >= c && chr <= *p)
-                        found = 1;
-                    p++;
+
+                        if(*p == CTLESC)
+                        {
+                            p++;
+                        }
+
+                        if(chr >= c && chr <= *p)
+                        {
+                            found = 1;
+                        }
+
+                        p++;
+                    }
+                    else
+                    {
+                        if(chr == c)
+                        {
+                            found = 1;
+                        }
+                    }
                 }
-                else
+                while((c = *p++) != ']');
+
+                if(found == invert)
                 {
-                    if (chr == c)
-                        found = 1;
+                    return 0;
                 }
+
+                break;
             }
-            while ((c = *p++) != ']');
-            if (found == invert)
-                return 0;
-            break;
-        }
-dft:
-        default:
-            if (*q++ != c)
-                return 0;
-            break;
-        }
+
+            dft:    default:
+
+                if(*q++ != c)
+                {
+                    return 0;
+                }
+
+                break;
+        } /* switch */
     }
 breakloop:
-    if (*q != '\0')
-        return 0;
-    return 1;
-}
 
+    if(*q != '\0')
+    {
+        return 0;
+    }
+
+    return 1;
+} /* patmat */
 
 #ifdef TEST
 

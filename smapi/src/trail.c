@@ -22,23 +22,27 @@
 #define _SMAPI_EXT
 #include "prog.h"
 
-SMAPI_EXT char *_fast Strip_Trailing(char *str, char strip)
+SMAPI_EXT char * _fast Strip_Trailing(char * str, char strip)
 {
     dword x;
-    if (str && *str && str[x = (dword)strlen(str) - 1] == strip)
+
+    if(str && *str && str[x = (dword)strlen(str) - 1] == strip)
     {
         str[x] = '\0';
     }
+
     return str;
 }
 
-SMAPI_EXT char *_fast Add_Trailing(char *str, char add)
+SMAPI_EXT char * _fast Add_Trailing(char * str, char add)
 {
     dword x;
-    if (str && *str && str[x = (dword)strlen(str) - 1] != add)
+
+    if(str && *str && str[x = (dword)strlen(str) - 1] != add)
     {
         str[x + 1] = add;
         str[x + 2] = '\0';
     }
+
     return str;
 }

@@ -23,40 +23,38 @@
 #include "prog.h"
 #include "strext.h"
 
-static char *colon = ":";
-static char *slash = "/";
-
-void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point)
+static char * colon = ":";
+static char * slash = "/";
+void _fast Parse_NetNode(char * netnode, word * zone, word * net, word * node, word * point)
 {
     ParseNN(netnode, zone, net, node, point, FALSE);
 }
 
-void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all)
+void _fast ParseNN(char * netnode, word * zone, word * net, word * node, word * point, word all)
 {
-    char *p;
+    char * p;
 
     p = netnode;
 
-    if (all && point)
+    if(all && point)
     {
         *point = POINT_ALL;
     }
 
-    if (all && toupper(*netnode) == 'W')
+    if(all && toupper(*netnode) == 'W')
     {
         /* World */
-
-        if (zone)
+        if(zone)
         {
             *zone = ZONE_ALL;
         }
 
-        if (net)
+        if(net)
         {
             *net = NET_ALL;
         }
 
-        if (node)
+        if(node)
         {
             *node = NODE_ALL;
         }
@@ -64,21 +62,19 @@ void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * p
         return;
     }
 
-
     /* if we have a zone (and the caller wants the zone to be passed back) */
-
-    if (strchr(netnode, ':'))
+    if(strchr(netnode, ':'))
     {
-        if (zone)
+        if(zone)
         {
-            if (all && toupper(*p) == 'A')
+            if(all && toupper(*p) == 'A')
             {
                 /* All */
                 *zone = ZONE_ALL;
             }
             else
             {
-                *zone = (word) atoi(p);
+                *zone = (word)atoi(p);
             }
         }
 
@@ -86,90 +82,84 @@ void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * p
     }
 
     /* if we have a net number */
-
-    if (p && *p)
+    if(p && *p)
     {
-        if (strchr(netnode, '/'))
+        if(strchr(netnode, '/'))
         {
-            if (net)
+            if(net)
             {
-                if (all && toupper(*p) == 'A')
+                if(all && toupper(*p) == 'A')
                 {
                     /* All */
                     *net = NET_ALL;
                 }
                 else
                 {
-                    *net = (word) atoi(p);
+                    *net = (word)atoi(p);
                 }
             }
 
             p = firstchar(p, slash, 2);
         }
-        else if (all && toupper(*p) == 'A')
+        else if(all && toupper(*p) == 'A')
         {
             /* If it's in the form "1:All" or "All" */
-
-            if (strchr(netnode, ':') == NULL && zone)
+            if(strchr(netnode, ':') == NULL && zone)
             {
                 *zone = ZONE_ALL;
             }
 
-            *net = NET_ALL;
+            *net  = NET_ALL;
             *node = NODE_ALL;
-            p += 3;
+            p    += 3;
         }
     }
 
     /* If we got a node number... */
-
-    if (p && *p && node && *netnode != '.')
+    if(p && *p && node && *netnode != '.')
     {
-        if (all && toupper(*p) == 'A')
+        if(all && toupper(*p) == 'A')
         {
             /* All */
-
             *node = NODE_ALL;
 
             /* 1:249/All implies 1:249/All.All too... */
-
-            if (point && all)
+            if(point && all)
             {
                 *point = POINT_ALL;
             }
         }
         else
         {
-            *node = (word) atoi(p);
+            *node = (word)atoi(p);
         }
     }
 
-    if (p)
+    if(p)
     {
-        while (*p && isdigit((int)(*p)))
+        while(*p && isdigit((int)(*p)))
         {
             p++;
         }
     }
 
     /* And finally check for a point number... */
-
-    if (p && *p == '.')
+    if(p && *p == '.')
     {
         p++;
 
-        if (point)
+        if(point)
         {
-            if (!p && *netnode == '.')
+            if(!p && *netnode == '.')
             {
                 p = netnode + 1;
             }
 
-            if (p && *p)
+            if(p && *p)
             {
-                *point = (word) atoi(p);
+                *point = (word)atoi(p);
 
-                if (all && toupper(*p) == 'A')
+                if(all && toupper(*p) == 'A')
                 {
                     /* All */
                     *point = POINT_ALL;
@@ -181,4 +171,4 @@ void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * p
             }
         }
     }
-}
+} /* ParseNN */

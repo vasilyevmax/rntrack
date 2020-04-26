@@ -21,10 +21,10 @@
  *                                                                         *
  ***************************************************************************/
 /*
-#pragma off(unreferenced)
-static char rcs_id[]="$Id$";
-#pragma on(unreferenced)
-*/
+ #pragma off(unreferenced)
+   static char rcs_id[]="$Id$";
+ #pragma on(unreferenced)
+ */
 #define MSGAPI_HANDLERS
 #define MSGAPI_NO_OLD_TYPES
 
@@ -51,7 +51,6 @@ static char rcs_id[]="$Id$";
 #include "memory.h"
 #include "ftnaddr.h"
 #include "locking.h"
-
 /* Swith for build DLL */
 #define DLLEXPORT
 
@@ -61,43 +60,41 @@ static char rcs_id[]="$Id$";
 #include "api_sq.h"
 #include "api_sqp.h"
 #include "apidebug.h"
-
-
 /* Kill the specified message number.                                       *
  *                                                                          *
  * This function assumes that we have exclusive access to the Squish base.  */
-
-static sword _SquishKill(HAREA ha, dword dwMsg, SQHDR *psqh, FOFS fo)
+static sword _SquishKill(HAREA ha, dword dwMsg, SQHDR * psqh, FOFS fo)
 {
     assert(Sqd->fHaveExclusive);
 
-
     /* Link the existing messages over this one */
-
-    if (psqh->prev_frame)
-        if (!_SquishSetFrameNext(ha, psqh->prev_frame, psqh->next_frame))
+    if(psqh->prev_frame)
+    {
+        if(!_SquishSetFrameNext(ha, psqh->prev_frame, psqh->next_frame))
+        {
             return FALSE;
+        }
+    }
 
-    if (psqh->next_frame)
-        if (!_SquishSetFramePrev(ha, psqh->next_frame, psqh->prev_frame))
+    if(psqh->next_frame)
+    {
+        if(!_SquishSetFramePrev(ha, psqh->next_frame, psqh->prev_frame))
+        {
             return FALSE;
-
+        }
+    }
 
     /* Delete this message from the index file */
-
-    if (!_SquishRemoveIndexEntry(Sqd->hix, dwMsg, NULL, psqh, TRUE))
+    if(!_SquishRemoveIndexEntry(Sqd->hix, dwMsg, NULL, psqh, TRUE))
+    {
         return FALSE;
-
+    }
 
     /* Finally, add the freed message to the free frame list */
-
     return (sword)_SquishInsertFreeChain(ha, fo, psqh);
-}
-
-
+} /* _SquishKill */
 
 /* This function is used to delete a message from a Squish message base */
-
 sword _XPENTRY apiSquishKillMsg(HAREA ha, dword dwMsg)
 {
     SQHDR sqh;
@@ -105,52 +102,46 @@ sword _XPENTRY apiSquishKillMsg(HAREA ha, dword dwMsg)
     FOFS fo;
 
     /* Validate parameters */
-
-    if (MsgInvalidHarea(ha))
+    if(MsgInvalidHarea(ha))
+    {
         return -1;
-
+    }
 
     /* Make sure that the message actually exists */
-
-    if (dwMsg==0 || dwMsg > ha->num_msg)
+    if(dwMsg == 0 || dwMsg > ha->num_msg)
     {
-        msgapierr=MERR_NOENT;
+        msgapierr = MERR_NOENT;
         return -1;
     }
 
     /* Get the offset of the frame to delete */
+    fo = _SquishGetFrameOfs(ha, dwMsg);
 
-    fo=_SquishGetFrameOfs(ha, dwMsg);
-    if (fo==NULL_FRAME)
+    if(fo == NULL_FRAME)
     {
         return -1;
     }
-
 
     /* Read that into memory */
-
-    if (!_SquishReadHdr(ha, fo, &sqh))
+    if(!_SquishReadHdr(ha, fo, &sqh))
     {
         return -1;
     }
 
-
     /* Now get exclusive access for the delete operation */
-
-    if (!_SquishExclusiveBegin(ha))
+    if(!_SquishExclusiveBegin(ha))
     {
         return FALSE;
     }
 
     /* Let _SquishKill to the dirty work */
-
-    rc=_SquishKill(ha, dwMsg, &sqh, fo);
+    rc = _SquishKill(ha, dwMsg, &sqh, fo);
 
     /* Let go of the base */
-
-    if (!_SquishExclusiveEnd(ha))
-        rc=FALSE;
+    if(!_SquishExclusiveEnd(ha))
+    {
+        rc = FALSE;
+    }
 
     return rc ? 0 : -1;
-}
-
+} /* apiSquishKillMsg */

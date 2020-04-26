@@ -21,11 +21,12 @@
 #include <time.h>
 #include "prog.h"
 
-union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st)
+union stamp_combo * _fast Get_Dos_Date(union stamp_combo * st)
 {
     time_t now;
-    struct tm *tm;
+    struct tm * tm;
+
     now = time(NULL);
-    tm = localtime(&now);
+    tm  = localtime(&now);
     return TmDate_to_DosDate(tm, st);
 }
