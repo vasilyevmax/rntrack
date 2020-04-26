@@ -382,8 +382,6 @@ char *extract_CVS_keyword(char *str)
     return r;
 }
 
-#define nfree(a) { if (a != NULL) { free(a); a = NULL; } }
-
 int copyString(char *str, char **pmem)
 {
     if (!(str&&pmem))
