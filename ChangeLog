@@ -4,6 +4,15 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.1.10 2020-04-27 (Subversion rev.335, tag "version-2.1.10")
+------------------------------------------------------------
+# add USE_MUSL, ARCH and STATIC build options for Linux
+# use %HOME% environment variable in configuration sample
+! get message name before using it in an error message
+# bring the code to a standard form using uncrustify
+  (https://github.com/uncrustify/uncrustify)
+  with devel/uncrustify.cfg as configuration file
+
 2.1.2 2020-04-22 (Subversion rev.326, tag "version-2.1.2")
 ----------------------------------------------------------
 # update the manual according to changes made in v.2.1.0
