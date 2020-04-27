@@ -1,5 +1,7 @@
 # $Id$
-# Makefile for build RNTrack in linux
+#
+# Makefile for building RNTrack in Linux
+#
 # Build options:
 # ENABLE_SCRIPTS=1
 #    Build with embedded Perl
@@ -11,29 +13,59 @@
 #    Alternate config file location
 # USE_CLANG=1
 #    Use Clang compiler instead of gcc
+# USE_MUSL=1
+#    Use musl libc instead of glibc. Implies USE_CLANG=0
+# ARCH=i486
+# ARCH=i686
+# ARCH=x86_64
+#    Target platform architecture. On default x86_64 is used
+# STATIC=1
+#    Link RNtrack staticly. Implies USE_MUSL=1
 
-PREFIX=/usr
-USE_CLANG?=0
-ifeq ($(USE_CLANG), 1)
-    CC = clang++
-    CFLAGS = -O3 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
-else
-    CC = g++
-    CFLAGS = -O3 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+PREFIX = /usr
+STATIC ?= 0
+USE_MUSL ?= 0
+USE_CLANG ?= 0
+ARCH ?= x86_64
+
+ifeq ($(STATIC), 1)
+    USE_MUSL = 1
 endif
-SMAPIDIR= ../../smapi
-CDEFS	= -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
-          -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
-          -DHAVE_LOCALE_H
-LFLAGS	= -s -L$(SMAPIDIR) -lsmapilnx
-SRCDIR	= ../../src/
-DOCDIR	= ../../doc/
-#CONFIG	= /etc/ftn/rntrack.cfg
 
-# set to 1 for enable (in command line: make ENABLE_SCRIPTS=1 ENABLE_LOG_PID=1 ENABLE_SYSLOG_LOG_FORMAT=1)
-ENABLE_SCRIPTS?=0
-ENABLE_LOG_PID?=0
-ENABLE_SYSLOG_LOG_FORMAT?=0
+SMAPIDIR := ../../smapi
+ifeq ($(USE_MUSL), 1)
+    CC := $(ARCH)-linux-musl-g++
+    CFLAGS := -O3 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+else ifeq ($(USE_CLANG), 1)
+    CC := clang++
+    CFLAGS := -O3 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+else
+    CC := g++
+    CFLAGS := -O3 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+endif
+
+ifeq ($(ARCH), i486)
+    CFLAGS += -march=i486
+else ifeq ($(ARCH), i686)
+    CFLAGS += -march=i686
+endif
+
+CDEFS = -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
+        -DHAVE_STRING_H -DHAVE_TIME_H -DHAVE_SYS_TIME_H -DHAVE_UTIME_H \
+        -DHAVE_LOCALE_H
+ifeq ($(STATIC), 1)
+    LFLAGS := -s -static -pie -z text -L$(SMAPIDIR) -lsmapilnx
+else
+    LFLAGS := -s -L$(SMAPIDIR) -lsmapilnx
+endif
+SRCDIR = ../../src/
+DOCDIR = ../../doc/
+#CONFIG = /etc/ftn/rntrack.cfg
+
+# set to 1 to enable (in command line: make ENABLE_SCRIPTS=1 ENABLE_LOG_PID=1 ENABLE_SYSLOG_LOG_FORMAT=1)
+ENABLE_SCRIPTS ?= 0
+ENABLE_LOG_PID ?= 0
+ENABLE_SYSLOG_LOG_FORMAT ?= 0
 
 ifeq ($(ENABLE_SCRIPTS), 1)
 #    CFLAGS += $(shell perl -MConfig -e 'my @v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] $$Config{ccdlflags} ", join(" ",grep(!/(^$|-fstack-protector|-fno-strict-aliasing|-Wdeclaration-after-statement)/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE"')
@@ -99,7 +131,7 @@ OBJS= \
 #	bison -l -d $< -o $(SRCDIR)cfg.cpp
 
 smapi:
-	make -C $(SMAPIDIR) -f makefile.lnx USE_CLANG=$(USE_CLANG)
+	make -C $(SMAPIDIR) -f makefile.lnx USE_MUSL=$(USE_MUSL) ARCH=$(ARCH) USE_CLANG=$(USE_CLANG)
 
 rntrack: smapi $(OBJS)
 	$(CC) -o rntrack $(OBJS) $(LFLAGS)

@@ -44,5 +44,11 @@ ENABLE_LOG_PID=1           - Enable pid logging
 ENABLE_SYSLOG_LOG_FORMAT=1 - Use syslog-like log style
                              (ex: Apr 04 22:00:02 --- RNtrack 2.0.3/Lnx started.)
 USE_CLANG=1                - Use Clang compiler instead of the default one (Linux only).
+USE_MUSL=1                 - Use musl libc instead of glibc. Implies USE_CLANG=0 (Linux only).
+ARCH=i486
+ARCH=i686
+ARCH=x86_64                - Target platform architecture. On default x86_64 is used
+                             (Linux only).
+STATIC=1                   - Link RNtrack staticly. Implies USE_MUSL=1 (Linux only).
 
 These make options are disabled by default.
