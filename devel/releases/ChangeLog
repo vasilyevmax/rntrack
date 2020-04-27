@@ -13,6 +13,8 @@ X.XX.XXX XXXX-XX-XX (Subversion rev.XXXX, tag "version-X.XX.XXX")
 
 2.1.0 2020-04-22 (Subversion rev.323, tag "version-2.1.0")
 ----------------------------------------------------------
+# any action changing a message with Locked flag set is ignored
+  and an error message is written to log
 # do not pack messages when at least one of Locked, Sent,
   Archive/Sent attributes is set
 # reset Received, Sent, KillSent, Local, Hold message attributes
