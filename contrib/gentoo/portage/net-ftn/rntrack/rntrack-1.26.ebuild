@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="7"
 
-inherit eutils versionator
+inherit eutils
 
 DESCRIPTION="A FTN Messages tracker"
-SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(replace_version_separator ${V} . _)-src.tgz"
+SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(ver_rs 1 _)-src.tgz"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
 
 SLOT="0"
