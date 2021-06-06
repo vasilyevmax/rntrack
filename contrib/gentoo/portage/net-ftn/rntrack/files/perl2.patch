@@ -1,0 +1,28 @@
+Index: src/script.cpp
+===================================================================
+--- src/script.cpp	(revision 263)
++++ src/script.cpp	(working copy)
+@@ -608,15 +608,15 @@
+ 
+ 
+     PUSHMARK(SP);
+-#if __PERL_VERSION__ >= 5008000
+-    /* for Perl 5.8.* and above, see Makefile */
+-    rc = perl_parse(PerlSystem,
+-                    (void (*)(PerlInterpreter *))xs_init,
+-                    2, perlargs, NULL);
+-#else
+-    /* for old Perl */
++//#if __PERL_VERSION__ >= 5008000
++//    /* for Perl 5.8.* and above, see Makefile */
++//    rc = perl_parse(PerlSystem,
++//                    (void (*)(PerlInterpreter *))xs_init,
++//                    2, perlargs, NULL);
++//#else
++//    /* for old Perl */
+     rc = perl_parse(PerlSystem, xs_init, 2, perlargs, NULL);
+-#endif
++//#endif
+     SPAGAIN;
+     PUTBACK;
+ 

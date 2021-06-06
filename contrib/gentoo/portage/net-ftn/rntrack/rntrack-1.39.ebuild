@@ -4,8 +4,6 @@
 
 EAPI="7"
 
-inherit eutils
-
 DESCRIPTION="A FTN Messages tracker"
 SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(ver_rs 1 _)-src.tar.bz2"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
@@ -27,6 +25,8 @@ src_unpack() {
 }
 
 src_prepare() {
+	eapply_user
+
 	# prevent to strip while linking
 	sed -e "s:-s -L:-L:" -i MakeFiles/linux/Makefile
 }

@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-inherit eutils subversion
+inherit subversion
 
 DESCRIPTION="An FTN Messages tracker"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
@@ -31,8 +31,10 @@ src_prepare() {
 
 	# apply patch for perl support if needed
 	use perl_fix || einfo "Please specify perl_fix use flag if your build with perl support is unsuccessfull"
-	use perl_fix && (epatch ${FILESDIR}/perl2.patch.gz || die "epatch failed")
-	
+	use perl_fix && (eapply -p0 ${FILESDIR}/perl3.patch || die "eapply failed")
+
+	eapply_user
+
 	# prevent to strip while linking
 	sed -e "s:-s -L:-L:" -i MakeFiles/linux/Makefile
 }

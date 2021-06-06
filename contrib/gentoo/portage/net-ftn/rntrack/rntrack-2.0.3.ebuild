@@ -4,8 +4,6 @@
 
 EAPI="7"
 
-inherit eutils
-
 DESCRIPTION="A FTN Messages tracker"
 SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(ver_rs 1- '_')-src.tar.bz2"
 HOMEPAGE="http://ftrack-as.sourceforge.net/"
@@ -28,7 +26,9 @@ src_prepare() {
 
 	# apply patch for perl support if needed
 	use perl_fix || einfo "Please specify perl_fix use flag if your build with perl support is unsuccessfull"
-	use perl_fix && (epatch ${FILESDIR}/perl2.patch.gz || die "epatch failed")
+	use perl_fix && (eapply -p0 ${FILESDIR}/perl2.patch || die "eapply failed")
+
+	eapply_user
 
 	# prevent to strip while linking
 	sed -e "s:-s -L:-L:" -i MakeFiles/linux/Makefile

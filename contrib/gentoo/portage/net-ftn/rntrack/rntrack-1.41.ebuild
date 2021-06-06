@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-inherit eutils autotools
+inherit autotools
 
 DESCRIPTION="A FTN Messages tracker"
 SRC_URI="mirror://sourceforge/ftrack-as/${V}/${PN}-$(ver_rs 1 _)-src.tar.bz2"
@@ -21,12 +21,13 @@ RDEPEND="${DEPEND}"
 AT_M4DIR="MakeFiles"
 
 src_prepare() {
-
 	eautoreconf || die "eautoreconf failed"
 
 	# apply patch for perl support if need
 	use perl_fix || einfo "Please specify perl_fix flag if your build with perl support is unsuccessfull"
-	use perl_fix && (epatch ${FILESDIR}/perl.patch.gz || die "epatch failed")
+	use perl_fix && (eapply -p0 ${FILESDIR}/perl.patch || die "epply failed")
+
+	eapply_user
 
 	# prevent to strip while linking
 	sed -e "s:-s -L:-L:" -i MakeFiles/linux/Makefile
