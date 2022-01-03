@@ -4,6 +4,19 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.1.15 2021-01-03
+-----------------
+# set version to 2.1.15 (tag "v2.1.15")
+# change BUG-REPORTING and README.md after migration from svn
+# rename README to README.md
+# migrate the project from svn to git
+
+2.1.14 2021-06-06 (Subversion rev.339)
+--------------------------------------
+! Update gentoo ebuilds: fix EAPI 7 support
+! Update gentoo ebuilds: add forgotten ebuild for the version 2.1.10
+# Update gentoo ebuilds: switch to EAPI=7, add a ebuild for the version 2.1.10
+
 2.1.10 2020-04-27 (Subversion rev.335, tag "version-2.1.10")
 ------------------------------------------------------------
 # add USE_MUSL, ARCH and STATIC build options for Linux
