@@ -2,41 +2,35 @@ BUG-REPORTING
 -------------
 
 If you found a bug in RNTrack, you may post information about it in the
-fidonet echoarea "RU.FTRACK" (russian), also you may post information in the
-bugtrack on rntrack project page on sourceforge
-(https://sourceforge.net/projects/ftrack-as), or you may send message to a maintainer
-via fidonet netmail or internet email.
+Fidonet echo area "RU.FTRACK" (Russian), also you may post information
+in the issues on the RNTrack project page on GitHub
+(https://github.com/dukelsky/rntrack/issues), or you may send a message
+to a maintainer via Fidonet netmail or internet email.
 
-Please try to reproduce the bug before contacting authors.
+Please try to reproduce the bug before contacting the authors.
 
-Things to do when you encountered a bug:
+Things to do when you encounter a bug:
 
-If a core-dump was created:
-- start gdb with
+If RNTrack created a core dump:
+- start `gdb` with
    gdb rntrack core
-- type where
+- type `where`
    where
-- try to get all information out of the core file which could be interesting
-  for me. (this is for people who are familiar with c-programming)
+- try to get all information out of the core file that could be interesting
+  for the maintainer (this is for the people familiar with programming in C).
 
 Send the following things:
 - an extensive description of the situation where the bug happened.
-- version of RNtrack (stable version or date of checkout)
-- version of smapi  (stable version or date of checkout)
-- your config-files
-- all SMALL files RNtrack was using when the bug happened. (pkt's/msg's/squis's or jam's)
-  only send me complete msgbases when the problem did not arise with a small
-  one.
-- a short description what system you are using.
-  (OS - Distribution - compiler - etc. i do NOT need to know what kind of
+- the RNTrack version
+- the SMAPI version
+- your config files
+- all SMALL files RNTrack was using when the bug happened
+  (pkt's/msg's/SQUISH's or JAM's). Please send me complete msg base only in
+  the case when you could not reproduce the problem with a small one.
+- a short description of what system you are using.
+  (OS - Distribution - compiler - etc. I do NOT need to know what kind of
   monitor you use :-)
 
 Stas Degteff
 2:5080/102@fidonet
 stas_degteff@users.sourceforge.net
-
-Michael Dukelsky
-2:5020/1042@fidonet
-dukelsky@users.sourceforge.net
-
-$Id$
