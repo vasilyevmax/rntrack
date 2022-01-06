@@ -2,15 +2,28 @@
 # Legacy makefile for building on Linux with gcc
 # No support for the Husky build environment
 
-ifeq ($(USE_MUSL), 1)
-    CC := $(ARCH)-linux-musl-gcc
-    CFLAGS := -Wall -fPIC -funsigned-char -Ih
-else ifeq ($(USE_CLANG), 1)
-    CC := clang
-    CFLAGS := -O3 -Wall -Wextra -funsigned-char -Ih
+ifeq ($(DEBUG),0)
+    ifeq ($(USE_MUSL), 1)
+        CC := $(ARCH)-linux-musl-gcc
+        CFLAGS := -O3 -Wall -fPIC -funsigned-char -Ih
+    else ifeq ($(USE_CLANG), 1)
+        CC := clang
+        CFLAGS := -O3 -Wall -Wextra -funsigned-char -Ih
+    else
+        CC := gcc
+        CFLAGS := -O3 -Wall -fPIC -funsigned-char -Ih
+    endif
 else
-    CC := gcc
-    CFLAGS := -Wall -fPIC -funsigned-char -Ih
+    ifeq ($(USE_MUSL), 1)
+        CC := $(ARCH)-linux-musl-gcc
+        CFLAGS := -g -O2 -Wall -fPIC -funsigned-char -Ih
+    else ifeq ($(USE_CLANG), 1)
+        CC := clang
+        CFLAGS := -g -O2 -Wall -Wextra -funsigned-char -Ih
+    else
+        CC := gcc
+        CFLAGS := -g -O2 -Wall -fPIC -funsigned-char -Ih
+    endif
 endif
 
 ifeq ($(ARCH), i486)
@@ -20,7 +33,6 @@ else ifeq ($(ARCH), i686)
 endif
 
 CDEFS := -DUNIX
-COPT := -O3
 OBJ := .o
 
 LIB := ar
@@ -34,7 +46,7 @@ include makefile.inc
 
 #.c.o:
 %.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(CC) $(CFLAGS) $(CDEFS) -c $<
 
 $(TARGET): $(OBJS)
 	$(LIB) r $@ $?
