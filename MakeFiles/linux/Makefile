@@ -2,6 +2,8 @@
 # Makefile for building RNTrack in Linux
 #
 # Build options:
+# PREFIX=/usr/local
+#    Alternative prefix. On default it is /usr
 # ENABLE_SCRIPTS=1
 #    Build with embedded Perl
 # ENABLE_SYSLOG_LOG_FORMAT=1
@@ -23,39 +25,49 @@
 # DEBUG=1
 #    Build a debug version of the executable
 
-PREFIX = /usr
+PREFIX ?= /usr
+ARCH ?= x86_64
+# set to 1 to enable (in command line: make ENABLE_SCRIPTS=1 ENABLE_LOG_PID=1 ENABLE_SYSLOG_LOG_FORMAT=1)
 STATIC ?= 0
 USE_MUSL ?= 0
 USE_CLANG ?= 0
-ARCH ?= x86_64
 DEBUG ?= 0
+ENABLE_SCRIPTS ?= 0
+ENABLE_LOG_PID ?= 0
+ENABLE_SYSLOG_LOG_FORMAT ?= 0
 
 ifeq ($(STATIC), 1)
     USE_MUSL = 1
 endif
 
+HPPDIR := ../../hpp
+SRCDIR := ../../src
 SMAPIDIR := ../../smapi
+smapi_HDIR := $(SMAPIDIR)/h
+smapi_SRCDIR :=$(SMAPIDIR)/src
+DOCDIR = ../../doc
+
 ifeq ($(DEBUG),0)
     ifeq ($(USE_MUSL), 1)
         CC := $(ARCH)-linux-musl-g++
-        CFLAGS := -O3 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+        CFLAGS := -O3 -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     else ifeq ($(USE_CLANG), 1)
         CC := clang++
-        CFLAGS := -O3 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+        CFLAGS := -O3 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     else
         CC := g++
-        CFLAGS := -O3 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+        CFLAGS := -O3 -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     endif
 else
     ifeq ($(USE_MUSL), 1)
         CC := $(ARCH)-linux-musl-g++
-        CFLAGS := -g -O2 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+        CFLAGS := -g -O2 -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     else ifeq ($(USE_CLANG), 1)
         CC := clang++
-        CFLAGS := -g -O2 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+        CFLAGS := -g -O2 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     else
         CC := g++
-        CFLAGS := -g -O2 -Wall -fPIC -fno-rtti -I../../hpp -I../../src -I$(SMAPIDIR)/h -I$(SMAPIDIR)/src
+        CFLAGS := -g -O2 -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     endif
 endif
 
@@ -71,30 +83,19 @@ CDEFS = -Dunix -D__linux__ -DHAVE_UNISTD_H -DHAVE_FCNTL_H -DHAVE_MALLOC_H \
 
 ifeq ($(DEBUG), 0)
     ifeq ($(STATIC), 1)
-        LFLAGS := -s -static -pie -z text -L$(SMAPIDIR) -lsmapilnx
+        LFLAGS := -s -static -pie -z text
     else
-        LFLAGS := -s -L$(SMAPIDIR) -lsmapilnx
+        LFLAGS := -s
     endif
 else
     ifeq ($(STATIC), 1)
-        LFLAGS := -static -pie -z text -L$(SMAPIDIR) -lsmapilnx
-    else
-        LFLAGS := -L$(SMAPIDIR) -lsmapilnx
+        LFLAGS := -static -pie -z text
     endif
 endif
 
-SRCDIR = ../../src/
-DOCDIR = ../../doc/
-#CONFIG = /etc/ftn/rntrack.cfg
 
-# set to 1 to enable (in command line: make ENABLE_SCRIPTS=1 ENABLE_LOG_PID=1 ENABLE_SYSLOG_LOG_FORMAT=1)
-ENABLE_SCRIPTS ?= 0
-ENABLE_LOG_PID ?= 0
-ENABLE_SYSLOG_LOG_FORMAT ?= 0
 
 ifeq ($(ENABLE_SCRIPTS),1)
-#    CFLAGS += $(shell perl -MConfig -e 'my @v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] $$Config{ccdlflags} ", join(" ",grep(!/(^$|-fstack-protector|-fno-strict-aliasing|-Wdeclaration-after-statement)/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE"')
-#    CFLAGS += $(shell perl -MConfig -e 'my @v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] ", join(" ",grep(!/(^$|-fno-strict-aliasing|-Wdeclaration-after-statement)/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE"')
     CFLAGS += $(shell perl -MConfig -e 'my @v=split(/\./,"$$]"); print "-D__PERL_VERSION__=".join("",@v)." -D__PERL_MAJOR__=$$v[0] -D__PERL_MINOR__=$$v[1] ", join(" ",grep(!/(^$$|-Wdeclaration-after-statement|-fstack-clash-protection|redhat-hardened-cc1|redhat-annobin-cc1)/,split(" ",$$Config{ccflags}))), " -I$$Config{archlibexp}/CORE"')
     LFLAGS += $(shell perl -e 'use ExtUtils::Embed; print join(" ",grep(!/DynaLoader|redhat-hardened-ld/,split(" ",ldopts(0))));')
 endif
@@ -110,8 +111,6 @@ endif
 ifdef CONFIG
     CDEFS += -DDefaultConfig=\"$(CONFIG)\"
 endif
-
-all: rntrack
 
 OBJS= \
 	age.o \
@@ -146,43 +145,49 @@ OBJS= \
 	vars.o \
 	wildmat.o
 
-%.o: $(SRCDIR)%.c
-	$(CC) $(CFLAGS) $(CDEFS) -c $<
+.PHONY: all
+all: rntrack $(DOCDIR)/rntrack.1.gz ;
 
-%.o: $(SRCDIR)%.cpp
-	$(CC) $(CFLAGS) $(CDEFS) -c $<
+include $(SMAPIDIR)/makefile.lnx
 
-#$(SRCDIR)cfg.cpp: $(SRCDIR)cfg.y
-#	bison -l -d $< -o $(SRCDIR)cfg.cpp
+rntrack: $(smapi_OBJS) $(OBJS)
+	$(CC) -o rntrack $(smapi_OBJS) $(OBJS) $(LFLAGS)
 
-smapi:
-	make -C $(SMAPIDIR) -f makefile.lnx USE_MUSL=$(USE_MUSL) ARCH=$(ARCH) \
-		USE_CLANG=$(USE_CLANG) DEBUG=$(DEBUG)
+$(OBJS): %.o: $(SRCDIR)/%.cpp
+	$(CC) $(CFLAGS) $(CDEFS) -c $(SRCDIR)/$*.cpp
 
-rntrack: smapi $(OBJS)
-	$(CC) -o rntrack $(OBJS) $(LFLAGS)
+#$(SRCDIR)/cfg.cpp: $(SRCDIR)/cfg.y
+#	bison -l -d $< -o $@
 
-rntrack.1.gz : $(DOCDIR)rntrack.1
-	gzip -9c $(DOCDIR)rntrack.1 > $(DOCDIR)rntrack.1.gz
+$(DOCDIR)/rntrack.1.gz : $(DOCDIR)/rntrack.1
+	gzip -9c $<   > $@
+
+BINDIR := $(DESTDIR)$(PREFIX)/bin
+MAN1DIR := $(DESTDIR)$(PREFIX)/share/man/man1
 
 .PHONY: install
-install: rntrack rntrack.1.gz
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp $< $(DESTDIR)$(PREFIX)/bin
-	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
-	cp $(DOCDIR)rntrack.1.gz $(DESTDIR)$(PREFIX)/share/man/man1
+install: rntrack $(DOCDIR)/rntrack.1.gz | $(BINDIR) $(MAN1DIR)
+	install $< $(BINDIR)
+	install -m 0644 $(DOCDIR)/rntrack.1.gz $(MAN1DIR)
+
+$(BINDIR):
+	mkdir -p $@
+
+$(MAN1DIR):
+	mkdir -p $@
+
 
 .PHONY: uninstall
 uninstall:
-	-rm -f $(BINDIR)$(DIRSEP)rntrack
-	-rm -f $(MAN1DIR)$(DIRSEP)rntrack.1.gz
+	-rm -f $(BINDIR)/rntrack
+	-rm -f $(MAN1DIR)/rntrack.1.gz
 
-.PHONY: clean
+.PHONY: clean distclean
 clean:
-	-rm -f $(SMAPIDIR)/*.o
-	-rm -f $(SMAPIDIR)/*.a
 	-rm -f *.o
-	-rm -f $(DOCDIR)rntrack.1.gz
 	-rm -f *~
 	-rm -f core
+
+distclean: clean
+	-rm -f $(DOCDIR)/rntrack.1.gz
 	-rm -f rntrack

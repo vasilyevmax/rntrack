@@ -1,59 +1,72 @@
-# $Id$
-# Legacy makefile for building on Linux with gcc
-# No support for the Husky build environment
+# Legacy makefile for building on Linux
 
 ifeq ($(DEBUG),0)
     ifeq ($(USE_MUSL), 1)
-        CC := $(ARCH)-linux-musl-gcc
-        CFLAGS := -O3 -Wall -fPIC -funsigned-char -Ih
+        smapi_CC := $(ARCH)-linux-musl-gcc
+        smapi_CFLAGS := -O3 -Wall -fPIC -funsigned-char -I$(smapi_HDIR)
     else ifeq ($(USE_CLANG), 1)
-        CC := clang
-        CFLAGS := -O3 -Wall -Wextra -funsigned-char -Ih
+        smapi_CC := clang
+        smapi_CFLAGS := -O3 -Wall -Wextra -funsigned-char -I$(smapi_HDIR)
     else
-        CC := gcc
-        CFLAGS := -O3 -Wall -fPIC -funsigned-char -Ih
+        smapi_CC := gcc
+        smapi_CFLAGS := -O3 -Wall -fPIC -funsigned-char -I$(smapi_HDIR)
     endif
 else
     ifeq ($(USE_MUSL), 1)
-        CC := $(ARCH)-linux-musl-gcc
-        CFLAGS := -g -O2 -Wall -fPIC -funsigned-char -Ih
+        smapi_CC := $(ARCH)-linux-musl-gcc
+        smapi_CFLAGS := -g -O2 -Wall -fPIC -funsigned-char -I$(smapi_HDIR)
     else ifeq ($(USE_CLANG), 1)
-        CC := clang
-        CFLAGS := -g -O2 -Wall -Wextra -funsigned-char -Ih
+        smapi_CC := clang
+        smapi_CFLAGS := -g -O2 -Wall -Wextra -funsigned-char -I$(smapi_HDIR)
     else
-        CC := gcc
-        CFLAGS := -g -O2 -Wall -fPIC -funsigned-char -Ih
+        smapi_CC := gcc
+        smapi_CFLAGS := -g -O2 -Wall -fPIC -funsigned-char -I$(smapi_HDIR)
     endif
 endif
 
 ifeq ($(ARCH), i486)
-    CFLAGS += -march=i486
+    smapi_CFLAGS += -march=i486
 else ifeq ($(ARCH), i686)
-    CFLAGS += -march=i686
+    smapi_CFLAGS += -march=i686
 endif
 
-CDEFS := -DUNIX
+smapi_CDEFS := -DUNIX
 OBJ := .o
 
-LIB := ar
-RANLIB := ranlib
+smapi_OBJS := api_jam$(OBJ) \
+          api_sdm$(OBJ) \
+          date2bin$(OBJ) \
+          dosdate$(OBJ) \
+          fexist$(OBJ) \
+          ffind$(OBJ) \
+          flush$(OBJ) \
+          ftnaddr$(OBJ) \
+          genmsgid$(OBJ) \
+          locking$(OBJ) \
+          memory$(OBJ) \
+          months$(OBJ) \
+          msgapi$(OBJ) \
+          parsenn$(OBJ) \
+          patmat$(OBJ) \
+          qksort$(OBJ) \
+          setfsize$(OBJ) \
+          sq_area$(OBJ) \
+          sq_hash$(OBJ) \
+          sq_help$(OBJ) \
+          sq_idx$(OBJ) \
+          sq_kill$(OBJ) \
+          sq_lock$(OBJ) \
+          sq_misc$(OBJ) \
+          sq_msg$(OBJ) \
+          sq_read$(OBJ) \
+          sq_uid$(OBJ) \
+          sq_write$(OBJ) \
+          strext$(OBJ) \
+          strftim$(OBJ) \
+          structrw$(OBJ) \
+          tdelay$(OBJ) \
+          trail$(OBJ) \
+          weekday$(OBJ)
 
-TARGET := libsmapilnx.a
-
-all: $(TARGET)
-
-include makefile.inc
-
-#.c.o:
-%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) $(CDEFS) -c $<
-
-$(TARGET): $(OBJS)
-	$(LIB) r $@ $?
-	$(RANLIB) $(TARGET)
-
-clean:
-	-rm *.o
-
-distclean: clean
-	-rm $(TARGET)
+$(smapi_OBJS): %.o: $(smapi_SRCDIR)/%.c
+	$(smapi_CC) $(smapi_CFLAGS) $(smapi_CDEFS) -c $(smapi_SRCDIR)/$*.c
