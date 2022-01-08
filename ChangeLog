@@ -4,8 +4,26 @@
 ! - Bug fixed
 # - Added feature or changes
 
-2.1.15 2021-01-03
------------------
+2.1.16 2021-01-08 (tag "v2.1.16")
+---------------------------------
+# update INSTALL file taking into account the migration from svn.
+# add "build_rpm" for building a rntrack.rpm;
+  add .gitignore to ignore "result/" directory created by "build_rpm"
+# changes in rntrack.spec:
+  add "BuildRequires: perl(ExtUtils::Embed)";
+  use %make_build and %make_install; remove unnecessary code;
+  use DEBUG=1 ENABLE_SCRIPTS=1 options.
+# define ROOTDIR and use it in other variables;
+  remove "result" subdirectory while running distclean.
+  The subdirectory is created by `build_rpm`.
+# reorganize makefiles to include "smapi/makefile.lnx"
+  instead of using recursive make. Now calling the
+  makefile again does not result in a rebuild. Parallel
+  build is now possible.
+# add DEBUG option to Makefile
+
+2.1.15 2021-01-03 (tag "v2.1.15")
+---------------------------------
 # set version to 2.1.15 (tag "v2.1.15")
 # change BUG-REPORTING and README.md after migration from svn
 # rename README to README.md
