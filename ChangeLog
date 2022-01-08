@@ -4,6 +4,10 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.2.0 2021-01-08 (tag "v2.2.0")
+-------------------------------
+! restrict the MSGID length by eight hex digits.
+
 2.1.16 2021-01-08 (tag "v2.1.16")
 ---------------------------------
 # update INSTALL file taking into account the migration from svn.
