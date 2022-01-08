@@ -40,12 +40,13 @@ ifeq ($(STATIC), 1)
     USE_MUSL = 1
 endif
 
-HPPDIR := ../../hpp
-SRCDIR := ../../src
-SMAPIDIR := ../../smapi
+ROOTDIR := ../..
+HPPDIR := $(ROOTDIR)/hpp
+SRCDIR := $(ROOTDIR)/src
+SMAPIDIR := $(ROOTDIR)/smapi
 smapi_HDIR := $(SMAPIDIR)/h
 smapi_SRCDIR :=$(SMAPIDIR)/src
-DOCDIR = ../../doc
+DOCDIR = $(ROOTDIR)/doc
 
 ifeq ($(DEBUG),0)
     ifeq ($(USE_MUSL), 1)
@@ -191,3 +192,4 @@ clean:
 distclean: clean
 	-rm -f $(DOCDIR)/rntrack.1.gz
 	-rm -f rntrack
+	-rm -rf $(ROOTDIR)/result
