@@ -537,11 +537,11 @@ void cMSG::Clear(void)
     _ReplyTo   = 0;
     _NextReply = 0;
     fChanged   = fPrivate    = fCrash   = fReceived    = fSent     =
-            fFileAttach = fTransit = fOrphan      = fKillSent =
-                                         fLocal      = fHold    = fFileRequest = fRRQ      =
-                                                 fIRR        = fARQ     = fFURQ        = fDIR      =
-                                                         fIMM        = fCFM     = fTFS         = fKFS      =
-                                                                 fEchomail   = fScanned = fLok         = fAS       = 0;
+                 fFileAttach = fTransit = fOrphan      = fKillSent =
+                 fLocal      = fHold    = fFileRequest = fRRQ      =
+                 fIRR        = fARQ     = fFURQ        = fDIR      =
+                 fIMM        = fCFM     = fTFS         = fKFS      =
+                 fEchomail   = fScanned = fLok         = fAS       = 0;
     CHP = 315026;
     _Klu.Clear();
     CHP = 315028;
