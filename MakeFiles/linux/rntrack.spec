@@ -1,11 +1,12 @@
 Name: rntrack
-Version: 2.1.15
+Version: 2.1.16
 Release: 1%{?dist}
 Group: Applications/FTN
 Summary: RNtrack - a FTN netmail tracker
 Summary(ru): RNtrack - трекер нетмейла в сетях типа "Фидонет"
 URL: https://sourceforge.net/projects/ftrack-as/
 License: GPLv2
+BuildRequires: perl(ExtUtils::Embed)
 Requires: perl >= 5.8.8
 Source: %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -21,17 +22,12 @@ RNtrack - трекер нетмейла в сетях типа "Фидонет"
 
 %build
 cd MakeFiles/linux
-make CONFIG="~/fido/etc/rntrack/rntrack.cfg"
+%make_build CONFIG="~/fido/etc/rntrack/rntrack.conf" DEBUG=1 ENABLE_SCRIPTS=1
 
 %install
-rm -rf %{buildroot}
 cd MakeFiles/linux
-export DESTDIR=%{buildroot}
-%makeinstall
+%make_install
 chmod -R a+rX,u+w,go-w %{buildroot}
-
-%clean
-rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
