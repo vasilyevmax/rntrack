@@ -553,7 +553,7 @@ unsigned long MsgID(void)
 {
     static unsigned int LastMSGID = 0;
 
-    return (unsigned long)((time(NULL) << 3) + LastMSGID++);
+    return (unsigned long)((time(NULL) + LastMSGID++) & 0xFFFFFFFF);
 }
 
 // ---------------------------
