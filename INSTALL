@@ -1,54 +1,104 @@
      RNTrack installation instructions
-     $Id$
+     =================================
 
-You may download the sources. For example, for RNtrack 2.0.3 the URL is
+Here you may find instructions on how to get the RNTrack source files
+and how to build an executable from the sources.
 
-https://sf.net/projects/ftrack-as/files/RNtrack/2.0.3/rntrack-2_0_3-src.tar.bz2/download
+To get the source files for the first time, clone the GitHub repository:
 
-You may also checkout the latest version
+    git clone https://github.com/dukelsky/rntrack.git
 
-svn checkout https://svn.code.sf.net/p/ftrack-as/code/trunk  rntrack
+Next time when you want to update the sources and build a new version, run
 
-or checkout any other revision
+    git pull
 
-svn checkout -r REV https://svn.code.sf.net/p/ftrack-as/code/trunk rntrack
+You have the latest version now. You may also want to build one of the
+previous tagged versions mentioned in the ChangeLog file. Every such version
+has a tag of the form v.X.XX.XXX or version-X.XX.XXX, where each X is a digit.
+To have a complete list of tags, give the command:
 
-where REV is the revision number you want to obtain. If you want to get
-a specific RNtrack version number, you may find the correponding revision
-number in ChangeLog.
+    git tag
 
-If a tag of the form version-X.XX.XXX is mentioned in ChangeLog, you may
-obtain the tagged version using the command
+After you selected the tag, check the tagged version out:
 
-svn checkout https://svn.code.sf.net/p/ftrack-as/code/tags/version-X.XX.XXX rntrack
+    git checkout <tag name>
 
-where you should replace X.XX.XXX with digits that give you the specific version.
-After that you may start the build:
+For example,
 
-tar jxf rntrack-version-src.tar.bz2
-# or `cd rntrack` if you made a checkout
-cd MakeFiles/YourSystem
-# for example, for linux: cd MakeFiles/linux
-make
+    git checkout v2.1.15
 
-Make options:
+Now you may build it. If you checked out a previous version, please don't
+forget to return to the latest version after the build using the command
 
+    git checkout master
+
+Now you should change the directory to the one corresponding to your OS.
+
+    cd rntrack/MakeFiles/YourSystem
+
+For example, for linux:
+
+    cd rntrack/MakeFiles/linux
+
+After that, you may start the build:
+
+    make -j [options]
+
+The options are:
+
+PREFIX=/prefix/path        - An alternative prefix, for example /usr/local;
+                             on default it is /usr.
 CONFIG="/path/to/cfg"      - Default config path. If not defined,
                              "~/fido/etc/rntrack.conf" under UNIX-like OS,
                              "%USERPROFILE%\fido\rntrack.cfg" under Windows
                              or "rntrack.cfg" under other OS will be used.
 ENABLE_SCRIPTS=1           - Enable Perl scripts support 
                              (currently not available on WIN32 and OS/2)
-ENABLE_LOG_PID=1           - Enable pid logging 
+ENABLE_LOG_PID=1           - Enable PID logging 
                              (ex: 2020-02-28 12:02:39 [212] --- RNtrack 2.0.3/Lnx started.)
 ENABLE_SYSLOG_LOG_FORMAT=1 - Use syslog-like log style
                              (ex: Apr 04 22:00:02 --- RNtrack 2.0.3/Lnx started.)
 USE_CLANG=1                - Use Clang compiler instead of the default one (Linux only).
-USE_MUSL=1                 - Use musl libc instead of glibc. Implies USE_CLANG=0 (Linux only).
+USE_MUSL=1                 - Use musl libc instead of glibc. This option
+                             implies USE_CLANG=0 (Linux only).
 ARCH=i486
 ARCH=i686
-ARCH=x86_64                - Target platform architecture. On default x86_64 is used
-                             (Linux only).
-STATIC=1                   - Link RNtrack staticly. Implies USE_MUSL=1 (Linux only).
+ARCH=x86_64                - Target platform architecture. On default, make
+                             uses x86_64 (Linux only).
+STATIC=1                   - Link RNtrack statically. This option implies
+                             USE_MUSL=1 (Linux only).
+DEBUG=1                    - Build a debug version of the executable.
 
 These make options are disabled by default.
+
+Here is an example of using some options:
+
+    make -j ENABLE_SCRIPTS=1 DEBUG=1
+
+To install RNTrack you have built, run:
+
+    sudo make install
+
+To uninstall it, run:
+
+    sudo make uninstall
+
+To clean all the results of your build, run:
+
+    make distclean
+
+If you use `make distclean`, next time you want to build a new version,
+you'll have to build everything from the very beginning. Otherwise, you'll
+build only the changed sources.
+
+
+Build a .rpm package
+---------------------
+
+To build a "rntrack.rpm" package, you must install the "mock" utility first.
+To start a build, run:
+
+    cd rntrack/MakeFiles/linux
+    ./build_rpm
+
+The result you may find in the "rntrack/result" directory.
