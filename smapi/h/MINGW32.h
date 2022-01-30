@@ -59,6 +59,7 @@
 #  define sleep(sec) Sleep((sec)*1000l)
 #  define mysleep(sec) Sleep((sec)*1000l)
 #  define HAS_sleep     1
+#  define HAS_strupr
 
 #  define mymkdir mkdir
 
