@@ -6,10 +6,10 @@ VERMAJOR= 2
 VERMINOR= 5
 VERH =  2.5
 VER  =  2.5.2
-SRCDIR = src
-HDIR   = h
+SRCDIR = src/
+HDIR   = h/
 
-OBJS	= api_jam$(OBJ) \
+OBJS    = api_jam$(OBJ) \
           api_sdm$(OBJ) \
           date2bin$(OBJ) \
           dosdate$(OBJ) \
@@ -45,49 +45,49 @@ OBJS	= api_jam$(OBJ) \
           trail$(OBJ) \
           weekday$(OBJ)
 
-HEADERS	= $(addprefix $(HDIR)/,api_brow.h \
-                               apidebug.h \
-                               api_jam.h \
-                               api_jamp.h \
-                               api_sdm.h \
-                               api_sdmp.h \
-                               api_sq.h \
-                               api_sqp.h \
-                               BCD.h \
-                               BCO.h \
-                               BCW.h \
-                               BEOS5.h \
-                               BORLANDC.h \
-                               compiler.h \
-                               cvsdate.h \
-                               DJGPP.h \
-                               dr.h \
-                               EMX.h \
-                               ffind.h \
-                               ftnaddr.h \
-                               genmsgid.h \
-                               HIGHC.h \
-                               IBMC_OS2.h \
-                               locking.h \
-                               memory.h \
-                               MINGW32.h \
-                               MSC.h \
-                               msgapi.h \
-                               MSVC.h \
-                               old_msg.h \
-                               patmat.h \
-                               prog.h \
-                               progprot.h \
-                               pstdint.h \
-                               SASC.h \
-                               stamp.h \
-                               strext.h \
-                               typedefs.h \
-                               typesize.h \
-                               UNIX.h \
-                               unused.h \
-                               WATCOMC.h \
-                               WCD.h \
-                               WCO.h \
-                               WCW.h \
-                               WCX.h)
+HEADERS = $(HDIR)api_brow.h \
+          $(HDIR)apidebug.h \
+          $(HDIR)api_jam.h \
+          $(HDIR)api_jamp.h \
+          $(HDIR)api_sdm.h \
+          $(HDIR)api_sdmp.h \
+          $(HDIR)api_sq.h \
+          $(HDIR)api_sqp.h \
+          $(HDIR)BCD.h \
+          $(HDIR)BCO.h \
+          $(HDIR)BCW.h \
+          $(HDIR)BEOS5.h \
+          $(HDIR)BORLANDC.h \
+          $(HDIR)compiler.h \
+          $(HDIR)cvsdate.h \
+          $(HDIR)DJGPP.h \
+          $(HDIR)dr.h \
+          $(HDIR)EMX.h \
+          $(HDIR)ffind.h \
+          $(HDIR)ftnaddr.h \
+          $(HDIR)genmsgid.h \
+          $(HDIR)HIGHC.h \
+          $(HDIR)IBMC_OS2.h \
+          $(HDIR)locking.h \
+          $(HDIR)memory.h \
+          $(HDIR)MINGW32.h \
+          $(HDIR)MSC.h \
+          $(HDIR)msgapi.h \
+          $(HDIR)MSVC.h \
+          $(HDIR)old_msg.h \
+          $(HDIR)patmat.h \
+          $(HDIR)prog.h \
+          $(HDIR)progprot.h \
+          $(HDIR)pstdint.h \
+          $(HDIR)SASC.h \
+          $(HDIR)stamp.h \
+          $(HDIR)strext.h \
+          $(HDIR)typedefs.h \
+          $(HDIR)typesize.h \
+          $(HDIR)UNIX.h \
+          $(HDIR)unused.h \
+          $(HDIR)WATCOMC.h \
+          $(HDIR)WCD.h \
+          $(HDIR)WCO.h \
+          $(HDIR)WCW.h \
+          $(HDIR)WCX.h
