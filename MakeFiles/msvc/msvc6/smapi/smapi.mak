@@ -46,7 +46,6 @@ CLEAN :
 	-@erase "$(INTDIR)\flush.obj"
 	-@erase "$(INTDIR)\ftnaddr.obj"
 	-@erase "$(INTDIR)\genmsgid.obj"
-	-@erase "$(INTDIR)\gnmsgid.obj"
 	-@erase "$(INTDIR)\locking.obj"
 	-@erase "$(INTDIR)\memory.obj"
 	-@erase "$(INTDIR)\months.obj"
@@ -128,7 +127,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\flush.obj" \
 	"$(INTDIR)\ftnaddr.obj" \
 	"$(INTDIR)\genmsgid.obj" \
-	"$(INTDIR)\gnmsgid.obj" \
 	"$(INTDIR)\locking.obj" \
 	"$(INTDIR)\memory.obj" \
 	"$(INTDIR)\months.obj" \
@@ -190,8 +188,6 @@ CLEAN :
 	-@erase "$(INTDIR)\ftnaddr.sbr"
 	-@erase "$(INTDIR)\genmsgid.obj"
 	-@erase "$(INTDIR)\genmsgid.sbr"
-	-@erase "$(INTDIR)\gnmsgid.obj"
-	-@erase "$(INTDIR)\gnmsgid.sbr"
 	-@erase "$(INTDIR)\locking.obj"
 	-@erase "$(INTDIR)\locking.sbr"
 	-@erase "$(INTDIR)\memory.obj"
@@ -296,7 +292,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\flush.sbr" \
 	"$(INTDIR)\ftnaddr.sbr" \
 	"$(INTDIR)\genmsgid.sbr" \
-	"$(INTDIR)\gnmsgid.sbr" \
 	"$(INTDIR)\locking.sbr" \
 	"$(INTDIR)\memory.sbr" \
 	"$(INTDIR)\months.sbr" \
@@ -340,7 +335,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\flush.obj" \
 	"$(INTDIR)\ftnaddr.obj" \
 	"$(INTDIR)\genmsgid.obj" \
-	"$(INTDIR)\gnmsgid.obj" \
 	"$(INTDIR)\locking.obj" \
 	"$(INTDIR)\memory.obj" \
 	"$(INTDIR)\months.obj" \
@@ -542,24 +536,6 @@ SOURCE=..\..\..\..\smapi\src\genmsgid.c
 
 
 "$(INTDIR)\genmsgid.obj"	"$(INTDIR)\genmsgid.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\..\..\smapi\src\gnmsgid.c
-
-!IF  "$(CFG)" == "smapi - Win32 Release"
-
-
-"$(INTDIR)\gnmsgid.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "smapi - Win32 Debug"
-
-
-"$(INTDIR)\gnmsgid.obj"	"$(INTDIR)\gnmsgid.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
