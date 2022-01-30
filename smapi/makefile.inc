@@ -18,7 +18,6 @@ OBJS    = api_jam$(OBJ) \
           flush$(OBJ) \
           ftnaddr$(OBJ) \
           genmsgid$(OBJ) \
-          gnmsgid$(OBJ) \
           locking$(OBJ) \
           memory$(OBJ) \
           months$(OBJ) \
