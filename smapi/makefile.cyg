@@ -46,6 +46,9 @@ DLLOPT  = -shared
 NAMEOPT	= -o
 # options for $(AR) program
 ARFLAGS	= rs
+# includes directories
+CINCL	= -I$(HDIR)
+
 
 ## files ##
 TARGET	= libsmapicyg$(LIB)
@@ -84,17 +87,17 @@ dll:	$(DLLTARGET)
 programs:  $(PROGRAMS)
 
 %.exe:	%.c $(TARGET)
-	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
+	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(NAMEOPT)$@ $^ $(LIBS)
 
-.c.o:
-	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
+%$(OBJ): $(SRCDIR)%$(C)
+	$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(OBJOPT) $<
 
 $(TARGET):	$(OBJS)
 	$(AR) $(ARFLAGS) $(TARGET) $?
 #	$(RANLIB) $(TARGET)   # 'ar rs' doing this
 	
 $(DLLTARGET):	$(OBJS)
-	$(CC) $(DLLOPT) $(CFLAGS) $(NAMEOPT)$@ $^
+	$(CC) $(DLLOPT) $(CFLAGS) $(CINCL) $(NAMEOPT)$@ $^
 
 
 clean:
