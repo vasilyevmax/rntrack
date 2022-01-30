@@ -680,10 +680,6 @@ SOURCE=..\..\..\hpp\tpkt.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\smapi\h\typedefs.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\smapi\h\typesize.h
 # End Source File
 # Begin Source File

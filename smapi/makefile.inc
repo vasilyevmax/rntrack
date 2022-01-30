@@ -81,7 +81,6 @@ HEADERS = $(HDIR)api_brow.h \
           $(HDIR)SASC.h \
           $(HDIR)stamp.h \
           $(HDIR)strext.h \
-          $(HDIR)typedefs.h \
           $(HDIR)typesize.h \
           $(HDIR)UNIX.h \
           $(HDIR)unused.h \

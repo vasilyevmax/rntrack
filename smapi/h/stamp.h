@@ -21,7 +21,6 @@
 #define __STAMP_H__
 
 #include "compiler.h"
-#include "typedefs.h"
 
 #if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
     typedef unsigned short bits;

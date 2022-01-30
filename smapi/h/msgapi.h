@@ -27,7 +27,6 @@ extern "C" {
 //#include "cvtdate.h"
 #include "progprot.h"
 #include "stamp.h"
-#include "typedefs.h"
 #include "memory.h"
 #include "ftnaddr.h"
 
