@@ -5,37 +5,42 @@
 CC=	gcc
 CFLAGS= -Wall -s
 CDEFS=	-D__FLAT__
-COPT=	-O3 -fomit-frame-pointer -fstrength-reduce -march=i486
-LIB=	ar
+COPT=	-O3 -fomit-frame-pointer -fstrength-reduce
+CINCL	= -I$(HDIR)
+LIB=	.a
 RANLIB= ranlib
+ARFLAGS= rs
 RM=del
 OBJ=	.o
+C=	.c
 EXE=	.exe
 
 
-TARGET= smapidjg.a
+TARGETLIB= smapidjg.a
 
-EXENAMEFLAG=-o 
+EXENAMEFLAG=-o
 
 include makefile.inc
 
 # Thunderbirds are go!
 
-.c.o:
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
-	$(LIB) r $(TARGET) $@
+%$(OBJ): $(SRCDIR)%$(C)
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) $(COPT) $(CINCL) -c $<
 
-all: $(TARGET) gnmsgid$(EXE)
+all: $(TARGETLIB) gnmsgid$(EXE)
+static: $(TARGETLIB)
 
-$(TARGET): $(OBJS)
-	$(RANLIB) $(TARGET)
+$(TARGETLIB): $(OBJS)
+	@echo Create $(TARGETLIB)
+	@$(AR) $(ARFLAGS) $(TARGETLIB) $?
 
 gnmsgid$(EXE): gnmsgid$(OBJ) genmsgid$(OBJ)
-	$(CC) $(CFLAGS) $(COPT) $(EXENAMEFLAG)gnmsgid$(EXE) $^ $(LOPT) $(TARGET)
+	$(CC) $(CFLAGS) $(COPT) $(EXENAMEFLAG)gnmsgid$(EXE) $^ $(LOPT) $(TARGETLIB)
 
 clean:
 	-$(RM) *$(OBJ)
 
 distclean: clean
-	-$(RM) $(TARGET)
+	-$(RM) $(TARGETLIB)
 	-$(RM) gnmsgid$(EXE)
