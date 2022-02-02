@@ -81,8 +81,10 @@
 #ifndef DefaultConfig
     #if defined(__unix__)
         #define DefaultConfig "~/fido/etc/rntrack.conf"
+/*
     #elif defined(__WIN32__)
         #define DefaultConfig "%USERPROFILE%\\fido\\rntrack.cfg"
+*/
     #else
         #define DefaultConfig "rntrack.cfg"
     #endif
