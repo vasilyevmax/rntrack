@@ -55,7 +55,7 @@ int ExecP(char * Name);
 int SetSemaphore(void);
 int ReleaseSemaphore(void);
 
-#ifdef __unix__
+#if defined (__unix__) && !defined(__EMX__)
     unsigned int filelength(int fh);
 #endif
 
