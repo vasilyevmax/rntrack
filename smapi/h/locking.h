@@ -22,14 +22,6 @@
 
 #include "compiler.h"
 
-#if defined(MSDOS)
-    sword far pascal shareloaded(void);
-#elif defined(OS2) || defined(__NT__) || defined(UNIX)
-    #define shareloaded() TRUE
-#else
-    #define shareloaded() FALSE
-#endif
-
 int lock(int handle, long ofs, long length);
 int unlock(int handle, long ofs, long length);
 int waitlock(int handle, long ofs, long length);
