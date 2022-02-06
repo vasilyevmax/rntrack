@@ -27,6 +27,7 @@
 #endif
 
 #undef __UNIX__
+#undef __unix__
 
 #  define _stdc
 #  define _intr

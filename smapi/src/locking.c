@@ -45,7 +45,7 @@ sword far pascal shareloaded(void)
 
 #endif
 
-#if (defined (__WATCOMC__) || defined (__EMX__) || defined (__IBMC__)) && defined (OS2)
+#if (defined (__WATCOMC__) || defined (__EMX__) || defined (__IBMC__)) && defined (__OS2__)
 
 #include <os2.h>
 
@@ -435,7 +435,7 @@ int sopen(const char * name, int oflag, int ishared, int mode)
     return fd;
 }
 
-#else  /* if (defined (__WATCOMC__) || defined (__EMX__) || defined (__IBMC__)) && defined (OS2)
+#else  /* if (defined (__WATCOMC__) || defined (__EMX__) || defined (__IBMC__)) && defined (__OS2__)
          */
 
 #ifdef OS2
@@ -481,5 +481,5 @@ int waitlock2(int handle, long ofs, long length, long t)
     return rc;
 }
 
-#endif /* if (defined (__WATCOMC__) || defined (__EMX__) || defined (__IBMC__)) && defined (OS2)
+#endif /* if (defined (__WATCOMC__) || defined (__EMX__) || defined (__IBMC__)) && defined (__OS2__)
           */
