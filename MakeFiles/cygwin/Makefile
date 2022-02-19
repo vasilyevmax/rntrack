@@ -82,10 +82,12 @@ OBJS= \
 	wildmat.o
 
 %.o: $(SRCDIR)%.c
-	$(CC) $(CFLAGS) $(CDEFS) -c $<
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) -c $<
 
 %.o: $(SRCDIR)%.cpp
-	$(CC) $(CFLAGS) $(CDEFS) -c $<
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) -c $<
 
 # Thunderbirds are go!
 
@@ -93,7 +95,8 @@ smapi:
 	cd $(SMAPIDIR) && make -f makefile.cyg static
 
 rntrack: smapi $(OBJS)
-	$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
+	@echo Compiling rntrack$(EXEEND)
+	@$(CC) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) 
 
 clean:
 	-rm -f $(SMAPIDIR)/*.o
