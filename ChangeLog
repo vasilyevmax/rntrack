@@ -4,11 +4,17 @@
 ! - Bug fixed
 # - Added feature or changes
 
-2.2.0 2021-01-08 (tag "v2.2.0")
+2.2.1 2022-02-19 (tag "v2.2.1")
+-------------------------------
+# fixed DOS/DJGPP, OS2/EMX, Windows' Cygwin and MSVC6 compilation
+# set DefaultConfig to "rntrack.cfg" for Windows OS
+# split OsType /Win to /W64 and /W32
+
+2.2.0 2022-01-08 (tag "v2.2.0")
 -------------------------------
 ! restrict the MSGID length by eight hex digits.
 
-2.1.16 2021-01-08 (tag "v2.1.16")
+2.1.16 2022-01-08 (tag "v2.1.16")
 ---------------------------------
 # update INSTALL file taking into account the migration from svn.
 # add "build_rpm" for building a rntrack.rpm;
@@ -26,7 +32,7 @@
   build is now possible.
 # add DEBUG option to Makefile
 
-2.1.15 2021-01-03 (tag "v2.1.15")
+2.1.15 2022-01-03 (tag "v2.1.15")
 ---------------------------------
 # set version to 2.1.15 (tag "v2.1.15")
 # change BUG-REPORTING and README.md after migration from svn
