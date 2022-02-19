@@ -1,26 +1,47 @@
 # Makefile for build dynamic rntrack/emx: for EMX on OS/2 with a.out style linkage
 # (EMX Runtime is required to run executable)
-# First needs to build smapi library (cd ../../src/smapi; make -f makefile.emx)
-# To build with Perl: Perl version 5.5.53 is needed. Else call `make PERLLIBS=`
+# To build with Perl: Perl version 5.5.53 is needed. Call `make PERL=1`
 #
 # $Id$
 
 CC=	gcc
 
-PERL=../../../perl5.00553/os2
+PERLDIR=../../../perl5.00553/os2
 
 SMAPIDIR= ../../smapi
 CFLAGS= -Wall -fno-rtti -s -g
-CDEFS=	-DOS2 -DEMX -DDO_PERL -DDOSISH -DEMBED -DHAVE_UNISTD_H -DHAVE_IO_H -DHAS_strupr -DHAVE_LOCALE_H -DHAVE_TIME_H -DHAVE_UTIME_H
-COPT=  -I../../hpp -I$(SMAPIDIR)/h -I$(PERL)/CORE -O3
+CDEFS=	-DOS2 -DEMX -DHAVE_UNISTD_H -DHAVE_IO_H -DHAS_strupr -DHAVE_LOCALE_H -DHAVE_TIME_H -DHAVE_UTIME_H
+COPT=  -I../../hpp -I$(SMAPIDIR)/h -O3
 SRCDIR= ../../src/
 LFLAGS= -Zcrtdll -L$(SMAPIDIR) -lsmapiemx -g -lstdcxx
-EXEEND= _emx.exe
 STRIP=	-s
+TARGET= rntrack-emx
 
-ALL: rntrack$(EXEEND)
+ifdef PERL
+TARGET:=$(TARGET)-perl
+ifndef PERLDIR
+PERLDIR=$(shell perl -MConfig -e "print $$Config{archlib}")
+endif
+PERLLIBS=\
+	$(PERLDIR)/auto/DB_File/DB_File.a \
+	$(PERLDIR)/auto/SDBM_File/SDBM_File.a \
+	$(PERLDIR)/auto/Fcntl/Fcntl.a \
+	$(PERLDIR)/auto/IO/IO.a \
+	$(PERLDIR)/auto/POSIX/POSIX.a \
+	$(PERLDIR)/auto/Socket/Socket.a \
+	$(PERLDIR)/auto/OS2/Process/Process.a \
+	$(PERLDIR)/auto/OS2/ExtAttr/ExtAttr.a \
+	$(PERLDIR)/auto/OS2/REXX/REXX.a \
+	$(PERLDIR)/auto/DynaLoader/DynaLoader.a \
+	-L$(PERLDIR)/CORE -llibperl -lsocket -lm -lbsd -ldb
+CDEFS+= -DDO_PERL -DDOSISH -DEMBED -D__PERL_VERSION__
+COPT+=	-I$(PERLDIR)/CORE
+endif
 
-TARGET= f
+
+TARGET:=$(TARGET).exe
+
+all: $(TARGET)
 
 OBJS= \
 	age.o \
@@ -56,18 +77,6 @@ OBJS= \
 	vars.o \
 	wildmat.o
 
-PERLLIBS=\
-	$(PERL)/auto/DB_File/DB_File.a \
-	$(PERL)/auto/SDBM_File/SDBM_File.a \
-	$(PERL)/auto/Fcntl/Fcntl.a \
-	$(PERL)/auto/IO/IO.a \
-	$(PERL)/auto/POSIX/POSIX.a \
-	$(PERL)/auto/Socket/Socket.a \
-	$(PERL)/auto/OS2/Process/Process.a \
-	$(PERL)/auto/OS2/ExtAttr/ExtAttr.a \
-	$(PERL)/auto/OS2/REXX/REXX.a \
-	$(PERL)/auto/DynaLoader/DynaLoader.a \
-	-L$(PERL)/CORE -llibperl -lsocket -lm -lbsd -ldb
 
 %.o: $(SRCDIR)%.c
 	@echo Compiling $<
@@ -82,10 +91,9 @@ PERLLIBS=\
 smapi:
 	make -C $(SMAPIDIR) -f makefile.emx
 
-rntrack$(EXEEND): smapi $(OBJS)
-	@echo Compiling rntrack$(EXEEND)
-#	 @$(CC) $(STRIP) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS) $(PERLLIBS)
-	$(CC) $(STRIP) -o rntrack$(EXEEND) $(OBJS) $(LFLAGS)
+$(TARGET): smapi $(OBJS)
+	@echo Compiling $(TARGET)
+	@$(CC) $(STRIP) -o $(TARGET) $(OBJS) $(LFLAGS) $(PERLLIBS)
 
 clean:
 	-del *.o
