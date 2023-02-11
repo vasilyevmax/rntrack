@@ -916,7 +916,7 @@ PKTrc PKT::AddMsg(cMSG & m, PKTMode mod, int Dest)
 
     if((tmt = GetPasswd(Addr)) != NULL)
     {
-        RSTRLCPY(p.Passwd, tmt, 8);
+        strncpy(p.Passwd, tmt, 8);
     }
 
     p.ToZone  = (unsigned short)(Addr.Zone()  & 0xffff);
