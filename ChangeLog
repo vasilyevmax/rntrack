@@ -4,6 +4,10 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.2.2 2023-02-11 (tag "v2.2.2")
+-------------------------------
+! pkt's "To Zone" field was set to 0 errorneosly in some cases (patch by Michael Dukelsky)
+
 2.2.1 2022-02-19 (tag "v2.2.1")
 -------------------------------
 # fixed DOS/DJGPP, OS2/EMX, Windows' Cygwin and MSVC6 compilation
