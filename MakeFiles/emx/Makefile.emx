@@ -4,7 +4,7 @@
 #
 # $Id$
 
-CC=	gcc
+CC=	g++
 
 PERLDIR=../../../perl5.00553/os2
 
@@ -13,9 +13,9 @@ CFLAGS= -Wall -fno-rtti -s -g
 CDEFS=	-DOS2 -DEMX -DHAVE_UNISTD_H -DHAVE_IO_H -DHAS_strupr -DHAVE_LOCALE_H -DHAVE_TIME_H -DHAVE_UTIME_H
 COPT=  -I../../hpp -I$(SMAPIDIR)/h -O3
 SRCDIR= ../../src/
-LFLAGS= -Zcrtdll -L$(SMAPIDIR) -lsmapiemx -g -lstdcxx
+LFLAGS= -Zcrtdll -L$(SMAPIDIR) -lsmapiemx -g
 STRIP=	-s
-TARGET= rntrack-emx
+TARGET= rntrack-os2
 
 ifdef PERL
 TARGET:=$(TARGET)-perl
