@@ -66,7 +66,7 @@
 #  define HAS_popen_close 1 /* popen(); pclose() */
 #  define HAS_sopen     4   /* sopen() : in io.h, 4 parameters */
 
-#  define HAS_DOS_H     1  /* use "#include <dos.h>" for _int86 () etc. */
+//#  define HAS_DOS_H     1  /* use "#include <dos.h>" for _int86 () etc. */
 #  define HAS_DIRENT_H  1  /* use "#include <dirent.h>" for opendir() etc. */
 #  define HAS_IO_H      1  /* use "#include <io.h>" */
 #  define HAS_SHARE_H   1  /* may use "#include <share.h> */
