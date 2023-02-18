@@ -293,7 +293,7 @@ typedef unsigned long       ULONG;              /*  4 byte */
  * define HAS_STDINT_H if you have one in your system or
  * define USE_PSTDINT_H if it works as replacement */
 #include "pstdint.h"
-typedef   int8_t            CHAR;               /*  1 byte */
+/* typedef   int8_t            CHAR; */              /*  1 byte */
 typedef  uint8_t           UCHAR;               /*  1 byte */
 typedef   int16_t           INT16;              /*  2 byte */
 typedef  uint16_t          UINT16;              /*  2 byte */
