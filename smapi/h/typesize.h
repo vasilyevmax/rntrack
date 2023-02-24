@@ -297,7 +297,7 @@ typedef unsigned long       ULONG;              /*  4 byte */
 typedef  uint8_t           UCHAR;               /*  1 byte */
 typedef   int16_t           INT16;              /*  2 byte */
 typedef  uint16_t          UINT16;              /*  2 byte */
-#ifndef __NT__ /* these are overlapped with windows' types */
+#if !defined (__NT__) && !defined (__OS2__) /* these are overlapped with OS' types */
 typedef   int32_t           INT32;              /*  4 byte */
 typedef  uint32_t          UINT32;              /*  4 byte */
 /*  -------------------------------------------------------------------------- */
