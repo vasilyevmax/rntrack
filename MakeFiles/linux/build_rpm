@@ -4,7 +4,8 @@
 #   Prerequisite: "mock" should be installed
 #                 this script should be in the directory for which "rntrack"
 #                 is a subdirectory
-#   Usage:  ./build_rpm
+#   Usage:  ./build_rpm [config]
+#                 config - one of the configs listed by `mock --list-chroots`
 #   Result: the built regular and debuginfo packages are
 #           in the "result" subdirectory
 #
@@ -22,13 +23,15 @@ die()
 # Check that the script is not run by root
 [ "$(id -u)" -eq 0 ] && die "DO NOT run this as root"
 
+[ -z "$1" ] && CONFIG=default || CONFIG="$1"
+echo "Building rntrack for $CONFIG"
 rm -rf ./result
 mkdir -p result
 pushd rntrack > /dev/null 2>&1
 git pull
 git archive --prefix=rntrack/ -o ../result/rntrack.tar.gz HEAD
-mock --buildsrpm --spec MakeFiles/linux/rntrack.spec \
+mock -r $CONFIG --buildsrpm --spec MakeFiles/linux/rntrack.spec \
     --sources ../result/rntrack.tar.gz --resultdir=../result
 popd > /dev/null 2>&1
 SRCRPM=$(echo result/*.src.rpm)
-mock --no-clean --resultdir=./result --rebuild $SRCRPM
+mock -r $CONFIG --no-clean --resultdir=./result --rebuild $SRCRPM
