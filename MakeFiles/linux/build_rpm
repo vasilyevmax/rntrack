@@ -2,6 +2,8 @@
 #
 # build_rpm - build an .rpm package for rntrack
 #   Prerequisite: "mock" should be installed
+#                 this script should be in the directory for which "rntrack"
+#                 is a subdirectory
 #   Usage:  ./build_rpm
 #   Result: the built regular and debuginfo packages are
 #           in the "result" subdirectory
@@ -13,15 +15,20 @@ die()
     exit 1
 }
 
+# Check that the script is in the directory for which "rntrack"
+# is a subdirectory
+[ -d rntrack ] || die "No 'rntrack' subdirectory"
+
 # Check that the script is not run by root
 [ "$(id -u)" -eq 0 ] && die "DO NOT run this as root"
 
-cd ../..
+rm -rf ./result
 mkdir -p result
-git archive --prefix=rntrack/ -o result/rntrack.tar.gz HEAD
-#tar --exclude='.git' --exclude='result' --transform="s|^.*$|rntrack/&|" \
-#    -czf result/rntrack.tar.gz *
+pushd rntrack > /dev/null 2>&1
+git pull
+git archive --prefix=rntrack/ -o ../result/rntrack.tar.gz HEAD
 mock --buildsrpm --spec MakeFiles/linux/rntrack.spec \
-    --sources result/rntrack.tar.gz --resultdir=./result
+    --sources ../result/rntrack.tar.gz --resultdir=../result
+popd > /dev/null 2>&1
 SRCRPM=$(echo result/*.src.rpm)
 mock --no-clean --resultdir=./result --rebuild $SRCRPM
