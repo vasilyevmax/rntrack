@@ -62,13 +62,13 @@ ifeq ($(DEBUG),0)
 else
     ifeq ($(USE_MUSL), 1)
         CC := $(ARCH)-linux-musl-g++
-        CFLAGS := -g -O2 -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
+        CFLAGS := -g -Og -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     else ifeq ($(USE_CLANG), 1)
         CC := clang++
-        CFLAGS := -g -O2 -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
+        CFLAGS := -g -Og -Wall -Wextra -ferror-limit=0 -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     else
         CC := g++
-        CFLAGS := -g -O2 -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
+        CFLAGS := -g -Og -Wall -fPIC -fno-rtti -I$(HPPDIR) -I$(SRCDIR) -I$(smapi_HDIR) -I$(smapi_SRCDIR)
     endif
 endif
 
