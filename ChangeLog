@@ -4,6 +4,16 @@
 ! - Bug fixed
 # - Added feature or changes
 
+2.3.1 2026-04-25 (tag "v2.3.1")
+-------------------------------
+# Michael Dukelsky (https://github.com/dukelsky/rntrack/) doesn't support RNTrack anymore. I moved all his patches to my (https://github.com/vasilyevmax/rntrack/) fork.
+# add Msg.txt to .gitignore
+# add a possibility to change build target in "build_rpm".
+# update "build_rpm" for work outside of "rntrack" directory.
+# use -Og instead of -O2 when DEBUG=1.
+# replace sourceforge with github in rntrack.spec.
+# add make, gcc-c++ to BuildRequires.
+
 2.2.2 2023-02-11 (tag "v2.2.2")
 -------------------------------
 ! pkt's "To Zone" field was set to 0 errorneosly in some cases (patch by Michael Dukelsky)
